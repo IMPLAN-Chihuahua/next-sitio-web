@@ -4,6 +4,8 @@ import { Montserrat } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import theme from "@/theme";
 import { ThemeProvider } from "@mui/material/styles";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
   title: "IMPLAN | Instituto de Planeación Integral del Municipio de Chihuahua",
@@ -28,7 +30,9 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
+            <Navbar />
             {children}
+            <Footer />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
