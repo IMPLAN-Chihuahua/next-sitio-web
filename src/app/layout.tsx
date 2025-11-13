@@ -6,6 +6,7 @@ import theme from "@/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "IMPLAN | Instituto de Planeación Integral del Municipio de Chihuahua",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Navbar />
             {children}
             <Footer />
