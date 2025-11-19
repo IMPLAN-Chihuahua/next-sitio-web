@@ -9,7 +9,7 @@ import Navbar from "./components/Navbar";
 import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
-  title: "IMPLAN | Instituto de Planeación Integral del Municipio de Chihuahua",
+  title: "IMPLAN Chihuahua",
   description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
 };
 
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={montserrat.variable}>
-      <body>
+      <body style={{ minHeight: '100vh', height: '100vh' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
