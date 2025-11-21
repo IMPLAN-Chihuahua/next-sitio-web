@@ -1,0 +1,138 @@
+'use client'
+
+import Autoplay from "embla-carousel-autoplay";
+import { Box, Container, Grow, IconButton, Slide, Typography } from "@mui/material";
+import useEmblaCarousel, { UseEmblaCarouselType, } from "embla-carousel-react";
+import { EmblaCarouselType } from 'embla-carousel'
+import Image from "next/image";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import styles from './LandingPageBanner.module.css'
+import Fade from "embla-carousel-fade";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
+
+
+export default function LandingPageBanner({ phrases }: { phrases: Array<{ content: string, emphasis: string, image: string }> }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false, loop: true },
+    [Autoplay({ playOnInit: true, delay: 3_500 }), Fade()]);
+
+  const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false)
+
+  const toggleAutoplay = useCallback(() => {
+    const autoplay = emblaApi?.plugins()?.autoplay;
+    if (!autoplay) return;
+
+    if (autoplay.isPlaying()) {
+      autoplay.stop();
+    } else {
+      autoplay.play();
+    }
+  }, [emblaApi]);
+
+  useEffect(() => {
+    const autoplay = emblaApi?.plugins()?.autoplay;
+    if (!autoplay) return;
+
+    setAutoplayIsPlaying(autoplay.isPlaying());
+    emblaApi
+      .on('autoplay:play', () => setAutoplayIsPlaying(true))
+      .on('autoplay:stop', () => setAutoplayIsPlaying(false))
+      .on('reInit', () => setAutoplayIsPlaying(autoplay.isPlaying()))
+  }, [emblaApi]);
+
+  return (
+    <Box
+      minHeight={'80vh'}
+      className={styles.embla}
+      bgcolor={'secondary.700'}
+      position={'relative'}
+    >
+      <Box className={styles.embla__viewport} ref={emblaRef}>
+        <Box className={styles.embla__container} height={'85vh'} position={'relative'}>
+          {phrases.map((phrase, idx) => (
+            <ContentSlide key={idx} {...phrase} />
+          ))}
+        </Box>
+      </Box>
+      <IconButton
+        onClick={toggleAutoplay}
+        disableTouchRipple
+        sx={{
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+          zIndex: 120,
+          border: '2px solid',
+          borderColor: 'secondary.50'
+        }}>
+        {
+          autoplayIsPlaying ? (
+            <PauseIcon sx={{ color: 'secondary.50', fontSize: 40 }} />
+          ) : (
+            <PlayArrowIcon sx={{ color: 'secondary.50', fontSize: 40 }} />
+          )
+        }
+      </IconButton>
+    </Box>
+  )
+}
+
+
+const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis: string, image: string }) => {
+
+  return (
+    <Box className={styles.embla__slide} sx={{ userSelect: 'none', position: 'relative' }}>
+      <Image
+        src={image}
+        alt=''
+        fill
+        loading="eager"
+        style={{
+          objectFit: 'cover'
+        }}
+      />
+      <Overlay />
+      <Container
+        maxWidth='xl'
+        component={Box}
+        zIndex={130}
+        position={'relative'}
+        color={'secondary.50'}
+        sx={{ xs: 45, md: 65 }}
+      >
+        <Typography
+          mt={{ xs: 20, md: 30 }}
+          fontSize={{ xs: 45, md: 65 }}
+          fontWeight={400}
+          sx={{
+            textShadow: '1px 1px 2px black'
+          }}
+          color='inherit'>{content}</Typography>
+        <Typography
+          fontWeight={900}
+          fontSize={{ xs: 45, md: 65 }}
+          sx={{
+            textShadow: '1px 1px 2px black'
+          }}
+          color='inherit'>{emphasis}</Typography>
+      </Container>
+    </Box>
+  );
+}
+
+
+
+const Overlay = () => {
+  return (
+    <Box
+      position='absolute'
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      height={'100%'}
+      bgcolor={'rgba(0,0,0,0.4)'}
+      zIndex={110}
+    />
+  )
+}
