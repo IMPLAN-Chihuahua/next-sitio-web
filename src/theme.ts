@@ -16,7 +16,7 @@ const theme = createTheme({
     background: {
       default: '#fafafc'
     },
-    primary: {
+    secondary: {
       main: '#e3a74d',
       '50': '#fdfcea',
       '100': '#faf7cb',
@@ -30,7 +30,7 @@ const theme = createTheme({
       '900': '#d9843f'
 
     },
-    secondary: {
+    primary: {
       main: '#606062',
       '50': '#fafafc',
       '100': '#f4f4f7',
