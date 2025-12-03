@@ -44,7 +44,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
     <Box
       minHeight={'80vh'}
       className={styles.embla}
-      bgcolor={'secondary.700'}
+      bgcolor={'primary.700'}
       position={'relative'}
     >
       <Box className={styles.embla__viewport} ref={emblaRef}>
@@ -63,13 +63,13 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
           right: 20,
           zIndex: 120,
           border: '2px solid',
-          borderColor: 'secondary.50'
+          borderColor: 'primary.50'
         }}>
         {
           autoplayIsPlaying ? (
-            <PauseIcon sx={{ color: 'secondary.50', fontSize: 40 }} />
+            <PauseIcon sx={{ color: 'primary.50', fontSize: 40 }} />
           ) : (
-            <PlayArrowIcon sx={{ color: 'secondary.50', fontSize: 40 }} />
+            <PlayArrowIcon sx={{ color: 'primary.50', fontSize: 40 }} />
           )
         }
       </IconButton>
@@ -97,13 +97,13 @@ const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis:
         component={Box}
         zIndex={130}
         position={'relative'}
-        color={'secondary.50'}
+        color={'primary.50'}
         sx={{ xs: 45, md: 65 }}
       >
         <Typography
           mt={{ xs: 20, md: 30 }}
           fontSize={{ xs: 45, md: 65 }}
-          fontWeight={400}
+          fontWeight={500}
           sx={{
             textShadow: '1px 1px 2px black'
           }}
@@ -122,7 +122,7 @@ const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis:
 
 
 
-const Overlay = () => {
+export const Overlay = () => {
   return (
     <Box
       position='absolute'
@@ -131,7 +131,7 @@ const Overlay = () => {
       right={0}
       bottom={0}
       height={'100%'}
-      bgcolor={'rgba(0,0,0,0.4)'}
+      bgcolor={'rgba(0,0,0,0.45)'}
       zIndex={110}
     />
   )

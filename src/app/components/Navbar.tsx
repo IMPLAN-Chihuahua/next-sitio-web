@@ -98,7 +98,7 @@ const DesktopNavbar = () => {
         columnGap={{ xs: 2, lg: 4 }}
         ml={{ md: 'auto' }}
         sx={{ display: { xs: 'none', md: 'flex' } }}
-        color={'secondary.50'}
+        color={'primary.50'}
       >
         {
           navLinks.map((item, idx) => item.menuItems.length > 0
@@ -115,7 +115,7 @@ const DesktopNavbar = () => {
 
 
 const appBarStyle = {
-  background: 'rgba(32, 32, 34, 0.72)',
+  background: 'rgba(32, 32, 34, 0.75)',
   boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
   backdropFilter: 'blur(7px)',
   WebkitBackdropFilter: 'blur(7px)',
@@ -158,7 +158,7 @@ const MobileDrawer = () => {
           display: { xs: 'block', md: 'none' }
         }}>
         <MenuIcon sx={{
-          color: 'secondary.50', fontSize: 40
+          color: 'primary.50', fontSize: 40
         }} />
       </IconButton>
       <Drawer
@@ -171,7 +171,7 @@ const MobileDrawer = () => {
         slotProps={{
           paper: {
             sx: {
-              bgcolor: 'secondary.50'
+              bgcolor: 'primary.50'
             },
           }
         }}
@@ -192,7 +192,7 @@ const MobileDrawer = () => {
             mt: 1,
             mr: 1.3,
           }}>
-          <CloseIcon sx={{ color: 'secondary.900', fontSize: 40 }} />
+          <CloseIcon sx={{ color: 'primary.900', fontSize: 40 }} />
         </IconButton>
         <Box width={275}>
           <List>
@@ -235,6 +235,7 @@ const NavbarLinkButton = ({ href, label }: { href: string, label: string }) => {
         textDecoration: 'none',
         textTransform: 'none',
         fontWeight: 600,
+        fontSize: 16,
       }}
       href={href}>
       {label}
@@ -320,6 +321,7 @@ const NavbarMenu = ({ label, menuItems, href }: { href: string, label: string, m
         aria-expanded={open ? 'true' : undefined}
         color="inherit"
         sx={{
+          fontSize: 16,
           textDecoration: 'none',
           textTransform: 'none',
           fontWeight: 600
