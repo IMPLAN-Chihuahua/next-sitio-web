@@ -54,9 +54,9 @@ export default async function LicitacionesPage() {
         <Button
           LinkComponent={MuiLink}
           href={`${process.env.IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
-          variant="contained"
+          variant="outlined"
           endIcon={<OpenInNew />}
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, fontWeight: 500, color: 'primary.800' }}
           target='_blank'
         >
           Plan de adquisiciones
@@ -67,7 +67,7 @@ export default async function LicitacionesPage() {
           <Grid container spacing={2} my={2}>
             {
               (licitacionesPage.data.procesoCompra as any[]).map((proceso, idx) => (
-                <Grid key={idx} size={{ xs: 12, md: 4 }} sx={{ height: '100%' }}>
+                <Grid key={idx} size={{ xs: 12, sm: 6, md: 4 }}>
                   <LicitacionCard
                     procedimiento={proceso.procedimiento}
                     descripcion={proceso.descripcion}

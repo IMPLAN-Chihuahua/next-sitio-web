@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Typography } from "@mui/material";
+import PageBanner from '../components/PageBanner';
 
 
 export const metadata: Metadata = {
@@ -11,6 +12,11 @@ export default function InstrumentosPlaneacionPage() {
 
 
   return (<main>
-    <Typography>Instrumentos de Planeación</Typography>
+    <PageBanner
+      cover=''
+      title='Instrumentos de planeación'
+      description='Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit veniam cum id tenetur aut aliquam.'
+    />
+
   </main>)
 }
