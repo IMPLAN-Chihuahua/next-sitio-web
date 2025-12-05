@@ -1,6 +1,7 @@
 'use client';
 
 import { createTheme } from "@mui/material"
+import { blue } from "@mui/material/colors";
 
 
 // Obtener colores de 50-900 https://m2.material.io/inline-tools/color/
@@ -42,6 +43,13 @@ const theme = createTheme({
       '700': '#606062',
       '800': '#414143',
       '900': '#202022',
+    }
+  },
+  components: {
+    MuiLink: {
+      defaultProps: {
+        color: blue[900]
+      }
     }
   }
 })
