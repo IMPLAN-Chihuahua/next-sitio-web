@@ -8,7 +8,8 @@ export type Licitacion = {
   identificador: string;
   descripcion: string;
   convocatoria: Convocatoria;
-  
+  bases: Bases | null;
+  resolucion: Resolucion | null;
 }
 
 
@@ -18,16 +19,14 @@ export type Convocatoria = {
   fechaInicio: string;
   modificaciones: MultipleMedia;
   convocatoria: Media;
-  bases: Bases | null;
-  resolucion: Resolucion | null;
 }
 
 
 export type Bases = {
   readonly id: number;
   basesEditable: Media;
-  actaJuntasAclaraciones: MultipleMedia;
-  actaApertura: Media;
+  actasJuntasAclaraciones: MultipleMedia;
+  actaApertura: Media | null;
   modificaciones: MultipleMedia;
   bases: Media;
 }
