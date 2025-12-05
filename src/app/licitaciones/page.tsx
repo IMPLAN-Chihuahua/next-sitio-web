@@ -7,6 +7,7 @@ import { SubtitleH2 } from "../components/Titles";
 import AdquisicionesDirectasTable from "./components/AdquisicionesDirectasTable";
 import { AdquisicionDirecta, Licitacion, LicitacionPage } from "./definitions";
 import { OpenInNew } from "@mui/icons-material";
+import { format, formatISO } from "date-fns";
 
 
 const queryForPage = qs.stringify({
@@ -14,7 +15,17 @@ const queryForPage = qs.stringify({
 })
 
 const queryForAdquisiciones = qs.stringify({
-  populate: '*'
+  populate: '*',
+  filters: {
+    $and: [{
+      fechaResolucion: {
+        $gte: formatISO(new Date(new Date().getFullYear(), 0, 1), { representation: 'date' }),
+        $lte: formatISO(new Date(new Date().getFullYear(), 11, 31), { representation: 'date' })
+      }
+    }]
+  }
+}, {
+  encode: false
 })
 
 
@@ -65,7 +76,7 @@ export default async function LicitacionesPage() {
           <Typography mb={1}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias, ipsam porro dolore, dicta quo temporibus quisquam, mollitia suscipit quam animi ipsa fugiat alias hic aliquam? Amet molestiae laudantium nobis dicta.
           </Typography>
-          
+
           <LicitacionesTable />
         </Box>
 
