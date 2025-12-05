@@ -25,10 +25,11 @@ export type Convocatoria = {
 export type Bases = {
   readonly id: number;
   basesEditable: Media;
-  actasJuntasAclaraciones: MultipleMedia;
+  actaJuntaAclaraciones: Media;
   actaApertura: Media | null;
   modificaciones: MultipleMedia;
   bases: Media;
+  sesionesExtraordinarias: MultipleMedia;
 }
 
 
