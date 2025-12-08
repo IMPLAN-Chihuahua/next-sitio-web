@@ -102,17 +102,20 @@ export default function LicitacionesTable() {
     headerName: 'Identificador',
     width: 180,
     sortable: false,
+    filterable: false,
   }, {
     field: 'descripcion',
     headerName: 'Descripción',
     width: 300,
     sortable: false,
+    filterable: false,
   },
   {
     field: '_fechaInicio',
     headerName: 'Fecha inicio',
     sortable: false,
     width: 130,
+    filterable: false,
     valueGetter: (_, row) => formatDate(parse(row.convocatoria.fechaInicio, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy')
   },
   {
@@ -120,12 +123,15 @@ export default function LicitacionesTable() {
     headerName: 'Estatus',
     width: 115,
     sortable: false,
+    filterable: false,
     renderCell: (params) => <Chip sx={{ fontWeight: 500 }} variant="outlined" label={params.row.estatus} />
   },
   {
     field: 'convocatoria',
     headerName: 'Convocatoria',
     width: 180,
+    filterable: false,
+    sortable: false,
     renderCell: (params) => (
       <Box>
         <MuiLink
@@ -156,6 +162,8 @@ export default function LicitacionesTable() {
     field: 'bases',
     headerName: 'Bases',
     width: 200,
+    filterable: false,
+    sortable: false,
     renderCell: (params) => (<Box>
       {params.row.bases && (
         <ul style={{ listStyleType: 'none' }}>
@@ -215,6 +223,8 @@ export default function LicitacionesTable() {
     field: 'resolucion',
     headerName: 'Resolución',
     width: 180,
+    filterable: false,
+    sortable: false,
     renderCell: (params) => {
       if (!params.row.resolucion) {
         return null;
