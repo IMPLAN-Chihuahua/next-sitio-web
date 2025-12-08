@@ -272,7 +272,7 @@ export default function LicitacionesTable() {
           />
         </Grid>
       </Grid>
-      <Paper sx={{ height: 600, width: '100%' }}>
+      <Paper sx={{ height: 600, width: '100%' }} variant='outlined'>
         <DataGrid
           loading={isLoading}
           columns={cols}

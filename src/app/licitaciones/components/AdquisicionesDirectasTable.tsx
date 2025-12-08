@@ -31,7 +31,11 @@ export default function AdquisicionesDirectasTable({ adquisiciones }: { adquisic
                   {adquisicion.resolucion}
                 </TableCell>
                 <TableCell sx={{ minWidth: '180px' }}>
-                  <Link href="#" color={blue[900]}>Dictamen de excepción</Link>
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adquisicion.dictamenExcepcion.url}`}
+                    target='_blank'>
+                    Dictamen de excepción
+                  </Link>
                 </TableCell>
               </TableRow>
             ))
