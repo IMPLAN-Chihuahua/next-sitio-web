@@ -56,6 +56,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       </Box>
       <IconButton
         onClick={toggleAutoplay}
+        disabled={phrases.length === 0}
         disableTouchRipple
         sx={{
           position: 'absolute',
