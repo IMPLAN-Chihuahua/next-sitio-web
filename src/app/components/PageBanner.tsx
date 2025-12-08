@@ -12,7 +12,8 @@ export default function PageBanner({ title, description, cover }: { title: strin
       bgcolor={'primary.100'}
       position={'relative'}
       display='flex'
-      alignItems='center'
+      pt={{ xs: 12 }}
+      alignItems={{ xs: 'flex-start', md: 'center' }}
     >
       <Image
         src={cover || '/DefaultBanner.webp'}
@@ -32,8 +33,24 @@ export default function PageBanner({ title, description, cover }: { title: strin
           userSelect: 'none'
         }}
       >
-        <Typography fontSize={{ xs: 38, md: 48 }} fontWeight={700} color="inherit"> {title}</Typography>
-        <Typography maxWidth={'900px'} fontSize={24} fontWeight={400} color="inherit">{description}</Typography>
+        <Typography
+          fontSize={{ xs: 38, md: 48 }}
+          fontWeight={700}
+          color="inherit"
+          sx={{
+            textShadow: '1px 1px 2px black'
+          }}
+        >{title}</Typography>
+
+        <Typography
+          maxWidth={'900px'}
+          fontSize={24}
+          fontWeight={400}
+          color="inherit"
+          sx={{
+            textShadow: '1px 1px 2px black'
+          }}
+        >{description}</Typography>
       </Container>
     </Box>
   )
