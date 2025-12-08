@@ -1,4 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Link, Typography } from "@mui/material";
+import { MDXRemote } from 'next-mdx-remote-client/rsc';
+import { Suspense } from "react";
 
 
 export default function LicitacionCard({ idx, procedimiento, descripcion }: { idx: number, procedimiento: string, descripcion: string }) {
@@ -6,7 +8,7 @@ export default function LicitacionCard({ idx, procedimiento, descripcion }: { id
 
   return (
     <Box p={1.5} bgcolor={'primary.200'} minHeight={{ xs: 'auto', md: '350px' }} overflow={'hidden'}>
-      <Box display={'flex'} alignItems={'center'}>
+      <Box display={'flex'} alignItems={'center'} mb={2}>
         <Box
           bgcolor={'secondary.700'}
           minHeight={40}
@@ -21,9 +23,16 @@ export default function LicitacionCard({ idx, procedimiento, descripcion }: { id
         </Box>
         <Typography ml={1} fontSize={18} fontWeight={500}>{procedimiento}</Typography>
       </Box>
-      <Typography mt={2}>
-        {descripcion}
-      </Typography>
+      <Suspense fallback={<CircularProgress />}>
+        <MDXRemote
+          source={descripcion}
+          components={{
+            p: props => <Typography>{props.children}</Typography>,
+            a: props => <Link href={props.href}>{props.children}</Link>,
+            li: props => <Typography component={'li'} ml={2}>{props.children}</Typography>
+          }}
+        />
+      </Suspense>
     </Box>
   )
 }
