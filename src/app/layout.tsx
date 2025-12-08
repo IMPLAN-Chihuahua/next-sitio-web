@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { CssBaseline } from "@mui/material";
+import LocalizationProvider from "./components/AppLocalizationProvider";
 
 export const metadata: Metadata = {
   title: "IMPLAN Chihuahua",
@@ -31,13 +32,15 @@ export default function RootLayout({
       <body style={{ minHeight: '100vh', height: '100vh' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Navbar />
-            {children}
-            <Footer />
+            <LocalizationProvider>
+              <CssBaseline />
+              <Navbar />
+              {children}
+              <Footer />
+            </LocalizationProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
-    </html>
+    </html >
   );
 }

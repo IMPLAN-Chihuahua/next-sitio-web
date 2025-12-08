@@ -44,3 +44,11 @@ export type MediaFormat = {
 
 
 export type MultipleMedia = Media[]
+
+
+export type Pagination = {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}

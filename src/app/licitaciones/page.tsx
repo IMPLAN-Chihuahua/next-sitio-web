@@ -6,54 +6,46 @@ import LicitacionCard from "./components/LicitacionCard";
 import { SubtitleH2 } from "../components/Titles";
 import AdquisicionesDirectasTable from "./components/AdquisicionesDirectasTable";
 import { AdquisicionDirecta, Licitacion, LicitacionPage } from "./definitions";
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { OpenInNew } from "@mui/icons-material";
+import { format, formatISO } from "date-fns";
 
-
-const queryForLicitaciones = qs.stringify({
-  populate: [
-    'convocatoria.convocatoria',
-    'convocatoria.modificaciones',
-    'bases.bases',
-    'bases.modificaciones',
-    'bases.actaApertura',
-    'bases.actasJuntasAclaraciones',
-    'bases.actaApertura',
-    'bases.basesEditable',
-    'resolucion.actaFallo',
-    'resolucion.actaDiferimientoFallo',
-    'resolucion.cancelacionLicitacion'
-  ]
-}, { encode: false })
 
 const queryForPage = qs.stringify({
   populate: '*'
 })
 
 const queryForAdquisiciones = qs.stringify({
-  populate: '*'
+  populate: '*',
+  filters: {
+    $and: [{
+      fechaResolucion: {
+        $gte: formatISO(new Date(new Date().getFullYear(), 0, 1), { representation: 'date' }),
+        $lte: formatISO(new Date(new Date().getFullYear(), 11, 31), { representation: 'date' })
+      }
+    }]
+  }
+}, {
+  encode: false
 })
 
 
 export default async function LicitacionesPage() {
-  const licitacionesReq = await fetch(`${process.env.IMPLAN_CMS}/licitaciones?${queryForLicitaciones}`);
-  const pageReq = await fetch(`${process.env.IMPLAN_CMS}/licitaciones-page?${queryForPage}`);
-  const adquisicionesReq = await fetch(`${process.env.IMPLAN_CMS}/adquisiciones-directas?${queryForAdquisiciones}`)
-  const licitacionesList: { data: Licitacion[] } = await licitacionesReq.json();
+  const pageReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/licitaciones-page?${queryForPage}`);
+  const adquisicionesReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/adquisiciones-directas?${queryForAdquisiciones}`)
   const licitacionesPage: { data: LicitacionPage } = await pageReq.json();
   const adquisicionesList: { data: AdquisicionDirecta[] } = await adquisicionesReq.json();
 
   return (
     <main>
       <PageBanner
-        cover={`${process.env.IMPLAN_STATIC}${licitacionesPage.data.cover.formats?.large.url}`}
+        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.cover.formats?.large.url}`}
         title="¿Cómo compramos?"
         description="En el IMPLAN estamos comprometidos con la transparencia y queremos que conozcas cómo invertimos tus impuestos"
       />
       <Container maxWidth='lg'>
         <Button
           LinkComponent={MuiLink}
-          href={`${process.env.IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
+          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
           variant="outlined"
           endIcon={<OpenInNew />}
           sx={{ mt: 2, fontWeight: 500, color: 'primary.800' }}
@@ -84,7 +76,8 @@ export default async function LicitacionesPage() {
           <Typography mb={1}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias, ipsam porro dolore, dicta quo temporibus quisquam, mollitia suscipit quam animi ipsa fugiat alias hic aliquam? Amet molestiae laudantium nobis dicta.
           </Typography>
-          <LicitacionesTable licitaciones={licitacionesList.data} />
+
+          <LicitacionesTable />
         </Box>
 
         <Box my={2}>
