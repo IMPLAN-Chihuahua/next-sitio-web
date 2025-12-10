@@ -4,9 +4,9 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material'
 
 const ServicesList = ({ data }: { data: Section[] }) => {
     return (
-        <Stack spacing={9} sx={{
+        <Stack spacing={7} sx={{
             width: '100%',
-            mt: 5
+            mt: 8
         }}>
             {
                 data.map((item, index) => {
@@ -55,9 +55,13 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
                     {
                         service.buttons.map((data, index) => {
                             return (
-                                <Button sx={{
-                                    textTransform: 'none'
-                                }} variant='contained' key={index}>{data.text}</Button>
+                                <Button
+                                    href={data.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    sx={{
+                                        textTransform: 'none'
+                                    }} variant='contained' key={index}>{data.text}</Button>
                             )
                         })
                     }
