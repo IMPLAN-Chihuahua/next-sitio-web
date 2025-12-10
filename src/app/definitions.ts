@@ -1,4 +1,26 @@
 
+export type Section = {
+  readonly id: number;
+  title: string;
+  description: string;
+  media: Media;
+  buttons: SectionButtons[];
+}
+
+type SectionButtons = {
+  readonly id: number;
+  text: string;
+  url: string;
+}
+
+export type Platform = {
+  readonly id: number;
+  name: string;
+  catchPhrase: string;
+  description: string;
+  url: string;
+  media: Media;
+}
 
 export type Media = {
   readonly id: number;
