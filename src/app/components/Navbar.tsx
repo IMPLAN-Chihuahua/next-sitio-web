@@ -24,19 +24,29 @@ const navLinks = [{
     label: 'Consejo',
     href: '/consejo',
   }]
-}, {
+},
+{
   label: 'Instrumentos de planeación',
   href: '/instrumentos-planeacion',
   menuItems: []
-}, {
-  label: 'Datos abiertos',
+},
+{
+  label: 'Cartografía',
   href: '/datos-abiertos',
   menuItems: []
-}, {
-  label: 'Estudios y proyectos',
-  href: '/estudios-y-proyectos',
-  menuItems: []
-}, {
+},
+{
+  label: 'Trabajos de planeación',
+  href: '/trabajos-planeacion',
+  menuItems: [{
+    label: 'Centro de estudios',
+    href: '/trabajos-planeacion/centro-estudios'
+  }, {
+    label: 'Proyectos urbanos',
+    href: '/trabajos-planeacion/proyectos-urbanos'
+  }]
+},
+{
   label: 'Transparencia',
   href: '/transparencia',
   menuItems: [{
@@ -349,7 +359,8 @@ const NavbarMenu = ({ label, menuItems, href }: { href: string, label: string, m
                 textDecoration: 'none',
                 textTransform: 'none',
                 fontWeight: 500,
-                textAlign: 'left'
+                textAlign: 'left',
+                minWidth: '120px'
               }}
               color='inherit'
               component={Link}
