@@ -40,10 +40,10 @@ const navLinks = [{
   href: '/trabajos-planeacion',
   menuItems: [{
     label: 'Centro de estudios',
-    href: '/trabajos-planeacion/centro-estudios'
+    href: '/estudios'
   }, {
     label: 'Proyectos urbanos',
-    href: '/trabajos-planeacion/proyectos-urbanos'
+    href: '/proyectos'
   }]
 },
 {
