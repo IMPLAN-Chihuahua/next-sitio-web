@@ -61,3 +61,11 @@ export type Tag = {
   slug: string;
   hexColor: string;
 }
+
+
+export type ColaboradorExterno = {
+  readonly id: string;
+  readonly documentId: string;
+  nombre: string;
+  acronimo: string | null;
+}
