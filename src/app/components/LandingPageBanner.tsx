@@ -1,7 +1,7 @@
 'use client'
 
 import Autoplay from "embla-carousel-autoplay";
-import { Box, Container, Grow, IconButton, Slide, Typography } from "@mui/material";
+import { Box, Container, Grow, IconButton, Paper, Slide, Typography } from "@mui/material";
 import useEmblaCarousel, { UseEmblaCarouselType, } from "embla-carousel-react";
 import { EmblaCarouselType } from 'embla-carousel'
 import Image from "next/image";
@@ -41,39 +41,60 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
   }, [emblaApi]);
 
   return (
-    <Box
-      minHeight={'80vh'}
-      className={styles.embla}
-      bgcolor={'primary.700'}
-      position={'relative'}
-    >
-      <Box className={styles.embla__viewport} ref={emblaRef}>
-        <Box className={styles.embla__container} height={'85vh'} position={'relative'}>
-          {phrases.map((phrase, idx) => (
-            <ContentSlide key={idx} {...phrase} />
-          ))}
+    <Box position={'relative'}>
+
+      <Box
+        minHeight={'80vh'}
+        className={styles.embla}
+        bgcolor={'primary.700'}
+        position={'relative'}
+      >
+        <Box className={styles.embla__viewport} ref={emblaRef}>
+          <Box className={styles.embla__container} height={'85vh'} position={'relative'}>
+            {phrases.map((phrase, idx) => (
+              <ContentSlide key={idx} {...phrase} />
+            ))}
+          </Box>
         </Box>
+        <IconButton
+          onClick={toggleAutoplay}
+          disabled={phrases.length === 0}
+          disableTouchRipple
+          sx={{
+            position: 'absolute',
+            bottom: 20,
+            right: 20,
+            zIndex: 120,
+            border: '2px solid',
+            borderColor: 'primary.50'
+          }}>
+          {
+            autoplayIsPlaying ? (
+              <PauseIcon sx={{ color: 'primary.50', fontSize: 40 }} />
+            ) : (
+              <PlayArrowIcon sx={{ color: 'primary.50', fontSize: 40 }} />
+            )
+          }
+        </IconButton>
       </Box>
-      <IconButton
-        onClick={toggleAutoplay}
-        disabled={phrases.length === 0}
-        disableTouchRipple
+      <Paper
+        elevation={0}
         sx={{
           position: 'absolute',
-          bottom: 20,
-          right: 20,
-          zIndex: 120,
-          border: '2px solid',
-          borderColor: 'primary.50'
-        }}>
-        {
-          autoplayIsPlaying ? (
-            <PauseIcon sx={{ color: 'primary.50', fontSize: 40 }} />
-          ) : (
-            <PlayArrowIcon sx={{ color: 'primary.50', fontSize: 40 }} />
-          )
-        }
-      </IconButton>
+          bottom: 0,
+          left: '50%',
+          transform: 'translate(-50%, 50%)',
+          px: 6,
+          py: 1,
+          boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px',
+          borderRadius: 0,
+          textAlign: 'center'
+        }}
+      >
+        <Typography variant="h4" fontWeight="bold" fontSize={40}>
+          IMPLAN
+        </Typography>
+      </Paper>
     </Box>
   )
 }
