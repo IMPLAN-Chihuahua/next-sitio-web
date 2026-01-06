@@ -1,7 +1,8 @@
 import { Container } from "@mui/material";
 import LandingPageBanner from "./components/LandingPageBanner";
-import ProjectsExplorer from "./components/ProjectsExplorer";
-import ServicesList from "./components/ServicesList";
+import ProjectsExplorer from "./inicio/ProjectsExplorer";
+import ServicesList from "./inicio/ServicesList";
+import StellarBanner from "./inicio/StellarBanner";
 
 
 export default async function Home() {
@@ -26,6 +27,7 @@ export default async function Home() {
         <ServicesList data={data.Sections} />
         <ProjectsExplorer data={data.Platforms} />
       </Container>
+      <StellarBanner data={data.Stellar} />
     </main>
   );
 }

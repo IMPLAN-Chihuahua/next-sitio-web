@@ -22,6 +22,13 @@ export type Platform = {
   media: Media;
 }
 
+export type Stellar = {
+  readonly id: number;
+  media: Media;
+  title: string;
+  Buttons: SectionButtons[]
+}
+
 export type Media = {
   readonly id: number;
   readonly documentId: string;
