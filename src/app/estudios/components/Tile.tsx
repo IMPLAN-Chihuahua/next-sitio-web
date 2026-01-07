@@ -54,12 +54,12 @@ export default function EstudioTile(props: { estudio: Estudio }) {
               href={`/estudios/${props.estudio.slug}`}
               fontWeight={600}>{props.estudio.nombre}</MuiLink>
             <Typography fontSize={20} mt={.5} fontWeight={500} color="primary.700">{props.estudio.fichaEstudio.anio}</Typography>
-            <Typography mt={.5}>Inversión: {
+            <Typography mt={.5}>{
               props.estudio.fichaEstudio.inversion
-                ? new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(props.estudio.fichaEstudio.inversion)
+                ? `Inversión: ${new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(props.estudio.fichaEstudio.inversion)}`
                 : props.estudio.fichaEstudio.esDesarrolloInterno
                   ? 'Desarrollo interno'
-                  : 'Ninguno'
+                  : 'Inversión: Ninguno'
             }</Typography>
             <Typography>
               Colaboradores externos: {

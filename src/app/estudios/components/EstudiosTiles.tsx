@@ -1,24 +1,37 @@
 'use client'
 import { cmsFetcher } from "@/app/services/http";
-import { Autocomplete, Box, Collapse, Fade, Grid, IconButton, Pagination, Stack, TextField, ToggleButton } from "@mui/material";
+import { Autocomplete, Badge, Box, Button, Collapse, colors, Fade, FormControl, Grid, IconButton, InputLabel, OutlinedInput, Pagination, Stack, TextField, ToggleButton } from "@mui/material";
 import useSWR from "swr";
 import qs from 'qs';
 import { Estudio } from "../definitions";
 import EstudioTile from "./Tile";
 import TuneIcon from '@mui/icons-material/Tune';
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { Pagination as PaginationType } from "@/app/definitions";
+import { ColaboradorExterno, Pagination as PaginationType, Tag } from "@/app/definitions";
 import { eachYearOfInterval } from "date-fns";
 import ColaboradoresExternosAutocomplete from "@/app/components/ColaboradoresExternosAutocomplete";
 import TagsAutocomplete from "@/app/components/TagsAutocomplete";
+import { Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
+import ClearIcon from '@mui/icons-material/Clear';
+import { Search } from "@mui/icons-material";
 
 
 
 export default function EstudiosTiles() {
   const [openFilters, setOpenFilters] = useState(false);
+  const methods = useForm<{ anio: number[], colaboradoresExternos: Array<ColaboradorExterno>, tags: Array<Tag> }>({
+    defaultValues: {
+      anio: [],
+      colaboradoresExternos: [],
+      tags: []
+    }
+  })
+
+  const values = useWatch<{ anio: number[], colaboradoresExternos: Array<ColaboradorExterno>, tags: Array<Tag> }>({ control: methods.control })
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+
   const estudiosQueryParams = qs.stringify({
     sort: ['fichaEstudio.anio:desc'],
     pagination: {
@@ -36,7 +49,32 @@ export default function EstudiosTiles() {
             }
           ]
         },
-        // 
+        {
+          fichaEstudio: {
+            $and: [
+              {
+                clasificaciones: {
+                  documentId: {
+                    $in: values.tags?.map(t => t.documentId) || []
+                  }
+                }
+              },
+              {
+                anio: {
+                  $in: values.anio || []
+                }
+              },
+              {
+                colaboradoresExternos: {
+                  documentId: {
+                    $in: values.colaboradoresExternos?.map(c => c.documentId) || []
+                  }
+                }
+              }
+            ],
+          }
+
+        }
       ]
     },
     populate: [
@@ -59,41 +97,58 @@ export default function EstudiosTiles() {
     setPage(val)
   }
 
+  const handleClearFiltros = useCallback(() => {
+    methods.reset();
+  }, []);
+
   const toggleFilterDisplay = () => setOpenFilters(pre => !pre);
 
   return (
     <Box>
       <Grid container my={2} spacing={2}>
-        <Grid size={{ xs: 12, sm: 11 }}>
-          <TextField
-            fullWidth
-            label='Buscar'
-            variant="outlined"
-            onChange={(e) => handleDebouncedSearch(e.currentTarget.value)}
-          />
+        <Grid size={{ xs: 12, md: 11 }}>
+          <FormControl variant="outlined" fullWidth>
+            <InputLabel>Buscar</InputLabel>
+            <OutlinedInput
+              placeholder='Busca estudios por nombre'
+              onChange={(e) => handleDebouncedSearch(e.currentTarget.value)}
+              sx={{ minWidth: '300px' }}
+              label='Buscar'
+              fullWidth
+              endAdornment={<Search sx={{ color: 'primary.700' }} />}
+            />
+          </FormControl>
         </Grid>
-        <Grid
-          size={{ xs: 12, sm: 1 }}
-          display={'flex'}
-          justifyContent={{ xs: 'flex-end', sm: 'center' }}>
-          <ToggleButton
-            value='check'
-            selected={openFilters}
-            onChange={toggleFilterDisplay}
-            sx={{
-              borderRadius: 50,
-              border: 'none',
-              width: 55,
-              height: 55,
-            }}>
-            <TuneIcon sx={{ color: 'primary.700' }} />
-          </ToggleButton>
-        </Grid>
-        <Grid size={12}>
-          <Collapse in={openFilters}>
-            <EstudiosFilters />
-          </Collapse>
-        </Grid>
+        <FormProvider {...methods}>
+          <Grid size={{ xs: 1 }} >
+            <Badge
+              color="info"
+              variant="dot"
+              overlap="circular"
+              invisible={!methods.formState.isDirty}
+            >
+              <ToggleButton
+                value='check'
+                selected={openFilters}
+                onChange={toggleFilterDisplay}
+                sx={{
+                  borderRadius: 50,
+                  width: 55,
+                  height: 55,
+                }}>
+                <TuneIcon sx={{ color: 'primary.700' }} />
+              </ToggleButton>
+            </Badge>
+          </Grid>
+          <Grid size={12}>
+            <Collapse in={openFilters}>
+              <EstudiosFilters
+                handleClearFiltros={handleClearFiltros}
+                showClearFilterButton={methods.formState.isDirty}
+              />
+            </Collapse>
+          </Grid>
+        </FormProvider>
       </Grid>
       <Box display={'flex'} flexDirection={'column'} minHeight={'600px'}>
         {
@@ -110,34 +165,66 @@ export default function EstudiosTiles() {
           size='medium'
         />
       </Box>
-    </Box>
+    </Box >
   )
 }
 
 
-const EstudiosFilters = () => {
-  const years = eachYearOfInterval({ start: new Date(), end: new Date(2000, 0, 1) })
+
+const EstudiosFilters = ({ handleClearFiltros, showClearFilterButton }: { handleClearFiltros: () => void, showClearFilterButton: boolean }) => {
 
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      spacing={2}
+      columnGap={2}
+      rowGap={2}
       flexWrap={'wrap'}>
       <ColaboradoresExternosAutocomplete />
-      <Autocomplete
-        multiple
-        getOptionLabel={val => val.toLocaleDateString('es-MX', { year: 'numeric' })}
-        options={years}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label={'Año'}
-            sx={{ minWidth: 200, maxWidth: 400 }}
-            maxRows={2}
-          />
-        )}
-      />
-      <TagsAutocomplete />
+      <AnioAutocomplete />
+      <TagsAutocomplete label='Clasificaciones' />
+      {
+        showClearFilterButton && (
+          <Button
+            endIcon={<ClearIcon />}
+            sx={{ justifySelf: 'center', alignSelf: 'center' }}
+            size="large"
+            disableRipple
+            variant="text"
+            onClick={handleClearFiltros}>Borrar filtros</Button>
+        )
+      }
     </Stack>
   )
+}
+
+
+
+const AnioAutocomplete = () => {
+  const methods = useFormContext()
+  const years = eachYearOfInterval({ start: new Date(), end: new Date(2000, 0, 1) }).map(y => y.getFullYear())
+
+  return (
+    <Controller
+      name="anio"
+      control={methods.control}
+      render={({ field }) => (
+        <Autocomplete
+          multiple
+          getOptionLabel={(option) => option.toString()}
+          options={years}
+          value={field.value}
+          onChange={(_, value) => field.onChange(value)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={'Año'}
+              sx={{ minWidth: 200 }}
+              maxRows={2}
+            />
+          )}
+        />
+      )}
+    />
+  )
+
 }
