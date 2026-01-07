@@ -3,6 +3,7 @@ import LandingPageBanner from "./components/LandingPageBanner";
 import ProjectsExplorer from "./inicio/ProjectsExplorer";
 import ServicesList from "./inicio/ServicesList";
 import StellarBanner from "./inicio/StellarBanner";
+import ProjectSlider from "./inicio/ProjectSlider";
 
 
 export default async function Home() {
@@ -28,6 +29,7 @@ export default async function Home() {
         <ProjectsExplorer data={data.Platforms} />
       </Container>
       <StellarBanner data={data.Stellar} />
+      <ProjectSlider />
     </main>
   );
 }
