@@ -38,11 +38,11 @@ export default async function LicitacionesPage() {
   return (
     <main>
       <PageBanner
-        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.cover.formats?.large.url}`}
+        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.cover.url}`}
         title="¿Cómo compramos?"
         description="En el IMPLAN estamos comprometidos con la transparencia y queremos que conozcas cómo invertimos tus impuestos"
       />
-      <Container maxWidth='lg'>
+      <Container>
         <Button
           LinkComponent={MuiLink}
           href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
