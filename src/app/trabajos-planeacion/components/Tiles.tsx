@@ -127,7 +127,7 @@ export default function TrabajosTiles() {
           </FormControl>
         </Grid>
         <FormProvider {...methods}>
-          <Grid size={{ xs: 1 }} >
+          <Grid size={{ xs: 12, md: 1 }} display='flex' justifyContent='center' >
             <Badge
               color="info"
               variant="dot"
