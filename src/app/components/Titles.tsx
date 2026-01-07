@@ -14,14 +14,6 @@ export function SubtitleH2({ title }: { title: string }) {
         component='h2'>
         {title}
       </Typography>
-      <Box
-        maxWidth={'400px'}
-        mb={2}
-        height='5px'
-        sx={{
-          backgroundColor: 'secondary.900',
-          borderRadius: '0 50px 50px 0'
-        }} />
     </>
   )
 }
