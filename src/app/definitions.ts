@@ -81,3 +81,20 @@ export type Pagination = {
   pageCount: number;
   total: number;
 }
+
+
+export type Tag = {
+  readonly id: string;
+  readonly documentId: string;
+  name: string;
+  slug: string;
+  hexColor: string;
+}
+
+
+export type ColaboradorExterno = {
+  readonly id: string;
+  readonly documentId: string;
+  nombre: string;
+  acronimo: string | null;
+}
