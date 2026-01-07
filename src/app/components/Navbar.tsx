@@ -38,13 +38,7 @@ const navLinks = [{
 {
   label: 'Trabajos de planeación',
   href: '/trabajos-planeacion',
-  menuItems: [{
-    label: 'Centro de estudios',
-    href: '/estudios'
-  }, {
-    label: 'Proyectos urbanos',
-    href: '/proyectos'
-  }]
+  menuItems: []
 },
 {
   label: 'Transparencia',

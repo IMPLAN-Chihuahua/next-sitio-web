@@ -1,10 +1,10 @@
 'use client'
 import { cmsFetcher } from "@/app/services/http";
-import { Autocomplete, Badge, Box, Button, Collapse, colors, Fade, FormControl, Grid, IconButton, InputLabel, OutlinedInput, Pagination, Stack, TextField, ToggleButton } from "@mui/material";
+import { Alert, Autocomplete, Badge, Box, Button, Collapse, colors, Fade, FormControl, Grid, IconButton, InputLabel, OutlinedInput, Pagination, Stack, TextField, ToggleButton, Typography } from "@mui/material";
 import useSWR from "swr";
 import qs from 'qs';
-import { Estudio } from "../definitions";
-import EstudioTile from "./Tile";
+import { TrabajoPlaneacion } from "../definitions";
+import TrabajoTile from "./Tile";
 import TuneIcon from '@mui/icons-material/Tune';
 import { ChangeEvent, useCallback, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -15,10 +15,11 @@ import TagsAutocomplete from "@/app/components/TagsAutocomplete";
 import { Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
 import ClearIcon from '@mui/icons-material/Clear';
 import { Search } from "@mui/icons-material";
+import { TrabajosTilesSkeletons } from "./Skeleton";
 
 
 
-export default function EstudiosTiles() {
+export default function TrabajosTiles() {
   const [openFilters, setOpenFilters] = useState(false);
   const methods = useForm<{ anio: number[], colaboradoresExternos: Array<ColaboradorExterno>, tags: Array<Tag> }>({
     defaultValues: {
@@ -33,7 +34,7 @@ export default function EstudiosTiles() {
   const [page, setPage] = useState(1);
 
   const estudiosQueryParams = qs.stringify({
-    sort: ['fichaEstudio.anio:desc'],
+    sort: ['ficha.anio:desc', 'updatedAt:desc'],
     pagination: {
       page: page,
       pageSize: 5,
@@ -50,7 +51,7 @@ export default function EstudiosTiles() {
           ]
         },
         {
-          fichaEstudio: {
+          ficha: {
             $and: [
               {
                 clasificaciones: {
@@ -79,15 +80,15 @@ export default function EstudiosTiles() {
     },
     populate: [
       'cover',
-      'fichaEstudio',
-      'fichaEstudio.clasificaciones',
-      'fichaEstudio.colaboradoresExternos',]
+      'ficha',
+      'ficha.clasificaciones',
+      'ficha.colaboradoresExternos',]
   }, { encodeValuesOnly: true })
 
   const { data, error, isLoading } = useSWR<{
-    data: Estudio[],
+    data: TrabajoPlaneacion[],
     meta: { pagination: PaginationType }
-  }>(`/estudios?${estudiosQueryParams.toString()}`, cmsFetcher);
+  }>(`/trabajos-planeacion?${estudiosQueryParams.toString()}`, cmsFetcher);
 
   const handleDebouncedSearch = useDebouncedCallback((val: string) => {
     setSearch(val)
@@ -103,6 +104,12 @@ export default function EstudiosTiles() {
 
   const toggleFilterDisplay = () => setOpenFilters(pre => !pre);
 
+
+  if (error) {
+    console.error(error)
+    return <Alert severity="error">Hubo un error al obtener los trabajos de planeación</Alert>
+  }
+
   return (
     <Box>
       <Grid container my={2} spacing={2}>
@@ -110,7 +117,7 @@ export default function EstudiosTiles() {
           <FormControl variant="outlined" fullWidth>
             <InputLabel>Buscar</InputLabel>
             <OutlinedInput
-              placeholder='Busca estudios por nombre'
+              placeholder='Buscar por nombre'
               onChange={(e) => handleDebouncedSearch(e.currentTarget.value)}
               sx={{ minWidth: '300px' }}
               label='Buscar'
@@ -142,7 +149,7 @@ export default function EstudiosTiles() {
           </Grid>
           <Grid size={12}>
             <Collapse in={openFilters}>
-              <EstudiosFilters
+              <TrabajosFilters
                 handleClearFiltros={handleClearFiltros}
                 showClearFilterButton={methods.formState.isDirty}
               />
@@ -152,18 +159,24 @@ export default function EstudiosTiles() {
       </Grid>
       <Box display={'flex'} flexDirection={'column'} minHeight={'600px'}>
         {
-          data?.data.map((estudio) => (
-            <EstudioTile key={estudio.documentId} estudio={estudio} />
-          ))
+          isLoading
+            ? <TrabajosTilesSkeletons />
+            : data !== undefined && data.data !== null && data?.data.length > 0
+              ? data.data.map(trabajo => (<TrabajoTile key={trabajo.documentId} trabajoPlaneacion={trabajo} />))
+              : <Typography>No se encontraron registros</Typography>
         }
       </Box>
       <Box height={80} display={'flex'} justifyContent={'center'} alignItems={'center'} >
-        <Pagination
-          page={page}
-          onChange={handlePageChange}
-          count={data?.meta.pagination.pageCount}
-          size='medium'
-        />
+        {
+          data?.meta && (
+            <Pagination
+              page={page}
+              onChange={handlePageChange}
+              count={data?.meta.pagination.pageCount}
+              size='medium'
+            />
+          )
+        }
       </Box>
     </Box >
   )
@@ -171,7 +184,7 @@ export default function EstudiosTiles() {
 
 
 
-const EstudiosFilters = ({ handleClearFiltros, showClearFilterButton }: { handleClearFiltros: () => void, showClearFilterButton: boolean }) => {
+const TrabajosFilters = ({ handleClearFiltros, showClearFilterButton }: { handleClearFiltros: () => void, showClearFilterButton: boolean }) => {
 
   return (
     <Stack

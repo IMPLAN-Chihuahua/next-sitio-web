@@ -1,7 +1,7 @@
 import { Media, MultipleMedia, Tag } from "@/app/definitions";
 
 
-export type CentroEstudiosPageType = {
+export type TrabajosPlaneacionPageType = {
   readonly id: string;
   readonly documentId: string;
   titulo: string;
@@ -10,18 +10,19 @@ export type CentroEstudiosPageType = {
 }
 
 
-export type Estudio = {
+export type TrabajoPlaneacion = {
   readonly id: string;
   readonly documentId: string;
   nombre: string;
   contenido: string;
   slug: string;
-  cover: Media;
+  cover: Media | null;
+  categoria: 'Proyecto' | 'Estudio';
   archivosAdjuntos: MultipleMedia;
-  fichaEstudio: FichaEstudio;
+  ficha: FichaTrabajoPlaneacion;
 }
 
-export type FichaEstudio = {
+export type FichaTrabajoPlaneacion = {
   readonly id: string;
   readonly documentId: string;
   anio: number;
@@ -32,4 +33,7 @@ export type FichaEstudio = {
   helperTextInversion: string | null;
   clasificaciones: Tag[];
   colaboradoresExternos: ColaboradorExterno[];
+  superficieM2: number | null;
+  superficieHas: number | null;
+  estatus: string | null;
 }
