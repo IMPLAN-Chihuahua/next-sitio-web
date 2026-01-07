@@ -13,7 +13,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
     <Card sx={{ mb: 2.5 }} variant="outlined">
       <CardContent>
         <Grid container >
-          <Grid bgcolor={'gainsboro'} height={250} size={{ xs: 12, md: 3 }} position={'relative'}>
+          <Grid bgcolor={'gainsboro'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={'5px'}>
             {props.trabajoPlaneacion.cover ? (
               <Link href={`/trabajos-planeacion/${props.trabajoPlaneacion.slug}`}>
                 <Image

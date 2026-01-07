@@ -17,7 +17,7 @@ export const TrabajoTileSkeleton = () => {
   return (
     <Grid container spacing={2} mt={3}>
       <Grid height={250} size={{ xs: 12, md: 3 }}>
-        <Skeleton variant="rectangular" height={250} sx={{ m: 1 }} />
+        <Skeleton variant="rounded" height={250} sx={{ m: 1 }} />
       </Grid>
       <Grid size={{ xs: 12, md: 9 }} position={'relative'}>
         <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
