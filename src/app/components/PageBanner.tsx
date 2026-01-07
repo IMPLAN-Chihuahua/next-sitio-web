@@ -9,7 +9,7 @@ export default function PageBanner({ title, description, cover }: { title: strin
   return (
     <Box
       minHeight={'70vh'}
-      bgcolor={'primary.100'}
+      bgcolor={'primary.700'}
       position={'relative'}
       display='flex'
       pt={{ xs: 12 }}
@@ -34,7 +34,7 @@ export default function PageBanner({ title, description, cover }: { title: strin
         }}
       >
         <Typography
-          fontSize={{ xs: 38, md: 48 }}
+          fontSize={{ xs: 40, md: 50 }}
           fontWeight={700}
           color="inherit"
           sx={{
@@ -44,8 +44,8 @@ export default function PageBanner({ title, description, cover }: { title: strin
 
         <Typography
           maxWidth={'900px'}
-          fontSize={24}
-          fontWeight={400}
+          fontSize={26}
+          fontWeight={500}
           color="inherit"
           sx={{
             textShadow: '1px 1px 2px black'

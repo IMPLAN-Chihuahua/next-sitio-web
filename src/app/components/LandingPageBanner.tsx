@@ -14,7 +14,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 
 export default function LandingPageBanner({ phrases }: { phrases: Array<{ content: string, emphasis: string, image: string }> }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false, loop: true },
-    [Autoplay({ playOnInit: true, delay: 3_500 }), Fade()]);
+    [Autoplay({ playOnInit: true, delay: 4_000 }), Fade()]);
 
   const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false)
 
@@ -44,7 +44,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
     <Box
       minHeight={'80vh'}
       className={styles.embla}
-      bgcolor={'primary.700'}
+      bgcolor={'primary.900'}
       position={'relative'}
     >
       <Box className={styles.embla__viewport} ref={emblaRef}>
@@ -87,6 +87,7 @@ const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis:
         src={image}
         alt=''
         fill
+        unoptimized
         loading="eager"
         style={{
           objectFit: 'cover'
@@ -132,7 +133,9 @@ export const Overlay = () => {
       right={0}
       bottom={0}
       height={'100%'}
-      bgcolor={'rgba(0,0,0,0.45)'}
+      sx={{
+        background: 'linear-gradient(65deg,rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.50) 50%, rgba(96, 96, 98, 0.19) 100%)'
+      }}
       zIndex={110}
     />
   )
