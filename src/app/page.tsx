@@ -22,14 +22,18 @@ export default async function Home() {
   return (
     <main>
       <LandingPageBanner
-        phrases={[]}
+        phrases={[{
+          content: 'Somos un Instituto que ',
+          emphasis: 'Promueve el desarrollo equitativo',
+          image: 'https://blog.uber-cdn.com/cdn-cgi/image/width=2160,quality=80,onerror=redirect,format=auto/wp-content/uploads/2019/05/Lugares-para-visitar-en-Chihuahua-1024x512.png'
+        }]}
       />
       <Container>
         <ServicesList data={data.Sections} />
         <ProjectsExplorer data={data.Platforms} />
       </Container>
       <StellarBanner data={data.Stellar} />
-      <ProjectSlider />
+      <ProjectSlider data={data.Projects} />
     </main>
   );
 }

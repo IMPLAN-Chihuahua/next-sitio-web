@@ -7,7 +7,6 @@ const StellarBanner = ({ data }: { data: Stellar[] }) => {
     return (
         <Box sx={{
             mt: 10,
-            p: '0 50px 0 50px',
         }}>
             {
                 data.map((data, index) => {
@@ -19,22 +18,6 @@ const StellarBanner = ({ data }: { data: Stellar[] }) => {
                             position: 'relative',
                             backgroundSize: 'cover',
                         }} key={index}>
-
-                            {/* <Box sx={{
-                                position: 'absolute',
-                                bottom: '20%',
-                                left: '50%',
-                                transform: 'translate(-50%, 50%)',
-                            }}>
-                                {
-                                    data.buttons.map((button, index) => {
-                                        return (
-                                            <Button variant='contained' key={index}>{button.text}</Button>
-                                        )
-                                    })
-                                }
-                            </Box> */}
-
                         </Box>
                     )
                 })
