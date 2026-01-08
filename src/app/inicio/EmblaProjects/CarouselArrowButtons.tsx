@@ -5,7 +5,9 @@ import { EmblaCarouselType } from 'embla-carousel'
 import styles from './Carousel.module.css'
 import { Button, ButtonProps, IconButton } from '@mui/material'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 type UsePrevNextButtonsType = {
     prevBtnDisabled: boolean
@@ -51,32 +53,46 @@ export const usePrevNextbuttons = (emblaApi: EmblaCarouselType | undefined): Use
 
 type PropType = ButtonProps
 export const PrevButton = (props: PropType) => {
-    const { children, ...restProps } = props;
+    const { ...restProps } = props;
 
     return (
         <IconButton
-            className={`${styles.embla__button} ${styles['embla__button--prev']}`}
+            className={styles.embla__arrow__button}
             type='button'
             {...restProps}
+            sx={{
+                backgroundColor: '#F5F5F5',
+                '&:hover': {
+                    backgroundColor: 'secondary.main' // Color un poco más oscuro, por ejemplo
+                },
+            }}
         >
-            <ArrowForwardIosIcon />
-            {children}
+            <KeyboardArrowRightOutlinedIcon sx={{
+                fontSize: 40
+            }} />
         </IconButton>
     )
 }
 
 
 export const NextButton: React.FC<PropType> = (props) => {
-    const { children, ...restProps } = props
+    const { ...restProps } = props
 
     return (
         <IconButton
-            className={`${styles.embla__button} ${styles['embla__button--next']}`}
+            className={styles.embla__arrow__button}
             type="button"
             {...restProps}
+            sx={{
+                backgroundColor: '#F5F5F5',
+                '&:hover': {
+                    backgroundColor: 'secondary.main' // Color un poco más oscuro, por ejemplo
+                },
+            }}
         >
-            <ArrowBackIosIcon />
-            {children}
+            <KeyboardArrowLeftOutlinedIcon sx={{
+                fontSize: 40
+            }} />
         </IconButton>
     )
 }

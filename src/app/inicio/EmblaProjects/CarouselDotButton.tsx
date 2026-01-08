@@ -50,7 +50,7 @@ type PropType = ButtonProps
 export const CarouselDotButton = (props: PropType) => {
     const { children, ...restProps } = props
     return (
-        <Button type='button' {...restProps}>
+        <Button type='button' {...restProps} disableRipple>
             {children}
         </Button>
     )

@@ -1,37 +1,23 @@
-import { Box } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import React from 'react'
 import Carousel from './EmblaProjects/Carousel'
 import { EmblaOptionsType } from 'embla-carousel'
+import { Project } from '../definitions'
 
-const ProjectSlider = () => {
+const ProjectSlider = ({ data }: { data: Project[] }) => {
 
     const OPTIONS: EmblaOptionsType = { direction: 'ltr' }
-    const SLIDE_COUNT = 5
-    const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
-
-
 
     return (
-        <Box sx={{
-            mt: 5,
-            border: 1
-        }}>
-            <Carousel slides={SLIDES} options={OPTIONS} />
-        </Box>
-    )
-}
-
-const Project = () => {
-    const projectito = ['Dictamenes', 'test'];
-
-    return (
-        projectito.map((projectito, idx) => (
-            <Box key={idx}>
-                {projectito}
+        <Container maxWidth={'xl'}>
+            <Box sx={{
+                mt: 5,
+                mb: 10
+            }}>
+                <Carousel slides={data} options={OPTIONS} />
             </Box>
-        ))
+        </Container>
     )
-
 }
 
 export default ProjectSlider
