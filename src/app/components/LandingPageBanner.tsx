@@ -101,10 +101,10 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
 
 const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis: string, image: string }) => {
-
   return (
     <Box className={styles.embla__slide} sx={{ userSelect: 'none', position: 'relative' }}>
       <Image
+        loader={() => image}
         src={image}
         alt=''
         fill
