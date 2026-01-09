@@ -59,7 +59,7 @@ const Carousel = (props: PropType) => {
                                     {project.buttons.map((btn, idx) => {
                                         console.log(project)
                                         return (
-                                            <Button key={idx} variant='contained' sx={{ borderRadius: 10 }}>{btn.text}</Button>
+                                            <Button key={idx} variant='contained' sx={{ textTransform: "none" }}>{btn.text}</Button>
                                         )
                                     })}
                                 </Grid>
@@ -110,7 +110,6 @@ const Carousel = (props: PropType) => {
                         <CarouselDotButton
                             key={index}
                             onClick={() => onDotButtonClick(index)}
-                            // Concatenación de clases para aplicar el estilo base y el seleccionado
                             className={`${styles.embla__dot} ${index === selectedIndex ? styles['embla__dot--selected'] : ''}`}
                         />
                     ))}
