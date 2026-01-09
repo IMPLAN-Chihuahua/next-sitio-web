@@ -3,6 +3,7 @@ import { TrabajoPlaneacion } from "../definitions";
 import Image from "next/image";
 import LandscapeIcon from '@mui/icons-material/Landscape';
 import Link from "next/link";
+import { Tag } from "@/app/definitions";
 
 
 
@@ -57,7 +58,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
             <Typography fontSize={18} mt={.5} fontWeight={500} color="primary.700">{props.trabajoPlaneacion.categoria} • {props.trabajoPlaneacion.ficha.anio}</Typography>
             <Typography mt={.5}>{
               props.trabajoPlaneacion.ficha.inversion
-                ? `Inversión: ${new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(props.trabajoPlaneacion.ficha.inversion)}`
+                ? `Inversión: ${getFormattedInversion(props.trabajoPlaneacion.ficha.inversion)}`
                 : props.trabajoPlaneacion.ficha.esDesarrolloInterno
                   ? 'Desarrollo interno'
                   : 'Inversión: Ninguno'
@@ -74,17 +75,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
             <Box flexWrap={'wrap'} justifySelf={'flex-end'} display={'flex'} columnGap={2} mt={{ xs: 1, md: 'auto' }}>
               {
                 props.trabajoPlaneacion.ficha.clasificaciones.map((clasificacion) => (
-                  <Box display={'flex'} alignItems={'center'} key={clasificacion.documentId}>
-                    <Box
-                      display={'inline-flex'}
-                      sx={{ bgcolor: clasificacion.hexColor }}
-                      component={'span'}
-                      width={8}
-                      height={8}
-                      borderRadius={50}
-                      mr={.7} />
-                    <Typography variant="body2">{clasificacion.name}</Typography>
-                  </Box>
+                  <ClasificacionSpan clasificacion={clasificacion} key={clasificacion.documentId} />
                 ))
               }
             </Box>
@@ -93,4 +84,24 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
       </CardContent>
     </Card>
   );
+}
+
+export const getFormattedInversion = (inversion: number) => {
+  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(inversion);
+}
+
+export const ClasificacionSpan = ({ clasificacion }: { clasificacion: Tag }) => {
+  return (
+    <Box component={'span'} display={'flex'} alignItems={'center'}>
+      <Box
+        display={'inline-flex'}
+        sx={{ bgcolor: clasificacion.hexColor }}
+        component={'span'}
+        width={8}
+        height={8}
+        borderRadius={50}
+        mr={.7} />
+      <Typography variant="body2">{clasificacion.name}</Typography>
+    </Box>
+  )
 }
