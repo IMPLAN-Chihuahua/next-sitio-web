@@ -50,6 +50,13 @@ const theme = createTheme({
       defaultProps: {
         color: blue[900]
       }
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        dense: {
+          minHeight: 80,
+        }
+      }
     }
   }
 })
