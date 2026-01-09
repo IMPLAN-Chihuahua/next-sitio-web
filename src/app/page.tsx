@@ -1,9 +1,10 @@
-import { Container } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import LandingPageBanner from "./components/LandingPageBanner";
 import ProjectsExplorer from "./inicio/ProjectsExplorer";
 import ServicesList from "./inicio/ServicesList";
 import StellarBanner from "./inicio/StellarBanner";
 import ProjectSlider from "./inicio/ProjectSlider";
+import News from "./inicio/News";
 
 
 export default async function Home() {
@@ -33,7 +34,11 @@ export default async function Home() {
         <ProjectsExplorer data={data.Platforms} />
       </Container>
       <StellarBanner data={data.Stellar} />
-      <ProjectSlider data={data.Projects} />
+      <Container maxWidth={'xl'}>
+        <ProjectSlider data={data.Projects} />
+        <Divider sx={{ mt: 5, mb: 5 }} />
+        <News />
+      </Container>
     </main>
   );
 }
