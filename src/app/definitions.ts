@@ -93,8 +93,16 @@ export type Tag = {
 
 
 export type ColaboradorExterno = {
-  readonly id: string;
+  readonly id: number;
   readonly documentId: string;
   nombre: string;
   acronimo: string | null;
+}
+
+
+export type DepartamentoType = {
+  readonly id: number;
+  readonly documentId: string;
+  nombre: string;
+  activo: boolean;
 }

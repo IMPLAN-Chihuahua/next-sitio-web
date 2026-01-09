@@ -1,4 +1,4 @@
-import { Media, MultipleMedia, Tag } from "@/app/definitions";
+import { ColaboradorExterno, DepartamentoType, Media, MultipleMedia, Tag } from "@/app/definitions";
 
 
 export type TrabajosPlaneacionPageType = {
@@ -20,6 +20,13 @@ export type TrabajoPlaneacion = {
   categoria: 'Proyecto' | 'Estudio';
   archivosAdjuntos: MultipleMedia;
   ficha: FichaTrabajoPlaneacion;
+  objetivos: ObjetivosEstudio;
+}
+
+export type ObjetivosEstudio = {
+  readonly id: number;
+  general: string;
+  especificos: Array<{ readonly id: number, descripcion: string }>
 }
 
 export type FichaTrabajoPlaneacion = {
@@ -33,7 +40,9 @@ export type FichaTrabajoPlaneacion = {
   helperTextInversion: string | null;
   clasificaciones: Tag[];
   colaboradoresExternos: ColaboradorExterno[];
+  departamentosAsignados: DepartamentoType[];
   superficieM2: number | null;
   superficieHas: number | null;
   estatus: string | null;
+  localizacion: string | null;
 }
