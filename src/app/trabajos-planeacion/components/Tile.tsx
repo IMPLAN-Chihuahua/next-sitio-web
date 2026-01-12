@@ -64,12 +64,12 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
                   : 'Inversión: Ninguno'
             }</Typography>
             <Typography>
-              Colaboradores externos: {
+              {
                 props.trabajoPlaneacion.ficha.colaboradoresExternos.length > 0
-                  ? props.trabajoPlaneacion.ficha.colaboradoresExternos
+                  ? `Colaboradores externos: ${props.trabajoPlaneacion.ficha.colaboradoresExternos
                     .map(c => `${c.nombre}${c.acronimo ? ` (${c.acronimo})` : ''}`)
-                    .join(', ')
-                  : 'Ninguno'
+                    .join(', ')}`
+                  : ''
               }
             </Typography>
             <Box flexWrap={'wrap'} justifySelf={'flex-end'} display={'flex'} columnGap={2} mt={{ xs: 1, md: 'auto' }}>
