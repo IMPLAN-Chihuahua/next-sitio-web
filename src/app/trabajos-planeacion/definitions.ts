@@ -18,6 +18,7 @@ export type TrabajoPlaneacion = {
   slug: string;
   cover: Media | null;
   categoria: 'Proyecto' | 'Estudio';
+  resumen: string;
   archivosAdjuntos: MultipleMedia;
   ficha: FichaTrabajoPlaneacion;
   objetivos: ObjetivosEstudio;
