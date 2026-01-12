@@ -36,8 +36,8 @@ const navLinks = [{
   menuItems: []
 },
 {
-  label: 'Trabajos de planeación',
-  href: '/trabajos-planeacion',
+  label: 'Estudios y proyectos',
+  href: '/estudios-y-proyectos',
   menuItems: []
 },
 {
@@ -234,6 +234,7 @@ const NavbarLinkButton = ({ href, label }: { href: string, label: string }) => {
     <Button
       color="inherit"
       component={Link}
+      disableTouchRipple
       sx={{
         textAlign: { xs: 'left', md: 'center' },
         textDecoration: 'none',
@@ -273,7 +274,7 @@ const NavbarNestedListItem = ({ label, nestedItems, href, handleOnClick }
   const toggleOpen = () => setOpen(pre => !pre);
 
   return <>
-    <ListItemButton onClick={toggleOpen}>
+    <ListItemButton onClick={toggleOpen} disableTouchRipple>
       <ListItemText
         slotProps={{
           primary: {
@@ -287,7 +288,7 @@ const NavbarNestedListItem = ({ label, nestedItems, href, handleOnClick }
       <List component='div' disablePadding>
         {
           nestedItems.map((item, idx) => (
-            <ListItemButton sx={{ pl: 4 }} LinkComponent={Link} href={item.href} key={idx} onClick={handleOnClick}>
+            <ListItemButton sx={{ pl: 4 }} disableTouchRipple LinkComponent={Link} href={item.href} key={idx} onClick={handleOnClick}>
               <ListItemText slotProps={{
                 primary: {
                   fontWeight: 500
@@ -324,6 +325,7 @@ const NavbarMenu = ({ label, menuItems, href }: { href: string, label: string, m
         aria-haspopup={true}
         aria-expanded={open ? 'true' : undefined}
         color="inherit"
+        disableTouchRipple
         sx={{
           fontSize: 16,
           textDecoration: 'none',
