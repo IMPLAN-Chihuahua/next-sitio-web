@@ -53,7 +53,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
               color='primary.800'
               underline="none"
               display={'inline-block'}
-              href={`/trabajos-planeacion/${props.trabajoPlaneacion.slug}`}
+              href={`/estudios-y-proyectos/${props.trabajoPlaneacion.slug}`}
               fontWeight={600}>{props.trabajoPlaneacion.nombre}</MuiLink>
             <Typography fontSize={18} mt={.5} fontWeight={500} color="primary.700">{props.trabajoPlaneacion.categoria} • {props.trabajoPlaneacion.ficha.anio}</Typography>
             <Typography mt={.5}>{

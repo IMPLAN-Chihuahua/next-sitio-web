@@ -186,6 +186,7 @@ const ContentSection = ({ contenido }: { contenido: string }) => {
         <MDXRemote
           source={contenido}
           components={{
+            // TODO: Agregar carousel component
             p: props => <Typography mb={1.3}>{props.children}</Typography>,
             a: props => <MuiLink href={props.href}>{props.children}</MuiLink>,
             li: props => <Typography component={'li'} ml={2}>{props.children}</Typography>,
