@@ -114,7 +114,7 @@ export default function TrabajosTiles() {
           }
         />
       </FormProvider>
-      <Box display={'flex'} flexDirection={'column'} minHeight={'600px'}>
+      <Box display={'flex'} flexDirection={'column'} minHeight={'600px'} alignItems={'center'}>
         {
           isLoading
             ? <TrabajosTilesSkeletons />
