@@ -37,7 +37,7 @@ const SearchAndFiltersLayout = ({ onDebouncedSearchChange, hasDirtyFields = fals
           />
         </FormControl>
       </Grid>
-      <Grid size={{ xs: 12, md: 1 }} display='flex' justifyContent='center' >
+      <Grid size={{ xs: 12, md: 1 }} display='flex' justifyContent='center'>
         <Badge
           color="info"
           variant="dot"
