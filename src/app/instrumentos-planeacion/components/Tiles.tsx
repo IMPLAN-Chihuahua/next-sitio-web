@@ -13,7 +13,7 @@ import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
 import TagsAutocomplete from "@/app/components/TagsAutocomplete";
 import { Clear } from "@mui/icons-material";
 import { ChangeEvent, useCallback, useState } from "react";
-import { formatISO } from "date-fns";
+import { formatISO, parseISO } from "date-fns";
 import InstrumentoSkeletonList from "./InstrumentoSkeleton";
 
 
@@ -30,7 +30,7 @@ const InstrumentosTiles = () => {
   const values = useWatch({ control: methods.control })
 
   const filterObj = {
-    fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion'],
+    fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug'],
     populate: [
       'tema',
       'cover'
@@ -50,7 +50,7 @@ const InstrumentosTiles = () => {
               }
             },
             {
-              acronimo: {
+              nombreCorto: {
                 $containsi: search
               }
             },
@@ -114,6 +114,7 @@ const InstrumentosTiles = () => {
                 <Grid
                   key={instrumento.documentId}
                   size={{ xs: 12, md: 4 }}
+                  justifyContent={{ xs: 'center' }}
                   display={'flex'}
                 >
                   <InstrumentoCard instrumento={instrumento} />
@@ -141,21 +142,25 @@ const InstrumentosTiles = () => {
 
 
 type InstrumentoCardProps = {
-  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version'>
+  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug'>
 }
 const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
-
+  const anioPublicacion = parseISO(instrumento.fechaAprobacion).getFullYear();
+  const aboutInstrumento = parseInt(instrumento.version) === anioPublicacion
+    ? `(${anioPublicacion})`
+    : `(${instrumento.version} ${anioPublicacion})`
   return (
     <Card variant="outlined"
       sx={{
         height: '100%',
+        maxWidth: '450px',
         display: 'flex',
         flexDirection: 'column'
       }}
     >
       <CardActionArea
         LinkComponent={Link}
-        href={'/'}
+        href={`/instrumentos-planeacion/${instrumento.nombreCortoSlug}`}
         disableTouchRipple
         disableRipple
       >
@@ -163,15 +168,16 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
           component='img'
           sx={{ height: '480px', maxHeight: '480px' }}
           image={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${instrumento.cover.url}`}
-          title={instrumento.cover.caption || 'Imagen decorativa'}
+          title={instrumento.cover.caption || `${instrumento.nombre} ${aboutInstrumento}`}
         />
       </CardActionArea>
       <CardContent sx={{ flex: 1 }}>
         <Box display={'flex'} flexDirection={'column'} height={'100%'}>
           <MuiLink
             component={Link}
-            href={'/'}
+            href={`/instrumentos-planeacion/${instrumento.nombreCortoSlug}`}
             color="primary.800"
+            title={`${instrumento.nombre} ${aboutInstrumento}`}
             sx={{
               textDecoration: 'none',
               display: '-webkit-box',
@@ -183,13 +189,13 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
             variant="h3"
             mb={2.5}
             fontSize={18}
-            fontWeight={600}>{instrumento.nombre} ({instrumento.version})</MuiLink>
+            fontWeight={600}>{instrumento.nombre} {aboutInstrumento}</MuiLink>
           <Box mt={'auto'}>
             <Typography variant="body2">{instrumento.tema.name}</Typography>
             <Typography
               sx={{
                 display: '-webkit-box',
-                WebkitLineClamp: 4,
+                WebkitLineClamp: { xs: 3, md: 4 },
                 WebkitBoxOrient: 'vertical',
                 wordBreak: 'break-word',
                 overflow: 'hidden'

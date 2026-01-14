@@ -14,7 +14,8 @@ export type InstrumentoPlaneacion = {
   readonly id: number;
   readonly documentId: string;
   nombre: string;
-  acronimo: string;
+  nombreCorto: string;
+  nombreCortoSlug: string;
   version: string;
   tema: Tag;
   cover: Media;
