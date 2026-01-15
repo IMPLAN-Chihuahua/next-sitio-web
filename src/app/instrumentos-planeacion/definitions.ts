@@ -1,4 +1,4 @@
-import { Media, MultipleMedia, Tag } from "../definitions";
+import { Media, MultipleMedia, Tag, TemaDatosAbiertos } from "../definitions";
 
 
 export type InstrumentosPageType = {
@@ -17,7 +17,7 @@ export type InstrumentoPlaneacion = {
   nombreCorto: string;
   nombreCortoSlug: string;
   version: string;
-  tema: Tag;
+  temaDatosAbiertos: TemaDatosAbiertos;
   cover: Media;
   fechaAprobacion: string;
   publicadoEn: string;
@@ -42,6 +42,7 @@ export type DatoGeografico = {
   descripcion: string;
   archivosDescargables: MultipleMedia;
   cover: Media;
+  temaDatosAbiertos: TemaDatosAbiertos;
 }
 
 export enum Geometrias {

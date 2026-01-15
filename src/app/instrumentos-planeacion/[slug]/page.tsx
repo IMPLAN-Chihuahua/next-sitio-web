@@ -18,7 +18,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
       'datosGeograficos',
       'datosGeograficos.cover',
       'cover',
-      'tema',
+      'temaDatosAbiertos',
       'archivosAdjuntos',
     ]
   }, { encodeValuesOnly: true });
@@ -35,8 +35,6 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
           <Grid height={490} maxWidth={'450px'} position={'relative'} size={{ xs: 12, md: 4 }} display={'flex'} marginX={'auto'}>
             <Image
               src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
-              // height={450}
-              // width={350}
               layout="fill"
               objectFit="cover"
               unoptimized
@@ -45,7 +43,8 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
             <Typography component={'h1'} fontWeight={600} fontSize={36}>{page.data.nombre}</Typography>
-            <Typography fontWeight={500}>
+            <Typography color='primary.600' fontSize={16} fontWeight={600}>{page.data.temaDatosAbiertos.tema}</Typography>
+            <Typography fontWeight={500} mt={1}>
               {page.data.publicadoEn !== null ? 'Aprobado' : 'Publicado'} el {
                 parseISO(page.data.fechaAprobacion).toLocaleDateString('es-MX', { dateStyle: 'long' })}{
                 page.data.publicadoEn !== null ? ` • ${page.data.publicadoEn} ${page.data.acercaDePublicacion || ''}` : ''
