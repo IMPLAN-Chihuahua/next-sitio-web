@@ -25,4 +25,27 @@ export type InstrumentoPlaneacion = {
   archivosAdjuntos: MultipleMedia;
   contenido: string;
   descripcion: string;
+  datosGeograficos: DatoGeografico[];
+}
+
+
+export type DatoGeografico = {
+  readonly id: number;
+  readonly documentId: string;
+  objetoGeografico: string;
+  geometria: Geometrias;
+  escala: string;
+  edicion: number;
+  proyeccion: string;
+  datum: string;
+  datosPublicacion: string;
+  descripcion: string;
+  archivosDescargables: MultipleMedia;
+  cover: Media;
+}
+
+export enum Geometrias {
+  Poligono = 'Polígonos',
+  Linea = 'Lineas',
+  Punto = 'Puntos'
 }

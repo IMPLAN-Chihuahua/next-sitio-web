@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Grid, Toolbar, Typography, Link as MuiLink, Divider } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, Toolbar, Typography, Link as MuiLink, Divider, Card, CardMedia, CardContent, Stack, Paper, Alert, AlertTitle } from "@mui/material";
 import qs from 'qs'
 import { InstrumentoDetailPageBreadcrumbs } from "../components/InstrumentoBreadcrumbs";
 import { InstrumentoPlaneacion } from "../definitions";
@@ -15,9 +15,11 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
 
   const queryParams = qs.stringify({
     populate: [
+      'datosGeograficos',
+      'datosGeograficos.cover',
       'cover',
+      'tema',
       'archivosAdjuntos',
-      'tema'
     ]
   }, { encodeValuesOnly: true });
 
@@ -30,11 +32,13 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
       <Container sx={{ mt: 3 }}>
         <InstrumentoDetailPageBreadcrumbs currentPageTitle={page.data.nombre} />
         <Grid container my={4} spacing={2}>
-          <Grid size={{ xs: 12, md: 4 }} display={'flex'} justifyContent={{ md: 'flex-start', xs: 'center' }}>
+          <Grid height={490} maxWidth={'450px'} position={'relative'} size={{ xs: 12, md: 4 }} display={'flex'} marginX={'auto'}>
             <Image
               src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
-              height={450}
-              width={350}
+              // height={450}
+              // width={350}
+              layout="fill"
+              objectFit="cover"
               unoptimized
               alt=''
             />
@@ -51,24 +55,58 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
             <ShareOptions />
           </Grid>
         </Grid>
-        <Divider />
+        <Divider sx={{ mb: 3 }} />
         <Suspense fallback={<CircularProgress />}>
           <MDXRemote
             source={page.data.contenido}
             components={{
-              p: props => <Typography mt={2}>{props.children}</Typography>,
+              p: props => <Typography mb={2} color='inherit' sx={{ wordBreak: 'break-word' }}>{props.children}</Typography>,
               h2: props => <Typography variant="h2" fontSize={24} mt={2.5} mb={1} fontWeight={600}>{props.children}</Typography>,
               h3: props => <Typography variant="h3" fontSize={20} mt={1.5} mb={.5} fontWeight={500}>{props.children}</Typography>,
               ul: props => <ul style={{ listStyle: 'none' }}>{props.children}</ul>,
               li: props => <li style={{ paddingTop: '2px', paddingBottom: '2px' }}>{props.children}</li>,
-              a: props => <MuiLink href={props.href} target='_blank'>{props.children}</MuiLink>
+              a: props => <MuiLink href={props.href} target='_blank'>{props.children}</MuiLink>,
+              Alert: props => (<Alert sx={{ my: 2 }} severity={props?.severity || 'info'}>
+                <AlertTitle color="inherit">{props.title}</AlertTitle>
+                {props.children}
+              </Alert>
+              )
             }}
           />
         </Suspense>
-        <Box component={'section'} mt={3}>
-          <Typography component={'h2'} fontSize={24} fontWeight={600}>Cartografía</Typography>
-        </Box>
+        {
+          page.data.datosGeograficos.length > 0 && (
+            <Box component={'section'} mt={3}>
+              <Typography component={'h2'} fontSize={24} fontWeight={600} mb={1}>Datos geográficos</Typography>
+              <Grid container spacing={2} flexWrap={'wrap'}>
+                {
+                  page.data.datosGeograficos.map((capa) => (
+                    <Grid size={{ xs: 12, sm: 4, md: 3 }} key={capa.documentId}>
+                      <Card sx={{ maxWidth: { xs: '100%', sm: '300px' } }} variant="outlined">
+                        <CardMedia
+                          sx={{ height: { xs: '270px', md: '240px' }, maxHeight: { xs: '270px', md: '240px' } }}
+                          image={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${capa.cover?.formats?.small?.url || capa.cover.url}`} />
+                        <CardContent sx={{ minHeight: { xs: '80px', sm: '115px' } }}>
+                          <Typography
+                            sx={{
+                              textDecoration: 'none',
+                              display: '-webkit-box',
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: 'vertical',
+                              wordBreak: 'break-word',
+                              overflow: 'hidden'
+                            }}
+                          >{capa.objetoGeografico}</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))
+                }
+              </Grid>
+            </Box>
+          )
+        }
       </Container>
-    </main>
+    </main >
   )
 }

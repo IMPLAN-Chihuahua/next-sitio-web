@@ -179,6 +179,7 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
             color="primary.800"
             title={`${instrumento.nombre} ${aboutInstrumento}`}
             sx={{
+              lineHeight:'1.5rem', 
               textDecoration: 'none',
               display: '-webkit-box',
               WebkitLineClamp: 3,
