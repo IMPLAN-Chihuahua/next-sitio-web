@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { CssBaseline } from "@mui/material";
 import LocalizationProvider from "./components/AppLocalizationProvider";
+import ScrollToTop from "./components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "IMPLAN Chihuahua",
@@ -29,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={montserrat.variable}>
-      <body style={{ minHeight: '100vh', height: '100vh' }}>
+      <body style={{ minHeight: '100vh' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <LocalizationProvider>
@@ -37,6 +38,7 @@ export default function RootLayout({
               <Navbar />
               {children}
               <Footer />
+              <ScrollToTop />
             </LocalizationProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
