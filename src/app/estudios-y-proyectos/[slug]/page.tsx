@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Media, MultipleMedia } from "@/app/definitions";
 import { ShareOptions } from "../components/ShareOptions";
 import { Metadata } from "next";
+import { filesize } from "filesize";
 
 
 type DetailPageMetadataProps = {
@@ -259,9 +260,11 @@ const ArchivosAdjuntosSection = ({ archivosAdjuntos }: { archivosAdjuntos: Multi
         {
           archivosAdjuntos.map((adjunto) => (
             <li key={adjunto.documentId} style={{ display: 'flex', alignItems: 'center', marginTop: '5px', marginBottom: '5px' }}>
-              <Typography>
-                {adjunto.caption}: <MuiLink target="_blank" href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adjunto.url}`}>{adjunto.name}</MuiLink>
-              </Typography>
+              <MuiLink
+                target='_blank'
+                href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adjunto.url}`}>{
+                  `${adjunto.caption ? `${adjunto.caption} • ${adjunto.ext.substring(1)}` : adjunto.name} (${filesize(adjunto.size * 1000, { standard: 'jedec' })})`
+                }</MuiLink>
             </li>
           ))
         }
