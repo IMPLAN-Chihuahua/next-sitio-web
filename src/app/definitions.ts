@@ -112,3 +112,18 @@ export type DepartamentoType = {
   nombre: string;
   activo: boolean;
 }
+
+export type TeamMember = {
+  readonly id: number;
+  readonly documentId: string;
+  nombres: string;
+  apellidos: string;
+  email: string;
+  titulo: string;
+  descripcion: string;
+  photo: Media;
+  departamento: DepartamentoType;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
