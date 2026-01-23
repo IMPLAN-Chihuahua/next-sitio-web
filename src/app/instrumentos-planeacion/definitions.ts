@@ -1,4 +1,5 @@
-import { Media, MultipleMedia, Tag, TemaDatosAbiertos } from "../definitions";
+import { DatoGeografico } from "../cartografia/definitions";
+import { Media, MultipleMedia, TemaDatosAbiertos } from "../definitions";
 
 
 export type InstrumentosPageType = {
@@ -26,27 +27,4 @@ export type InstrumentoPlaneacion = {
   contenido: string;
   descripcion: string;
   datosGeograficos: DatoGeografico[];
-}
-
-
-export type DatoGeografico = {
-  readonly id: number;
-  readonly documentId: string;
-  objetoGeografico: string;
-  geometria: Geometrias;
-  escala: string;
-  edicion: number;
-  proyeccion: string;
-  datum: string;
-  datosPublicacion: string;
-  descripcion: string;
-  archivosDescargables: MultipleMedia;
-  cover: Media;
-  temaDatosAbiertos: TemaDatosAbiertos;
-}
-
-export enum Geometrias {
-  Poligono = 'Polígonos',
-  Linea = 'Lineas',
-  Punto = 'Puntos'
 }
