@@ -19,7 +19,7 @@ export default async function InstrumentosPlaneacionPage() {
   return (<Box component={'main'} minHeight='100vh'>
     <PageBanner
       cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
-      title={page.data.titulo}
+      title={`Datos abiertos ${page.data.titulo}`}
       description={page.data.descripcion}
     />
     <Container>

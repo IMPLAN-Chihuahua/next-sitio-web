@@ -8,6 +8,8 @@ import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
 import { SubtitleH2 } from "@/app/components/Titles";
+import Link from "next/link";
+import CartografiaCard from "../components/CartografiaCard";
 
 
 export default async function InstrumentoPlaneacionPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -80,25 +82,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
               <Grid container spacing={2} flexWrap={'wrap'}>
                 {
                   page.data.datosGeograficos.map((capa) => (
-                    <Grid size={{ xs: 12, sm: 4, md: 3 }} key={capa.documentId}>
-                      <Card sx={{ maxWidth: { xs: '100%', sm: '300px' } }} variant="outlined">
-                        <CardMedia
-                          sx={{ height: { xs: '270px', md: '240px' }, maxHeight: { xs: '270px', md: '240px' } }}
-                          image={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${capa.cover?.formats?.small?.url || capa.cover.url}`} />
-                        <CardContent sx={{ minHeight: { xs: '80px', sm: '115px' } }}>
-                          <Typography
-                            sx={{
-                              textDecoration: 'none',
-                              display: '-webkit-box',
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: 'vertical',
-                              wordBreak: 'break-word',
-                              overflow: 'hidden'
-                            }}
-                          >{capa.objetoGeografico}</Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
+                    <CartografiaCard capa={capa} key={capa.documentId} />
                   ))
                 }
               </Grid>
