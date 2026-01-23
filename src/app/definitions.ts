@@ -1,3 +1,10 @@
+export type Project = {
+  readonly id: number;
+  description: string;
+  title: string;
+  media: Media[];
+  buttons: SectionButtons[];
+}
 
 export type Section = {
   readonly id: number;
@@ -70,9 +77,8 @@ export type MediaFormat = {
   sizeInBytes: string;
 }
 
-
-
 export type MultipleMedia = Media[]
+
 
 
 export type Pagination = {
