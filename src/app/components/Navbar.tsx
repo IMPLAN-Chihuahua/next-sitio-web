@@ -32,7 +32,7 @@ const navLinks = [{
 },
 {
   label: 'Cartografía',
-  href: '/datos-abiertos',
+  href: '/cartografia',
   menuItems: []
 },
 {

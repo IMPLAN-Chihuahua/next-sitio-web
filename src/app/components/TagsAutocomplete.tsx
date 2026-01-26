@@ -7,7 +7,7 @@ import { cmsFetcher } from "../services/http"
 import { Controller, useFormContext } from "react-hook-form"
 
 
-export default function TagsAutocomplete({ label }: { label?: string }) {
+export default function TagsAutocomplete({ label, name }: { name: string, label?: string }) {
   const { control } = useFormContext();
   const { data, isLoading } = useSWRImmutable<{ data: Tag[], meta: { pagination: Pagination } }>('/tags?pagination[pageSize]=100', cmsFetcher)
 
@@ -17,14 +17,15 @@ export default function TagsAutocomplete({ label }: { label?: string }) {
 
   return (
     <Controller
-      name='tags'
+      name={name}
       control={control}
       render={({ field, fieldState }) => (
         <Autocomplete
+          noOptionsText='No se encontraron opciones'
           multiple
           value={field.value}
           onChange={(_, val) => field.onChange(val)}
-          getOptionLabel={option => option.name}
+          getOptionLabel={option => option.name || ''}
           isOptionEqualToValue={(option, value) => option.documentId === value.documentId}
           options={data?.data || []}
           renderInput={params => (

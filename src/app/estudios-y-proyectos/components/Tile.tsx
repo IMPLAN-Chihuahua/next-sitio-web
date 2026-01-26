@@ -11,7 +11,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
   const hasSmallImage = props.trabajoPlaneacion.cover?.formats?.small !== undefined || props.trabajoPlaneacion.cover?.formats?.small !== null;
   const coverImage = hasSmallImage ? props.trabajoPlaneacion.cover?.formats?.small.url : props.trabajoPlaneacion.cover?.url;
   return (
-    <Card sx={{ mb: 2.5 }} variant="outlined">
+    <Card sx={{ mb: 2.5, width: '100%', maxWidth: { xs: '450px', md: '100%' } }} variant="outlined">
       <CardContent>
         <Grid container >
           <Grid bgcolor={'gainsboro'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={'5px'}>

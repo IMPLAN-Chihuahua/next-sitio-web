@@ -98,6 +98,15 @@ export type Tag = {
 }
 
 
+export type TemaDatosAbiertos = {
+  readonly id: string;
+  readonly documentId: string;
+  tema: string;
+  hexColor: string | null;
+}
+
+
+
 export type ColaboradorExterno = {
   readonly id: number;
   readonly documentId: string;

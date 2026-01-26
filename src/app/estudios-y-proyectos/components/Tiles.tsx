@@ -1,26 +1,23 @@
 'use client'
 import { cmsFetcher } from "@/app/services/http";
-import { Alert, Autocomplete, Badge, Box, Button, Collapse, colors, Fade, FormControl, Grid, IconButton, InputLabel, OutlinedInput, Pagination, Stack, TextField, ToggleButton, Typography } from "@mui/material";
-import useSWR from "swr";
+import { Alert, Autocomplete, Box, Button, Pagination, Stack, TextField, Typography } from "@mui/material";
 import qs from 'qs';
 import { TrabajoPlaneacion } from "../definitions";
 import TrabajoTile from "./Tile";
-import TuneIcon from '@mui/icons-material/Tune';
 import { ChangeEvent, useCallback, useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
 import { ColaboradorExterno, Pagination as PaginationType, Tag } from "@/app/definitions";
 import { eachYearOfInterval } from "date-fns";
 import ColaboradoresExternosAutocomplete from "@/app/components/ColaboradoresExternosAutocomplete";
 import TagsAutocomplete from "@/app/components/TagsAutocomplete";
 import { Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
 import ClearIcon from '@mui/icons-material/Clear';
-import { Search } from "@mui/icons-material";
 import { TrabajosTilesSkeletons } from "./Skeleton";
+import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
+import useSWRImmutable from "swr/immutable";
 
 
 
 export default function TrabajosTiles() {
-  const [openFilters, setOpenFilters] = useState(false);
   const methods = useForm<{ anio: number[], colaboradoresExternos: Array<ColaboradorExterno>, tags: Array<Tag> }>({
     defaultValues: {
       anio: [],
@@ -85,14 +82,10 @@ export default function TrabajosTiles() {
       'ficha.colaboradoresExternos',]
   }, { encodeValuesOnly: true })
 
-  const { data, error, isLoading } = useSWR<{
+  const { data, error, isLoading } = useSWRImmutable<{
     data: TrabajoPlaneacion[],
     meta: { pagination: PaginationType }
   }>(`/trabajos-planeacion?${estudiosQueryParams.toString()}`, cmsFetcher);
-
-  const handleDebouncedSearch = useDebouncedCallback((val: string) => {
-    setSearch(val)
-  }, 300);
 
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
     setPage(val)
@@ -102,9 +95,6 @@ export default function TrabajosTiles() {
     methods.reset();
   }, []);
 
-  const toggleFilterDisplay = () => setOpenFilters(pre => !pre);
-
-
   if (error) {
     console.error(error)
     return <Alert severity="error">Hubo un error al obtener los trabajos de planeación</Alert>
@@ -112,52 +102,19 @@ export default function TrabajosTiles() {
 
   return (
     <Box>
-      <Grid container my={2} spacing={2}>
-        <Grid size={{ xs: 12, md: 11 }}>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>Buscar</InputLabel>
-            <OutlinedInput
-              placeholder='Buscar por nombre'
-              onChange={(e) => handleDebouncedSearch(e.currentTarget.value)}
-              sx={{ minWidth: '300px' }}
-              label='Buscar'
-              fullWidth
-              endAdornment={<Search sx={{ color: 'primary.700' }} />}
+      <FormProvider {...methods}>
+        <SearchAndFiltersLayout
+          onDebouncedSearchChange={(val) => setSearch(val)}
+          hasDirtyFields={methods.formState.isDirty}
+          Filters={
+            <TrabajosFilters
+              handleClearFiltros={handleClearFiltros}
+              showClearFilterButton={methods.formState.isDirty}
             />
-          </FormControl>
-        </Grid>
-        <FormProvider {...methods}>
-          <Grid size={{ xs: 12, md: 1 }} display='flex' justifyContent='center' >
-            <Badge
-              color="info"
-              variant="dot"
-              overlap="circular"
-              invisible={!methods.formState.isDirty}
-            >
-              <ToggleButton
-                value='check'
-                selected={openFilters}
-                onChange={toggleFilterDisplay}
-                sx={{
-                  borderRadius: 50,
-                  width: 55,
-                  height: 55,
-                }}>
-                <TuneIcon sx={{ color: 'primary.700' }} />
-              </ToggleButton>
-            </Badge>
-          </Grid>
-          <Grid size={12}>
-            <Collapse in={openFilters}>
-              <TrabajosFilters
-                handleClearFiltros={handleClearFiltros}
-                showClearFilterButton={methods.formState.isDirty}
-              />
-            </Collapse>
-          </Grid>
-        </FormProvider>
-      </Grid>
-      <Box display={'flex'} flexDirection={'column'} minHeight={'600px'}>
+          }
+        />
+      </FormProvider>
+      <Box display={'flex'} flexDirection={'column'} minHeight={'600px'} alignItems={'center'}>
         {
           isLoading
             ? <TrabajosTilesSkeletons />
@@ -194,7 +151,7 @@ const TrabajosFilters = ({ handleClearFiltros, showClearFilterButton }: { handle
       flexWrap={'wrap'}>
       <ColaboradoresExternosAutocomplete />
       <AnioAutocomplete />
-      <TagsAutocomplete label='Clasificaciones' />
+      <TagsAutocomplete name='tags' label='Clasificaciones' />
       {
         showClearFilterButton && (
           <Button
@@ -212,7 +169,7 @@ const TrabajosFilters = ({ handleClearFiltros, showClearFilterButton }: { handle
 
 
 
-const AnioAutocomplete = () => {
+export const AnioAutocomplete = () => {
   const methods = useFormContext()
   const years = eachYearOfInterval({ start: new Date(), end: new Date(2000, 0, 1) }).map(y => y.getFullYear())
 
@@ -220,13 +177,15 @@ const AnioAutocomplete = () => {
     <Controller
       name="anio"
       control={methods.control}
+      defaultValue={null}
       render={({ field }) => (
         <Autocomplete
+          noOptionsText='No se encontraron opciones'
           multiple
           getOptionLabel={(option) => option.toString()}
           options={years}
           value={field.value}
-          onChange={(_, value) => field.onChange(value)}
+          onChange={(_, value) =>  field.onChange(value)}
           renderInput={(params) => (
             <TextField
               {...params}
