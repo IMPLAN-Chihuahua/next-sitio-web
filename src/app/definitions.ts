@@ -127,3 +127,21 @@ export type TeamMember = {
   updatedAt: string;
   publishedAt: string;
 }
+
+export type VacanteTipo = 'Practicas' | 'Trabajo' | 'Servicio';
+export type VacanteHorario = 'Flexible' | 'Completo' | 'Objetivos';
+export type VacanteModalidad = 'presencial' | 'hibrido' | 'remoto' | 'campo';
+
+export type Vacante = {
+  readonly id: number;
+  readonly documentId: string;
+  title: string;
+  description: string;
+  tipo: VacanteTipo;
+  horario: VacanteHorario;
+  modalidad: VacanteModalidad;
+  departamento: DepartamentoType;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
