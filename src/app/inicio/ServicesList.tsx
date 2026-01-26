@@ -20,7 +20,7 @@ const ServicesList = ({ data }: { data: Section[] }) => {
 }
 
 const Service = ({ service, reverse }: { service: Section, reverse: boolean }) => {
-
+    const imageUrl = service.media.formats?.small?.url || service.media.url;
     return (
         <Grid container sx={{
             display: 'flex',
@@ -80,8 +80,7 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     overflow: 'hidden',
-                    backgroundImage: `url(http://localhost:1337${service.media.formats?.small.url})`,
-                    bgcolor: 'grey.300',
+                    backgroundImage: `url(${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl})`, bgcolor: 'grey.300',
                     boxShadow: 3
                 }}>
                 </Box>

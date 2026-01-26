@@ -18,9 +18,6 @@ const navLinks = [{
     label: '¿Quiénes somos?',
     href: '/quienes-somos',
   }, {
-    label: '¿Qué hacemos?',
-    href: '/que-hacemos',
-  }, {
     label: 'Consejo',
     href: '/consejo',
   }]

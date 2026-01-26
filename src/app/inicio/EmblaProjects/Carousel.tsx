@@ -57,7 +57,6 @@ const Carousel = (props: PropType) => {
                                     </Box>
                                     <br />
                                     {project.buttons.map((btn, idx) => {
-                                        console.log(project)
                                         return (
                                             <Button key={idx} variant='contained' sx={{ textTransform: "none" }}>{btn.text}</Button>
                                         )
@@ -77,14 +76,17 @@ const Carousel = (props: PropType) => {
                                         position: 'relative',
                                         width: '70%',
                                         height: '280px',
-                                        boxShadow: '0px 4px 20px rgba(0,0,0,0.1)', // Opcional: Una sombrita para que resalte
+                                        boxShadow: '0px 4px 20px rgba(0,0,0,0.1)',
                                         borderRadius: 1,
                                         overflow: 'hidden'
                                     }}>
                                         <Image
-                                            src={`http://localhost:1337${project.media[0].url}`}
+                                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${project.media[0].formats?.medium?.url ||
+                                                project.media[0].formats?.small?.url ||
+                                                project.media[0].url
+                                                }`}
                                             unoptimized={true}
-                                            alt=''
+                                            alt={project.title}
                                             fill
                                             loading="eager"
                                             style={{

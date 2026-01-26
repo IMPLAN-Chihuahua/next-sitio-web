@@ -110,7 +110,7 @@ const Project = ({ data }: { data: Platform }) => {
                 height: '600px',
                 maxWidth: '600px',
                 aspectRatio: '1 / 1',
-                backgroundImage: `url(http://localhost:1337${data.media.formats?.small.url})`,
+                backgroundImage: `url(${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.small?.url || data.media.url})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 overflow: 'hidden',

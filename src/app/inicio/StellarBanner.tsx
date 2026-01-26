@@ -3,7 +3,6 @@ import { Stellar } from '../definitions'
 import { Box, Button, Typography } from '@mui/material'
 
 const StellarBanner = ({ data }: { data: Stellar[] }) => {
-    // console.log(`url(http://localhost:1337${data.media.url}`)
     return (
         <Box sx={{
             mt: 10,
@@ -12,8 +11,7 @@ const StellarBanner = ({ data }: { data: Stellar[] }) => {
                 data.map((data, index) => {
                     return (
                         <Box sx={{
-                            backgroundImage: `url(http://localhost:1337${data.media.url})`,
-                            height: '400px',
+                            backgroundImage: `url(${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media?.url})`, height: '400px',
                             borderRadius: 1,
                             position: 'relative',
                             backgroundSize: 'cover',
