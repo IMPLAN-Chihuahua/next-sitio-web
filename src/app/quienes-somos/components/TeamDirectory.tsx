@@ -23,17 +23,17 @@ import BrushIcon from '@mui/icons-material/Brush';
 import MapIcon from '@mui/icons-material/Map';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-import CorporateFareIcon from '@mui/icons-material/CorporateFare';
-import StreamIcon from '@mui/icons-material/Stream';
+import CameraAltRoundedIcon from '@mui/icons-material/CameraAltRounded';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import HiveIcon from '@mui/icons-material/Hive';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const departmentStyles: Record<string, { icon: SvgIconComponent }> = {
     'Sistemas': { icon: CodeIcon },
     'Jurídico': { icon: GavelIcon, },
     'Diseño': { icon: BrushIcon, },
-    'Dirección': { icon: CorporateFareIcon, },
-    'Vinculación': { icon: StreamIcon, },
+    'Dirección': { icon: HiveIcon, },
+    'Vinculación': { icon: CameraAltRoundedIcon, },
     'Geomática': { icon: MapIcon, },
     'Planes y Programas': { icon: ArchitectureIcon, },
     'default': { icon: AccountCircleIcon },
@@ -46,25 +46,18 @@ const getDeptStyle = (deptName: string | undefined | null) => {
     return departmentStyles['default'];
 };
 
-const getStrapiImage = (photo: any, baseUrl: string) => {
+const getStrapiImage = (photo: any) => {
     if (!photo) return null;
 
-    const formats = photo.formats;
+    const selectedUrl = photo.formats?.small?.url ||
+        photo.formats?.medium?.url ||
+        photo.url;
 
-    let selectedUrl = photo.url;
-
-    if (formats) {
-        if (formats.small) {
-            selectedUrl = formats.small.url;
-        } else if (formats.medium) {
-            selectedUrl = formats.medium.url;
-        } else if (formats.thumbnail && !photo.url) {
-            selectedUrl = formats.thumbnail.url;
-        }
-    }
-
-    return selectedUrl.startsWith('http') ? selectedUrl : `${baseUrl}${selectedUrl}`;
+    return selectedUrl.startsWith('http')
+        ? selectedUrl
+        : `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${selectedUrl}`;
 };
+
 
 const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
     const [openDialog, setOpenDialog] = useState(false);
@@ -103,7 +96,6 @@ const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
         });
     }, [data, searchTerm, selectedDept]);
 
-    const STRAPI_BASE_URL = 'http://localhost:1337';
 
     const PLACEHOLDER_IMAGE = 'https://i.pravatar.cc/300?u=placeholder';
 
@@ -118,7 +110,7 @@ const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
     }, [data]);
 
     return (
-        <Box sx={{ bgcolor: '#f9fafb', py: 8 }}>
+        <Box sx={{ bgcolor: '#f9fafb', pt: 8 }}>
             <Container maxWidth="lg">
                 <Box textAlign="center" mb={8}>
                     <Typography variant="h3" fontWeight="800" gutterBottom color="text.primary">
@@ -205,19 +197,13 @@ const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
                             filteredData.map((member) => {
                                 const fullName = `${member.nombres} ${member.apellidos}`;
 
-                                let imageUrl = getStrapiImage(member.photo, STRAPI_BASE_URL) || PLACEHOLDER_IMAGE;
-                                if (member.photo && member.photo.url) {
-                                    imageUrl = member.photo.url.startsWith('http')
-                                        ? member.photo.url
-                                        : `${STRAPI_BASE_URL}${member.photo.url}`;
-                                }
+                                const imageUrl = getStrapiImage(member.photo) || PLACEHOLDER_IMAGE;
 
                                 const deptStyle = getDeptStyle(member.departamento?.nombre);
 
                                 return (
                                     <Grid size={{ xs: 12, sm: 6, md: 3 }} key={member.id}
                                         component={motion.div}
-
                                         layout
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
