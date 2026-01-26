@@ -35,7 +35,7 @@ const TeamMemberCard = ({
                 }
             }}
         >
-            <Box sx={{ position: 'relative', mb: 3 }}>
+            <Box sx={{ position: 'relative', mb: 2 }}>
 
                 <Avatar
                     className="member-image"
