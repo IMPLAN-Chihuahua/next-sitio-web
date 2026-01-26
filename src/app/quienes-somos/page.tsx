@@ -32,35 +32,37 @@ export default async function QuienesSomosPage() {
     const employeesJson = await employees.json();
 
     team = employeesJson.data;
-    console.log(team)
     data = json.data;
+    console.log(team)
+    console.log(data)
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
 
   return (
     <Box sx={{ pb: 10 }}>
-      <PageBanner title="¿Quiénes somos?" description="..." />
+      <PageBanner title={data.banner.text} description={data.banner.textEmphasis} />
       <Container maxWidth="lg" sx={{ mt: 8 }}>
         <Grid container spacing={4} alignItems="stretch" justifyContent="center">
 
           <Grid size={{ md: 6, xs: 12 }} >
             <CardInfo
               title="Misión"
-              text="Impulsar la planeación estratégica del municipio mediante análisis técnico y participación ciudadana, promoviendo un desarrollo ordenado y sostenible."
+              text={data.Mision.description}
               icon={TrackChangesIcon}
             />
           </Grid>
           <Grid size={{ md: 6, xs: 12 }} >
             <CardInfo
               title="Visión"
-              text="Ser un referente nacional en la planeación integral urbana, consolidando un municipio competitivo, resiliente y con alta calidad de vida para todos."
+              text={data.Vision.description}
               icon={VisibilityIcon}
             />
           </Grid>
         </Grid>
-        <OurValues />
-        <TeamDirectory data={team} />
+        <FreshDivider />
+        {/* <OurValues data/> */}
+        <TeamDirectory data={team} organigrama={data.organigrama} />
       </Container>
     </Box>
   );

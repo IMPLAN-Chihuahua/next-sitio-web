@@ -14,7 +14,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
 import TeamMemberCard from './TeamMembers';
-import { TeamMember } from '@/app/definitions';
+import { Media, TeamMember } from '@/app/definitions';
+import Image from 'next/image';
 
 import { SvgIconComponent } from "@mui/icons-material";
 import CodeIcon from '@mui/icons-material/Code';
@@ -59,7 +60,7 @@ const getStrapiImage = (photo: any) => {
 };
 
 
-const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
+const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama: Media }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialog = () => setOpenDialog(true);
     const handleCloseDialog = () => setOpenDialog(false);
@@ -110,7 +111,7 @@ const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
     }, [data]);
 
     return (
-        <Box sx={{ bgcolor: '#f9fafb', pt: 8 }}>
+        <Box sx={{ bgcolor: '#f9fafb' }}>
             <Container maxWidth="lg">
                 <Box textAlign="center" mb={8}>
                     <Typography variant="h3" fontWeight="800" gutterBottom color="text.primary">
@@ -233,7 +234,7 @@ const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
                 <Dialog
                     open={openDialog}
                     onClose={handleCloseDialog}
-                    maxWidth="md"
+                    maxWidth="xl"
                     fullWidth
                     scroll="body"
                 >
@@ -243,11 +244,24 @@ const TeamDirectory = ({ data }: { data: TeamMember[] }) => {
                     >
                         <CloseIcon />
                     </IconButton>
-                    <DialogContent sx={{ p: 0, bgcolor: 'background.paper' }}>
-                        <img
-                            src="https://picsum.photos/id/1073/900/600"
-                            alt="Organigrama del Instituto"
-                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                    <DialogContent
+                        sx={{
+                            p: 0,
+                            bgcolor: 'background.paper',
+                            position: 'relative',
+                            width: '100%',
+                            height: '80vh',
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Image
+                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${organigrama.url}`}
+                            alt="Organigrama del Instituto IMPLAN"
+                            fill
+                            unoptimized={true}
+                            style={{
+                                objectFit: 'contain',
+                            }}
                         />
                     </DialogContent>
                 </Dialog>

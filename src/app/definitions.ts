@@ -113,6 +113,13 @@ export type DepartamentoType = {
   activo: boolean;
 }
 
+export type Value = {
+  readonly id: number;
+  title: string;
+  description: string;
+  icon: Media | null;
+}
+
 export type TeamMember = {
   readonly id: number;
   readonly documentId: string;
