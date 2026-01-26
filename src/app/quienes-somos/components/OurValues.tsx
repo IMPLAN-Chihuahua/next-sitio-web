@@ -11,25 +11,25 @@ const valuesData: ValueCardProps[] = [
         title: 'INTEGRIDAD',
         description: 'Actuamos con honestidad, transparencia y coherencia en todas nuestras acciones.',
         icon: HandshakeIcon,
-        iconBgColor: '#1565c0',
+        iconBgColor: '#eed25e',
     },
     {
         title: 'INNOVACIÓN',
         description: 'Buscamos constantemente nuevas ideas y soluciones creativas para mejorar.',
         icon: LightbulbIcon,
-        iconBgColor: '#fbc02d',
+        iconBgColor: '#e9bd56',
     },
     {
         title: 'PASIÓN',
         description: 'Nos entregamos con entusiasmo y dedicación a nuestro trabajo y propósito.',
         icon: FavoriteIcon,
-        iconBgColor: '#e53935',
+        iconBgColor: '#e3a74d',
     },
     {
         title: 'COLABORACIÓN',
         description: 'Trabajamos juntos, compartiendo conocimientos y esfuerzos para metas comunes.',
         icon: SettingsIcon,
-        iconBgColor: '#546e7a',
+        iconBgColor: '#d9843f',
     },
 ];
 const OurValues = () => {
