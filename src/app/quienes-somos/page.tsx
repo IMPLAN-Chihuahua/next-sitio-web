@@ -33,8 +33,6 @@ export default async function QuienesSomosPage() {
 
     team = employeesJson.data;
     data = json.data;
-    console.log(team)
-    console.log(data)
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
