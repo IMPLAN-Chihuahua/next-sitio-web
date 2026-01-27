@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FaqItem } from './definitions';
 
-const AccordionFAQ = ({ data }: { data: FaqItem[] }) => {
+const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: string }) => {
     const [expanded, setExpanded] = useState<number | false>(false);
 
     const handleChange = (panelId: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -88,6 +88,8 @@ const AccordionFAQ = ({ data }: { data: FaqItem[] }) => {
                 </Typography>
                 <Button
                     variant="contained"
+                    href={urlContacto || '#'}
+                    target="_blank"
                     sx={{
                         mt: 1,
                         bgcolor: 'secondary.main',

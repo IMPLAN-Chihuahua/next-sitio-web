@@ -10,7 +10,9 @@ export default async function PreguntasFrecuentesPage() {
             next: { revalidate: 3600 },
         });
         const json = await res.json();
+
         data = json.data;
+        console.log(data);
     } catch (err) {
         console.error("Error fetching data: ", err);
     }
@@ -21,7 +23,7 @@ export default async function PreguntasFrecuentesPage() {
                 title='Preguntas frecuentes'
                 description='¿Tienes alguna duda?'
             />
-            <AccordionFAQ data={data.FAQ} />
+            <AccordionFAQ data={data.FAQ} urlContacto={data.urlContacto} />
         </main>
     )
 }
