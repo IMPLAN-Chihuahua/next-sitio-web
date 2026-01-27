@@ -17,9 +17,7 @@ export default async function PracticasProfesionalesPage() {
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
-  console.log(data.Slides)
   const { text, textEmphasis, image } = data.Slides;
-  console.log(`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${image.url}`)
   return (
     <main>
       <PageBanner
