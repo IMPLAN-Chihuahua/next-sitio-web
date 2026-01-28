@@ -15,7 +15,7 @@ export default async function Home() {
       next: { revalidate: 3600 },
     });
     const json = await res.json();
-    data = json.data;
+    data = json?.data || {};
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
@@ -29,8 +29,8 @@ export default async function Home() {
           image: 'https://blog.uber-cdn.com/cdn-cgi/image/width=2160,quality=80,onerror=redirect,format=auto/wp-content/uploads/2019/05/Lugares-para-visitar-en-Chihuahua-1024x512.png'
         }]}
       />
+      <ServicesList data={data.Sections} />
       <Container>
-        <ServicesList data={data.Sections} />
         <ProjectsExplorer data={data.Platforms} />
       </Container>
       <StellarBanner data={data.Stellar} />
