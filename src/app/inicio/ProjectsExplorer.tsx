@@ -1,7 +1,7 @@
 'use client';
 
-import { Box, Grid, List, Typography, ListItemButton, ListItemText, Fade, Paper, Button } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, Grid, List, Typography, ListItemButton, ListItemText, Fade, Paper, Button, Container, IconButton } from '@mui/material'
+import React, { useRef, useState } from 'react'
 import { Platform } from '../definitions'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 
@@ -12,17 +12,11 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
 
     const activePlatform = data[selectedIndex]
 
-
-
     return (
-        <Box sx={{ width: '100%' }}>
-            <Box sx={{
-
-            }}
-            >
+        <Container>
+            <Box sx={{ width: '100%' }}>
                 <Grid container sx={{
                     display: 'flex',
-                    mt: { xs: 4, md: 10 },
                     justifyContent: 'space-around',
                     alignItems: 'flex-start',
                 }}>
@@ -46,12 +40,26 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
                             <List component={'nav'}
                                 sx={{
                                     display: 'flex',
-                                    flexDirection: { xs: 'row', md: 'column' }, overflowX: { xs: 'auto', md: 'visible' },
+                                    flexDirection: { xs: 'row', md: 'column' },
+                                    overflowX: { xs: 'auto', md: 'visible' },
                                     width: '100%',
-                                    pb: 1,
+                                    maxWidth: '100vw',
+                                    gap: { xs: 2, md: 0 },
+                                    pb: 2,
                                     scrollSnapType: { xs: 'x mandatory', md: 'none' },
-                                    '&::-webkit-scrollbar': { display: 'none' },
-                                    scrollbarWidth: 'none',
+
+                                    '&::-webkit-scrollbar': {
+                                        height: '3px',
+                                        display: { xs: 'block', md: 'none' }
+                                    },
+                                    '&::-webkit-scrollbar-track': {
+                                        backgroundColor: '#e0e0e0',
+                                        borderRadius: '4px',
+                                    },
+                                    '&::-webkit-scrollbar-thumb': {
+                                        backgroundColor: '#000000',
+                                        borderRadius: '4px',
+                                    }
                                 }}>
                                 {data.map((item: Platform, index: number) => {
                                     const isActive = index === selectedIndex;
@@ -61,11 +69,21 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
                                             disableRipple
                                             onClick={() => setSelectedIndex(index)}
                                             sx={{
-                                                mb: 1,
+                                                whiteSpace: 'nowrap',
+                                                flexShrink: 0,
+                                                alignItems: 'center',
+                                                justifyContent: { xs: 'center', md: 'flex-start' },
+                                                mr: { xs: 0, md: 0 },
+                                                pl: { xs: 2, md: 2 },
+                                                pr: { xs: 2, md: 0 },
+                                                mb: { xs: 0, md: 1 },
+
+                                                color: isActive
+                                                    ? { xs: 'white', md: 'primary.main' }
+                                                    : 'text.secondary',
+
                                                 transition: 'all 0.3s ease',
-                                                '&:hover': {
-                                                    transform: 'translateX(5px)' // Pequeño efecto de empuje
-                                                },
+                                                scrollSnapAlign: 'start',
                                             }}
                                         >
                                             <ListItemText
@@ -121,12 +139,11 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
                     </Grid>
                 </Grid>
             </Box>
-        </Box>
+        </Container>
     )
 }
 
 const Project = ({ data }: { data: Platform }) => {
-    // URL de la imagen helper
     const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.small?.url || data.media.url}`;
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -148,7 +165,7 @@ const Project = ({ data }: { data: Platform }) => {
     return (
         <AnimatePresence mode='wait'>
             <motion.div
-                key={data.name} // IMPORTANTE: La key dispara la animación al cambiar de plataforma
+                key={data.name}
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -157,15 +174,12 @@ const Project = ({ data }: { data: Platform }) => {
             >
                 <Box sx={{
                     position: 'relative',
-                    // Mantenemos tu altura fija en desktop, auto en mobile
                     height: { xs: 'auto', md: '600px' },
-                    maxWidth: '800px', // Aumenté un poco el max-width para que respire más en desktop
+                    maxWidth: '800px',
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                 }}>
-
-                    {/* IMAGEN DE FONDO */}
                     <motion.div
                         variants={{
                             hidden: { opacity: 0, scale: 0.98 },
@@ -181,18 +195,15 @@ const Project = ({ data }: { data: Platform }) => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             zIndex: 0,
-                            borderRadius: { xs: 2, md: 4 }, // Bordes más suaves en desktop
                             mb: { xs: 2, md: 0 },
-                            // Sombra suave para separar del fondo blanco de la página
                             boxShadow: { md: '0 20px 40px rgba(0,0,0,0.08)' }
                         }} />
                     </motion.div>
 
-                    {/* CARD SUPERIOR (Título) */}
                     <Box component={motion.div} variants={itemVariants} sx={{
                         position: { xs: 'relative', md: 'absolute' },
                         top: { md: 40 },
-                        right: { md: -20 }, // Efecto "salido" del margen
+                        right: { md: -20 },
                         maxWidth: { xs: '100%', md: 400 },
                         width: { xs: '100%', md: 'auto' },
                         zIndex: 2,
@@ -202,11 +213,10 @@ const Project = ({ data }: { data: Platform }) => {
                             elevation={0}
                             sx={{
                                 p: 3,
-                                borderRadius: 0, // Mantenemos tu estilo cuadrado
-                                // GLASSMORPHISM: Fondo blanco semitransparente con blur
+                                borderRadius: 0,
                                 bgcolor: { xs: 'white', md: 'rgba(255, 255, 255, 0.9)' },
                                 backdropFilter: { md: 'blur(12px)' },
-                                borderLeft: '6px solid #1a1a1a', // Acento visual fuerte
+                                borderLeft: '6px solid #1a1a1a',
                                 boxShadow: { md: '0 8px 32px rgba(0, 0, 0, 0.1)' }
                             }}
                         >
@@ -219,10 +229,9 @@ const Project = ({ data }: { data: Platform }) => {
                         </Paper>
                     </Box>
 
-                    {/* CARD INFERIOR (Descripción) */}
                     <Box component={motion.div} variants={itemVariants} sx={{
                         position: { xs: 'relative', md: 'absolute' },
-                        bottom: { md: 80 }, // Lo moví al bottom para equilibrar
+                        bottom: { md: 80 },
                         right: { md: 0 },
                         width: { xs: '100%', md: 320 },
                         zIndex: 2,
@@ -237,7 +246,7 @@ const Project = ({ data }: { data: Platform }) => {
                                 color: 'white',
                                 borderRadius: 0,
                                 position: 'relative',
-                                '&::before': { // Detalle decorativo
+                                '&::before': {
                                     content: '""',
                                     position: 'absolute',
                                     top: -10,
@@ -250,13 +259,12 @@ const Project = ({ data }: { data: Platform }) => {
                                 }
                             }}
                         >
-                            <Typography variant="body2" fontSize={16} sx={{ lineHeight: 1.6, opacity: 0.9 }}>
+                            <Typography variant="body2" fontSize={16} sx={{ lineHeight: 1.6, opacity: 0.9, color: 'white' }}>
                                 {data.description}
                             </Typography>
                         </Paper>
                     </Box>
 
-                    {/* BOTÓN (CTA) */}
                     <Box component={motion.div} variants={itemVariants} sx={{
                         position: { xs: 'relative', md: 'absolute' },
                         bottom: { md: 40 },

@@ -30,8 +30,8 @@ export default async function Home() {
         }]}
       />
       <ServicesList data={data.Sections} />
+      <ProjectsExplorer data={data.Platforms} />
       <Container>
-        <ProjectsExplorer data={data.Platforms} />
       </Container>
       <StellarBanner data={data.Stellar} />
       <Container maxWidth={'xl'}>
