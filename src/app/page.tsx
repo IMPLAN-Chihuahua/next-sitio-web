@@ -1,10 +1,11 @@
-import { Container, Divider } from "@mui/material";
+import { Box, Container, Divider } from "@mui/material";
 import LandingPageBanner from "./components/LandingPageBanner";
 import ProjectsExplorer from "./inicio/ProjectsExplorer";
 import ServicesList from "./inicio/ServicesList";
 import StellarBanner from "./inicio/StellarBanner";
 import ProjectSlider from "./inicio/ProjectSlider";
 import News from "./inicio/News";
+import FreshDivider from "./components/FreshDivider";
 
 
 export default async function Home() {
@@ -16,29 +17,45 @@ export default async function Home() {
     });
     const json = await res.json();
     data = json?.data || {};
+    console.log(data);
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
 
+  const heroPhrases = data.Hero?.map((item: any) => ({
+    content: item.text,
+    emphasis: item.textEmphasis,
+    image: `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${item.image?.url}`
+  }))
+
   return (
     <main>
-      <LandingPageBanner
-        phrases={[{
-          content: 'Somos un Instituto que ',
-          emphasis: 'Promueve el desarrollo equitativo',
-          image: 'https://blog.uber-cdn.com/cdn-cgi/image/width=2160,quality=80,onerror=redirect,format=auto/wp-content/uploads/2019/05/Lugares-para-visitar-en-Chihuahua-1024x512.png'
-        }]}
-      />
-      <ServicesList data={data.Sections} />
-      <ProjectsExplorer data={data.Platforms} />
-      <Container>
-      </Container>
-      <StellarBanner data={data.Stellar} />
-      <Container maxWidth={'xl'}>
-        <ProjectSlider data={data.Projects} />
-        <Divider sx={{ mt: 5, mb: 5 }} />
-        <News />
-      </Container>
+      <LandingPageBanner phrases={heroPhrases} />
+      <Box sx={{
+        bgcolor: 'white',
+        backgroundSize: '20px 20px',
+      }}>
+
+        <Container>
+          <ServicesList data={data.Sections} />
+        </Container>
+
+        <Box sx={{
+          bgcolor: 'grey.50',
+        }}>
+          <ProjectsExplorer data={data.Platforms} />
+        </Box>
+        <StellarBanner data={data.Stellar} />
+        <Box sx={{
+          bgcolor: 'white',
+        }}>
+          <Container maxWidth={'xl'}>
+            <ProjectSlider data={data.Projects} />
+            <FreshDivider />
+            <News />
+          </Container>
+        </Box>
+      </Box>
     </main>
   );
 }

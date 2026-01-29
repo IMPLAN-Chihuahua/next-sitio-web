@@ -4,7 +4,7 @@ import React from 'react'
 
 const FreshDivider = () => {
     return (
-        <Box sx={{ py: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{ py: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Divider sx={{ flexGrow: 1, borderColor: 'grey.300' }} />
             <Box sx={{ mx: 2, color: 'grey.400' }}>
                 <LocationCity fontSize="large" />
