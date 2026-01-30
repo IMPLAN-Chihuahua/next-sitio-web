@@ -2,17 +2,26 @@
 
 import { createTheme } from "@mui/material"
 import { blue } from "@mui/material/colors";
+import { Montserrat } from 'next/font/google';
+
+const montserrat = Montserrat({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 
 // Obtener colores de 50-900 https://m2.material.io/inline-tools/color/
 const theme = createTheme({
 
   typography: {
-    fontFamily: 'var(--font-montserrat)',
+    fontFamily: montserrat.style.fontFamily,
     allVariants: {
-      color: '#202022'
+      color: '#202022',
+      fontFamily: montserrat.style.fontFamily,
     }
   },
+
   palette: {
     background: {
       default: '#fcfcfd'
