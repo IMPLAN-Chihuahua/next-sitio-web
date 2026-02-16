@@ -9,15 +9,26 @@ import FreshDivider from "./components/FreshDivider";
 
 
 export default async function Home() {
-  let data: any = [];
+  let data: any = {};
+  let newsData: any = [];
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/home-page`, {
-      next: { revalidate: 3600 },
-    });
-    const json = await res.json();
-    data = json?.data || {};
-    console.log(data);
+    const [homeRes, newsRes] = await Promise.all([
+      fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/home-page?populate=deep`, {
+        next: { revalidate: 3600 },
+      }),
+      fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?sort=publishedAt:desc&pagination[limit]=4&populate=*`, {
+        next: { revalidate: 3600 },
+      })
+    ]);
+
+    const homeJson = await homeRes.json();
+    const newsJson = await newsRes.json();
+
+    data = homeJson?.data || {};
+    newsData = newsJson?.data || [];
+
+    console.log(newsData)
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
@@ -52,7 +63,7 @@ export default async function Home() {
           <Container maxWidth={'xl'}>
             <ProjectSlider data={data.Projects} />
             <FreshDivider />
-            <News />
+            <News data={newsData} />
           </Container>
         </Box>
       </Box>
