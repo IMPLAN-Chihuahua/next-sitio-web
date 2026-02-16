@@ -5,7 +5,6 @@ import { EmblaOptionsType } from 'embla-carousel'
 import { Project } from '../definitions'
 
 const ProjectSlider = ({ data }: { data: Project[] }) => {
-    console.log(data)
     const OPTIONS: EmblaOptionsType = { direction: 'ltr' }
 
     return (

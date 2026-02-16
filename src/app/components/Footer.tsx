@@ -14,7 +14,6 @@ export default async function Footer() {
     });
     const json = await res.json();
     data = json.data;
-    console.log(data)
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
