@@ -30,7 +30,7 @@ import HiveIcon from '@mui/icons-material/Hive';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const departmentStyles: Record<string, { icon: SvgIconComponent }> = {
-    'Sistemas': { icon: CodeIcon },
+    'Infraestructura Tecnológica': { icon: CodeIcon },
     'Jurídico': { icon: GavelIcon, },
     'Diseño': { icon: BrushIcon, },
     'Dirección': { icon: HiveIcon, },
