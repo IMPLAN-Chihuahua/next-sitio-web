@@ -24,8 +24,6 @@ export default async function CentroEstudiosPage() {
         </Typography>
         <TrabajosTiles />
       </Container>
-      <Container maxWidth='xl'>
-      </Container>
     </main>
   )
 }
