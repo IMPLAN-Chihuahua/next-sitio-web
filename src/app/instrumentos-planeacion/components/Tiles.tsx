@@ -19,7 +19,6 @@ import { AnimatePresence, motion } from "framer-motion";
 
 
 const MotionGrid = motion.create(Grid);
-const MotionTypography = motion.create(Typography);
 
 const InstrumentosTiles = () => {
   const methods = useForm<{ anio: number[], temas: Array<TemaInstrumentoPlaneacion> }>({
@@ -136,11 +135,14 @@ const InstrumentosTiles = () => {
                   <InstrumentoCard instrumento={instrumento} />
                 </MotionGrid>
               )) : (
-                <MotionTypography
+                <MotionGrid
+                  size={12}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}>
-                  No se encontraron instrumentos de planeación
-                </MotionTypography>
+                  <Typography>
+                    No se encontraron instrumentos de planeación
+                  </Typography>
+                </MotionGrid>
               )
           }
         </AnimatePresence>
@@ -204,11 +206,13 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
               lineHeight: '1.5rem',
               textDecoration: 'none',
               display: '-webkit-box',
-              WebkitLineClamp: 3,
+              WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               wordBreak: 'break-word',
               overflow: 'hidden'
             }}
+            height={'3rem'}
+            maxHeight={'3rem'}
             variant="h3"
             mb={2.5}
             fontSize={18}
@@ -218,7 +222,7 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
             <Typography
               sx={{
                 display: '-webkit-box',
-                WebkitLineClamp: { xs: 3, md: 4 },
+                WebkitLineClamp: 3,
                 WebkitBoxOrient: 'vertical',
                 wordBreak: 'break-word',
                 overflow: 'hidden'
