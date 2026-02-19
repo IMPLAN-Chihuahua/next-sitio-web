@@ -11,12 +11,15 @@ import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
 import { Clear } from "@mui/icons-material";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { formatISO, parseISO } from "date-fns";
-import InstrumentoSkeletonList from "./InstrumentoSkeleton";
 import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
+import { AnimatePresence, motion } from "framer-motion";
 
 
+
+const MotionGrid = motion.create(Grid);
+const MotionTypography = motion.create(Typography);
 
 const InstrumentosTiles = () => {
   const methods = useForm<{ anio: number[], temas: Array<TemaInstrumentoPlaneacion> }>({
@@ -58,7 +61,7 @@ const InstrumentosTiles = () => {
           ],
         },
         {
-          temaDatosAbiertos: {
+          tema: {
             documentId: {
               $in: values.temas?.map(t => t.documentId) || []
             }
@@ -84,6 +87,14 @@ const InstrumentosTiles = () => {
     meta: { pagination: Pagination }
   }>(`/instrumentos-planeacion?${queryParams.toString()}`, cmsFetcher)
 
+  const [instrumentos, setInstrumentos] = useState<InstrumentoPlaneacion[]>([]);
+
+  useEffect(() => {
+    if (!data?.data) return;
+
+    setInstrumentos(data.data);
+  }, [data])
+
   const handleClearFiltros = useCallback(() => {
     methods.reset();
   }, []);
@@ -93,7 +104,7 @@ const InstrumentosTiles = () => {
   }
 
   if (error) {
-    return <Alert severity="error">Hubo un error al obtener los instrumentos</Alert>
+    return <Alert severity="error">Hubo un error al obtener los instrumentos de planeación</Alert>
   }
 
   return (
@@ -107,21 +118,32 @@ const InstrumentosTiles = () => {
         />
       </FormProvider>
       <Grid container spacing={2} minHeight={'600px'}>
-        {
-          isLoading ? (<InstrumentoSkeletonList />)
-            : data?.data && data.data.length > 0
-              ? data?.data.map(instrumento => (
-                <Grid
+        <AnimatePresence mode='popLayout'>
+          {
+            !isLoading && instrumentos.length > 0
+              ? instrumentos.map(instrumento => (
+                <MotionGrid
+                  layout
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.25 }}
                   key={instrumento.documentId}
                   size={{ xs: 12, md: 4 }}
                   justifyContent={{ xs: 'center' }}
                   display={'flex'}
                 >
                   <InstrumentoCard instrumento={instrumento} />
-                </Grid>
-              ))
-              : <Typography>No se encontraron instrumentos</Typography>
-        }
+                </MotionGrid>
+              )) : (
+                <MotionTypography
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}>
+                  No se encontraron instrumentos de planeación
+                </MotionTypography>
+              )
+          }
+        </AnimatePresence>
       </Grid>
       <Box height={80} display={'flex'} justifyContent={'center'} alignItems={'center'} >
         {

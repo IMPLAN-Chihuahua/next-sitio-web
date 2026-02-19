@@ -25,7 +25,7 @@ export default function TemasInstrumentoPlaneacionAutocomplete({ label, name }: 
           multiple
           value={field.value}
           onChange={(_, val) => field.onChange(val)}
-          getOptionLabel={option => option.tema || ''}
+          getOptionLabel={option => option.descripcion || ''}
           isOptionEqualToValue={(option, value) => option.documentId === value.documentId}
           options={data?.data || []}
           renderInput={params => (
