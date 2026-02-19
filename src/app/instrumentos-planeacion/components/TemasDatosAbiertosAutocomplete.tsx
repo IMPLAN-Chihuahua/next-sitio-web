@@ -3,13 +3,13 @@
 import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 import useSWRImmutable from "swr/immutable"
 import { Controller, useFormContext } from "react-hook-form"
-import { Pagination, TemaDatosAbiertos } from "@/app/definitions";
+import { Pagination, TemaInstrumentoPlaneacion } from "@/app/definitions";
 import { cmsFetcher } from "@/app/services/http";
 
 
-export default function TemasDatsAbiertosAutocomplete({ label, name }: { name: string, label?: string }) {
+export default function TemasInstrumentoPlaneacionAutocomplete({ label, name }: { name: string, label?: string }) {
   const { control } = useFormContext();
-  const { data, isLoading } = useSWRImmutable<{ data: TemaDatosAbiertos[], meta: { pagination: Pagination} }>('/temas-datos-abiertos?pagination[pageSize]=100', cmsFetcher)
+  const { data, isLoading } = useSWRImmutable<{ data: TemaInstrumentoPlaneacion[], meta: { pagination: Pagination} }>('/temas-instrumento-planeacion?pagination[pageSize]=100', cmsFetcher)
 
   if (isLoading) {
     return <CircularProgress />

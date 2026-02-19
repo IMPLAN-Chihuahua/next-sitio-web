@@ -1,5 +1,5 @@
 import { DatoGeografico } from "../cartografia/definitions";
-import { Media, MultipleMedia, TemaDatosAbiertos } from "../definitions";
+import { Media, MultipleMedia, TemaInstrumentoPlaneacion } from "../definitions";
 
 
 export type InstrumentosPageType = {
@@ -18,7 +18,7 @@ export type InstrumentoPlaneacion = {
   nombreCorto: string;
   nombreCortoSlug: string;
   version: string;
-  temaDatosAbiertos: TemaDatosAbiertos;
+  tema: TemaInstrumentoPlaneacion;
   cover: Media;
   fechaAprobacion: string;
   publicadoEn: string;

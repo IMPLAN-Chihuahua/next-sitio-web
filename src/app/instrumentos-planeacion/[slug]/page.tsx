@@ -20,7 +20,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
       'datosGeograficos',
       'datosGeograficos.cover',
       'cover',
-      'temaDatosAbiertos',
+      'tema',
       'archivosAdjuntos',
     ]
   }, { encodeValuesOnly: true });
@@ -29,7 +29,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
   const page: { data: InstrumentoPlaneacion } = await req.json();
 
   return (
-    <main>
+    <Box component={'main'} minHeight={'90vh'}>
       <Toolbar variant="dense" />
       <Container sx={{ mt: 3 }}>
         <InstrumentoDetailPageBreadcrumbs currentPageTitle={page.data.nombre} />
@@ -45,7 +45,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
             <Typography component={'h1'} fontWeight={600} fontSize={36}>{page.data.nombre}</Typography>
-            <Typography color='primary.600' fontSize={16} fontWeight={600}>{page.data.temaDatosAbiertos.tema}</Typography>
+            <Typography color='primary.600' fontSize={16} fontWeight={600}>{page.data.tema.descripcion}</Typography>
             <Typography fontWeight={500} mt={1}>
               {page.data.publicadoEn !== null ? 'Aprobado' : 'Publicado'} el {
                 parseISO(page.data.fechaAprobacion).toLocaleDateString('es-MX', { dateStyle: 'long' })}{
@@ -90,6 +90,6 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
           )
         }
       </Container>
-    </main >
+    </Box>
   )
 }

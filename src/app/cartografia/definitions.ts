@@ -1,4 +1,4 @@
-import { Media, MultipleMedia, TemaDatosAbiertos } from "../definitions";
+import { Media, MultipleMedia, TemaInstrumentoPlaneacion } from "../definitions";
 
 
 export type DatoGeografico = {
@@ -14,7 +14,7 @@ export type DatoGeografico = {
   descripcion: string;
   archivosDescargables: MultipleMedia;
   cover: Media;
-  temaDatosAbiertos: TemaDatosAbiertos;
+  tema: TemaInstrumentoPlaneacion;
   grupoCartografia: {
     id: number,
     grupo: string

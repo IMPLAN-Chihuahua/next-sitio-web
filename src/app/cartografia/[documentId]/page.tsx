@@ -14,7 +14,7 @@ export default async function CartografiaDetailPage({ params }: { params: Promis
   const { documentId } = await params;
 
   const queryParams = qs.stringify({
-    populate: ['grupoCartografia', 'cover', 'temaDatosAbiertos', 'archivosDescargables']
+    populate: ['grupoCartografia', 'cover', 'tema', 'archivosDescargables']
   })
   const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/datos-geograficos/${documentId}?${queryParams.toString()}`)
   const page: { data: DatoGeografico } = await req.json();
@@ -25,8 +25,7 @@ export default async function CartografiaDetailPage({ params }: { params: Promis
       <Container sx={{ mt: 3 }}>
         <CartografiaDetailPageBreadcrumbs currentPageTitle={page.data.objetoGeografico} />
         <Typography component={'h1'} mt={4} fontWeight={600} fontSize={36}>{page.data.objetoGeografico}</Typography>
-        <Typography mb={3} color='primary.700' fontSize={16} fontWeight={600}>{page.data.temaDatosAbiertos.tema} • {page.data.edicion}</Typography>
-
+        <Typography mb={3} color='primary.700' fontSize={16} fontWeight={600}>{page.data.tema.descripcion} • {page.data.edicion}</Typography>
         <Typography>
           {
             page.data.descripcion

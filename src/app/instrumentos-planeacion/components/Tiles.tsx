@@ -5,22 +5,21 @@ import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Pagination as 
 import useSWRImmutable from "swr/immutable";
 import qs from 'qs'
 import { cmsFetcher } from "@/app/services/http";
-import { Pagination, Tag, TemaDatosAbiertos } from "@/app/definitions";
+import { Pagination, Tag, TemaInstrumentoPlaneacion } from "@/app/definitions";
 import { InstrumentoPlaneacion } from "../definitions";
 import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
-import TagsAutocomplete from "@/app/components/TagsAutocomplete";
 import { Clear } from "@mui/icons-material";
 import { ChangeEvent, useCallback, useState } from "react";
 import { formatISO, parseISO } from "date-fns";
 import InstrumentoSkeletonList from "./InstrumentoSkeleton";
-import TemasDatsAbiertosAutocomplete from "./TemasDatosAbiertosAutocomplete";
+import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
 
 
 
 const InstrumentosTiles = () => {
-  const methods = useForm<{ anio: number[], temas: Array<TemaDatosAbiertos> }>({
+  const methods = useForm<{ anio: number[], temas: Array<TemaInstrumentoPlaneacion> }>({
     defaultValues: {
       anio: [],
       temas: []
@@ -33,7 +32,7 @@ const InstrumentosTiles = () => {
   const filterObj = {
     fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug'],
     populate: [
-      'temaDatosAbiertos',
+      'tema',
       'cover'
     ],
     pagination: {
@@ -143,7 +142,7 @@ const InstrumentosTiles = () => {
 
 
 type InstrumentoCardProps = {
-  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'temaDatosAbiertos' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug'>
+  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug'>
 }
 const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
   const anioPublicacion = parseISO(instrumento.fechaAprobacion).getFullYear();
@@ -193,7 +192,7 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
             fontSize={18}
             fontWeight={600}>{instrumento.nombre} {aboutInstrumento}</MuiLink>
           <Box mt={'auto'}>
-            <Typography variant="body2">{instrumento?.temaDatosAbiertos.tema}</Typography>
+            <Typography variant="body2">{instrumento?.tema.descripcion}</Typography>
             <Typography
               sx={{
                 display: '-webkit-box',
@@ -224,7 +223,7 @@ const InstrumentosFilters = ({ handleClearFiltros, showClearFilterButton }: { ha
       flexWrap={'wrap'}
     >
       <AnioAutocomplete />
-      <TemasDatsAbiertosAutocomplete name='temas' label='Tema datos abiertos' />
+      <TemasInstrumentoPlaneacionAutocomplete name='temas' label='Tema datos abiertos' />
       {
         showClearFilterButton && (
           <Button

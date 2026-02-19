@@ -98,11 +98,17 @@ export type Tag = {
 }
 
 
-export type TemaDatosAbiertos = {
+export type TemaInstrumentoPlaneacion = {
   readonly id: string;
   readonly documentId: string;
-  tema: string;
-  hexColor: string | null;
+  descripcion: string;
+}
+
+
+export type TemaCartografia = {
+  readonly id: string;
+  readonly documentId: string;
+  descripcion: string;
 }
 
 
