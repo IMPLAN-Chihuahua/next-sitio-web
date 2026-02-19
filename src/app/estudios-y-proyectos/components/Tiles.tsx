@@ -169,13 +169,13 @@ const TrabajosFilters = ({ handleClearFiltros, showClearFilterButton }: { handle
 
 
 
-export const AnioAutocomplete = () => {
+export const AnioAutocomplete = ({ name = 'anio', label = 'Año' }: { name?: string, label?: string }) => {
   const methods = useFormContext()
   const years = eachYearOfInterval({ start: new Date(), end: new Date(2000, 0, 1) }).map(y => y.getFullYear())
 
   return (
     <Controller
-      name="anio"
+      name={name}
       control={methods.control}
       defaultValue={null}
       render={({ field }) => (
@@ -185,11 +185,11 @@ export const AnioAutocomplete = () => {
           getOptionLabel={(option) => option.toString()}
           options={years}
           value={field.value}
-          onChange={(_, value) =>  field.onChange(value)}
+          onChange={(_, value) => field.onChange(value)}
           renderInput={(params) => (
             <TextField
               {...params}
-              label={'Año'}
+              label={label}
               sx={{ minWidth: 200 }}
               maxRows={2}
             />

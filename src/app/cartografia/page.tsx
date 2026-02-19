@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Container, Toolbar, Typography } from "@mui/material";
 import PageBanner from '../components/PageBanner';
 import { SubtitleH2 } from '../components/Titles';
-import SearchAndFiltersLayout from '../components/SearchAndFiltersLayout';
 import CartografiaTiles from './components/Tiles';
 
 export const metadata: Metadata = {
@@ -18,7 +17,7 @@ export default function DatosAbiertosPage() {
       title='Cartografía'
     />
 
-    <Container>
+    <Container sx={{ my: 4 }}>
       <SubtitleH2 title='Datos abiertos' />
       <Typography mb={1}>
         Aviso: El carácter de esta información es de uso público, puede presentar inconsistencias y variaciones temporales. Los usuarios de nuestra información y otros productos de análisis son los únicos responsables de las interpretaciones que se realicen, no existe implicación legal en el uso de la misma para el municipio o para el propio instituto.
@@ -28,7 +27,7 @@ export default function DatosAbiertosPage() {
       </Typography>
       <CartografiaTiles />
     </Container>
-    
+
 
   </main>)
 }
