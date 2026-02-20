@@ -6,7 +6,7 @@ import theme from "@/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import LocalizationProvider from "./components/AppLocalizationProvider";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -30,13 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={montserrat.variable}>
-      <body style={{ minHeight: '100vh' }}>
+      <body style={{ minHeight: '100vh', margin: 0, display: 'flex', flexDirection: 'column' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <LocalizationProvider>
               <CssBaseline />
               <Navbar />
-              {children}
+              <Box flex={1}>
+                {children}
+              </Box>
               <Footer />
               <ScrollToTop />
             </LocalizationProvider>

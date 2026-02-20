@@ -99,7 +99,12 @@ const InstrumentosTiles = () => {
   }, []);
 
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
-    setPage(val)
+    setPage(val);
+
+    window.scrollTo({
+      top: 550,
+      behavior: 'auto'
+    });
   }
 
   if (error) {
@@ -116,17 +121,18 @@ const InstrumentosTiles = () => {
           searchBarPlaceholder="Buscar instrumentos por nombre"
         />
       </FormProvider>
-      <Grid container spacing={2} minHeight={'600px'}>
+
+      <Grid container spacing={2} sx={{ my: 3 }} minHeight={'600px'}>
         <AnimatePresence mode='popLayout'>
           {
             !isLoading && instrumentos.length > 0
               ? instrumentos.map(instrumento => (
                 <MotionGrid
                   layout
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.25 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
                   key={instrumento.documentId}
                   size={{ xs: 12, md: 4 }}
                   justifyContent={{ xs: 'center' }}
@@ -135,10 +141,7 @@ const InstrumentosTiles = () => {
                   <InstrumentoCard instrumento={instrumento} />
                 </MotionGrid>
               )) : (
-                <MotionGrid
-                  size={12}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}>
+                <MotionGrid size={12}>
                   <Typography>
                     No se encontraron instrumentos de planeación
                   </Typography>
@@ -147,17 +150,19 @@ const InstrumentosTiles = () => {
           }
         </AnimatePresence>
       </Grid>
-      <Box height={80} display={'flex'} justifyContent={'center'} alignItems={'center'} >
-        {
-          data?.meta && (
-            <MuiPagination
-              page={page}
-              onChange={handlePageChange}
-              count={data?.meta.pagination.pageCount}
-              size="medium"
-            />
-          )
-        }
+
+      <Box
+        my={2}
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+      >
+        <MuiPagination
+          page={page}
+          onChange={handlePageChange}
+          count={data?.meta.pagination.pageCount || 0}
+          size='medium'
+        />
       </Box>
     </Box>
   )

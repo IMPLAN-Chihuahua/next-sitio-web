@@ -38,7 +38,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
             <Image
               src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
               layout="fill"
-              objectFit="cover"
+              objectFit="contain"
               unoptimized
               alt=''
             />

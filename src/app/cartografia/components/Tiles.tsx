@@ -2,7 +2,7 @@
 
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
 import { cmsFetcher } from "@/app/services/http";
-import { Alert, Box, Card, CardContent, CardMedia, Link as MuiLink, Grid, Typography, CardActionArea, Stack, Skeleton } from "@mui/material"
+import { Alert, Box, Card, CardContent, CardMedia, Link as MuiLink, Grid, Typography, CardActionArea, Stack, Skeleton, Pagination as MuiPagination } from "@mui/material"
 import useSWRImmutable from "swr/immutable";
 import qs from 'qs';
 import { Pagination, TemaCartografia, TemaInstrumentoPlaneacion } from "@/app/definitions";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { DatoGeografico } from "../definitions";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { CartografiaFilters } from "./CartografiaFilters";
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 
@@ -19,6 +19,7 @@ const MotionGrid = motion.create(Grid);
 
 const CartografiaTiles = () => {
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const methods = useForm<{
     ediciones: number[],
@@ -69,7 +70,11 @@ const CartografiaTiles = () => {
           }
         }
       ]
-    }
+    },
+    pagination: {
+      pageSize: 6,
+      page
+    },
   })
 
   const { data, isLoading, error } = useSWRImmutable<{
@@ -89,6 +94,15 @@ const CartografiaTiles = () => {
     methods.reset();
   }, []);
 
+
+  const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
+    setPage(val);
+
+    window.scrollTo({
+      top: 550,
+      behavior: 'auto'
+    });
+  }
 
   if (error) {
     console.error(error)
@@ -113,10 +127,10 @@ const CartografiaTiles = () => {
                 ? datosGeograficos.map((geografico) => (
                   <MotionGrid
                     layout
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: .25 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
                     key={geografico.documentId}
                     size={{ xs: 12, md: 4 }}
                   >
@@ -134,6 +148,23 @@ const CartografiaTiles = () => {
             }
           </AnimatePresence>
         </Grid>
+      </Box>
+      <Box
+        my={2}
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+      >
+        {
+          data?.meta && (
+            <MuiPagination
+              page={page}
+              onChange={handlePageChange}
+              count={data?.meta.pagination.pageCount}
+              size="medium"
+            />
+          )
+        }
       </Box>
     </Box>
   )

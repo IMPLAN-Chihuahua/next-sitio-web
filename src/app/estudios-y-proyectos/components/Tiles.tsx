@@ -4,7 +4,7 @@ import { Alert, Autocomplete, Box, Button, Pagination, Stack, TextField, Typogra
 import qs from 'qs';
 import { TrabajoPlaneacion } from "../definitions";
 import TrabajoTile from "./Tile";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ColaboradorExterno, Pagination as PaginationType, Tag } from "@/app/definitions";
 import { eachYearOfInterval } from "date-fns";
 import ColaboradoresExternosAutocomplete from "@/app/components/ColaboradoresExternosAutocomplete";
@@ -14,6 +14,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { TrabajosTilesSkeletons } from "./Skeleton";
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
 import useSWRImmutable from "swr/immutable";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 
@@ -87,8 +88,23 @@ export default function TrabajosTiles() {
     meta: { pagination: PaginationType }
   }>(`/trabajos-planeacion?${estudiosQueryParams.toString()}`, cmsFetcher);
 
+  const [trabajos, setTrabajos] = useState<TrabajoPlaneacion[]>([])
+
+  useEffect(() => {
+    if (!data?.data) return;
+
+    setTrabajos(data.data)
+  }, [data]);
+
+
+
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
-    setPage(val)
+    setPage(val);
+
+    window.scrollTo({
+      top: 550,
+      behavior: 'auto'
+    });
   }
 
   const handleClearFiltros = useCallback(() => {
@@ -114,28 +130,40 @@ export default function TrabajosTiles() {
           }
         />
       </FormProvider>
-      <Box display={'flex'} flexDirection={'column'} minHeight={'600px'} alignItems={'center'}>
-        {
-          isLoading
-            ? <TrabajosTilesSkeletons />
-            : data !== undefined && data.data !== null && data?.data.length > 0
-              ? data.data.map(trabajo => (<TrabajoTile key={trabajo.documentId} trabajoPlaneacion={trabajo} />))
+      <Box component={'section'} display={'flex'} flexDirection={'column'} alignItems={'center'} minHeight={'600px'}>
+        <AnimatePresence mode='popLayout'>
+          {
+            !isLoading && trabajos.length > 0
+              ? trabajos.map(trabajo => (
+                <Box
+                  key={trabajo.documentId}
+                  sx={{ mb: 2.5, width: '100%', maxWidth: { xs: '450px', md: '100%' } }}
+                  layout
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                  component={motion.div}>
+                  <TrabajoTile trabajoPlaneacion={trabajo} />
+                </Box>
+              ))
               : <Typography>No se encontraron registros</Typography>
-        }
+          }
+        </AnimatePresence>
       </Box>
-      <Box height={80} display={'flex'} justifyContent={'center'} alignItems={'center'} >
-        {
-          data?.meta && (
-            <Pagination
-              page={page}
-              onChange={handlePageChange}
-              count={data?.meta.pagination.pageCount}
-              size='medium'
-            />
-          )
-        }
+      <Box
+        my={2}
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'} >
+        <Pagination
+          page={page}
+          onChange={handlePageChange}
+          count={data?.meta.pagination.pageCount || 0}
+          size='medium'
+        />
       </Box>
-    </Box >
+    </Box>
   )
 }
 
