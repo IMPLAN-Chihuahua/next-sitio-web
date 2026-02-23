@@ -42,7 +42,7 @@ const ReportesTabs = ({ availableYears }: { availableYears: number[] }) => {
         <AnimatePresence mode='popLayout'>
           {
             availableYears.map(y => (
-              <TabPanel value={y} key={y} sx={{ px: 0 }}>
+              <TabPanel value={y} key={y} sx={{ px: 0, pb: 0 }}>
                 <DynamicReportes year={y} />
               </TabPanel>
             ))

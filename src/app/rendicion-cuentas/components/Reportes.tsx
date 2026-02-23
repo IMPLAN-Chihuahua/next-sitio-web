@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import { ExpandMore, More, UnfoldMore } from "@mui/icons-material";
 import { MultipleMedia } from "@/app/definitions";
 import { filesize } from "filesize";
+import { ReporteFinanciero } from "../definitions";
 
 
 
-const MotionAccordion = motion.create(Accordion)
 const MotionBox = motion.create(Box);
 
 const Reportes = ({ year }: { year: number }) => {
@@ -26,7 +26,7 @@ const Reportes = ({ year }: { year: number }) => {
   })
   const { data, error } = useSWRImmutable(`/reportes-financieros?${params.toString()}`, cmsFetcher);
 
-  const [reportes, setReportes] = useState<any[]>([]);
+  const [reportes, setReportes] = useState<ReporteFinanciero[]>([]);
 
   useEffect(() => {
     if (!data?.data) return;
@@ -44,13 +44,19 @@ const Reportes = ({ year }: { year: number }) => {
   }
 
   return (
-    <MotionBox layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .3 }}>
+    <MotionBox
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: .3 }}
+    >
       {
         reportes.map((reporte, idx) => (
           <Accordion
+            disableGutters
             variant="outlined"
             key={reporte.documentId}
-            defaultExpanded={idx === 0}
           >
             <AccordionSummary
               expandIcon={<ExpandMore />}
@@ -87,7 +93,9 @@ const Reportes = ({ year }: { year: number }) => {
 
 const AccordionAdjuntos = ({ grupo, adjuntos }: { grupo: string, adjuntos: MultipleMedia }) => {
   return (
-    <Accordion>
+    <Accordion
+      variant="outlined"
+    >
       <AccordionSummary
         expandIcon={<UnfoldMore />}
       >

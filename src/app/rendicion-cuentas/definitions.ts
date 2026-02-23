@@ -1,4 +1,4 @@
-import { MultipleMedia } from "../definitions";
+import { Media, MultipleMedia } from "../definitions";
 
 
 export type ReporteFinanciero = {
@@ -6,6 +6,16 @@ export type ReporteFinanciero = {
   readonly id: number;
   anio: number;
   isAnual: boolean;
-  trimestre: number;
+  trimestre: number | null;
   reportes: MultipleMedia;
+}
+
+
+export type RendicionDeCuentasPage = {
+  readonly documentId: string;
+  readonly id: number;
+  cover: Media;
+  titulo: string;
+  descripcion: string;
+  contenido: string;
 }
