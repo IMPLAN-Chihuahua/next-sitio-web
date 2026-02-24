@@ -2,7 +2,7 @@
 import React from 'react'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
-import { Novedades } from '../novedades/definitions';
+import { Novedades } from '../editorial/definitions';
 
 const News = ({ data }: { data: Novedades[] }) => {
     if (data.length === 0) return null;
@@ -27,7 +27,7 @@ const News = ({ data }: { data: Novedades[] }) => {
                 </Typography>
                 <Button
                     component={Link}
-                    href="/novedades"
+                    href="/editorial"
                     variant='outlined'
                     sx={{
                         textTransform: 'none',
