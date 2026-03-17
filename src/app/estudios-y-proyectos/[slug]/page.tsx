@@ -10,6 +10,7 @@ import { Media, MultipleMedia } from "@/app/definitions";
 import { ShareOptions } from "../components/ShareOptions";
 import { Metadata } from "next";
 import { filesize } from "filesize";
+import Carousel, { Slide } from "../components/Carousel";
 
 
 type DetailPageMetadataProps = {
@@ -187,7 +188,6 @@ const ContentSection = ({ contenido }: { contenido: string }) => {
         <MDXRemote
           source={contenido}
           components={{
-            // TODO: Agregar carousel component
             p: props => <Typography mb={1.3}>{props.children}</Typography>,
             a: props => <MuiLink href={props.href}>{props.children}</MuiLink>,
             li: props => <Typography component={'li'} ml={2}>{props.children}</Typography>,
@@ -196,7 +196,9 @@ const ContentSection = ({ contenido }: { contenido: string }) => {
                 <source src={props.src} type={props.type}></source>
               </video>
               <Typography variant="caption" textAlign='center' display='block' mb={1}>Video: {props.caption}</Typography>
-            </Box>)
+            </Box>),
+            Carousel: props => (<Carousel>{props.children}</Carousel>),
+            Slide: props => <Slide {...props} />
           }}
         />
       </Suspense>
