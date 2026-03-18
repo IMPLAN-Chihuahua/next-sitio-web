@@ -1,6 +1,6 @@
 'use client'
 
-import { AppBar, Box, Button, Collapse, Container, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, Toolbar, Typography, useMediaQuery } from "@mui/material";
+import { AppBar, Box, Button, Collapse, Container, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, menuItemClasses, Toolbar, Typography, useMediaQuery } from "@mui/material";
 import { Link as MuiLink } from "@mui/material";
 import Link from "next/link";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -38,15 +38,9 @@ const navLinks = [{
   menuItems: []
 },
 {
-  label: 'Transparencia',
-  href: '/transparencia',
-  menuItems: [{
-    label: 'Licitaciones',
-    href: '/licitaciones'
-  }, {
-    label: 'Rendición de cuentas',
-    href: '/rendicion-cuentas'
-  }]
+  label: 'Licitaciones',
+  href: '/licitaciones',
+  menuItems: []
 }]
 
 
