@@ -2,7 +2,7 @@
 
 import { cmsFetcher } from "@/app/services/http"
 import { Alert, Autocomplete, Box, FormControl, Grid, InputLabel, Link as MuiLink, OutlinedInput, Paper, TextField } from "@mui/material"
-import { DataGrid, GridColDef } from "@mui/x-data-grid"
+import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid"
 import useSWRImmutable from "swr/immutable"
 import qs from 'qs'
 import { Convenio } from "../definitions"
@@ -62,29 +62,37 @@ export const ConveniosTable = () => {
     field: 'colaboradorExterno',
     headerName: 'Colaborador',
     valueGetter: (_, row) => row.colaboradores.map((c: ColaboradorExterno) => `${c.nombre}${c.acronimo ? ` (${c.acronimo})` : ''}`).join(','),
-    flex: 1
+    width: 400
   }, {
     field: 'anio',
     headerName: 'Año'
-  }, {
-    field: 'convenio',
-    headerName: 'Convenio',
-    renderCell: params => (
-      <MuiLink target='_blank' href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.convenio.url}`}>Convenio</MuiLink>
-    )
-  }, {
-    field: 'terminosReferencia',
-    headerName: 'Términos de referencia',
-    width: 200,
-    renderCell: params => (
-      <MuiLink target='_blank' href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.terminosReferencia.url}`}>Términos de referencia</MuiLink>
-    )
-  }, {
-    field: 'presentacion',
-    headerName: 'Presentación',
-    width: 150,
-    renderCell: params => (
-      <MuiLink target='_blank' href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.presentacion.url}`}>Presentación</MuiLink>
+  },
+  {
+    field: '_',
+    sortable: false,
+    headerName: 'Archivos adjuntos',
+    flex: 1,
+    renderCell: ({ row }) => (
+      <Box>
+        <MuiLink
+          target='_blank'
+          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.convenio.url}`}
+          display={'block'}
+          maxWidth={'fit-content'}
+        >Convenio</MuiLink>
+        <MuiLink
+          target='_blank'
+          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.terminosReferencia.url}`}
+          display={'block'}
+          maxWidth={'fit-content'}
+        >Términos de referencia</MuiLink>
+        <MuiLink
+          target='_blank'
+          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.presentacion.url}`}
+          display={'block'}
+          maxWidth={'fit-content'}
+        >Presentación</MuiLink>
+      </Box>
     )
   }]
 
@@ -136,6 +144,12 @@ export const ConveniosTable = () => {
           loading={isLoading}
           rows={data?.data}
           columns={columns}
+          getRowHeight={() => 'auto'}
+          sx={{
+            [`& .${gridClasses.cell}`]: {
+              py: 1,
+            },
+          }}
         />
       </Paper>
     </Box>
