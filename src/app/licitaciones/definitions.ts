@@ -72,3 +72,18 @@ export type AdquisicionDirecta = {
   fechaResolucion: string;
   dictamenExcepcion: Media;
 }
+
+
+export type Subasta = {
+  readonly id: string;
+  readonly documentId: string;
+  identificador: string;
+  shortDescripcion: string;
+  convocatoria: Media;
+  bases: Media;
+  resolucion: Media | null;
+  estatus: 'Vigente' | 'Concluida';
+  aperturaPosturas: Media | null;
+  juntaAclaraciones: Media | null;
+  otros: MultipleMedia;
+}

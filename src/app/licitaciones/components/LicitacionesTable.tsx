@@ -105,7 +105,7 @@ export default function LicitacionesTable() {
     filterable: false,
   }, {
     field: 'descripcion',
-    headerName: 'Descripción',
+    headerName: 'Adquisición',
     width: 300,
     sortable: false,
     filterable: false,
@@ -150,7 +150,7 @@ export default function LicitacionesTable() {
                   href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${mod.url}`}
                   target='_blank'
                 >
-                  {idx + 1}ª  Modificacion
+                  {idx + 1}ª  Modificacion de la convocatoria
                 </MuiLink>
               </li>
             ))

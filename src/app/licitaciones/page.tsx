@@ -5,9 +5,10 @@ import qs from 'qs';
 import LicitacionCard from "./components/LicitacionCard";
 import { SubtitleH2 } from "../components/Titles";
 import AdquisicionesDirectasTable from "./components/AdquisicionesDirectasTable";
-import { AdquisicionDirecta, Licitacion, LicitacionPage } from "./definitions";
+import { AdquisicionDirecta, Licitacion, LicitacionPage, Subasta } from "./definitions";
 import { OpenInNew } from "@mui/icons-material";
 import { format, formatISO } from "date-fns";
+import { SubastasTable } from "./components/SubastasTable";
 
 
 const queryForPage = qs.stringify({
@@ -25,16 +26,31 @@ const queryForAdquisiciones = qs.stringify({
     }]
   }
 }, {
-  encode: false
+  encodeValuesOnly: true
 })
+
+const queryForSubastas = qs.stringify({
+  populate: '*',
+  filters: {
+    $and: [{
+      createdAt: {
+        $gte: formatISO(new Date(new Date().getFullYear(), 0, 1), { representation: 'date' }),
+        $lte: formatISO(new Date(new Date().getFullYear(), 11, 31), { representation: 'date' })
+      }
+    }]
+  }
+}, { encodeValuesOnly: true })
 
 
 export default async function LicitacionesPage() {
   const pageReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/licitaciones-page?${queryForPage}`);
   const adquisicionesReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/adquisiciones-directas?${queryForAdquisiciones}`)
+  const subastasReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/subastas?${queryForSubastas}`)
+
   const licitacionesPage: { data: LicitacionPage } = await pageReq.json();
   const adquisicionesList: { data: AdquisicionDirecta[] } = await adquisicionesReq.json();
-  
+  const { data: subastas }: { data: Subasta[] } = await subastasReq.json();
+
   return (
     <main>
       <PageBanner
@@ -42,7 +58,7 @@ export default async function LicitacionesPage() {
         title="¿Cómo compramos?"
         description="En el IMPLAN estamos comprometidos con la transparencia y queremos que conozcas cómo invertimos tus impuestos"
       />
-      <Container>
+      <Container sx={{ my: 3 }}>
         <Button
           LinkComponent={MuiLink}
           href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
@@ -73,19 +89,18 @@ export default async function LicitacionesPage() {
 
         <Box component='section' my={2}>
           <SubtitleH2 title="Licitaciones públicas" />
-          <Typography mb={1}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias, ipsam porro dolore, dicta quo temporibus quisquam, mollitia suscipit quam animi ipsa fugiat alias hic aliquam? Amet molestiae laudantium nobis dicta.
-          </Typography>
-
           <LicitacionesTable />
         </Box>
 
-        <Box mt={2} mb={3}>
+        <Box component={'section'} my={2}>
           <SubtitleH2 title="Adjudicaciones directas" />
-          <Typography mb={1}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, mollitia tempora ut illum porro, odit quae nulla facere autem tempore quos aliquid expedita sapiente. Similique consequatur dolorum cum facilis mollitia!
-          </Typography>
           <AdquisicionesDirectasTable adquisiciones={adquisicionesList.data} />
+        </Box>
+
+
+        <Box my={2} component={'section'}>
+          <SubtitleH2 title="Subastas" />
+          <SubastasTable subastas={subastas} />
         </Box>
       </Container>
     </main>
