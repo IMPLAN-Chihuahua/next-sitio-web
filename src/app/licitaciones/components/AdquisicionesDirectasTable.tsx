@@ -19,7 +19,8 @@ export default function AdquisicionesDirectasTable({ adquisiciones }: { adquisic
           </TableRow>
         </TableHead>
         <TableBody>
-          {
+          { 
+          adquisiciones.length > 0 ?
             adquisiciones.map(adquisicion => (
               <TableRow key={adquisicion.documentId}>
                 <TableCell sx={{ minWidth: '200px' }}>
@@ -39,6 +40,9 @@ export default function AdquisicionesDirectasTable({ adquisiciones }: { adquisic
                 </TableCell>
               </TableRow>
             ))
+            : (
+              <TableRow><TableCell>No se encontraron registros de este año</TableCell></TableRow>
+            )
           }
         </TableBody>
       </Table>

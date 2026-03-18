@@ -31,7 +31,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
   return (
     <Box component={'main'} minHeight={'90vh'}>
       <Toolbar variant="dense" />
-      <Container sx={{ mt: 3 }}>
+      <Container sx={{ my: 3 }}>
         <InstrumentoDetailPageBreadcrumbs currentPageTitle={page.data.nombre} />
         <Grid container my={4} spacing={2}>
           <Grid height={490} maxWidth={'450px'} position={'relative'} size={{ xs: 12, md: 4 }} display={'flex'} marginX={'auto'}>

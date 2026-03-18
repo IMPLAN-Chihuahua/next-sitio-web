@@ -19,11 +19,11 @@ export default async function InstrumentosPlaneacionPage() {
   return (<Box component={'main'} minHeight='100vh'>
     <PageBanner
       cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
-      title={`Datos abiertos ${page.data.titulo}`}
+      title={`${page.data.titulo}`}
       description={page.data.descripcion}
     />
     <Container>
-      <SubtitleH2 title='Planeación urbana' />
+      <SubtitleH2 title='Datos abiertos planeación urbana' />
       <Typography>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias illo eos commodi beatae a recusandae ratione, nihil esse dolor reiciendis eaque, deleniti voluptate ab fuga consectetur ipsam unde modi libero.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla soluta voluptatibus dolorem eius, deserunt eligendi sint dolor perspiciatis neque perferendis tenetur ducimus quis? Ducimus impedit omnis sit unde. Id, atque.

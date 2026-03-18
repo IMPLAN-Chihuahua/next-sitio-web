@@ -34,7 +34,7 @@ export default async function LicitacionesPage() {
   const adquisicionesReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/adquisiciones-directas?${queryForAdquisiciones}`)
   const licitacionesPage: { data: LicitacionPage } = await pageReq.json();
   const adquisicionesList: { data: AdquisicionDirecta[] } = await adquisicionesReq.json();
-
+  
   return (
     <main>
       <PageBanner
@@ -80,7 +80,7 @@ export default async function LicitacionesPage() {
           <LicitacionesTable />
         </Box>
 
-        <Box my={2}>
+        <Box mt={2} mb={3}>
           <SubtitleH2 title="Adjudicaciones directas" />
           <Typography mb={1}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, mollitia tempora ut illum porro, odit quae nulla facere autem tempore quos aliquid expedita sapiente. Similique consequatur dolorum cum facilis mollitia!

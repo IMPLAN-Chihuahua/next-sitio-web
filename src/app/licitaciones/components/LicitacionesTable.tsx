@@ -83,7 +83,7 @@ export default function LicitacionesTable() {
       page: paginationModel.page + 1,
       pageSize: paginationModel.pageSize
     }
-  }, { encode: false })
+  }, { encodeValuesOnly: true })
 
   const handleDebouncedSearch = useDebouncedCallback((value: string) => {
     setSearch(value)
@@ -93,7 +93,7 @@ export default function LicitacionesTable() {
 
   if (error) {
     return <Alert severity="error">
-      <AlertTitle color='inherit'>Hubo un error al obtener las licitaciones</AlertTitle>
+      Hubo un error al obtener las licitaciones
     </Alert>
   }
 

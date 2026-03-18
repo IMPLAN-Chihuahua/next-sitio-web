@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Box, CircularProgress, Container, Link, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Link, Toolbar, Typography } from "@mui/material";
 import PageBanner from '../components/PageBanner';
 import { SubtitleH2 } from '../components/Titles';
 import { CuentaPublicaSection } from './components/ReportesTable';
@@ -22,12 +22,8 @@ export default async function QuienesSomosPage() {
 
   return (
     <main>
-      <PageBanner
-        title={rendicionCuentasPage.data.titulo}
-        description={rendicionCuentasPage.data.descripcion}
-        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${rendicionCuentasPage.data.cover.url}`}
-      />
-      <Container>
+      <Toolbar variant='dense' />
+      <Container sx={{ my: 3 }}>
         <CuentaPublicaSection availableYears={cuentaPublicaYears} />
         <Box>
           <Suspense fallback={<CircularProgress />}>

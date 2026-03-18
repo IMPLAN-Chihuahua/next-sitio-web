@@ -58,7 +58,6 @@ export function Slide(props: { color: string, desc?: string, url: string }) {
     <Box
       className={styles.embla__slide}
       minHeight={'35rem'}
-      bgcolor={props.color}
       position={'relative'}>
       <Image
         alt={props.desc ? props.desc : ''}
