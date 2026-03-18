@@ -3,12 +3,10 @@ import qs from 'qs'
 import { InstrumentoDetailPageBreadcrumbs } from "../components/InstrumentoBreadcrumbs";
 import { InstrumentoPlaneacion } from "../definitions";
 import Image from "next/image";
-import { parseISO, parseJSON } from "date-fns";
+import { parseISO } from "date-fns";
 import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
-import { SubtitleH2 } from "@/app/components/Titles";
-import Link from "next/link";
 import CartografiaCard from "../components/CartografiaCard";
 
 
