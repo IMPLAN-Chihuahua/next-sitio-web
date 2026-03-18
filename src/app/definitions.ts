@@ -148,6 +148,7 @@ export type TeamMember = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  prefix: string | null;
 }
 
 export type VacanteTipo = 'Practicas' | 'Trabajo' | 'Servicio';
