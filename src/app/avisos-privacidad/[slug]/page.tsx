@@ -2,6 +2,7 @@ import { Alert, Box, Button, Container, Link, Toolbar, Typography } from "@mui/m
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import qs from 'qs'
 import { AvisoPrivacidadDetailPageBreadcrumbs } from "./components/AvisoPrivacidadBreadcrumb";
+import { AvisoPrivacidad } from "../definitions";
 
 
 
@@ -11,13 +12,18 @@ export default async function AvisoPrivacidadDetailPage({ params }: { params: Pr
     populate: ['adjunto']
   })
   const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/avisos-privacidad/${slug}?${queryParams}`);
-  const { data: aviso } = await req.json();
+  const { data: aviso }: { data: AvisoPrivacidad } = await req.json();
   return (
     <Box>
       <Toolbar variant="dense" />
       <Container sx={{ my: 3 }}>
         <AvisoPrivacidadDetailPageBreadcrumbs currentPageTitle={aviso.titulo} />
-        <Button component={Link} variant="outlined" sx={{ my: 3 }}>Descargar PDF</Button>
+        <Button
+          target="_blank"
+          component={Link}
+          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${aviso.adjunto.url}`}
+          variant="outlined"
+          sx={{ my: 3 }}>Descargar PDF</Button>
         <MDXRemote
           source={aviso.contenido}
           components={{
