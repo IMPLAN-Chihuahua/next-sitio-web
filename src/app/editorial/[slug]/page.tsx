@@ -1,15 +1,5 @@
 import {
-    Box,
-    CircularProgress,
-    Container,
-    Divider,
-    Grid,
-    Link as MuiLink,
-    Toolbar,
-    Typography,
-    Stack,
-    Chip,
-    Avatar
+    Box, CircularProgress, Container, Divider, Grid, Link as MuiLink, Toolbar, Typography, Stack, Chip, Avatar
 } from "@mui/material";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import qs from 'qs';
@@ -33,7 +23,6 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
 
     const queryParams = qs.stringify({
         filters: { slug: { $eq: slug } },
-        populate: ['media']
     }, { encodeValuesOnly: true });
 
     try {
@@ -62,11 +51,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
     const queryParams = qs.stringify({
         filters: { slug: { $eq: slug } },
-        populate: [
-            'media',
-            'autors.photo',
-            'tags'
-        ]
     }, { encodeValuesOnly: true });
 
     const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?${queryParams}`, {
@@ -76,6 +60,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     const json = await req.json();
     const article: Novedades = json.data?.[0];
 
+    console.log(article)
     if (!article) {
         notFound();
     }
@@ -138,7 +123,6 @@ const HeaderSection = ({ article }: { article: Novedades }) => {
             </Typography>
 
             <Stack direction="row" alignItems="center" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
-                {/* Autor principal */}
                 {article.autors && article.autors.length > 0 && (
                     <Stack direction="row" alignItems="center" spacing={1.5}>
                         <Avatar
@@ -200,7 +184,7 @@ const ContentSection = ({ content }: { content: string }) => {
 
     return (
         <Box component='article' my={4} sx={{
-            '& p': { mb: 3, fontSize: '1.15rem', lineHeight: 1.8, color: 'text.secondary' },
+            '& .mdx-paragraph': { mb: 3, fontSize: '1.15rem', lineHeight: 1.8, color: 'text.secondary' },
             '& h2': { mt: 6, mb: 3, fontSize: '1.8rem', fontWeight: 700, color: 'primary.900' },
             '& h3': { mt: 4, mb: 2, fontSize: '1.5rem', fontWeight: 600, color: 'primary.800' },
             '& ul, & ol': { mb: 3, ml: 3, color: 'text.secondary', fontSize: '1.15rem', lineHeight: 1.8 },
@@ -214,7 +198,8 @@ const ContentSection = ({ content }: { content: string }) => {
                 <MDXRemote
                     source={content}
                     components={{
-                        p: props => <Typography component="p" {...props} />,
+                        p: props => <Typography component="div" className="mdx-paragraph" {...props} />,
+
                         a: props => <MuiLink href={props.href} target="_blank" underline="hover" color="primary.main">{props.children}</MuiLink>,
                         img: props => (
                             <Box my={4} textAlign="center">
