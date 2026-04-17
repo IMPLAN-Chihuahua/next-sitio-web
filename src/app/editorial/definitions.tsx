@@ -21,6 +21,7 @@ export type Novedades = {
     seoDescription: string | null;
     media: MultipleMedia;
     autors: Autor[];
+    tags?: Tag[];
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
@@ -35,4 +36,14 @@ export type EditorialData = {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+}
+
+export type Tag = {
+    readonly id: number;
+    readonly documentId: string;
+    name: string;
+    slug: string;
+    hexColor: string;
+    createdAt: string;
+    updatedAt: string;
 }
