@@ -29,14 +29,15 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
         const page = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?${queryParams}`);
         const json = await page.json();
         const article: Novedades = json.data?.[0];
-
+        console.log('artikle')
+        console.log(article)
         if (!article) return { title: 'Artículo no encontrado | IMPLAN' };
 
         const imageUrl = article.media?.[0]?.formats?.small?.url || article.media?.[0]?.url;
         const images = imageUrl ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl}`] : [];
 
         return {
-            title: `${article.seoTitle || article.title} | IMPLAN`,
+            title: `${article.title} | IMPLAN`,
             description: article.seoDescription || article.description,
             openGraph: {
                 images
@@ -123,21 +124,33 @@ const HeaderSection = ({ article }: { article: Novedades }) => {
             </Typography>
 
             <Stack direction="row" alignItems="center" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
-                {article.autors && article.autors.length > 0 && (
+                {article.autor && article.autor.length > 0 && (
                     <Stack direction="row" alignItems="center" spacing={1.5}>
-                        <Avatar
-                            src={article.autors[0].photo?.url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${article.autors[0].photo.url}` : ''}
-                            alt={article.autors[0].nombre}
-                            sx={{ width: 45, height: 45 }}
-                        />
-                        <Box>
-                            <Typography variant="subtitle2" fontWeight={700} lineHeight={1.2}>
-                                {article.autors[0].nombre}
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                                {article.autors[0].role || 'Redacción IMPLAN'}
-                            </Typography>
-                        </Box>
+                        {article.autor.map((autor, idx) => (
+                            <Stack key={idx} direction="row" alignItems="center" spacing={1}>
+                                <Avatar
+                                    src={autor.photo?.formats?.small?.url
+                                        ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${autor.photo.formats.small.url}`
+                                        : ''}
+                                    alt={`${autor.nombres} ${autor.apellidos}`}
+                                    sx={{
+                                        width: 56,
+                                        height: 56,
+                                        '& img': {
+                                            objectPosition: 'center top'
+                                        }
+                                    }}
+                                />
+                                <Box>
+                                    <Typography variant="subtitle2" fontWeight={700} lineHeight={1.2}>
+                                        {autor.prefix ? `${autor.prefix}. ` : ''}{autor.nombres} {autor.apellidos}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        {autor.titulo || 'Redacción IMPLAN'}
+                                    </Typography>
+                                </Box>
+                            </Stack>
+                        ))}
                     </Stack>
                 )}
 
