@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
 import { SvgIconComponent } from "@mui/icons-material";
 
@@ -10,6 +9,7 @@ type TeamMemberProps = {
     imageUrl: string;
     icon: SvgIconComponent;
     iconColor?: string;
+    email?: string;
 };
 
 const TeamMemberCard = ({
@@ -17,7 +17,8 @@ const TeamMemberCard = ({
     role,
     imageUrl,
     icon: Icon,
-    iconColor = '#ef5350'
+    iconColor = '#ef5350',
+    email,
 }: TeamMemberProps) => {
     return (
         <Box
@@ -32,11 +33,14 @@ const TeamMemberCard = ({
                 },
                 '&:hover .member-icon': {
                     transform: 'scale(1.1) rotate(5deg)',
-                }
+                },
+                '&:hover .member-email': {
+                    opacity: 1,
+                    transform: 'translateY(0)',
+                },
             }}
         >
             <Box sx={{ position: 'relative', mb: 2 }}>
-
                 <Avatar
                     className="member-image"
                     src={imageUrl}
@@ -55,7 +59,6 @@ const TeamMemberCard = ({
                         boxShadow: 3,
                     }}
                 />
-
                 <Box
                     className="member-icon"
                     sx={{
@@ -73,7 +76,7 @@ const TeamMemberCard = ({
                         color: 'white',
                         boxShadow: 2,
                         transition: 'transform 0.3s ease',
-                        zIndex: 2
+                        zIndex: 2,
                     }}
                 >
                     <Icon sx={{ fontSize: 24 }} />
@@ -87,6 +90,31 @@ const TeamMemberCard = ({
             <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
                 {role}
             </Typography>
+
+            <Box
+                component="a"
+                href={email ? `mailto:${email}` : undefined}
+                className="member-email"
+                sx={{
+                    mt: 0.75,
+                    fontSize: '0.7rem',
+                    color: 'text.disabled',
+                    textDecoration: 'none',
+                    letterSpacing: '0.02em',
+                    borderBottom: '0.5px solid',
+                    borderColor: 'divider',
+                    opacity: 0,
+                    transform: 'translateY(-4px)',
+                    transition: 'opacity 0.3s ease, transform 0.3s ease',
+                    visibility: email ? 'visible' : 'hidden',
+                    '&:hover': {
+                        color: 'text.secondary',
+                        borderColor: 'text.disabled',
+                    },
+                }}
+            >
+                {email}
+            </Box>
         </Box>
     );
 };

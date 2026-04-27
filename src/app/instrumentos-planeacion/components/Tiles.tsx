@@ -85,7 +85,7 @@ const InstrumentosTiles = () => {
     data: InstrumentoPlaneacion[],
     meta: { pagination: Pagination }
   }>(`/instrumentos-planeacion?${queryParams.toString()}`, cmsFetcher)
-
+  console.log(data)
   const [instrumentos, setInstrumentos] = useState<InstrumentoPlaneacion[]>([]);
 
   useEffect(() => {
@@ -178,6 +178,11 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
   const aboutInstrumento = parseInt(instrumento.version) === anioPublicacion
     ? `(${anioPublicacion})`
     : `(${instrumento.version} ${anioPublicacion})`
+
+  const coverUrl = instrumento.cover?.url
+    ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${instrumento.cover.url}`
+    : 'https://thumbs.dreamstime.com/b/web-324671543.jpg';
+
   return (
     <Card variant="outlined"
       sx={{
@@ -196,8 +201,8 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
         <CardMedia
           component='img'
           sx={{ height: '480px', maxHeight: '480px' }}
-          image={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${instrumento.cover.url}`}
-          title={instrumento.cover.caption || `${instrumento.nombre} ${aboutInstrumento}`}
+          image={coverUrl}
+          title={instrumento.cover?.caption || `${instrumento.nombre} ${aboutInstrumento}`}
         />
       </CardActionArea>
       <CardContent sx={{ flex: 1 }}>
