@@ -3,10 +3,12 @@ import { Media, MultipleMedia } from "../definitions";
 export type Autor = {
     readonly id: number;
     readonly documentId: string;
-    nombre: string;
-    slug: string;
-    role: string;
-    bio: string;
+    nombres: string;
+    apellidos: string;
+    prefix?: string;
+    titulo?: string;
+    descripcion?: string | null;
+    email?: string;
     photo?: Media;
 }
 
@@ -20,7 +22,7 @@ export type Novedades = {
     seoTitle: string | null;
     seoDescription: string | null;
     media: MultipleMedia;
-    autors: Autor[];
+    autor?: Autor[];
     tags?: Tag[];
     createdAt: string;
     updatedAt: string;
