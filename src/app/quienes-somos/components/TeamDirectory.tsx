@@ -17,7 +17,7 @@ import TeamMemberCard from './TeamMembers';
 import { Media, TeamMember } from '@/app/definitions';
 import Image from 'next/image';
 
-import { SvgIconComponent } from "@mui/icons-material";
+import { AccountTree, SupervisorAccount, SvgIconComponent } from "@mui/icons-material";
 import CodeIcon from '@mui/icons-material/Code';
 import GavelIcon from '@mui/icons-material/Gavel';
 import BrushIcon from '@mui/icons-material/Brush';
@@ -26,17 +26,19 @@ import ArchitectureIcon from '@mui/icons-material/Architecture';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CameraAltRoundedIcon from '@mui/icons-material/CameraAltRounded';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import BusinessIcon from '@mui/icons-material/Business';
 import HiveIcon from '@mui/icons-material/Hive';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const departmentStyles: Record<string, { icon: SvgIconComponent }> = {
     'Infraestructura Tecnológica': { icon: CodeIcon },
     'Jurídico': { icon: GavelIcon, },
-    'Diseño': { icon: BrushIcon, },
     'Dirección': { icon: HiveIcon, },
     'Vinculación': { icon: CameraAltRoundedIcon, },
     'Geomática': { icon: MapIcon, },
     'Planes y Programas': { icon: ArchitectureIcon, },
+    'Administrativo': { icon: BusinessIcon },
+    'Subdirección': { icon: SupervisorAccount },
     'default': { icon: AccountCircleIcon },
 };
 
@@ -70,30 +72,50 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
 
     const uniqueDepartments = useMemo(() => {
         const depts = data
-            .map(m => m.departamento?.nombre) // Obtener nombres
-            .filter((nombre): nombre is string => !!nombre); // Quitar nulls/undefined
+            .map(m => m.departamento?.nombre)
+            .filter((nombre): nombre is string => !!nombre);
 
         return Array.from(new Set(depts)).sort();
     }, [data]);
-
     const filteredData = useMemo(() => {
-        const sorted = [...data].sort((a, b) => {
-            const fullNameA = `${a.apellidos} ${a.nombres}`.toLowerCase();
-            const fullNameB = `${b.apellidos} ${b.nombres}`.toLowerCase();
-            return fullNameA.localeCompare(fullNameB, 'es', { sensitivity: 'base' });
-        });
+        const PRIORITY_DEPTS: Record<string, number> = {
+            'Dirección': 0,
+            'Subdirección': 1,
+        };
 
-        return sorted.filter((member) => {
+        const getDeptOrder = (nombre: string | undefined | null): number => {
+            if (!nombre) return 999;
+            if (nombre in PRIORITY_DEPTS) return PRIORITY_DEPTS[nombre];
+            return 2;
+        };
+
+        const filtered = data.filter((member) => {
             const fullName = `${member.nombres} ${member.apellidos}`.toLowerCase();
             const matchesSearch =
                 fullName.includes(searchTerm.toLowerCase()) ||
                 member.titulo?.toLowerCase().includes(searchTerm.toLowerCase());
-
             const matchesDept =
                 selectedDept === 'Todos' ||
                 member.departamento?.nombre === selectedDept;
-
             return matchesSearch && matchesDept;
+        });
+
+        return filtered.sort((a, b) => {
+            const orderA = getDeptOrder(a.departamento?.nombre);
+            const orderB = getDeptOrder(b.departamento?.nombre);
+
+            if (orderA !== orderB) return orderA - orderB;
+
+            const deptA = a.departamento?.nombre ?? '';
+            const deptB = b.departamento?.nombre ?? '';
+            const deptCompare = deptA.localeCompare(deptB, 'es', { sensitivity: 'base' });
+            if (deptCompare !== 0) return deptCompare;
+
+            return `${a.apellidos} ${a.nombres}`.localeCompare(
+                `${b.apellidos} ${b.nombres}`,
+                'es',
+                { sensitivity: 'base' }
+            );
         });
     }, [data, searchTerm, selectedDept]);
 
@@ -147,7 +169,6 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
                             mt: 4
                         }}
                     >
-                        {/* Input de Búsqueda */}
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -192,11 +213,11 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
                     </Stack>
                 </Box>
 
-                <Grid container spacing={6} justifyContent="center" component={motion.div}>
+                <Grid container spacing={1} justifyContent="center" component={motion.div}>
                     <AnimatePresence mode='popLayout'>
                         {filteredData.length > 0 ? (
                             filteredData.map((member) => {
-                                const fullName = `${member.nombres} ${member.apellidos}`;
+                                const fullName = `${member.prefix ? member.prefix : ''} ${member.nombres} ${member.apellidos}`;
 
                                 const imageUrl = getStrapiImage(member.photo) || PLACEHOLDER_IMAGE;
 
@@ -217,6 +238,7 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
                                             imageUrl={imageUrl}
                                             icon={deptStyle.icon}
                                             iconColor="secondary.main"
+                                            email={member.email}  // 👈 esto es todo lo que agregas aquí
                                         />
                                     </Grid>
                                 );
