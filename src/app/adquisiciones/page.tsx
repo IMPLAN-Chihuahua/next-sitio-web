@@ -62,9 +62,11 @@ export default async function LicitacionesPage() {
         <Button
           LinkComponent={MuiLink}
           href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
-          variant="outlined"
+          variant="contained"
           endIcon={<OpenInNew />}
-          sx={{ mt: 2, fontWeight: 500, color: 'primary.800' }}
+          sx={{ mt: 2, fontWeight: 600 }}
+          color='secondary'
+          size="large"
           target='_blank'
         >
           Plan de adquisiciones

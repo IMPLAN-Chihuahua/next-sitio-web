@@ -28,22 +28,14 @@ const ScrollToTop = () => {
                     zIndex: 99,
                 }}
             >
-                <Tooltip title="¡Llévame arriba!" placement="left">
-                    <Fab
-                        onClick={handleClick}
-                        color="secondary"
-                        size="medium"
-                        aria-label="scroll back to top"
-                        sx={{
-                            color: 'white',
-                            '&:hover': {
-                                opacity: 0.8
-                            }
-                        }}
-                    >
-                        <KeyboardArrowUpIcon />
-                    </Fab>
-                </Tooltip>
+                <Fab
+                    onClick={handleClick}
+                    color="secondary"
+                    size="large"
+                    aria-label="¡Llévame arriba!"
+                >
+                    <KeyboardArrowUpIcon />
+                </Fab>
             </Box>
         </Zoom>
     );

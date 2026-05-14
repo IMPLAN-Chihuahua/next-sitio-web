@@ -7,9 +7,12 @@ export type Licitacion = {
   estatus: 'Abierta' | 'Desierta' | 'Cancelada' | 'Cerrada';
   identificador: string;
   descripcion: string;
-  convocatoria: Convocatoria;
-  bases: Bases | null;
-  resolucion: Resolucion | null;
+  convocatoria: Media;
+  modificacionesConvocatoria: MultipleMedia | null;
+  bases: MultipleMedia | null;
+  resolucion: MultipleMedia | null;
+  fechaInicio: string;
+  fechaResolucion: string;
 }
 
 
@@ -80,10 +83,7 @@ export type Subasta = {
   identificador: string;
   shortDescripcion: string;
   convocatoria: Media;
-  bases: Media;
-  resolucion: Media | null;
+  bases: MultipleMedia | null;
+  resolucion: MultipleMedia | null;
   estatus: 'Vigente' | 'Concluida';
-  aperturaPosturas: Media | null;
-  juntaAclaraciones: Media | null;
-  otros: MultipleMedia;
 }

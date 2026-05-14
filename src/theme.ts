@@ -66,6 +66,13 @@ const theme = createTheme({
           minHeight: 80,
         }
       }
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.light
+        })
+      }
     }
   }
 })

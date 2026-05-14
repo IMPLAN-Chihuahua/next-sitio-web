@@ -36,20 +36,12 @@ export default function LicitacionesTable() {
   const [selectedYears, setSelectedYears] = useState<Date[]>([]);
   const years = eachYearOfInterval({ start: new Date(), end: new Date(2000, 0, 1) })
   const queryForLicitaciones = qs.stringify({
-    sort: ['convocatoria.fechaInicio:desc'],
+    sort: ['fechaInicio:desc'],
     populate: [
-      'convocatoria.convocatoria',
-      'convocatoria.modificaciones',
-      'bases.bases',
-      'bases.modificaciones',
-      'bases.actaApertura',
-      'bases.actaJuntaAclaraciones',
-      'bases.actaApertura',
-      'bases.basesEditable',
-      'bases.sesionesExtraordinarias',
-      'resolucion.actaFallo',
-      'resolucion.actaDiferimientoFallo',
-      'resolucion.cancelacionLicitacion'
+      'convocatoria',
+      'modificacionesConvocatoria',
+      'bases',
+      'resolucion',
     ],
     filters: {
       $and: [
@@ -68,14 +60,12 @@ export default function LicitacionesTable() {
           ]
         },
         {
-          convocatoria: {
-            $or: selectedYears.map(date => ({
-              fechaInicio: {
-                $gte: formatISO(date, { representation: 'date' }),
-                $lte: formatISO(new Date(date.getFullYear(), 11, 31), { representation: 'date' })
-              }
-            }))
-          }
+          $or: selectedYears.map(date => ({
+            fechaInicio: {
+              $gte: formatISO(date, { representation: 'date' }),
+              $lte: formatISO(new Date(date.getFullYear(), 11, 31), { representation: 'date' })
+            }
+          }))
         }
       ]
     },
@@ -99,24 +89,52 @@ export default function LicitacionesTable() {
 
   const cols: GridColDef<Licitacion>[] = [{
     field: 'identificador',
-    headerName: 'Identificador',
-    width: 180,
+    headerName: 'Convocatoria',
+    width: 220,
     sortable: false,
     filterable: false,
+    renderCell: params => (
+      <Box>
+        <MuiLink
+          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.convocatoria.url}`}
+          target='_blank'
+          display={'block'}
+          my={1}
+          maxWidth={'fit-content'}
+        >
+          {params.row.identificador}
+        </MuiLink>
+        {
+          params.row.modificacionesConvocatoria
+          && params.row.modificacionesConvocatoria.map((adjunto, idx) => (
+            <MuiLink
+              key={adjunto.id}
+              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.convocatoria.url}`}
+              target='_blank'
+              display={'block'}
+              ml={1.5}
+              maxWidth={'fit-content'}
+            >
+              {idx + 1}ª Modificación
+            </MuiLink>
+          ))
+        }
+      </Box>
+    )
   }, {
     field: 'descripcion',
-    headerName: 'Adquisición',
+    headerName: 'Descripción',
     width: 300,
     sortable: false,
     filterable: false,
   },
   {
-    field: '_fechaInicio',
+    field: 'fechaInicio',
     headerName: 'Fecha inicio',
     sortable: false,
     width: 130,
     filterable: false,
-    valueGetter: (_, row) => formatDate(parse(row.convocatoria.fechaInicio, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy')
+    valueGetter: (_, row) => formatDate(parse(row.fechaInicio, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy')
   },
   {
     field: 'estatus',
@@ -124,117 +142,60 @@ export default function LicitacionesTable() {
     width: 115,
     sortable: false,
     filterable: false,
-    renderCell: (params) => <Chip sx={{ fontWeight: 500 }} variant="outlined" label={params.row.estatus} />
+    renderCell: (params) => <Chip sx={{ fontWeight: params.row.estatus === 'Cerrada' ? 500 : 400 }} variant={params.row.estatus === 'Cerrada' ? "filled" : "outlined"} label={params.row.estatus} />
   },
   {
-    field: 'convocatoria',
-    headerName: 'Convocatoria',
-    width: 180,
-    filterable: false,
-    sortable: false,
-    renderCell: (params) => (
-      <Box>
-        <MuiLink
-          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.convocatoria.convocatoria.url}`}
-          target='_blank'
-        >
-          Convocatoria
-        </MuiLink>
-        <ul style={{ listStyle: 'none', marginTop: '8px' }}>
-          {
-
-            params.row.convocatoria.modificaciones
-            && params.row.convocatoria.modificaciones.map((mod, idx) => (
-              <li key={mod.documentId}>
-                <MuiLink
-                  href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${mod.url}`}
-                  target='_blank'
-                >
-                  {idx + 1}ª  Modificacion de la convocatoria
-                </MuiLink>
-              </li>
-            ))
-          }
-        </ul>
-      </Box>
-    ),
-  }, {
     field: 'bases',
     headerName: 'Bases',
+    sortable: false,
     width: 200,
     filterable: false,
-    sortable: false,
-    renderCell: (params) => (<Box>
-      {params.row.bases && (
-        <ul style={{ listStyleType: 'none' }}>
-          <li>
+    renderCell: params => (
+      <Box>
+        {
+          params.row.bases
+          && params.row.bases.map(adjunto => (
             <MuiLink
+              key={adjunto.id}
+              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adjunto.url}`}
               target='_blank'
-              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.bases.bases.url}`}
-            >Bases</MuiLink>
-          </li>
-          {
-            params.row.bases.modificaciones &&
-            params.row.bases.modificaciones.map((modificacion, idx) => (
-              <li style={{ marginTop: '8px' }} key={modificacion.documentId}>
-                <MuiLink
-                  target='_blank'
-                  href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${modificacion.url}`}
-                >{idx + 1}ª Modificación bases</MuiLink>
-              </li>
-            ))
-          }
-          {
-            params.row.bases.actaJuntaAclaraciones && (
-              <li style={{ marginTop: '8px' }} key={params.row.bases.actaJuntaAclaraciones.documentId}>
-                <MuiLink
-                  target='_blank'
-                  href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.bases.actaJuntaAclaraciones.url}`}
-                >Junta de aclaraciones</MuiLink>
-              </li>
-            )
-          }
-          {
-            params.row.bases.actaApertura && (
-              <li style={{ marginTop: '8px' }}>
-                <MuiLink
-                  target='_blank'
-                  href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.bases.actaApertura.url}`}
-                >Acta de apertura</MuiLink>
-              </li>
-            )
-          }
-
-          {
-            params.row.bases.sesionesExtraordinarias
-            && params.row.bases.sesionesExtraordinarias.map((sesion, idx) => (
-              <li style={{ marginTop: '8px' }} key={sesion.documentId}>
-                <MuiLink
-                  target='_blank'
-                  href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${sesion.url}`}
-                >{idx + 1}ª sesión extraordinaria</MuiLink>
-              </li>
-            ))
-          }
-        </ul>
-      )}
-    </Box>)
+              mt={1}
+              display={'block'}
+              maxWidth={'fit-content'}
+            >
+              {adjunto.name}
+            </MuiLink>
+          ))
+        }
+      </Box>
+    )
   }, {
     field: 'resolucion',
     headerName: 'Resolución',
-    width: 180,
+    width: 200,
     filterable: false,
     sortable: false,
-    renderCell: (params) => {
-      if (!params.row.resolucion) {
-        return null;
-      }
-      return <MuiLink
-        href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${params.row.resolucion.actaFallo.url}`}
-        target='_blank'
-      >Fallo</MuiLink>
-    }
-  }]
+    renderCell: params => (
+      <Box>
+        {
+          params.row.resolucion
+          && params.row.resolucion.map(adjunto => (
+            <MuiLink
+              key={adjunto.id}
+              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adjunto.url}`}
+              target='_blank'
+              mt={1}
+              display={'block'}
+              maxWidth={'fit-content'}
+            >
+              {adjunto.name}
+            </MuiLink>
+          ))
+        }
+      </Box>
+    )
+  }
+  ]
 
   return (
     <Box>
@@ -288,6 +249,7 @@ export default function LicitacionesTable() {
               py: 1,
             },
           }}
+
           getRowHeight={() => 'auto'}
         />
       </Paper>

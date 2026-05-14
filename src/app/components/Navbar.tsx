@@ -38,8 +38,8 @@ const navLinks = [{
   menuItems: []
 },
 {
-  label: 'Licitaciones',
-  href: '/licitaciones',
+  label: 'Adquisiciones',
+  href: '/adquisiciones',
   menuItems: []
 }]
 
@@ -49,8 +49,7 @@ export default function Navbar() {
   return (
     <Box position='relative'>
       <DesktopNavbar />
-
-    </Box >
+    </Box>
   );
 }
 
