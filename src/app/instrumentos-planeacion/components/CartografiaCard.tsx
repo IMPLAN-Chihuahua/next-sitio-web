@@ -16,7 +16,7 @@ const CartografiaCard = ({ capa }: { capa: DatoGeografico }) => {
           <CardMedia
             title={capa.objetoGeografico}
             sx={{ height: '200px', maxHeight: '200px' }}
-          image={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${capa.cover?.formats?.small?.url || capa.cover.url}`} />
+            image={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${capa.cover?.formats?.small?.url || capa.cover.url}`} />
         </CardActionArea>
         <CardContent sx={{ minHeight: { xs: '80px', sm: '115px' } }}>
           <MuiLink

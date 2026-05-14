@@ -85,7 +85,6 @@ const InstrumentosTiles = () => {
     data: InstrumentoPlaneacion[],
     meta: { pagination: Pagination }
   }>(`/instrumentos-planeacion?${queryParams.toString()}`, cmsFetcher)
-  console.log(data)
   const [instrumentos, setInstrumentos] = useState<InstrumentoPlaneacion[]>([]);
 
   useEffect(() => {

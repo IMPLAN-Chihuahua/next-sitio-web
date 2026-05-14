@@ -28,7 +28,6 @@ export default async function Home() {
     data = homeJson?.data || {};
     newsData = newsJson?.data || [];
 
-    console.log(newsData)
   } catch (err) {
     console.error("Error fetching data: ", err);
   }

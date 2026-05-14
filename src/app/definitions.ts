@@ -168,3 +168,23 @@ export type Vacante = {
   updatedAt: string;
   publishedAt: string;
 }
+
+
+export type FooterType = {
+  readonly id: number;
+  readonly documentId: string;
+  logo: Media;
+  grupos: FooterGroup[]
+}
+
+
+export type FooterGroup = {
+  id: number;
+  titulo: string;
+  enlaces: {
+    id: number;
+    label: string;
+    href: string;
+    external: boolean;
+  }[]
+}

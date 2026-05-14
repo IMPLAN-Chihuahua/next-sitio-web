@@ -29,8 +29,6 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
         const page = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?${queryParams}`);
         const json = await page.json();
         const article: Novedades = json.data?.[0];
-        console.log('artikle')
-        console.log(article)
         if (!article) return { title: 'Artículo no encontrado | IMPLAN' };
 
         const imageUrl = article.media?.[0]?.formats?.small?.url || article.media?.[0]?.url;
@@ -61,7 +59,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     const json = await req.json();
     const article: Novedades = json.data?.[0];
 
-    console.log(article)
     if (!article) {
         notFound();
     }
