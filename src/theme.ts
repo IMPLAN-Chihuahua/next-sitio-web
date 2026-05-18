@@ -1,8 +1,9 @@
 'use client';
 
-import { createTheme } from "@mui/material"
+import { createTheme, ThemeOptions } from "@mui/material"
 import { blue } from "@mui/material/colors";
 import { Montserrat } from 'next/font/google';
+import { esES } from '@mui/x-data-grid/locales'
 
 const montserrat = Montserrat({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -13,7 +14,6 @@ const montserrat = Montserrat({
 
 // Obtener colores de 50-900 https://m2.material.io/inline-tools/color/
 const theme = createTheme({
-
   typography: {
     fontFamily: montserrat.style.fontFamily,
     allVariants: {
@@ -69,13 +69,16 @@ const theme = createTheme({
     },
     MuiTableHead: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          backgroundColor: theme.palette.primary.light
+        root: (options: any) => ({
+          backgroundColor: options.theme.palette.primary.light
         })
       }
-    }
+    },
+
   }
-})
+},
+  esES
+)
 
 
 export default theme;
