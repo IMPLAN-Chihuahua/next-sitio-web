@@ -31,8 +31,8 @@ export default async function QuienesSomosPage() {
               source={rendicionCuentasPage.data.contenido}
               components={{
                 h2: props => (<SubtitleH2 title={props.children} />),
-                p: props => (<Typography>{props.children}</Typography>),
-                a: props => (<Link href={props.href} target='_blank'>hey {props.children}</Link>)
+                p: props => (<Typography mb={1.3}>{props.children}</Typography>),
+                a: props => (<Link href={props.href} target='_blank'>{props.children}</Link>)
               }}
             />
           </Suspense>
