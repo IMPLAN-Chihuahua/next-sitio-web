@@ -1,5 +1,11 @@
 import { Media, MultipleMedia } from "../definitions";
 
+export type ArchivoGrupo = {
+  readonly id: number;
+  Nombre: string;
+  Archivo: Media[];
+};
+
 export type Licitacion = {
   readonly id: number;
   readonly documentId: string;
@@ -7,41 +13,19 @@ export type Licitacion = {
   estatus: 'Abierta' | 'Desierta' | 'Cancelada' | 'Cerrada';
   identificador: string;
   descripcion: string;
-  convocatoria: Media;
-  modificacionesConvocatoria: MultipleMedia | null;
-  bases: MultipleMedia | null;
-  resolucion: MultipleMedia | null;
+
   fechaInicio: string;
-  fechaResolucion: string;
-}
+  fechaResolucion: string | null;
 
+  Convocatoria: ArchivoGrupo[];
+  Bases: ArchivoGrupo[];
+  Resolucion: ArchivoGrupo[];
 
-export type Convocatoria = {
-  readonly id: number;
-  readonly documentId: string;  
-  fechaInicio: string;
-  modificaciones: MultipleMedia;
-  convocatoria: Media;
-}
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
 
-
-export type Bases = {
-  readonly id: number;
-  basesEditable: Media;
-  actaJuntaAclaraciones: Media;
-  actaApertura: Media | null;
-  modificaciones: MultipleMedia;
-  bases: Media;
-  sesionesExtraordinarias: MultipleMedia;
-}
-
-
-export type Resolucion = {
-  id: number;
-  cancelacionLicitacion: Media;
-  actaDiferimientoFallo: Media;
-  actaFallo: Media;
-}
 
 
 export type LicitacionPage = {

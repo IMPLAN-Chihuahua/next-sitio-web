@@ -5,7 +5,6 @@ import { AdquisicionDirecta } from "../definitions";
 
 export default function AdquisicionesDirectasTable({ adquisiciones }: { adquisiciones: AdquisicionDirecta[] }) {
 
-
   return (
     <TableContainer component={Paper} variant="outlined">
       <Table>
