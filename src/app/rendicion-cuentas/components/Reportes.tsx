@@ -1,7 +1,7 @@
 'use client'
 
 import { cmsFetcher } from "@/app/services/http"
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Chip, Link, Table, TableCell, TableContainer, TableHead, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Chip, CircularProgress, Link, Table, TableCell, TableContainer, TableHead, Typography } from "@mui/material"
 import useSWRImmutable from "swr/immutable"
 import qs from 'qs';
 import { AnimatePresence, motion } from "framer-motion";
@@ -22,9 +22,10 @@ const Reportes = ({ year }: { year: number }) => {
         $eq: year
       }
     },
-    populate: ['reportes', 'reportes.adjuntos']
+    populate: ['reportes', 'reportes.adjuntos'],
+    sort: ['trimestre:asc']
   })
-  const { data, error } = useSWRImmutable(`/reportes-financieros?${params.toString()}`, cmsFetcher);
+  const { data, isLoading, error } = useSWRImmutable(`/reportes-financieros?${params.toString()}`, cmsFetcher);
 
   const [reportes, setReportes] = useState<ReporteFinanciero[]>([]);
 
@@ -52,39 +53,42 @@ const Reportes = ({ year }: { year: number }) => {
       transition={{ duration: .3 }}
     >
       {
-        reportes.map((reporte, idx) => (
-          <Accordion
-            disableGutters
-            variant="outlined"
-            key={reporte.documentId}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMore />}
-              aria-controls={`panel-${idx + 1}-reportes-trimestre-${reporte.trimestre ? reporte.trimestre : 'anual'}-año-${year}`}
-              id={`panel-${idx + 1}`}
+        isLoading ? (
+          <CircularProgress />
+        ) :
+          reportes.map((reporte, idx) => (
+            <Accordion
+              disableGutters
+              variant="outlined"
+              key={reporte.documentId}
             >
-              {reporte.trimestre ? (
-                <Typography fontWeight={500} fontSize={18}>
-                  {reporte.trimestre}{
-                    reporte.trimestre === 1 || reporte.trimestre === 3
-                      ? 'er'
-                      : reporte.trimestre === 2
-                        ? 'do'
-                        : 'to'} Trimestre
-                </Typography>
-              ) : (
-                <Typography fontWeight={500} fontSize={18}>Anual</Typography>
-              )}
-            </AccordionSummary>
-            <AccordionDetails>
-              {
-                reporte.reportes.map((r: any) => (
-                  <AccordionAdjuntos key={r.id} grupo={r.grupo} adjuntos={r.adjuntos} />
-                ))
-              }
-            </AccordionDetails>
-          </Accordion>
-        ))
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                aria-controls={`panel-${idx + 1}-reportes-trimestre-${reporte.trimestre ? reporte.trimestre : 'anual'}-año-${year}`}
+                id={`panel-${idx + 1}`}
+              >
+                {reporte.trimestre ? (
+                  <Typography fontWeight={500} fontSize={18}>
+                    {reporte.trimestre}{
+                      reporte.trimestre === 1 || reporte.trimestre === 3
+                        ? 'er'
+                        : reporte.trimestre === 2
+                          ? 'do'
+                          : 'to'} Trimestre
+                  </Typography>
+                ) : (
+                  <Typography fontWeight={500} fontSize={18}>Anual</Typography>
+                )}
+              </AccordionSummary>
+              <AccordionDetails>
+                {
+                  reporte.reportes.map((r: any) => (
+                    <AccordionAdjuntos key={r.id} grupo={r.grupo} adjuntos={r.adjuntos} />
+                  ))
+                }
+              </AccordionDetails>
+            </Accordion>
+          ))
       }
     </MotionBox>
   )
@@ -115,12 +119,13 @@ const AccordionAdjuntos = ({ grupo, adjuntos }: { grupo: string, adjuntos: Multi
               }
               return 0
             }).map((adjunto, idx) => (
-              <li key={adjunto.documentId}>
+              <Box component='li' mt={1.3} key={adjunto.documentId}>
                 <Link
                   href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adjunto.url}`}
                   target={'_blank'}
+                  sx={{ wordBreak: 'break-all' }}
                 >{adjunto.name} ({filesize(adjunto.size * 1000, { standard: 'jedec' })})</Link>
-              </li>
+              </Box>
             ))
           }
         </ul>

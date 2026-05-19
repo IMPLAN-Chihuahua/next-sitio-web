@@ -15,12 +15,12 @@ export default async function AvisoPrivacidadPage() {
   const { data: avisos }: { data: AvisoPrivacidad[] } = await req.json();
 
   return (
-    <Box px={2} pt={3}>
+    <Box>
       <Toolbar variant="dense" />
-      <Container>
+      <Container sx={{ mt: 3 }}>
         <SubtitleH2 title="Avisos de privacidad" />
         <AvisosPrivacidadTable avisos={avisos} />
       </Container>
-    </Box >
+    </Box>
   )
 }

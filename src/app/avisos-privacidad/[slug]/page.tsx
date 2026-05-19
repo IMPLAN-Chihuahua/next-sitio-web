@@ -30,7 +30,8 @@ export default async function AvisoPrivacidadDetailPage({ params }: { params: Pr
             p: props => <Typography my={2}>{props.children}</Typography>,
             a: props => <Link href={props.href}>{props.children}</Link>,
             li: props => <li style={{ paddingBottom: '2px' }}>{props.children}</li>,
-            ul: props => <ul style={{ marginLeft: '15px' }}>{props.children}</ul>,
+            ul: props => <ul style={{ marginLeft: '18px' }}>{props.children}</ul>,
+            ol: props => <ol style={{ marginLeft: '18px' }}>{props.children}</ol>,
           }}
         />
         <Alert severity="info" sx={{ my: 3 }}>
