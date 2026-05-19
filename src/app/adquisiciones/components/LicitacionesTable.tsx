@@ -82,7 +82,7 @@ export default function LicitacionesTable() {
 
   const [selectedYears, setSelectedYears] = useState<number[]>([new Date().getFullYear()]);
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) => currentYear - i);
+  const years = Array.from({ length: currentYear - 2018 + 1 }, (_, i) => currentYear - i);
 
   const queryForLicitaciones = qs.stringify({
     sort: ['createdAt:desc'],

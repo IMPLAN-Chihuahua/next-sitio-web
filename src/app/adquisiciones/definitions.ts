@@ -26,7 +26,11 @@ export type Licitacion = {
   publishedAt: string;
 };
 
-
+export type PlanAnual = {
+  id: number;
+  year: number;
+  document: Media;
+};
 
 export type LicitacionPage = {
   readonly id: number;
@@ -38,7 +42,7 @@ export type LicitacionPage = {
   publishedAt: string;
   cover: Media;
   procesoCompra: ProcesoCompraStep[];
-  planAdquisiciones: Media;
+  planesAnuales: PlanAnual[];
 }
 
 export type ProcesoCompraStep = {
@@ -62,12 +66,17 @@ export type AdquisicionDirecta = {
 
 
 export type Subasta = {
-  readonly id: string;
+  readonly id: number;
   readonly documentId: string;
   identificador: string;
   shortDescripcion: string;
-  convocatoria: Media;
-  bases: MultipleMedia | null;
-  resolucion: MultipleMedia | null;
   estatus: 'Vigente' | 'Concluida';
-}
+
+  convocatoria: ArchivoGrupo[];
+  bases: ArchivoGrupo[];
+  resolucion: ArchivoGrupo[];
+
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
