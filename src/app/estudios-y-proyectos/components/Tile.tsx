@@ -14,7 +14,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
     <Card variant="outlined">
       <CardContent>
         <Grid container >
-          <Grid bgcolor={'gainsboro'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={'5px'}>
+          <Grid bgcolor={'gainsboro'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={1}>
             {props.trabajoPlaneacion.cover ? (
               <Link href={`/estudios-y-proyectos/${props.trabajoPlaneacion.slug}`}>
                 <Image
@@ -90,7 +90,7 @@ export const getFormattedInversion = (inversion: number) => {
   return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(inversion);
 }
 
-export const ClasificacionSpan = ({ clasificacion }: { clasificacion: Tag }) => {
+export const ClasificacionSpan = ({ clasificacion }: { clasificacion: { hexColor: string, name: string } }) => {
   return (
     <Box component={'span'} display={'flex'} alignItems={'center'}>
       <Box

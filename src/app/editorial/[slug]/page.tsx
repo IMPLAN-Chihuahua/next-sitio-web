@@ -10,8 +10,11 @@ import { notFound } from "next/navigation";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import { Novedades } from "@/app/editorial/definitions";
-import { MultipleMedia } from "@/app/definitions";
+import { Media, MultipleMedia } from "@/app/definitions";
 import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions";
+import { NovedadBreadcrumbs } from "../components/Breadcrumbs";
+import { ClasificacionSpan } from "@/app/estudios-y-proyectos/components/Tile";
+import Carousel, { Slide } from "@/app/estudios-y-proyectos/components/Carousel";
 
 type DetailPageMetadataProps = {
     params: Promise<{ slug: string }>,
@@ -22,7 +25,7 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
     const slug = (await params).slug;
 
     const queryParams = qs.stringify({
-        filters: { slug: { $eq: slug } },
+        filters: { slug: { $eq: slug } }
     }, { encodeValuesOnly: true });
 
     try {
@@ -66,18 +69,39 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     return (
         <Box component={'main'}>
             <Toolbar variant="dense" />
-            <Container maxWidth="md" sx={{ mt: 3, mb: 10 }}>
+            <Container maxWidth="lg" sx={{ mt: 3, mb: 10 }}>
+                <NovedadBreadcrumbs currentPageTitle={article.title} />
                 <HeaderSection article={article} />
-                <CoverImage media={article.media} />
-
-                <Divider sx={{ my: 4 }} />
-
-                <Box display="flex" justifyContent="flex-end" mb={4}>
-                    <Stack direction="row" alignItems="center" spacing={2}>
-                        <Typography fontWeight={600} color='primary.800'>Compartir:</Typography>
-                        <ShareOptions />
-                    </Stack>
+                <Box my={3}>
+                    <Grid container gap={3}>
+                        <Grid size={{ xs: 12, md: 'grow' }}>
+                            <Typography fontWeight={600} color='primary.800'>Fecha publicación</Typography>
+                            <Typography>{(new Date(article.fechaPublicacion)).toLocaleDateString('es-MX', { dateStyle: 'short' })}</Typography>
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 'grow' }}>
+                            <Typography fontWeight={600} color='primary.800'>Etiquetas</Typography>
+                            {(article as any).tags && (article as any).tags.length > 0 && (
+                                <Stack direction="row" gap={.5} sx={{ mb: 2, flexWrap: 'wrap' }}>
+                                    {(article as any).tags.map((tag: any) => (
+                                        <ClasificacionSpan
+                                            key={tag.id}
+                                            clasificacion={{
+                                                name: tag.name,
+                                                hexColor: tag.hexColor
+                                            }}
+                                        />
+                                    ))}
+                                </Stack>
+                            )}
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 'grow' }}>
+                            <Typography fontWeight={600} color='primary.800'>Compartir</Typography>
+                            <ShareOptions />
+                        </Grid>
+                    </Grid>
                 </Box>
+                <CoverImage media={article.cover} />
+                <Divider sx={{ my: 4 }} />
 
                 <ContentSection content={article.content} />
             </Container>
@@ -94,97 +118,84 @@ const HeaderSection = ({ article }: { article: Novedades }) => {
 
     return (
         <Box component='header' mt={2}>
-            {(article as any).tags && (article as any).tags.length > 0 && (
-                <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
-                    {(article as any).tags.map((tag: any) => (
-                        <Chip
-                            key={tag.id}
-                            label={tag.name}
-                            size="small"
-                            sx={{
-                                bgcolor: `${tag.hexColor}15`,
-                                color: tag.hexColor,
-                                fontWeight: 600,
-                                border: `1px solid ${tag.hexColor}`
-                            }}
-                        />
+            <Typography component={'h1'} mt={4} mb={2} fontWeight={600} fontSize={36}>
+                {article.title}
+            </Typography>
+            {article.autor && article.autor.length > 0 && (
+                <Stack direction={{ xs: 'column', md: "row" }} alignItems={{ xs: 'flex-start', md: "center" }} mb={3} columnGap={4} rowGap={2}>
+                    {article.autor.map((autor, idx) => (
+                        <Stack key={idx} direction="row" alignItems="center" spacing={1}>
+                            <Avatar
+                                src={autor.photo?.formats?.small?.url
+                                    ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${autor.photo.formats.small.url}`
+                                    : ''}
+                                alt={`${autor.nombres} ${autor.apellidos}`}
+                                sx={{
+                                    width: 56,
+                                    height: 56,
+                                    '& img': {
+                                        objectPosition: 'center top'
+                                    }
+                                }}
+                            />
+                            <Box>
+                                <Typography fontWeight={700} lineHeight={1.2}>
+                                    {autor.prefix ? `${autor.prefix} ` : ''}{autor.nombres} {autor.apellidos}
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                    {autor.titulo || 'Redacción IMPLAN'}
+                                </Typography>
+                            </Box>
+                        </Stack>
                     ))}
                 </Stack>
             )}
-
-            <Typography component={'h1'} mb={2} fontWeight={800} fontSize={{ xs: 32, md: 46 }} lineHeight={1.2}>
-                {article.title}
-            </Typography>
-
-            <Typography variant="h6" color="text.secondary" fontWeight={400} mb={4} lineHeight={1.6}>
+            <Typography color="text.secondary" fontSize={20} fontWeight={400} mb={2} lineHeight={1.6}>
                 {article.description}
             </Typography>
 
-            <Stack direction="row" alignItems="center" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
-                {article.autor && article.autor.length > 0 && (
-                    <Stack direction="row" alignItems="center" spacing={1.5}>
-                        {article.autor.map((autor, idx) => (
-                            <Stack key={idx} direction="row" alignItems="center" spacing={1}>
-                                <Avatar
-                                    src={autor.photo?.formats?.small?.url
-                                        ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${autor.photo.formats.small.url}`
-                                        : ''}
-                                    alt={`${autor.nombres} ${autor.apellidos}`}
-                                    sx={{
-                                        width: 56,
-                                        height: 56,
-                                        '& img': {
-                                            objectPosition: 'center top'
-                                        }
-                                    }}
-                                />
-                                <Box>
-                                    <Typography variant="subtitle2" fontWeight={700} lineHeight={1.2}>
-                                        {autor.prefix ? `${autor.prefix}. ` : ''}{autor.nombres} {autor.apellidos}
-                                    </Typography>
-                                    <Typography variant="caption" color="text.secondary">
-                                        {autor.titulo || 'Redacción IMPLAN'}
-                                    </Typography>
-                                </Box>
-                            </Stack>
-                        ))}
-                    </Stack>
-                )}
 
-                <Stack direction="row" alignItems="center" spacing={0.5} color="text.secondary">
-                    <AccessTimeIcon fontSize="small" />
-                    <Typography variant="body2" fontWeight={500}>
-                        {formatDate(article.publishedAt)}
-                    </Typography>
-                </Stack>
-            </Stack>
+
         </Box>
     )
 }
 
-const CoverImage = ({ media }: { media: MultipleMedia }) => {
-    if (!media || media.length === 0) return null;
-    const cover = media[0];
+const CoverImage = ({ media }: { media: Media | null }) => {
+    if (!media) return null;
+    const cover = media;
 
     return (
         <Box
-            height={{ xs: 300, md: 500 }}
-            width={'100%'}
-            mt={4}
-            position={'relative'}
-            borderRadius={4}
-            overflow={'hidden'}
-            boxShadow={3}
+            display={'flex'}
+            justifyContent={'center'}
+            flexDirection={'column'}
+
         >
-            <Image
-                src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${cover.url}`}
-                fill
-                alt={cover.alternativeText ?? 'Portada del artículo'}
-                unoptimized
-                style={{
-                    objectFit: 'cover',
-                }}
-            />
+            <Box
+                height={{ xs: 300, md: 500 }}
+                width={'100%'}
+                mx='auto'
+                maxWidth={'700px'}
+                mt={4}
+                mb={1}
+                position={'relative'}
+                borderRadius={1}
+                overflow={'hidden'}
+                boxShadow={3}
+            >
+                <Image
+                    src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${cover.url}`}
+                    fill
+                    alt={cover.alternativeText ?? 'Portada del artículo'}
+                    unoptimized
+                    style={{
+                        objectFit: 'cover',
+                    }}
+                />
+            </Box>
+            <Typography variant="caption" textAlign={'center'} display={'block'}>
+                {cover.caption}
+            </Typography>
         </Box>
     )
 }
@@ -194,10 +205,10 @@ const ContentSection = ({ content }: { content: string }) => {
 
     return (
         <Box component='article' my={4} sx={{
-            '& .mdx-paragraph': { mb: 3, fontSize: '1.15rem', lineHeight: 1.8, color: 'text.secondary' },
+            '& .mdx-paragraph': { mb: 3, fontSize: '1.15rem', lineHeight: 1.8 },
             '& h2': { mt: 6, mb: 3, fontSize: '1.8rem', fontWeight: 700, color: 'primary.900' },
             '& h3': { mt: 4, mb: 2, fontSize: '1.5rem', fontWeight: 600, color: 'primary.800' },
-            '& ul, & ol': { mb: 3, ml: 3, color: 'text.secondary', fontSize: '1.15rem', lineHeight: 1.8 },
+            '& ul, & ol': { mb: 3, ml: 3, fontSize: '1.15rem', lineHeight: 1.8 },
             '& li': { mb: 1 },
             '& blockquote': {
                 borderLeft: '4px solid', borderColor: 'primary.main', pl: 3, ml: 0,
@@ -210,11 +221,11 @@ const ContentSection = ({ content }: { content: string }) => {
                     components={{
                         p: props => <Typography component="div" className="mdx-paragraph" {...props} />,
 
-                        a: props => <MuiLink href={props.href} target="_blank" underline="hover" color="primary.main">{props.children}</MuiLink>,
+                        a: props => <MuiLink href={props.href} target="_blank" underline="hover">{props.children}</MuiLink>,
                         img: props => (
                             <Box my={4} textAlign="center">
-                                <img src={props.src} alt={props.alt} style={{ maxWidth: '100%', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                                {props.alt && <Typography variant="caption" display="block" mt={1.5} color="text.secondary">{props.alt}</Typography>}
+                                <img src={props.src} alt={props.alt} style={{ maxWidth: '600px', borderRadius: '5px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                                {props.alt && <Typography variant="caption" display="block" color="text.secondary">{props.alt}</Typography>}
                             </Box>
                         ),
                         LocalVideo: props => (
@@ -224,7 +235,9 @@ const ContentSection = ({ content }: { content: string }) => {
                                 </video>
                                 <Typography variant="caption" textAlign='center' display='block' mt={1} color="text.secondary">Video: {props.caption}</Typography>
                             </Box>
-                        )
+                        ),
+                        Carousel: props => (<Carousel>{props.children}</Carousel>),
+                        Slide: props => <Slide {...props} />
                     }}
                 />
             </Suspense>
