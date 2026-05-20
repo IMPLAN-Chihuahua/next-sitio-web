@@ -29,6 +29,7 @@ export type Novedades = {
     updatedAt: string;
     publishedAt: string;
     fechaPublicacion: string;
+    momentosDestacados: MultipleMedia | null;
 }
 
 export type EditorialData = {

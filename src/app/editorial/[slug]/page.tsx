@@ -15,6 +15,7 @@ import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions
 import { NovedadBreadcrumbs } from "../components/Breadcrumbs";
 import { ClasificacionSpan } from "@/app/estudios-y-proyectos/components/Tile";
 import Carousel, { Slide } from "@/app/estudios-y-proyectos/components/Carousel";
+import { ImagesMasonry } from "../components/Masonry";
 
 type DetailPageMetadataProps = {
     params: Promise<{ slug: string }>,
@@ -104,6 +105,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <Divider sx={{ my: 4 }} />
 
                 <ContentSection content={article.content} />
+
+                {article.momentosDestacados !== null && (
+                    <Box>
+                        <Typography variant="h3" sx={{ mt: 4, mb: 2, fontSize: '1.5rem', fontWeight: 600, color: 'primary.800' }}>
+                            Momentos destacados
+                        </Typography>
+                        <ImagesMasonry images={article.momentosDestacados} />
+                    </Box>
+                )}
             </Container>
         </Box>
     )
@@ -153,9 +163,6 @@ const HeaderSection = ({ article }: { article: Novedades }) => {
             <Typography color="text.secondary" fontSize={20} fontWeight={400} mb={2} lineHeight={1.6}>
                 {article.description}
             </Typography>
-
-
-
         </Box>
     )
 }
@@ -237,7 +244,7 @@ const ContentSection = ({ content }: { content: string }) => {
                             </Box>
                         ),
                         Carousel: props => (<Carousel>{props.children}</Carousel>),
-                        Slide: props => <Slide {...props} />
+                        Slide: props => <Slide {...props} />,
                     }}
                 />
             </Suspense>
