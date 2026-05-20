@@ -1,15 +1,17 @@
-import { Box, Button, Container, Divider, Grid, Link as MuiLink, TextField, Typography } from "@mui/material";
+import {
+  Box, Button, Container, Grid, Link as MuiLink, Typography,
+  Accordion, AccordionSummary, AccordionDetails
+} from "@mui/material";
 import PageBanner from "../components/PageBanner";
 import LicitacionesTable from "./components/LicitacionesTable";
 import qs from 'qs';
 import LicitacionCard from "./components/LicitacionCard";
 import { SubtitleH2 } from "../components/Titles";
 import AdquisicionesDirectasTable from "./components/AdquisicionesDirectasTable";
-import { AdquisicionDirecta, Licitacion, LicitacionPage, Subasta } from "./definitions";
-import { OpenInNew } from "@mui/icons-material";
-import { format, formatISO } from "date-fns";
+import { AdquisicionDirecta, LicitacionPage, Subasta } from "./definitions";
+import { OpenInNew, ExpandMore } from "@mui/icons-material";
+import { formatISO } from "date-fns";
 import { SubastasTable } from "./components/SubastasTable";
-
 
 const queryForPage = qs.stringify({
   populate: '*'
@@ -50,6 +52,10 @@ export default async function LicitacionesPage() {
   const licitacionesPage: { data: LicitacionPage } = await pageReq.json();
   const adquisicionesList: { data: AdquisicionDirecta[] } = await adquisicionesReq.json();
   const { data: subastas }: { data: Subasta[] } = await subastasReq.json();
+  const planesAnuales = licitacionesPage.data?.planesAnuales || [];
+  const planesOrdenados = [...planesAnuales].sort((a, b) => b.year - a.year);
+
+  const planMasReciente = planesOrdenados[0];
 
   return (
     <main>
@@ -59,18 +65,22 @@ export default async function LicitacionesPage() {
         description="En el IMPLAN estamos comprometidos con la transparencia y queremos que conozcas cómo invertimos tus impuestos"
       />
       <Container sx={{ my: 3 }}>
-        <Button
-          LinkComponent={MuiLink}
-          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.planAdquisiciones.url}`}
-          variant="contained"
-          endIcon={<OpenInNew />}
-          sx={{ mt: 2, fontWeight: 600 }}
-          color='secondary'
-          size="large"
-          target='_blank'
-        >
-          Plan de adquisiciones
-        </Button>
+
+        {planMasReciente && planMasReciente.document && (
+          <Button
+            LinkComponent={MuiLink}
+            href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${planMasReciente.document.url}`}
+            variant="contained"
+            endIcon={<OpenInNew />}
+            sx={{ mt: 2, fontWeight: 600 }}
+            color='secondary'
+            size="large"
+            target='_blank'
+          >
+            Plan de adquisiciones {planMasReciente.year}
+          </Button>
+        )}
+
         <Box component='section' my={2}>
           <SubtitleH2 title="Proceso de compra" />
           <Typography>Al igual que tú, el IMPLAN compara opciones y presupuestos antes de realizar una compra.</Typography>
@@ -99,11 +109,43 @@ export default async function LicitacionesPage() {
           <AdquisicionesDirectasTable adquisiciones={adquisicionesList.data} />
         </Box>
 
-
         <Box my={2} component={'section'}>
           <SubtitleH2 title="Subastas" />
           <SubastasTable subastas={subastas} />
         </Box>
+
+        {planesOrdenados.length > 1 && (
+          <Box my={4} component={'section'}>
+            <Accordion variant="outlined" sx={{ borderRadius: 1 }}>
+              <AccordionSummary expandIcon={<ExpandMore />}>
+                <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                  Historial de Planes de Adquisición
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  {planesOrdenados.map((plan) => (
+                    plan.document && (
+                      <Grid size={{ xs: 12, sm: 4, md: 3 }} key={plan.id}>
+                        <Button
+                          fullWidth
+                          variant="outlined"
+                          color="primary"
+                          endIcon={<OpenInNew />}
+                          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${plan.document.url}`}
+                          target="_blank"
+                        >
+                          Plan {plan.year}
+                        </Button>
+                      </Grid>
+                    )
+                  ))}
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+        )}
+
       </Container>
     </main>
   )

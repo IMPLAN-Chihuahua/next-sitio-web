@@ -1,5 +1,11 @@
 import { Media, MultipleMedia } from "../definitions";
 
+export type ArchivoGrupo = {
+  readonly id: number;
+  Nombre: string;
+  Archivo: Media[];
+};
+
 export type Licitacion = {
   readonly id: number;
   readonly documentId: string;
@@ -7,42 +13,24 @@ export type Licitacion = {
   estatus: 'Abierta' | 'Desierta' | 'Cancelada' | 'Cerrada';
   identificador: string;
   descripcion: string;
-  convocatoria: Media;
-  modificacionesConvocatoria: MultipleMedia | null;
-  bases: MultipleMedia | null;
-  resolucion: MultipleMedia | null;
+
   fechaInicio: string;
-  fechaResolucion: string;
-}
+  fechaResolucion: string | null;
 
+  Convocatoria: ArchivoGrupo[];
+  Bases: ArchivoGrupo[];
+  Resolucion: ArchivoGrupo[];
 
-export type Convocatoria = {
-  readonly id: number;
-  readonly documentId: string;  
-  fechaInicio: string;
-  modificaciones: MultipleMedia;
-  convocatoria: Media;
-}
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
 
-
-export type Bases = {
-  readonly id: number;
-  basesEditable: Media;
-  actaJuntaAclaraciones: Media;
-  actaApertura: Media | null;
-  modificaciones: MultipleMedia;
-  bases: Media;
-  sesionesExtraordinarias: MultipleMedia;
-}
-
-
-export type Resolucion = {
+export type PlanAnual = {
   id: number;
-  cancelacionLicitacion: Media;
-  actaDiferimientoFallo: Media;
-  actaFallo: Media;
-}
-
+  year: number;
+  document: Media;
+};
 
 export type LicitacionPage = {
   readonly id: number;
@@ -54,7 +42,7 @@ export type LicitacionPage = {
   publishedAt: string;
   cover: Media;
   procesoCompra: ProcesoCompraStep[];
-  planAdquisiciones: Media;
+  planesAnuales: PlanAnual[];
 }
 
 export type ProcesoCompraStep = {
@@ -78,12 +66,17 @@ export type AdquisicionDirecta = {
 
 
 export type Subasta = {
-  readonly id: string;
+  readonly id: number;
   readonly documentId: string;
   identificador: string;
   shortDescripcion: string;
-  convocatoria: Media;
-  bases: MultipleMedia | null;
-  resolucion: MultipleMedia | null;
   estatus: 'Vigente' | 'Concluida';
-}
+
+  convocatoria: ArchivoGrupo[];
+  bases: ArchivoGrupo[];
+  resolucion: ArchivoGrupo[];
+
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
