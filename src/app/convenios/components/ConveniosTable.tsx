@@ -62,36 +62,51 @@ export const ConveniosTable = () => {
     field: 'colaboradorExterno',
     headerName: 'Colaborador',
     valueGetter: (_, row) => row.colaboradores.map((c: ColaboradorExterno) => `${c.nombre}${c.acronimo ? ` (${c.acronimo})` : ''}`).join(','),
-    width: 400
+    width: 200
   }, {
+    field: 'shortDescripcion',
+    headerName: 'Descripción',
+    flex: 1,
+  },{
     field: 'anio',
-    headerName: 'Año'
+    headerName: 'Año',
   },
   {
+    flex: 1,
     field: '_',
     sortable: false,
     headerName: 'Archivos adjuntos',
-    flex: 1,
     renderCell: ({ row }) => (
       <Box>
         <MuiLink
+          mt={1}
           target='_blank'
           href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.convenio.url}`}
           display={'block'}
           maxWidth={'fit-content'}
         >Convenio</MuiLink>
-        <MuiLink
-          target='_blank'
-          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.terminosReferencia.url}`}
-          display={'block'}
-          maxWidth={'fit-content'}
-        >Términos de referencia</MuiLink>
-        <MuiLink
-          target='_blank'
-          href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.presentacion.url}`}
-          display={'block'}
-          maxWidth={'fit-content'}
-        >Presentación</MuiLink>
+        {
+          row.terminosReferencia && (
+            <MuiLink
+              mt={1}
+              target='_blank'
+              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.terminosReferencia.url}`}
+              display={'block'}
+              maxWidth={'fit-content'}
+            >Términos de referencia</MuiLink>
+          )
+        }
+        {
+          row.presentacion && (
+            <MuiLink
+              mt={1}
+              target='_blank'
+              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${row.presentacion.url}`}
+              display={'block'}
+              maxWidth={'fit-content'}
+            >Presentación</MuiLink>
+          )
+        }
       </Box>
     )
   }]
