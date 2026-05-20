@@ -53,7 +53,7 @@ export default function Carousel(props: { children: ReactNode }) {
 }
 
 
-export function Slide(props: { color: string, desc?: string, url: string }) {
+export function Slide(props: { desc?: string, url: string }) {
   return (
     <Box
       className={styles.embla__slide}
@@ -72,11 +72,13 @@ export function Slide(props: { color: string, desc?: string, url: string }) {
         props.desc && (
           <Typography
             bgcolor={'primary.900'}
-            p={1}
+            p={1.5}
             position={'absolute'}
             bottom={20}
             left={30}
             right={30}
+            borderRadius={1}
+            mx='auto'
             width='fit-content'
             color="whitesmoke"
             zIndex={1000}

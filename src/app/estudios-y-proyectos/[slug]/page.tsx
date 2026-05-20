@@ -92,7 +92,7 @@ const HeaderSection = ({ nombre, categoria, ficha }: { nombre: string, categoria
   return (
     <Box component='section'>
       <TrabajoPageBreadcrumbs currentPageTitle={nombre} />
-      <Typography component={'h1'} mt={3} mb={1} fontWeight={600} fontSize={36}>{nombre}</Typography>
+      <Typography component={'h1'} mt={4} mb={2} fontWeight={600} fontSize={36}>{nombre}</Typography>
       <Typography mb={3} color='primary.700' fontSize={16} fontWeight={600}>{categoria} • {ficha.anio}</Typography>
       <FichaSummary ficha={ficha} />
     </Box>
