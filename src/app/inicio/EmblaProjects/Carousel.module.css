@@ -83,8 +83,9 @@
 .embla__dots {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
+    
 }
 
 .embla__dot {
@@ -119,6 +120,6 @@
 
 .embla__arrow__buttons {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 10;
 }

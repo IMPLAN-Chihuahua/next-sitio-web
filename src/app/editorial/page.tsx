@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   Divider,
+  Toolbar,
 } from '@mui/material';
 import PageBanner from '../components/PageBanner';
 import Destacados from './components/Destacados';
@@ -26,21 +27,12 @@ export default async function EditorialPage() {
   const featuredPosts = editorialData?.featuredPosts || [];
 
   return (
-    <>
-      <PageBanner
-        description={editorialData.description}
-        title={editorialData.title}
-      />
-      <Box component="main" sx={{ bgcolor: '#f8f9fa', minHeight: '100vh', py: 8 }}>
-        <Destacados data={featuredPosts} />
-
-        <Container maxWidth="lg">
-          <Divider sx={{ my: 8 }} />
-
-          <Articulos />
-
-        </Container>
-      </Box>
-    </>
+    <Box component="main" sx={{ py: 3 }}>
+      <Toolbar variant='dense' />
+      <Destacados data={featuredPosts} />
+      <Container maxWidth="lg" sx={{ minHeight: '80vh' }}>
+        <Articulos />
+      </Container>
+    </Box>
   );
 }

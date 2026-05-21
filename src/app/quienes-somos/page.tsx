@@ -26,7 +26,7 @@ export default async function QuienesSomosPage() {
     });
     const json = await res.json();
 
-    const employees = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/team-members?populate=*&pagination[pageSize]=100`, {
+    const employees = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/team-members?populate=*&pagination[pageSize]=100&filters[habilitado][$eq]=true`, {
       next: { revalidate: 3600 },
     });
     const employeesJson = await employees.json();

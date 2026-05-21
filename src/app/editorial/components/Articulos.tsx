@@ -20,23 +20,26 @@ import qs from 'qs';
 import { cmsFetcher } from '@/app/services/http';
 import { Novedades } from '../definitions';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ClasificacionSpan } from '@/app/estudios-y-proyectos/components/Tile';
+import { Image } from '@mui/icons-material';
+import { parse } from 'date-fns';
 
 const getImageUrl = (entry: Novedades) => {
-    const url = entry?.media?.[0]?.url;
+    const url = entry?.cover?.url;
     return url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${url}` : '';
 };
 
+const dateFormatOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
 const formatDate = (dateString: string) => {
     if (!dateString) return '';
-    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('es-MX', options);
+    return new Date(dateString).toLocaleDateString('es-MX', dateFormatOptions);
 };
 
 export default function Articulos() {
     const [page, setPage] = useState(1);
 
     const queryParams = qs.stringify({
-        sort: ['publishedAt:desc'],
+        sort: ['fechaPublicacion:desc'],
         pagination: {
             page: page,
             pageSize: 6,
@@ -75,7 +78,7 @@ export default function Articulos() {
                             key={page}
                         >
                             {data?.data.map((item) => (
-                                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.id}>
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }} height={420} position='relative' key={item.id}>
                                     <motion.div
                                         layout
                                         initial={{ opacity: 0, scale: 0.8 }}
@@ -87,65 +90,94 @@ export default function Articulos() {
                                         <Link href={`/editorial/${item.slug}`} style={{ textDecoration: 'none' }} aria-label={`Leer artículo: ${item.title}`}>
                                             <Card sx={{
                                                 height: '100%',
-                                                borderRadius: 3,
+                                                borderRadius: 1,
                                                 display: 'flex',
                                                 flexDirection: 'column',
                                                 transition: 'transform 0.2s, box-shadow 0.2s',
                                                 '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 }
                                             }}>
-                                                <CardMedia
-                                                    component="img"
-                                                    height="200"
-                                                    image={getImageUrl(item)}
-                                                    alt={`Imagen de ${item.title}`}
-                                                    sx={{ bgcolor: 'grey.300', objectFit: 'cover' }}
-                                                    loading="lazy"
-                                                />
-                                                <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                                                {
+                                                    item.cover ? (
+                                                        <CardMedia
+                                                            component="img"
+                                                            height="200px"
+                                                            image={getImageUrl(item)}
+                                                            alt={`Imagen de ${item.title}`}
+                                                            sx={{
+                                                                bgcolor: 'grey.300',
+                                                                objectFit: 'cover',
+                                                                flex: 1,
+                                                            }}
+                                                            loading="lazy"
+                                                        />
 
-                                                    {item.tags && item.tags.length > 0 && (
-                                                        <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
-                                                            {item.tags?.map((tag) => (
-                                                                <Chip
-                                                                    key={tag.id}
-                                                                    label={tag.name}
-                                                                    size="small"
-                                                                    variant="outlined"
-                                                                    sx={{
-                                                                        borderColor: tag.hexColor,
-                                                                        color: tag.hexColor,
-                                                                        margin: '0 !important',
-                                                                        marginBottom: '8px !important'
-                                                                    }}
-                                                                />
-                                                            ))}
-                                                        </Stack>
-                                                    )}
-
-                                                    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2, color: 'text.secondary' }}>
-                                                        <AccessTimeIcon fontSize="small" />
-                                                        <Typography variant="caption">
-                                                            {formatDate(item.publishedAt)}
-                                                            {item.autors?.[0]?.nombre ? ` • ${item.autors[0].nombre}` : ''}
-                                                        </Typography>
-                                                    </Stack>
-
-                                                    <Typography variant="h6" component="h3" fontWeight={700} sx={{ mb: 1, color: 'text.primary', lineHeight: 1.3 }}>
+                                                    ) : (
+                                                        <Box
+                                                            sx={{
+                                                                minHeight: '200px',
+                                                                flex: 1,
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'center',
+                                                                bgcolor: 'grey.300'
+                                                            }}
+                                                        >
+                                                            <Image sx={{ fontSize: 50, color: 'grey.700' }} />
+                                                        </Box>
+                                                    )
+                                                }
+                                                <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                                    <Typography
+                                                        variant="h6"
+                                                        component="h3"
+                                                        fontWeight={600}
+                                                        sx={{
+                                                            mb: 1,
+                                                            color: 'text.primary',
+                                                            lineHeight: 1.3,
+                                                            display: '-webkit-box',
+                                                            WebkitLineClamp: 2,
+                                                            WebkitBoxOrient: 'vertical',
+                                                            wordBreak: 'break-word',
+                                                            overflow: 'hidden'
+                                                        }}>
                                                         {item.title}
                                                     </Typography>
-
-                                                    <Typography
-                                                        variant="body2"
-                                                        color="text.secondary"
-                                                        sx={{
-                                                            display: '-webkit-box',
-                                                            WebkitLineClamp: 3,
-                                                            WebkitBoxOrient: 'vertical',
-                                                            overflow: 'hidden',
-                                                        }}
-                                                    >
-                                                        {item.description}
+                                                    <Typography variant="body2" mb={2}>
+                                                        {item.autor && item.autor.length > 0 && ` ${item.autor[0]?.nombres} ${item.autor[0]?.apellidos} • `}
+                                                        {parse(item.fechaPublicacion, 'yyyy-MM-dd', new Date()).toLocaleDateString('es-MX', dateFormatOptions)}
                                                     </Typography>
+                                                    <Box
+                                                        mt={'auto'}
+                                                    >
+
+                                                        {item.tags && item.tags.length > 0 && (
+                                                            <Stack direction="row" sx={{ mb: 1, flexWrap: 'wrap', columnGap: 1.5, rowGap: .5 }}>
+                                                                {item.tags?.map((tag) => (
+                                                                    <ClasificacionSpan
+                                                                        key={tag.id}
+                                                                        clasificacion={{
+                                                                            hexColor: tag.hexColor,
+                                                                            name: tag.name
+                                                                        }}
+                                                                    />
+                                                                ))}
+                                                            </Stack>
+                                                        )}
+
+                                                        <Typography
+                                                            variant="body2"
+                                                            color="text.secondary"
+                                                            sx={{
+                                                                display: '-webkit-box',
+                                                                WebkitLineClamp: 3,
+                                                                WebkitBoxOrient: 'vertical',
+                                                                overflow: 'hidden',
+                                                            }}
+                                                        >
+                                                            {item.description}
+                                                        </Typography>
+                                                    </Box>
                                                 </CardContent>
                                             </Card>
                                         </Link>

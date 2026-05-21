@@ -8,6 +8,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
 
 type UsePrevNextButtonsType = {
     prevBtnDisabled: boolean
@@ -61,13 +62,12 @@ export const PrevButton = (props: PropType) => {
             type='button'
             {...restProps}
             sx={{
-                backgroundColor: '#F5F5F5',
                 '&:hover': {
-                    backgroundColor: 'secondary.main' // Color un poco más oscuro, por ejemplo
+                    backgroundColor: 'primary.200' // Color un poco más oscuro, por ejemplo
                 },
             }}
         >
-            <KeyboardArrowRightOutlinedIcon sx={{
+            <KeyboardArrowLeft sx={{
                 fontSize: 40
             }} />
         </IconButton>
@@ -84,13 +84,12 @@ export const NextButton: React.FC<PropType> = (props) => {
             type="button"
             {...restProps}
             sx={{
-                backgroundColor: '#F5F5F5',
                 '&:hover': {
-                    backgroundColor: 'secondary.main' // Color un poco más oscuro, por ejemplo
+                    backgroundColor: 'primary.200' // Color un poco más oscuro, por ejemplo
                 },
             }}
         >
-            <KeyboardArrowLeftOutlinedIcon sx={{
+            <KeyboardArrowRight sx={{
                 fontSize: 40
             }} />
         </IconButton>

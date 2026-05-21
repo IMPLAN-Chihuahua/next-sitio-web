@@ -21,12 +21,15 @@ export type Novedades = {
     content: string;
     seoTitle: string | null;
     seoDescription: string | null;
-    media: MultipleMedia;
+    cover: Media | null;
+    media?: MultipleMedia;
     autor?: Autor[];
     tags?: Tag[];
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+    fechaPublicacion: string;
+    momentosDestacados: MultipleMedia | null;
 }
 
 export type EditorialData = {
