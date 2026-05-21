@@ -55,6 +55,11 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiPopover: {
+      defaultProps: {
+        disableScrollLock: true,
+      }
+    },
     MuiLink: {
       defaultProps: {
         color: blue[900]

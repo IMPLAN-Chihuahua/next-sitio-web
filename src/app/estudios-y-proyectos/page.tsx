@@ -9,6 +9,7 @@ export default async function CentroEstudiosPage() {
   const pageReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/trabajos-planeacion-page?populate=*`);
   const trabajosPlaneacionPage: { data: TrabajosPlaneacionPageType, media: Record<string, unknown> } = await pageReq.json();
 
+
   return (
     <main>
       <PageBanner
