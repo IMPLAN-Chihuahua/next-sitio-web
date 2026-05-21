@@ -11,6 +11,7 @@ import { ShareOptions } from "../components/ShareOptions";
 import { Metadata } from "next";
 import { filesize } from "filesize";
 import Carousel, { Slide } from "../components/Carousel";
+import { ImagesMasonry } from "@/app/editorial/components/Masonry";
 
 
 type DetailPageMetadataProps = {
@@ -60,7 +61,8 @@ export default async function EstudioPage({ params }: { params: Promise<{ slug: 
       'ficha.clasificaciones',
       'ficha.colaboradoresExternos',
       'objetivos.general',
-      'objetivos.especificos'
+      'objetivos.especificos',
+      'galeriaFotografica'
     ]
   })
   const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/trabajos-planeacion/${slug}?${queryParams.toString()}`)
@@ -76,10 +78,16 @@ export default async function EstudioPage({ params }: { params: Promise<{ slug: 
           ficha={page.data.ficha}
         />
         <CoverImage cover={page.data.cover} />
+        <FichaSummary ficha={page.data.ficha} />
         <Divider sx={{ my: 3 }} />
         <ContentSection contenido={page.data.contenido} />
         <ObjetivosSection objetivos={page.data.objetivos} />
         <ArchivosAdjuntosSection archivosAdjuntos={page.data.archivosAdjuntos} />
+        {
+          page.data.galeriaFotografica && page.data.galeriaFotografica.length > 0 && (
+            <GaleriaFotografica images={page.data.galeriaFotografica} />
+          )
+        }
         <AcercaDeSection categoria={page.data.categoria} ficha={page.data.ficha} />
       </Container>
     </Box >
@@ -92,9 +100,8 @@ const HeaderSection = ({ nombre, categoria, ficha }: { nombre: string, categoria
   return (
     <Box component='section'>
       <TrabajoPageBreadcrumbs currentPageTitle={nombre} />
-      <Typography component={'h1'} mt={4} mb={2} fontWeight={600} fontSize={36}>{nombre}</Typography>
+      <Typography component={'h1'} mt={3} fontWeight={600} fontSize={36}>{nombre}</Typography>
       <Typography mb={3} color='primary.700' fontSize={16} fontWeight={600}>{categoria} • {ficha.anio}</Typography>
-      <FichaSummary ficha={ficha} />
     </Box>
   )
 }
@@ -113,6 +120,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
               ? 'Desarrollo interno'
               : 'Inversión: Ninguno'
         }</Typography>
+        <Typography variant="caption">{ficha.helperTextInversion}</Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 3.5 }} mt={{ xs: 2, md: 0 }}>
         <Typography fontSize={15} fontWeight={600} color='primary.800'>Colaboradores</Typography>
@@ -150,31 +158,42 @@ const CoverImage = ({ cover }: { cover: Media | null }) => {
   }
 
   return (
-    <Box
-      height={550}
-      width={'100%'}
-      mt={2}
-      mb={1}
-      position={'relative'}
-      overflow={'hidden'}
-      display={'flex'}
-      flexDirection={'column'}
-      alignItems={'center'}
-    >
-      <Image
-        src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${cover.url}`}
-        height={0}
-        width={0}
-        alt={cover.alternativeText ?? ''}
-        unoptimized
-        style={{
-          width: 'auto',
-          height: '100%',
-          objectFit: 'contain',
-          userSelect: 'none'
+    <Box>
+      <Box
+        height={600}
+        width={'100%'}
+        mt={2}
+        display={'flex'}
+        justifyContent={'center'}
+        overflow={'hidden'}
+        borderRadius={1}
+        sx={{
+          ':before': {
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${cover.url})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(16px) brightness(0.55)',
+            transform: 'scale(1.1)',
+            zIndex: 0
+          }
         }}
-      />
-      <Typography variant="caption" my={1}>Imagen: {cover.caption}</Typography>
+        position={'relative'}
+      >
+        <Image
+          src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${cover.url}`}
+          layout='fill'
+          alt={cover.alternativeText ?? ''}
+          unoptimized
+          style={{
+            objectFit: 'contain',
+            userSelect: 'none',
+          }}
+        />
+      </Box>
+      <Typography textAlign={'center'} display={'block'} variant="caption" mt={.5} mb={1}>{cover.caption}</Typography>
     </Box>
   )
 }
@@ -191,6 +210,7 @@ const ContentSection = ({ contenido }: { contenido: string }) => {
             p: props => <Typography mb={1.3}>{props.children}</Typography>,
             a: props => <MuiLink href={props.href}>{props.children}</MuiLink>,
             li: props => <Typography component={'li'} ml={2}>{props.children}</Typography>,
+            h3: props => <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>{props.children}</Typography>,
             LocalVideo: props => (<Box>
               <video width='100%' height='auto' controls disablePictureInPicture>
                 <source src={props.src} type={props.type}></source>
@@ -257,7 +277,7 @@ const ArchivosAdjuntosSection = ({ archivosAdjuntos }: { archivosAdjuntos: Multi
 
   return (
     <Box component='section' my={4}>
-      <Typography component={'h2'} fontSize={24} fontWeight={500}>Archivos adjuntos</Typography>
+      <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>Archivos adjuntos</Typography>
       <ul style={{ listStyle: 'none' }}>
         {
           archivosAdjuntos.map((adjunto) => (
@@ -277,11 +297,22 @@ const ArchivosAdjuntosSection = ({ archivosAdjuntos }: { archivosAdjuntos: Multi
 
 
 
+const GaleriaFotografica = (props: { images: MultipleMedia }) => {
+  return (
+    <Box my={4}>
+      <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>Galería fotográfica</Typography>
+      <ImagesMasonry images={props.images} />
+    </Box>
+  )
+}
+
+
+
 const AcercaDeSection = ({ categoria, ficha }: { categoria: string, ficha: FichaTrabajoPlaneacion }) => {
 
   return (
     <Box component='section' my={4}>
-      <Typography component={'h2'} fontSize={24} fontWeight={500}>Acerca de</Typography>
+      <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>Acerca de</Typography>
       <TableContainer style={{ maxWidth: '900px' }}>
         <Table aria-label={`Metadatos del ${categoria.toLowerCase()}`}>
           <TableBody>
