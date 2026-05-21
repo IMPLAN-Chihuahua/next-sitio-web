@@ -22,6 +22,7 @@ export type TrabajoPlaneacion = {
   archivosAdjuntos: MultipleMedia;
   ficha: FichaTrabajoPlaneacion;
   objetivos: ObjetivosEstudio;
+  galeriaFotografica: MultipleMedia;
 }
 
 export type ObjetivosEstudio = {

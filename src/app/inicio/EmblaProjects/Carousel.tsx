@@ -131,7 +131,6 @@ const Carousel = (props: PropType) => {
             </Box>
 
             <Box className={styles.embla__controls} sx={{
-                mt: 3,
                 px: { xs: 1, md: 2 },
                 display: 'flex',
                 justifyContent: 'space-between',
