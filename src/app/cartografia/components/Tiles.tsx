@@ -12,14 +12,14 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { CartografiaFilters } from "./CartografiaFilters";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { useUrlPagination } from "@/app/hooks/useUrlPagination";
 
 
 const MotionGrid = motion.create(Grid);
 
 const CartografiaTiles = () => {
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const { page, changePage } = useUrlPagination(1);
 
   const methods = useForm<{
     ediciones: number[],
@@ -92,11 +92,11 @@ const CartografiaTiles = () => {
 
   const handleClearFiltros = useCallback(() => {
     methods.reset();
-  }, []);
-
+    changePage(1);
+  }, [methods, changePage]);
 
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
-    setPage(val);
+    changePage(val);
 
     window.scrollTo({
       top: 550,
@@ -114,7 +114,7 @@ const CartografiaTiles = () => {
       <FormProvider {...methods}>
         <SearchAndFiltersLayout
           Filters={<CartografiaFilters handleClearFiltros={handleClearFiltros} showClearFilterButton={methods.formState.isDirty} />}
-          onDebouncedSearchChange={(val) => setSearch(val)}
+          onDebouncedSearchChange={(val) => { setSearch(val), changePage(1) }}
           hasDirtyFields={methods.formState.isDirty}
           searchBarPlaceholder="Busca por objeto geográfico, "
         />

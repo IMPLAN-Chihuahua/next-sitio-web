@@ -15,7 +15,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { formatISO, parseISO } from "date-fns";
 import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { useUrlPagination } from "@/app/hooks/useUrlPagination";
 
 
 const MotionGrid = motion.create(Grid);
@@ -28,8 +28,8 @@ const InstrumentosTiles = () => {
     }
   })
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1);
   const values = useWatch({ control: methods.control })
+  const { page, changePage } = useUrlPagination(1);
 
   const filterObj = {
     fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug'],
@@ -98,7 +98,7 @@ const InstrumentosTiles = () => {
   }, []);
 
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
-    setPage(val);
+    changePage(val);
 
     window.scrollTo({
       top: 550,
@@ -115,7 +115,7 @@ const InstrumentosTiles = () => {
       <FormProvider {...methods}>
         <SearchAndFiltersLayout
           Filters={<InstrumentosFilters handleClearFiltros={handleClearFiltros} showClearFilterButton={methods.formState.isDirty} />}
-          onDebouncedSearchChange={(val) => setSearch(val)}
+          onDebouncedSearchChange={(val) => { setSearch(val); changePage(1); }}
           hasDirtyFields={methods.formState.isDirty}
           searchBarPlaceholder="Buscar instrumentos por nombre"
         />

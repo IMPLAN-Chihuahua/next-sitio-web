@@ -15,7 +15,7 @@ import { TrabajosTilesSkeletons } from "./Skeleton";
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
 import useSWRImmutable from "swr/immutable";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { useUrlPagination } from "@/app/hooks/useUrlPagination";
 
 
 export default function TrabajosTiles() {
@@ -29,7 +29,7 @@ export default function TrabajosTiles() {
 
   const values = useWatch<{ anio: number[], colaboradoresExternos: Array<ColaboradorExterno>, tags: Array<Tag> }>({ control: methods.control })
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const { page, changePage } = useUrlPagination(1);
 
   const estudiosQueryParams = qs.stringify({
     sort: ['ficha.anio:desc', 'updatedAt:desc'],
@@ -99,7 +99,7 @@ export default function TrabajosTiles() {
 
 
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
-    setPage(val);
+    changePage(val);
 
     window.scrollTo({
       top: 550,
@@ -109,7 +109,8 @@ export default function TrabajosTiles() {
 
   const handleClearFiltros = useCallback(() => {
     methods.reset();
-  }, []);
+    changePage(1);
+  }, [methods, changePage]);
 
   if (error) {
     console.error(error)
@@ -120,7 +121,7 @@ export default function TrabajosTiles() {
     <Box>
       <FormProvider {...methods}>
         <SearchAndFiltersLayout
-          onDebouncedSearchChange={(val) => setSearch(val)}
+          onDebouncedSearchChange={(val) => { setSearch(val); changePage(1); }}
           hasDirtyFields={methods.formState.isDirty}
           Filters={
             <TrabajosFilters
