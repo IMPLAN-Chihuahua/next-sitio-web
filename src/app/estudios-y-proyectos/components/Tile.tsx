@@ -63,6 +63,9 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
                   ? 'Desarrollo interno'
                   : 'Inversión: Ninguno'
             }</Typography>
+            <Typography variant="body2" color='textSecondary'>
+              {props.trabajoPlaneacion.ficha.helperTextInversion ? ` (${props.trabajoPlaneacion.ficha.helperTextInversion})` : ''}
+            </Typography>
             <Typography>
               {
                 props.trabajoPlaneacion.ficha.colaboradoresExternos.length > 0

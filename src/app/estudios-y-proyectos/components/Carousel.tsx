@@ -17,7 +17,7 @@ export default function Carousel(props: { children: ReactNode }) {
   const { nextBtnDisabled, prevBtnDisabled, onNextButtonClick, onPrevButtonClick } = usePrevNextbuttons(emblaApi);
 
   return (
-    <Box className={styles.embla} my={3}>
+    <Box className={styles.embla}>
       <Box className={styles.embla__viewport} ref={emblaRef} borderRadius={1}>
         <div className={styles.embla__container}>
           {props.children}
@@ -37,7 +37,7 @@ export default function Carousel(props: { children: ReactNode }) {
 
 
 export function Slide(props: { desc?: string, url: string }) {
-  
+
   return (
     <Box
       className={styles.embla__slide}
@@ -67,21 +67,26 @@ export function Slide(props: { desc?: string, url: string }) {
       />
       {
         props.desc && (
-          <Typography
-            bgcolor={'primary.800'}
-            p={1.5}
+          <Box
             position={'absolute'}
-            bottom={20}
-            left={30}
-            right={30}
-            mx={{ md: 3 }}
-            borderRadius={1}
-            color="whitesmoke"
-            zIndex={1000}
-            fontWeight={500}
+            bottom={0}
+            left={0}
+            right={0}
           >
-            {props.desc}
-          </Typography>
+            <Overlay />
+            <Typography
+              p={3}
+              color='primary.100'
+              zIndex={1000}
+              fontWeight={500}
+              position={'relative'}
+              sx={{
+                textShadow: '1px 1px 2px black'
+              }}
+            >
+              {props.desc}
+            </Typography>
+          </Box>
         )
       }
     </Box>
