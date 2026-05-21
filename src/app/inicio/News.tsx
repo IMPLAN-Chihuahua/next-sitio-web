@@ -11,7 +11,7 @@ const News = ({ data }: { data: Novedades[] }) => {
     const others = data.slice(1, 4);
 
     const getImageUrl = (entry: any) => {
-        const url = entry?.media?.[0]?.url;
+        const url = entry?.cover?.url;
         return url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${url}` : '';
     };
 
