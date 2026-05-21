@@ -106,7 +106,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
                 <ContentSection content={article.content} />
 
-                {article.momentosDestacados !== null && (
+                {article.momentosDestacados && article.momentosDestacados.length > 0 && (
                     <Box>
                         <Typography variant="h3" sx={{ mt: 4, mb: 2, fontSize: '1.5rem', fontWeight: 600, color: 'primary.800' }}>
                             Momentos destacados

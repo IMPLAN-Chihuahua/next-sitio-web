@@ -15,6 +15,10 @@ export const ImagesMasonry = (props: { images: MultipleMedia }) => {
 
   const toggleImages = () => setOpen(pre => !pre)
 
+  if (!props.images) {
+    return
+  }
+
   return <Box>
     <Carousel >
       {
@@ -24,7 +28,7 @@ export const ImagesMasonry = (props: { images: MultipleMedia }) => {
       }
     </Carousel>
     {
-      props.images.length > 6 && (
+      props.images.length > 5 && (
         <Box>
           <Button
             endIcon={open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
