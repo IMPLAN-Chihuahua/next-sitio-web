@@ -8,6 +8,7 @@ import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
 import CartografiaCard from "../components/CartografiaCard";
+import { filesize } from "filesize";
 
 
 export default async function InstrumentoPlaneacionPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -23,7 +24,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
     ]
   }, { encodeValuesOnly: true });
 
-  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumentos-planeacion/${slug}?${queryParams.toString()}]`)
+  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumentos-planeacion/${slug}?${queryParams.toString()}`)
   const page: { data: InstrumentoPlaneacion } = await req.json();
 
   return (
@@ -75,7 +76,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
         </Suspense>
         {
           page.data.datosGeograficos.length > 0 && (
-            <Box component={'section'} mt={3}>
+            <Box component={'section'} my={3}>
               <Typography component={'h2'} fontSize={24} fontWeight={600} mb={1}>Datos geográficos</Typography>
               <Grid container spacing={2} flexWrap={'wrap'}>
                 {
@@ -84,6 +85,26 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
                   ))
                 }
               </Grid>
+            </Box>
+          )
+        }
+        {
+          page.data.archivosAdjuntos.length > 0 && (
+            <Box component={'section'} my={3}>
+              <Typography component={'h2'} fontSize={24} fontWeight={600} mb={1}>Archivos descargables</Typography>
+              <ul style={{ listStyle: 'none' }}>
+                {
+                  page.data.archivosAdjuntos.map((archivo, idx) => (
+                    <li key={archivo.documentId}>
+                      <MuiLink
+                        target='_blank'
+                        href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${archivo.url}`}>{
+                          `${archivo.caption ? `${archivo.caption} • ${archivo.ext.substring(1)}` : archivo.name} (${filesize(archivo.size * 1000, { standard: 'jedec' })})`
+                        }</MuiLink>
+                    </li>
+                  ))
+                }
+              </ul>
             </Box>
           )
         }

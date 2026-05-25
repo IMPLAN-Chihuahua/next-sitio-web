@@ -24,9 +24,6 @@ export default async function InstrumentosPlaneacionPage() {
     />
     <Container>
       <SubtitleH2 title='Datos abiertos' />
-      <Typography>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias illo eos commodi beatae a recusandae ratione, nihil esse dolor reiciendis eaque, deleniti voluptate ab fuga consectetur ipsam unde modi libero.
-      </Typography>
       <InstrumentosTiles />
     </Container>
   </Box>)
