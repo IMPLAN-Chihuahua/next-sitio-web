@@ -4,6 +4,7 @@ import { Box, Container, Grid, Typography, TextField, InputAdornment, Chip, Stac
 import SearchIcon from '@mui/icons-material/Search'
 import ConsejoCard from './ConsejoCard'
 import { Consejero, SectorType } from '../definitions'
+import { SubtitleH2 } from '@/app/components/Titles'
 
 // Configuración de los filtros (Etiqueta visible vs Valor interno)
 const FILTERS = [
@@ -37,8 +38,8 @@ const Consejo = ({ data }: { data: Consejero[] }) => {
     return (
         <Box sx={{ pb: 10, bgcolor: '#fafafa', minHeight: '100vh' }}>
             <Container maxWidth="xl">
-
                 <Box sx={{ mb: 6, textAlign: 'center', maxWidth: 800, mx: 'auto' }}>
+                    <SubtitleH2 title='Consejeros' />
 
                     {/* 2. BARRA DE BÚSQUEDA */}
                     <TextField

@@ -44,8 +44,6 @@ export default async function ConsejoPage() {
           : undefined
         }
       />
-      <FreshDivider />
-      <Headline />
       <ConsejoCards data={consejo} />
 
 
