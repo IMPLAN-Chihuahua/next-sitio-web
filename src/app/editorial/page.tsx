@@ -8,6 +8,7 @@ import {
 import PageBanner from '../components/PageBanner';
 import Destacados from './components/Destacados';
 import Articulos from './components/Articulos';
+import { SubtitleH2 } from '../components/Titles';
 
 export default async function EditorialPage() {
   let editorialData: any = {};
@@ -27,10 +28,11 @@ export default async function EditorialPage() {
   const featuredPosts = editorialData?.featuredPosts || [];
 
   return (
-    <Box component="main" sx={{ py: 3 }}>
+    <Box component="main" sx={{ mb: 3 }}>
       <Toolbar variant='dense' />
-      <Destacados data={featuredPosts} />
       <Container maxWidth="lg" sx={{ minHeight: '80vh' }}>
+        <SubtitleH2 title="Editorial" />
+        <Destacados data={featuredPosts} />
         <Articulos />
       </Container>
     </Box>
