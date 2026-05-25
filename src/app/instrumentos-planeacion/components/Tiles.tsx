@@ -1,7 +1,7 @@
 'use client'
 
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
-import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Pagination as MuiPagination, Typography, Link as MuiLink, Stack, Button, Alert } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Pagination as MuiPagination, Typography, Link as MuiLink, Stack, Button, Alert, CircularProgress } from "@mui/material";
 import useSWRImmutable from "swr/immutable";
 import qs from 'qs'
 import { cmsFetcher } from "@/app/services/http";
@@ -124,28 +124,31 @@ const InstrumentosTiles = () => {
       <Grid container spacing={2} sx={{ my: 3 }} minHeight={'600px'}>
         <AnimatePresence mode='popLayout'>
           {
-            !isLoading && instrumentos.length > 0
-              ? instrumentos.map(instrumento => (
-                <MotionGrid
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.3 }}
-                  key={instrumento.documentId}
-                  size={{ xs: 12, md: 4 }}
-                  justifyContent={{ xs: 'center' }}
-                  display={'flex'}
-                >
-                  <InstrumentoCard instrumento={instrumento} />
-                </MotionGrid>
-              )) : (
-                <MotionGrid size={12}>
-                  <Typography>
-                    No se encontraron instrumentos de planeación
-                  </Typography>
-                </MotionGrid>
-              )
+            isLoading
+              ? (<CircularProgress />)
+              :
+              instrumentos.length > 0
+                ? instrumentos.map(instrumento => (
+                  <MotionGrid
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                    key={instrumento.documentId}
+                    size={{ xs: 12, md: 4 }}
+                    justifyContent={{ xs: 'center' }}
+                    display={'flex'}
+                  >
+                    <InstrumentoCard instrumento={instrumento} />
+                  </MotionGrid>
+                )) : (
+                  <MotionGrid size={12}>
+                    <Typography>
+                      No se encontraron instrumentos de planeación
+                    </Typography>
+                  </MotionGrid>
+                )
           }
         </AnimatePresence>
       </Grid>

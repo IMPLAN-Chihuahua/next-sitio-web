@@ -80,8 +80,8 @@ export default async function EstudioPage({ params }: { params: Promise<{ slug: 
         <CoverImage cover={page.data.cover} />
         <FichaSummary ficha={page.data.ficha} />
         <Divider sx={{ my: 3 }} />
-        <ContentSection contenido={page.data.contenido} />
         <ObjetivosSection objetivos={page.data.objetivos} />
+        <ContentSection contenido={page.data.contenido} />
         <ArchivosAdjuntosSection archivosAdjuntos={page.data.archivosAdjuntos} />
         {
           page.data.galeriaFotografica && page.data.galeriaFotografica.length > 0 && (
@@ -112,7 +112,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
   return (
     <Grid container sx={{ my: { xs: 2.5, md: 4.5 } }} columnSpacing={3}>
       <Grid size={{ xs: 12, md: 3 }}>
-        <Typography fontSize={15} fontWeight={600} color='primary.800'>Inversión</Typography>
+        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Inversión</Typography>
         <Typography variant='body2'>{
           ficha.inversion
             ? getFormattedInversion(ficha.inversion)
@@ -120,10 +120,12 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
               ? 'Desarrollo interno'
               : 'Inversión: Ninguno'
         }</Typography>
-        <Typography variant="caption">{ficha.helperTextInversion}</Typography>
+        {
+          ficha.helperTextInversion && <Typography variant="body2" color='textSecondary'>({ficha.helperTextInversion})</Typography>
+        }
       </Grid>
       <Grid size={{ xs: 12, md: 3.5 }} mt={{ xs: 2, md: 0 }}>
-        <Typography fontSize={15} fontWeight={600} color='primary.800'>Colaboradores</Typography>
+        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Colaboradores</Typography>
         <Typography variant="body2">
           {
             ficha.colaboradoresExternos.length > 0
@@ -133,7 +135,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 3.5 }} mt={{ xs: 2, md: 0 }}>
-        <Typography fontSize={15} fontWeight={600} color='primary.800'>Clasificación</Typography>
+        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Clasificación</Typography>
         {
           ficha.clasificaciones.length > 0
             ? ficha.clasificaciones.map(clasificacion => (
@@ -143,7 +145,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
         }
       </Grid>
       <Grid size={{ xs: 12, md: 2 }} mt={{ xs: 2, md: 0 }}>
-        <Typography fontSize={15} fontWeight={600} color='primary.800'>Compartir</Typography>
+        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Compartir</Typography>
         <ShareOptions />
       </Grid>
     </Grid>
@@ -207,10 +209,14 @@ const ContentSection = ({ contenido }: { contenido: string }) => {
         <MDXRemote
           source={contenido}
           components={{
-            p: props => <Typography mb={1.3}>{props.children}</Typography>,
-            a: props => <MuiLink href={props.href}>{props.children}</MuiLink>,
-            li: props => <Typography component={'li'} ml={2}>{props.children}</Typography>,
-            h3: props => <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>{props.children}</Typography>,
+            p: props => <Typography mb={3}>{props.children}</Typography>,
+            a: props => <MuiLink lineHeight={1.8} href={props.href}>{props.children}</MuiLink>,
+            li: props => <Typography lineHeight={1.8} component={'li'} ml={2}>{props.children}</Typography>,
+            ul: props => <Box component='ul' lineHeight={1.8} mb={1.3}>{props.children}</Box>,
+            ol: props => <Box component='ol' lineHeight={1.8} mb={1.3}>{props.children}</Box>,
+            h2: props => <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>{props.children}</Typography>,
+            h3: props => <Typography component={'h3'} my={1} fontSize={20} fontWeight={500} color='primary.800'>{props.children}</Typography>,
+            h4: props => <Typography component='h4' fontSize={18} fontWeight={600} color='primary.800'>{props.children}</Typography>,
             LocalVideo: props => (<Box>
               <video width='100%' height='auto' controls disablePictureInPicture>
                 <source src={props.src} type={props.type}></source>
@@ -236,34 +242,44 @@ const ObjetivosSection = ({ objetivos }: { objetivos: ObjetivosEstudio | null })
   return (
     <Box component={'section'} my={4}>
       <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>Objetivos</Typography>
-      <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>General</Typography>
-      <Box bgcolor={'primary.200'} p={3}>
-        <Suspense fallback={<CircularProgress />}>
-          <MDXRemote
-            source={objetivos.general}
-            components={{
-              p: props => <Typography textAlign={'center'}>{props.children}</Typography>
-            }}
-          />
-        </Suspense>
-      </Box>
-      <Box mt={2}>
-        <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>Específicos</Typography>
-        <ol style={{ marginLeft: '20px' }}>
-          {
-            objetivos.especificos.map(especifico => (
-              <MDXRemote
-                source={especifico.descripcion}
-                key={especifico.id}
-                components={{
-                  p: props => <li style={{ marginBottom: '5px' }}><Typography>{props.children}</Typography></li>,
-                  a: props => <MuiLink target={'_blank'} href={props.href}>{props.children}</MuiLink>
-                }}
-              />
-            ))
-          }
-        </ol>
-      </Box>
+      {
+        objetivos.general && (
+          <>
+            <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>General</Typography>
+            <Box bgcolor={'primary.200'} p={3}>
+              <Suspense fallback={<CircularProgress />}>
+                <MDXRemote
+                  source={objetivos.general}
+                  components={{
+                    p: props => <Typography mt={1} textAlign={'center'}>{props.children}</Typography>
+                  }}
+                />
+              </Suspense>
+            </Box>
+          </>
+        )
+      }
+      {
+        objetivos.especificos.length > 0 && (
+          <Box mt={2}>
+            <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>Específicos</Typography>
+            <Box component={'ol'} ml={5}>
+              {
+                objetivos.especificos.map(especifico => (
+                  <MDXRemote
+                    source={especifico.descripcion}
+                    key={especifico.id}
+                    components={{
+                      p: props => <li style={{ marginBottom: '5px' }}><Typography>{props.children}</Typography></li>,
+                      a: props => <MuiLink target={'_blank'} href={props.href}>{props.children}</MuiLink>
+                    }}
+                  />
+                ))
+              }
+            </Box>
+          </Box>
+        )
+      }
     </Box>
   )
 }
@@ -349,7 +365,7 @@ const AcercaDeSection = ({ categoria, ficha }: { categoria: string, ficha: Ficha
                 <Typography fontWeight={500}>Localización</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{ficha.localizacion}</Typography>
+                <Typography>{ficha.localizacion ? ficha.localizacion : 'No establecida'}</Typography>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -362,7 +378,7 @@ const AcercaDeSection = ({ categoria, ficha }: { categoria: string, ficha: Ficha
                     ? `${new Intl.NumberFormat().format(ficha.superficieM2)} m²`
                     : ficha.superficieHas
                       ? `${new Intl.NumberFormat().format(ficha.superficieHas)} has`
-                      : 'No definido'}</Typography>
+                      : 'No establecida'}</Typography>
               </TableCell>
             </TableRow>
           </TableBody>

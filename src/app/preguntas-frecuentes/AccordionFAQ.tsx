@@ -3,6 +3,7 @@ import { Accordion, Box, Container, Typography, AccordionSummary, AccordionDetai
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FaqItem } from './definitions';
+import { SubtitleH2 } from '../components/Titles';
 
 const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: string }) => {
     const [expanded, setExpanded] = useState<number | false>(false);
@@ -12,13 +13,9 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
     };
 
     return (
-        <Container maxWidth="md" sx={{ py: 5 }}>
+        <Container sx={{ mb: 3 }}>
 
-            <Box textAlign="center" mb={3}>
-                <Typography variant="h4" component="h2" fontWeight="bold" gutterBottom>
-                    Estas son algunas de las preguntas más frecuentes en el Instituto
-                </Typography>
-            </Box>
+            <SubtitleH2 title='Preguntas frecuentes' />
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {data.length > 0 ? (

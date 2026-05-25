@@ -17,7 +17,7 @@ export default async function AvisoPrivacidadPage() {
   return (
     <Box>
       <Toolbar variant="dense" />
-      <Container sx={{ mt: 3 }}>
+      <Container sx={{ my: 3 }}>
         <SubtitleH2 title="Avisos de privacidad" />
         <AvisosPrivacidadTable avisos={avisos} />
       </Container>

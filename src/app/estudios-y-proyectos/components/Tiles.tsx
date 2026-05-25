@@ -1,6 +1,6 @@
 'use client'
 import { cmsFetcher } from "@/app/services/http";
-import { Alert, Autocomplete, Box, Button, Pagination, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Autocomplete, Box, Button, CircularProgress, Pagination, Stack, TextField, Typography } from "@mui/material";
 import qs from 'qs';
 import { TrabajoPlaneacion } from "../definitions";
 import TrabajoTile from "./Tile";
@@ -134,21 +134,23 @@ export default function TrabajosTiles() {
       <Box component={'section'} display={'flex'} flexDirection={'column'} alignItems={'center'} minHeight={'600px'}>
         <AnimatePresence mode='popLayout'>
           {
-            !isLoading && trabajos.length > 0
-              ? trabajos.map(trabajo => (
-                <Box
-                  key={trabajo.documentId}
-                  sx={{ mb: 2.5, width: '100%', maxWidth: { xs: '450px', md: '100%' } }}
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.3 }}
-                  component={motion.div}>
-                  <TrabajoTile trabajoPlaneacion={trabajo} />
-                </Box>
-              ))
-              : <Typography>No se encontraron registros</Typography>
+            isLoading
+              ? (<CircularProgress />)
+              : trabajos.length > 0
+                ? trabajos.map(trabajo => (
+                  <Box
+                    key={trabajo.documentId}
+                    sx={{ mb: 2.5, width: '100%', maxWidth: { xs: '450px', md: '100%' } }}
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                    component={motion.div}>
+                    <TrabajoTile trabajoPlaneacion={trabajo} />
+                  </Box>
+                ))
+                : <Typography>No se encontraron registros</Typography>
           }
         </AnimatePresence>
       </Box>
