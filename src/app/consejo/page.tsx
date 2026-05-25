@@ -17,7 +17,7 @@ export default async function ConsejoPage() {
   let data: any = {};
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/consejos`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/consejos?pagination[pageSize]=1000000`, {
       next: { revalidate: 3600 },
     });
     const json = await res.json();
