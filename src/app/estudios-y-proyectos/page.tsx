@@ -1,8 +1,9 @@
 import PageBanner from "@/app/components/PageBanner";
 import { TrabajosPlaneacionPageType } from "./definitions";
-import { Container, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import { SubtitleH2 } from "@/app/components/Titles";
 import TrabajosTiles from "./components/Tiles";
+import { Suspense } from "react";
 
 
 export default async function CentroEstudiosPage() {
@@ -23,7 +24,10 @@ export default async function CentroEstudiosPage() {
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima quibusdam nesciunt quo cupiditate ab consequatur.
           Libero commodi laborum dolor saepe, delectus vitae veniam recusandae quidem. Vero nesciunt necessitatibus sint consequuntur.
         </Typography>
-        <TrabajosTiles />
+        <Suspense fallback={<Box display="flex" justifyContent="center" py={10}><CircularProgress /></Box>}>
+
+          <TrabajosTiles />
+        </Suspense>
       </Container>
     </main>
   )
