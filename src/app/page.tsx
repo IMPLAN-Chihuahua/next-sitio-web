@@ -36,7 +36,14 @@ export default async function Home() {
     content: item.text,
     emphasis: item.textEmphasis,
     image: `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${item.image?.url}`
-  }))
+  })) ?? [];
+
+  const {
+    Sections: sections = null,
+    Platforms: platforms = null,
+    Stellar: stellar = null,
+    Projects: projects = null,
+  } = data;
 
   return (
     <main>
@@ -45,22 +52,22 @@ export default async function Home() {
         bgcolor: 'white',
         backgroundSize: '20px 20px',
       }}>
-
         <Container>
-          <ServicesList data={data.Sections} />
+          <ServicesList data={sections} />
         </Container>
-
         <Box sx={{
           bgcolor: 'grey.50',
         }}>
-          <ProjectsExplorer data={data.Platforms} />
+          <ProjectsExplorer data={platforms} />
         </Box>
-        <StellarBanner data={data.Stellar} />
+
+        <StellarBanner data={stellar} />
+
         <Box sx={{
           bgcolor: 'white',
         }}>
           <Container maxWidth={'xl'}>
-            <ProjectSlider data={data.Projects} />
+            <ProjectSlider data={projects} />
             <FreshDivider />
             <News data={newsData} />
           </Container>
