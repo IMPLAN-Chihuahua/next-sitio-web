@@ -1,6 +1,7 @@
 import { Box, Card, CardMedia, Container, Grid, Typography, CardContent, Chip } from '@mui/material'
 import { Novedades } from '../definitions';
 import Link from 'next/link';
+import { Image } from '@mui/icons-material';
 
 
 const Destacados = ({ data }: { data: Novedades[] }) => {
@@ -9,7 +10,7 @@ const Destacados = ({ data }: { data: Novedades[] }) => {
 
     // Helper para sacar la URL completa de la imagen
     const getImageUrl = (entry: Novedades) => {
-        const url = entry?.media?.[0]?.url;
+        const url = entry?.cover?.url;
         return url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${url}` : '';
     };
 
@@ -32,17 +33,40 @@ const Destacados = ({ data }: { data: Novedades[] }) => {
                                 transition: 'transform 0.2s',
                                 '&:hover': { transform: 'translateY(-4px)' }
                             }}>
-                                <CardMedia
-                                    component="img"
-                                    height="300"
-                                    image={getImageUrl(item)}
-                                    alt={item.title}
-                                    sx={{ bgcolor: 'grey.300' }}
-                                />
+                                {
+                                    item.cover ? (
+                                        <CardMedia
+                                            component="img"
+                                            height="300px"
+                                            image={getImageUrl(item)}
+                                            alt={`Imagen de ${item.title}`}
+                                            sx={{
+                                                bgcolor: 'grey.300',
+                                                objectFit: 'cover',
+                                                flex: 1,
+                                            }}
+                                            loading="lazy"
+                                        />
+
+                                    ) : (
+                                        <Box
+                                            sx={{
+                                                minHeight: '300px',
+                                                flex: 1,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                bgcolor: 'grey.300'
+                                            }}
+                                        >
+                                            <Image sx={{ fontSize: 50, color: 'grey.700' }} />
+                                        </Box>
+                                    )
+                                }
                                 <CardContent sx={{ p: 4, flexGrow: 1 }}>
                                     <Chip label="Destacado" size="small" sx={{ mb: 2, bgcolor: 'primary.main', color: 'white' }} />
 
-                                    <Typography variant="h4" fontWeight={700} sx={{ color: 'text.primary' }}>
+                                    <Typography variant="h4" fontWeight={600} sx={{ color: 'text.primary' }}>
                                         {item.title}
                                     </Typography>
                                 </CardContent>

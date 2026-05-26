@@ -1,3 +1,4 @@
+import { Toolbar } from '@mui/material';
 import PageBanner from '../components/PageBanner';
 import AccordionFAQ from './AccordionFAQ';
 
@@ -18,10 +19,7 @@ export default async function PreguntasFrecuentesPage() {
 
     return (
         <main>
-            <PageBanner
-                title='Preguntas frecuentes'
-                description='¿Tienes alguna duda?'
-            />
+            <Toolbar variant='dense' />
             <AccordionFAQ data={data.FAQ} urlContacto={data.urlContacto} />
         </main>
     )
