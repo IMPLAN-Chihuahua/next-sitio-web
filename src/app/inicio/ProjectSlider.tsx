@@ -5,12 +5,12 @@ import { EmblaOptionsType } from 'embla-carousel'
 import { Project } from '../definitions'
 
 const ProjectSlider = ({ data }: { data: Project[] }) => {
+    if (!data?.length) return null;
     const OPTIONS: EmblaOptionsType = { direction: 'ltr' }
 
     return (
         <Box sx={{
             mt: 5,
-            mb: 10
         }}>
             <Carousel slides={data} options={OPTIONS} />
         </Box>

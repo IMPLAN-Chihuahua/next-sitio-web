@@ -13,6 +13,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 
 
 export default function LandingPageBanner({ phrases }: { phrases: Array<{ content: string, emphasis: string, image: string }> }) {
+  if (!phrases.length) return null;
   const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false, loop: true },
     [Autoplay({ playOnInit: true, delay: 4_000 }), Fade()]);
 

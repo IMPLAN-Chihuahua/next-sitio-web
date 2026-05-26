@@ -3,8 +3,8 @@ import { Section } from '../definitions'
 import { Box, Button, Grid, Stack, Typography, Container } from '@mui/material'
 
 const ServicesList = ({ data }: { data: Section[] }) => {
+    if (!data?.length) return null;
     return (
-        // Quitamos el Stack y manejamos el espacio individualmente
         <Box sx={{ width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
             {data.map((item, index) => {
                 const isEven = index % 2 === 0;

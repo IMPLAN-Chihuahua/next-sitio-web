@@ -6,6 +6,7 @@ import { Platform } from '../definitions'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 
 const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
+    if (!data?.length) return null;
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     if (!data || data.length === 0) return null;
