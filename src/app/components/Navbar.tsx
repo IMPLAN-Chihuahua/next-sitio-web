@@ -67,7 +67,7 @@ const ImplanImageLink = () => {
         src='/implan.svg'
         width={80}
         height={50}
-        alt=''
+        alt='Volver al inicio - IMPLAN Chihuahua'
         draggable={false}
         style={{
           objectFit: 'contain',
@@ -226,13 +226,46 @@ const NavbarLinkButton = ({ href, label }: { href: string, label: string }) => {
       component={Link}
       disableTouchRipple
       sx={{
+        position: 'relative',
         textAlign: { xs: 'left', md: 'center' },
-        textDecoration: 'none',
         textTransform: 'none',
         fontWeight: 600,
         fontSize: 16,
+        px: 1.5,
+        py: 1,
+        borderRadius: 1,
+        transition: 'background-color 160ms ease, color 160ms ease',
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          left: 12,
+          right: 12,
+          bottom: 4,
+          height: 2,
+          borderRadius: 999,
+          backgroundColor: 'secondary.main',
+          transform: 'scaleX(0)',
+          transformOrigin: 'center',
+          transition: 'transform 160ms ease',
+        },
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        },
+        '&:hover::after': {
+          transform: 'scaleX(1)',
+        },
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: 'secondary.main',
+          outlineOffset: 3,
+          backgroundColor: 'rgba(255, 255, 255, 0.10)',
+        },
+        '&:focus-visible::after': {
+          transform: 'scaleX(1)',
+        },
       }}
-      href={href}>
+      href={href}
+    >
       {label}
     </Button>
   )
@@ -312,20 +345,64 @@ const NavbarMenu = ({ label, menuItems, href }: { href: string, label: string, m
       <Button
         id={buttonId}
         aria-controls={open ? menuId : undefined}
-        aria-haspopup={true}
+        aria-haspopup="menu"
         aria-expanded={open ? 'true' : undefined}
         color="inherit"
         disableTouchRipple
         sx={{
+          position: 'relative',
           fontSize: 16,
-          textDecoration: 'none',
           textTransform: 'none',
-          fontWeight: 600
+          fontWeight: 600,
+          px: 1.5,
+          py: 1,
+          borderRadius: 1,
+          transition: 'background-color 160ms ease',
+
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            left: 12,
+            right: 12,
+            bottom: 4,
+            height: 2,
+            borderRadius: 999,
+            backgroundColor: 'secondary.main',
+            transform: open ? 'scaleX(1)' : 'scaleX(0)',
+            transformOrigin: 'center',
+            transition: 'transform 160ms ease',
+          },
+
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+          },
+
+          '&:hover::after': {
+            transform: 'scaleX(1)',
+          },
+
+          '&:focus-visible': {
+            outline: '2px solid',
+            outlineColor: 'secondary.main',
+            outlineOffset: 3,
+            backgroundColor: 'rgba(255, 255, 255, 0.10)',
+          },
+
+          '&:focus-visible::after': {
+            transform: 'scaleX(1)',
+          },
+
+          '& .MuiButton-endIcon': {
+            transition: 'transform 160ms ease',
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+          },
         }}
         onClick={handleClick}
-        endIcon={<ExpandMoreIcon />}>
+        endIcon={<ExpandMoreIcon />}
+      >
         {label}
       </Button>
+
       <Menu
         id={menuId}
         open={open}
@@ -334,27 +411,45 @@ const NavbarMenu = ({ label, menuItems, href }: { href: string, label: string, m
         onClose={handleClose}
         slotProps={{
           list: {
-            'aria-labelledby': `${menuFor}-button`
-          }
+            'aria-labelledby': buttonId,
+          },
+          paper: {
+            sx: {
+              mt: 1,
+              borderRadius: 1,
+              border: '1px solid',
+              borderColor: 'divider',
+            },
+          },
         }}
       >
         {menuItems.map((item, idx) => (
-          <MenuItem key={`${menuId}-${idx}`} >
-            <MuiLink
-              sx={{
-                textDecoration: 'none',
-                textTransform: 'none',
-                fontWeight: 500,
-                textAlign: 'left',
-                minWidth: '120px'
-              }}
-              color='inherit'
-              component={Link}
-              onClick={handleClose}
-              href={item.href}
-            >
-              {item.label}
-            </MuiLink>
+          <MenuItem
+            key={`${menuId}-${idx}`}
+            component={Link}
+            href={item.href}
+            onClick={handleClose}
+            sx={{
+              minWidth: 180,
+              fontWeight: 500,
+              textTransform: 'none',
+              borderLeft: '3px solid transparent',
+
+              '&:hover': {
+                bgcolor: 'primary.100',
+                borderLeftColor: 'secondary.main',
+              },
+
+              '&:focus-visible': {
+                bgcolor: 'primary.100',
+                borderLeftColor: 'secondary.main',
+                outline: '2px solid',
+                outlineColor: 'secondary.main',
+                outlineOffset: -2,
+              },
+            }}
+          >
+            {item.label}
           </MenuItem>
         ))}
       </Menu>
