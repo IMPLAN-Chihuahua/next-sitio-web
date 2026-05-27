@@ -1,8 +1,9 @@
 'use client'
 import React from 'react'
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography, Link as MuiLink } from '@mui/material'
 import Link from 'next/link'
 import { Novedades } from '../editorial/definitions';
+import { Add, Article, ChevronRight, Feed, OpenInNew } from '@mui/icons-material';
 
 const News = ({ data }: { data: Novedades[] }) => {
     if (data.length === 0) return null;
@@ -19,93 +20,118 @@ const News = ({ data }: { data: Novedades[] }) => {
         <Box sx={{
             pl: { xs: 2, md: 10 },
             pr: { xs: 2, md: 10 },
-            mb: 10
+            mb: 10,
         }}>
             <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant='h4' fontWeight={800}>
                     Novedades
                 </Typography>
-                <Button
-                    component={Link}
-                    href="/editorial"
-                    variant='outlined'
-                    sx={{
-                        textTransform: 'none',
-                        borderRadius: 50,
-                        color: 'black',
-                        borderColor: 'black',
-                        px: 3,
-                        '&:hover': { borderColor: 'grey.700', bgcolor: 'grey.50' }
-                    }}
-                >
-                    Saber más
-                </Button>
             </Box>
 
             <Grid container spacing={4}>
-                {/* --- ARTÍCULO DESTACADO (GRANDE) --- */}
-                <Grid size={{ xs: 12, md: 8 }}>
-                    <Link href={`/editorial/${featured.slug}`} style={{ textDecoration: 'none' }}>
+                <Grid size={{ xs: 12 }}>
+                    <Link href={`/editorial/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <Box
                             sx={{
-                                width: '100%',
-                                height: 400,
-                                backgroundImage: `url(${getImageUrl(featured)})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                borderRadius: 2,
-                                transition: 'transform 0.3s ease',
-                                '&:hover': { transform: 'scale(1.01)' }
+                                p: { xs: 2, md: 3 },
+                                backgroundColor: 'background.paper',
+                                border: '1px solid',
+                                borderColor: 'divider',
+                                transition: 'all 0.3s ease-in-out',
+                                '&:hover': {
+                                    transform: 'translateY(-4px)',
+                                }
                             }}
-                        />
+                        >
+                            <Grid container spacing={4}>
+                                <Grid size={{ xs: 12, md: 8 }}>
+                                    <Box
+                                        sx={{
+                                            width: '100%',
+                                            height: { xs: 250, md: 400 },
+                                            backgroundImage: `url(${getImageUrl(featured)})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                        }}
+                                    />
+                                </Grid>
+
+                                <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <Typography className="featured-title" variant="h5" fontWeight="bold" gutterBottom sx={{ transition: 'color 0.3s ease' }}>
+                                        {featured.title}
+                                    </Typography>
+                                    <Typography
+                                        variant="body1"
+                                        color="text.secondary"
+                                        sx={{
+                                            display: '-webkit-box',
+                                            overflow: 'hidden',
+                                        }}
+                                    >
+                                        {featured.description?.replace(/"/g, '')}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Box>
                     </Link>
                 </Grid>
 
-                <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <Link href={`/editorial/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <Typography variant="h5" fontWeight="bold" gutterBottom sx={{ '&:hover': { color: 'primary.main' } }}>
-                            {featured.title}
-                        </Typography>
-                    </Link>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        sx={{
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                        }}
-                    >
-                        {/* Quitamos las comillas y escape characters si vienen del JSON */}
-                        {featured.description?.replace(/"/g, '')}
-                    </Typography>
-                </Grid>
-
-                {/* --- ARTÍCULOS SECUNDARIOS (3 ABAJO) --- */}
                 {others.map((item) => (
-                    <Grid key={item.id} size={{ xs: 12, md: 4 }} >
+                    <Grid key={item.id} size={{ xs: 12, md: 4 }}>
                         <Link href={`/editorial/${item.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <Box
                                 sx={{
-                                    width: '100%',
-                                    height: 200,
-                                    backgroundImage: `url(${getImageUrl(item)})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    borderRadius: 2,
-                                    mb: 2,
-                                    transition: 'transform 0.3s ease',
-                                    '&:hover': { transform: 'scale(1.02)' }
+                                    p: 2,
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    backgroundColor: 'background.paper',
+                                    border: '1px solid',
+                                    borderColor: 'divider',
+                                    transition: 'all 0.3s ease-in-out',
+                                    '&:hover': {
+                                        transform: 'translateY(-4px)',
+                                    }
                                 }}
-                            />
-                            <Typography fontWeight="bold" sx={{ '&:hover': { color: 'primary.main' } }}>
-                                {item.title}
-                            </Typography>
+                            >
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                        height: 200,
+                                        backgroundImage: `url(${getImageUrl(item)})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        mb: 2
+                                    }}
+                                />
+
+                                <Typography className="secondary-title" fontWeight="bold" sx={{ transition: 'color 0.3s ease' }}>
+                                    {item.title}
+                                </Typography>
+                            </Box>
                         </Link>
                     </Grid>
                 ))}
             </Grid>
+            <Box sx={{
+                mt: 3,
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
+                <Button
+                    LinkComponent={MuiLink}
+                    href="/editorial"
+                    variant="contained"
+                    endIcon={<ChevronRight />}
+                    sx={{ mt: 2, fontWeight: 600 }}
+                    color='secondary'
+                    size="large"
+                    target='_blank'
+                >
+                    Ver más
+                </Button>
+            </Box>
+
         </Box>
     )
 }
