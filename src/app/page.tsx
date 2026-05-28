@@ -57,6 +57,8 @@ export default async function Home() {
         </Container>
         <Box sx={{
           bgcolor: 'grey.50',
+          mb: 10,
+          p: 2
         }}>
           <ProjectsExplorer data={platforms} />
         </Box>

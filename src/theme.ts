@@ -1,6 +1,6 @@
 'use client';
 
-import { createTheme, ThemeOptions } from "@mui/material"
+import { createTheme } from "@mui/material"
 import { blue } from "@mui/material/colors";
 import { Montserrat } from 'next/font/google';
 import { esES } from '@mui/x-data-grid/locales'
@@ -55,6 +55,11 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiModal: {
+      defaultProps: {
+        disableScrollLock: true,
+      }
+    },
     MuiPopover: {
       defaultProps: {
         disableScrollLock: true,
@@ -74,8 +79,8 @@ const theme = createTheme({
     },
     MuiTableHead: {
       styleOverrides: {
-        root: (options: any) => ({
-          backgroundColor: options.theme.palette.primary.light
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.primary.light
         })
       }
     },

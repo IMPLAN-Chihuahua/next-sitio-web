@@ -1,7 +1,6 @@
 'use client'
 
-import { AppBar, Box, Button, Collapse, Container, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, menuItemClasses, Toolbar, Typography, useMediaQuery } from "@mui/material";
-import { Link as MuiLink } from "@mui/material";
+import { AppBar, Box, Button, Collapse, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
 import Link from "next/link";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { MouseEvent, ReactNode, useState } from "react";
@@ -144,13 +143,15 @@ const MobileDrawer = () => {
   }
 
   return (
-    <nav>
+    <nav aria-label="Secciones del IMPLAN">
       <IconButton
         size="large"
         onClick={handleOpen}
         sx={{
           display: { xs: 'block', md: 'none' }
-        }}>
+        }}
+        aria-label="Abrir menú de navegación"
+      >
         <MenuIcon sx={{
           color: 'primary.50', fontSize: 40
         }} />
