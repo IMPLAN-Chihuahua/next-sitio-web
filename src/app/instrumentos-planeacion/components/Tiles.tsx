@@ -10,7 +10,7 @@ import { InstrumentoPlaneacion } from "../definitions";
 import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
-import { Clear } from "@mui/icons-material";
+import { Clear, Landscape } from "@mui/icons-material";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { formatISO, parseISO } from "date-fns";
 import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
@@ -32,7 +32,7 @@ const InstrumentosTiles = () => {
   const { page, changePage } = useUrlPagination(1);
 
   const filterObj = {
-    fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug'],
+    fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug', 'anioPublicacion'],
     populate: [
       'tema',
       'cover'
@@ -41,7 +41,7 @@ const InstrumentosTiles = () => {
       pageSize: 6,
       page
     },
-    sort: ['fechaAprobacion:desc'],
+    sort: ['anioPublicacion:desc'],
     filters: {
       $and: [
         {
@@ -140,7 +140,7 @@ const InstrumentosTiles = () => {
                     justifyContent={{ xs: 'center' }}
                     display={'flex'}
                   >
-                    <InstrumentoCard instrumento={instrumento} />
+                    <InstrumentoTile instrumento={instrumento} />
                   </MotionGrid>
                 )) : (
                   <MotionGrid size={12}>
@@ -173,13 +173,10 @@ const InstrumentosTiles = () => {
 
 
 type InstrumentoCardProps = {
-  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug'>
+  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug' | 'anioPublicacion'>
 }
-const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
-  const anioPublicacion = parseISO(instrumento.fechaAprobacion).getFullYear();
-  const aboutInstrumento = parseInt(instrumento.version) === anioPublicacion
-    ? `(${anioPublicacion})`
-    : `(${instrumento.version} ${anioPublicacion})`
+const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
+  let aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : ''
 
   const coverUrl = instrumento.cover?.url
     ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${instrumento.cover.url}`
@@ -200,12 +197,31 @@ const InstrumentoCard = ({ instrumento }: InstrumentoCardProps) => {
         disableTouchRipple
         disableRipple
       >
-        <CardMedia
-          component='img'
-          sx={{ height: '480px', maxHeight: '480px' }}
-          image={coverUrl}
-          title={instrumento.cover?.caption || `${instrumento.nombre} ${aboutInstrumento}`}
-        />
+        {
+          instrumento.cover ? (
+            <CardMedia
+              component='img'
+              sx={{ height: '480px', maxHeight: '480px' }}
+              image={coverUrl}
+              title={instrumento.cover?.caption || `${instrumento.nombre} ${aboutInstrumento}`}
+            />
+
+          ) : (
+            <Box
+              height='480px'
+              bgcolor={'primary.300'}
+              display='flex'
+              justifyContent={'center'}
+              alignItems={'center'}
+            >
+              <Landscape
+                sx={{
+                  fontSize: 80,
+                  color: 'primary.600'
+                }} />
+            </Box>
+          )
+        }
       </CardActionArea>
       <CardContent sx={{ flex: 1 }}>
         <Box display={'flex'} flexDirection={'column'} height={'100%'}>

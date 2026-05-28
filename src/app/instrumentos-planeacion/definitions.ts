@@ -20,11 +20,12 @@ export type InstrumentoPlaneacion = {
   version: string;
   tema: TemaInstrumentoPlaneacion;
   cover: Media;
-  fechaAprobacion: string;
+  fechaAprobacion: string | null;
   publicadoEn: string;
   acercaDePublicacion: string;
   archivosAdjuntos: MultipleMedia;
   contenido: string;
   descripcion: string;
   datosGeograficos: DatoGeografico[];
+  anioPublicacion: number;
 }
