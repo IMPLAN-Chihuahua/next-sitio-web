@@ -21,7 +21,7 @@ import { cmsFetcher } from '@/app/services/http';
 import { Novedades } from '../definitions';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ClasificacionSpan } from '@/app/estudios-y-proyectos/components/Tile';
-import { Image } from '@mui/icons-material';
+import { Image, Landscape } from '@mui/icons-material';
 import { parse } from 'date-fns';
 
 const getImageUrl = (entry: Novedades) => {
@@ -122,7 +122,7 @@ export default function Articulos() {
                                                                 bgcolor: 'grey.300'
                                                             }}
                                                         >
-                                                            <Image sx={{ fontSize: 50, color: 'grey.700' }} />
+                                                            <Landscape sx={{ fontSize: 50, color: 'grey.700' }} />
                                                         </Box>
                                                     )
                                                 }
