@@ -42,7 +42,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
   }, [emblaApi]);
 
   return (
-    <Box position={'relative'}>
+    <Box position={'relative'} aria-roledescription="carrusel" aria-label="Frases destacadas del IMPLAN" component={'section'}>
 
       <Box
         minHeight={'80vh'}
@@ -60,6 +60,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
         <IconButton
           onClick={toggleAutoplay}
           disabled={phrases.length === 0}
+          aria-label={autoplayIsPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
           disableTouchRipple
           sx={{
             position: 'absolute',
@@ -67,7 +68,11 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
             right: 20,
             zIndex: 120,
             border: '2px solid',
-            borderColor: 'primary.50'
+            borderColor: 'primary.50',
+            '&:focus-visible': {
+              outline: '2px solid #e3a74d',
+              outlineOffset: '2px',
+            }
           }}>
           {
             autoplayIsPlaying ? (
@@ -102,6 +107,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
           },
         }}
       >
+
         <Box
           component="img"
           src="https://implanchihuahua.org/img/LOGO_COLOR.png"
@@ -140,23 +146,28 @@ const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis:
         zIndex={130}
         position={'relative'}
         color={'primary.50'}
-        sx={{ xs: 45, md: 65 }}
       >
         <Typography
-          mt={{ xs: 20, md: 30 }}
-          fontSize={{ xs: 45, md: 65 }}
-          fontWeight={500}
+          component="h1"
+          color='inherit'
           sx={{
+            mt: { xs: 20, md: 30 },
             textShadow: '1px 1px 2px black'
           }}
-          color='inherit'>{content}</Typography>
-        <Typography
-          fontWeight={900}
-          fontSize={{ xs: 45, md: 65 }}
-          sx={{
-            textShadow: '1px 1px 2px black'
-          }}
-          color='inherit'>{emphasis}</Typography>
+        >
+          <Box
+            component="span"
+            sx={{ display: 'block', fontSize: { xs: 45, md: 65 }, fontWeight: 500 }}
+          >
+            {content}
+          </Box>
+          <Box
+            component="span"
+            sx={{ display: 'block', fontSize: { xs: 45, md: 65 }, fontWeight: 900 }}
+          >
+            {emphasis}
+          </Box>
+        </Typography>
       </Container>
     </Box>
   );

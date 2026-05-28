@@ -1,12 +1,12 @@
 'use client';
 
-import { Box, Grid, List, Typography, ListItemButton, ListItemText, Fade, Paper, Button, Container, IconButton } from '@mui/material'
-import React, { useRef, useState } from 'react'
+import { Box, Grid, List, Typography, ListItemButton, ListItemText, Paper, Button, Container, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import React, { useState } from 'react'
 import { Platform } from '../definitions'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 
 const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
-    if (!data?.length) return null;
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     if (!data || data.length === 0) return null;
@@ -14,14 +14,15 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
     const activePlatform = data[selectedIndex]
 
     return (
-        <Container>
+        <Container maxWidth="xl">
             <Box sx={{ width: '100%' }}>
                 <Grid container sx={{
                     display: 'flex',
-                    justifyContent: 'space-around',
+                    justifyContent: 'space-between',
                     alignItems: 'flex-start',
+                    columnGap: { md: 4, lg: 6 },
                 }}>
-                    <Grid size={{ xs: 12, md: 4 }} sx={{ mr: { md: 5 }, mb: { xs: 4, md: 0 } }}>
+                    <Grid size={{ xs: 12, md: 3 }} sx={{ mb: { xs: 4, md: 0 } }}>
                         <Box sx={{ mb: 2, px: { xs: 2, md: 0 } }}>
                             <Typography variant='h2' fontWeight={'bold'}
                                 sx={{
@@ -134,7 +135,7 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
                     </Grid>
 
                     <Grid size={{
-                        xs: 12, md: 6
+                        xs: 12, md: 8.5
                     }}>
                         <Project key={selectedIndex} data={activePlatform} />
                     </Grid>
@@ -145,7 +146,20 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
 }
 
 const Project = ({ data }: { data: Platform }) => {
-    const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.small?.url || data.media.url}`;
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    console.log(data.media.formats)
+    console.log(data.media.formats)
+    console.log(data.media.formats)
+    const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.large?.url || data.media.url}`;
+    const getShortDescription = (text: string, maxLength = 70) => {
+        if (text.length <= maxLength) return text;
+
+        const nextSpaceIndex = text.indexOf(' ', maxLength);
+        const endIndex = nextSpaceIndex === -1 ? text.length : nextSpaceIndex;
+
+        return `${text.slice(0, endIndex).trim()}...`;
+    };
+    const shortDescription = getShortDescription(data.description);
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -176,7 +190,7 @@ const Project = ({ data }: { data: Platform }) => {
                 <Box sx={{
                     position: 'relative',
                     height: { xs: 'auto', md: '600px' },
-                    maxWidth: '800px',
+                    maxWidth: 'none',
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
@@ -203,66 +217,59 @@ const Project = ({ data }: { data: Platform }) => {
 
                     <Box component={motion.div} variants={itemVariants} sx={{
                         position: { xs: 'relative', md: 'absolute' },
-                        top: { md: 40 },
-                        right: { md: -20 },
-                        maxWidth: { xs: '100%', md: 400 },
-                        width: { xs: '100%', md: 'auto' },
+                        top: { md: 44 },
+                        right: { md: 36 },
+                        width: { xs: '100%', md: 380 },
                         zIndex: 2,
-                        mb: { xs: 1, md: 0 }
-                    }}>
-                        <Paper
-                            elevation={0}
-                            sx={{
-                                p: 3,
-                                borderRadius: 0,
-                                bgcolor: { xs: 'white', md: 'rgba(255, 255, 255, 0.9)' },
-                                backdropFilter: { md: 'blur(12px)' },
-                                borderLeft: '6px solid #1a1a1a',
-                                boxShadow: { md: '0 8px 32px rgba(0, 0, 0, 0.1)' }
-                            }}
-                        >
-                            <Typography variant='h4' fontWeight={'800'} sx={{ fontSize: { xs: '1.5rem', md: '2.5rem' }, letterSpacing: '-0.5px' }}>
-                                {data.name}
-                            </Typography>
-                            <Typography variant='body1' sx={{ mt: 1, color: 'text.secondary', fontWeight: 500 }}>
-                                {data.catchPhrase}
-                            </Typography>
-                        </Paper>
-                    </Box>
-
-                    <Box component={motion.div} variants={itemVariants} sx={{
-                        position: { xs: 'relative', md: 'absolute' },
-                        bottom: { md: 80 },
-                        right: { md: 0 },
-                        width: { xs: '100%', md: 320 },
-                        zIndex: 2,
-                        mt: { xs: 0, md: 2 },
+                        mt: { xs: 0, md: 0 },
                         mb: { xs: 2, md: 0 }
                     }}>
                         <Paper
                             elevation={0}
                             sx={{
-                                p: 3,
-                                bgcolor: '#2c2f33',
+                                p: { xs: 3, md: 4 },
+                                bgcolor: 'rgba(30, 34, 38, 0.94)',
                                 color: 'white',
-                                borderRadius: 0,
+                                borderRadius: 1,
                                 position: 'relative',
+                                backdropFilter: 'blur(12px)',
+                                boxShadow: { md: '0 18px 40px rgba(0, 0, 0, 0.24)' },
+                                borderTop: '4px solid rgba(255, 255, 255, 0.42)',
                                 '&::before': {
                                     content: '""',
                                     position: 'absolute',
-                                    top: -10,
-                                    left: -10,
-                                    width: '40px',
-                                    height: '40px',
-                                    borderTop: '4px solid #2c2f33',
-                                    borderLeft: '4px solid #2c2f33',
+                                    top: -4,
+                                    left: 0,
+                                    width: '72px',
+                                    height: '4px',
+                                    bgcolor: '#1a1a1a',
                                     display: { xs: 'none', md: 'block' }
                                 }
                             }}
                         >
-                            <Typography variant="body2" fontSize={16} sx={{ lineHeight: 1.6, opacity: 0.9, color: 'white' }}>
-                                {data.description}
+                            <Typography variant='h4' fontWeight={800} sx={{ fontSize: { xs: '1.55rem', md: '2rem' }, color: 'white', lineHeight: 1.1 }}>
+                                {data.name}
                             </Typography>
+                            <Typography variant='body1' sx={{ mt: 1, color: 'rgba(255,255,255,0.78)', fontWeight: 500 }}>
+                                {data.catchPhrase}
+                            </Typography>
+                            <Typography variant="body2" fontSize={16} sx={{ mt: 3, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)' }}>
+                                {shortDescription}
+                            </Typography>
+                            <Button
+                                onClick={() => setIsDetailsOpen(true)}
+                                sx={{
+                                    mt: 2,
+                                    px: 0,
+                                    minWidth: 'auto',
+                                    color: 'white',
+                                    fontWeight: 800,
+                                    textTransform: 'none',
+                                    '&:hover': { bgcolor: 'transparent', opacity: 0.72 }
+                                }}
+                            >
+                                Leer más
+                            </Button>
                         </Paper>
                     </Box>
 
@@ -282,9 +289,12 @@ const Project = ({ data }: { data: Platform }) => {
                                 fontWeight: 'bold',
                                 boxShadow: 3,
                                 transition: 'transform 0.2s',
-                                '&:hover': { transform: 'scale(1.05)' }
+                                '&:hover': { transform: 'scale(1.05)' },
+
                             }}
                             variant='contained'
+                            color='secondary'
+
                             href={data.url}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -294,6 +304,48 @@ const Project = ({ data }: { data: Platform }) => {
                     </Box>
 
                 </Box>
+                <Dialog
+                    open={isDetailsOpen}
+                    onClose={() => setIsDetailsOpen(false)}
+                    maxWidth="sm"
+                    fullWidth
+                    PaperProps={{
+                        sx: {
+                            borderRadius: 1,
+                            p: { xs: 1, md: 2 }
+                        }
+                    }}
+                >
+                    <DialogTitle component="div" sx={{ pr: 6 }}>
+                        <Typography variant="h5" component="h2" fontWeight={800}>
+                            {data.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                            {data.catchPhrase}
+                        </Typography>
+                        <IconButton
+                            aria-label="Cerrar"
+                            onClick={() => setIsDetailsOpen(false)}
+                            sx={{ position: 'absolute', right: 16, top: 16 }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </DialogTitle>
+                    <DialogContent>
+                        <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
+                            {data.description}
+                        </Typography>
+                        <Button
+                            sx={{ mt: 3, borderRadius: 0, px: 4, py: 1.25, fontWeight: 'bold' }}
+                            variant="contained"
+                            href={data.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Explorar
+                        </Button>
+                    </DialogContent>
+                </Dialog>
             </motion.div>
         </AnimatePresence>
     )
