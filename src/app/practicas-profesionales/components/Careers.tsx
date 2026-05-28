@@ -31,7 +31,7 @@ const Careers = ({ data }: { data: Vacante[] }) => {
     const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
     const filteredJobs = useMemo(() => {
-        return data.filter((job) => {
+        return data?.filter((job) => {
             const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 job.description.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -41,9 +41,6 @@ const Careers = ({ data }: { data: Vacante[] }) => {
         });
     }, [searchTerm, activeFilter, data]);
 
-    if (!data || data.length === 0) {
-        return null;
-    }
 
     const getBadgesForJob = (job: Vacante) => {
         const badges = [];
@@ -73,10 +70,11 @@ const Careers = ({ data }: { data: Vacante[] }) => {
     };
 
     return (
-        <Box sx={{ backgroundColor: 'background.paper' }}>
+        <Box>
             <Container maxWidth="lg">
                 <TextField
                     fullWidth
+                    sx={{ mt: 2 }}
                     placeholder="Buscar vacante por puesto o palabras clave..."
                     variant="outlined"
                     value={searchTerm}

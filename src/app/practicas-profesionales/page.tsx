@@ -1,7 +1,8 @@
-import { Typography } from "@mui/material";
+import { Box, Container, Toolbar, Typography } from "@mui/material";
 import PageBanner from "../components/PageBanner";
 import FreshDivider from "../components/FreshDivider";
 import Careers from "./components/Careers";
+import { SubtitleH2 } from "../components/Titles";
 
 
 export default async function PracticasProfesionalesPage() {
@@ -17,15 +18,12 @@ export default async function PracticasProfesionalesPage() {
   } catch (err) {
     console.error("Error fetching data: ", err);
   }
-  const { text, textEmphasis, image } = data.Slides;
+
   return (
-    <main>
-      <PageBanner
-        title={text}
-        description={textEmphasis}
-        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${image.url}`}
-      />
-      <FreshDivider />
-      <Careers data={data.vacantes} />
-    </main>)
+    <Container component={'main'}>
+      <Toolbar variant="dense" />
+      <SubtitleH2 title="Vacantes" />
+      <Careers data={data?.vacantes} />
+    </Container>
+  )
 }
