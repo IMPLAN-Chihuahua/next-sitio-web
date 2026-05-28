@@ -17,7 +17,7 @@ export default async function Home() {
       fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/home-page?populate=deep`, {
         next: { revalidate: 3600 },
       }),
-      fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?sort=publishedAt:desc&pagination[limit]=4&populate=*`, {
+      fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?sort=fechaPublicacion:desc&pagination[limit]=4&populate=*`, {
         next: { revalidate: 3600 },
       })
     ]);
