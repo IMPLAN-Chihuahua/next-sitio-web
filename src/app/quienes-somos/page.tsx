@@ -39,7 +39,7 @@ export default async function QuienesSomosPage() {
 
   return (
     <Box sx={{ pb: 10 }}>
-      <PageBanner title={data.banner.text} description={data.banner.textEmphasis} />
+      <PageBanner title={data.banner.text} description={data.banner.textEmphasis} cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.banner.image.url}`} />
       <Container maxWidth="lg" sx={{ mt: 8 }}>
         <Grid container spacing={4} alignItems="stretch" justifyContent="center">
 
