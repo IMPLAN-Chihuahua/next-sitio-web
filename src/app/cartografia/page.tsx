@@ -4,27 +4,28 @@ import PageBanner from '../components/PageBanner';
 import { SubtitleH2 } from '../components/Titles';
 import CartografiaTiles from './components/Tiles';
 import { Suspense } from 'react';
+import { MDXRemote } from 'next-mdx-remote-client/rsc';
 
 export const metadata: Metadata = {
-  title: 'Datos Abiertos | IMPLAN'
+  title: 'Cartografía | IMPLAN'
 };
 
-export default function DatosAbiertosPage() {
+export default async function DatosAbiertosPage() {
+  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/cartografia-page?populate=*`)
+  const page = await req.json();
 
   return (<main>
     <PageBanner
-      description='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi maxime nobis recusandae unde.'
-      title='Cartografía'
+      cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
+      description={page.data.descripcion}
+      title={page.data.titulo}
     />
 
     <Container sx={{ my: 4 }}>
       <SubtitleH2 title='Datos abiertos' />
-      <Typography mb={1}>
-        Aviso: El carácter de esta información es de uso público, puede presentar inconsistencias y variaciones temporales. Los usuarios de nuestra información y otros productos de análisis son los únicos responsables de las interpretaciones que se realicen, no existe implicación legal en el uso de la misma para el municipio o para el propio instituto.
-      </Typography>
-      <Typography mb={4}>
-        No dude en ponerse en contacto con nuestro personal si detecta inconsistencias u omisiones. Realice sus observaciones al correo electrónico implan@implanchiuahua.org o al teléfono 200-48-00, ext. 5714.
-      </Typography>
+      <MDXRemote 
+        source={page.data.datosAbiertosContent}
+      />
 
       <Suspense fallback={<Box display="flex" justifyContent="center" py={10}><CircularProgress /></Box>}>
         <CartografiaTiles />
