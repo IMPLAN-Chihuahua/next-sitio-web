@@ -62,7 +62,7 @@ const renderArchivoGrupos = (grupos?: ArchivoGrupo[]) => {
             display="block"
             mt={1}
             maxWidth="fit-content"
-            underline="none"
+            underline="hover"
           >
             {grupo.Nombre}
           </MuiLink>
