@@ -55,6 +55,31 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          '&:focus-visible': {
+            outline: '3px solid #e3a74d',
+            outlineOffset: '2px',
+          },
+        },
+      },
+    },
+
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          '&:focus-visible': {
+            outline: '3px solid #e3a74d',
+            outlineOffset: '2px',
+            borderRadius: '2px',
+          },
+        },
+      },
+      defaultProps: {
+        color: blue[900]
+      }
+    },
     MuiModal: {
       defaultProps: {
         disableScrollLock: true,
@@ -63,11 +88,6 @@ const theme = createTheme({
     MuiPopover: {
       defaultProps: {
         disableScrollLock: true,
-      }
-    },
-    MuiLink: {
-      defaultProps: {
-        color: blue[900]
       }
     },
     MuiToolbar: {

@@ -1,11 +1,10 @@
 'use client'
 
 import Autoplay from "embla-carousel-autoplay";
-import { Box, Container, Grow, IconButton, Paper, Slide, Typography } from "@mui/material";
-import useEmblaCarousel, { UseEmblaCarouselType, } from "embla-carousel-react";
-import { EmblaCarouselType } from 'embla-carousel'
+import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
+import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from './LandingPageBanner.module.css'
 import Fade from "embla-carousel-fade";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -13,7 +12,6 @@ import PauseIcon from '@mui/icons-material/Pause';
 
 
 export default function LandingPageBanner({ phrases }: { phrases: Array<{ content: string, emphasis: string, image: string }> }) {
-  if (!phrases.length) return null;
   const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false, loop: true },
     [Autoplay({ playOnInit: true, delay: 4_000 }), Fade()]);
 
@@ -40,6 +38,8 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       .on('autoplay:stop', () => setAutoplayIsPlaying(false))
       .on('reInit', () => setAutoplayIsPlaying(autoplay.isPlaying()))
   }, [emblaApi]);
+
+  if (!phrases.length) return null;
 
   return (
     <Box position={'relative'} aria-roledescription="carrusel" aria-label="Frases destacadas del IMPLAN" component={'section'}>
@@ -91,8 +91,8 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
           bottom: 0,
           left: '50%',
           transform: 'translate(-50%, 50%)',
-          px: 5,
-          py: 2,
+          px: { xs: 3, md: 4 },
+          py: { xs: 1.25, md: 1 },
           borderRadius: 1,
           backgroundColor: 'rgba(255, 255, 255, 0.85)',
           backdropFilter: 'blur(8px)',
@@ -101,20 +101,18 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          transition: 'box-shadow 0.2s ease',
-          '&:hover': {
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.25)',
-          },
+
         }}
       >
 
         <Box
           component="img"
-          src="https://implanchihuahua.org/img/LOGO_COLOR.png"
+          src="implan_logo.png"
           alt="IMPLAN Chihuahua"
           sx={{
-            height: 60,
+            height: { xs: 82, md: 96 },
             width: 'auto',
+            maxWidth: { xs: '78vw', md: 420 },
             display: 'block',
           }}
         />

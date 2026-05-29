@@ -1,19 +1,43 @@
-import { Box, Button, Stack, Container, Typography } from '@mui/material'
+import { Box, Button, Stack, Container } from '@mui/material'
+import { Media } from '../definitions';
 
-const StellarBanner = ({ data }: { data: any[] }) => {
+type StellarButton = {
+    id: number;
+    text: string;
+    url: string;
+}
+
+type StellarBannerItem = {
+    id: number;
+    title: string;
+    buttons?: StellarButton[];
+    media_desktop?: Media | string | null;
+    media_mobile?: Media | string | null;
+}
+
+const getMediaUrl = (media: StellarBannerItem['media_desktop'], baseUrl: string) => {
+    if (!media || typeof media === 'string') return '';
+
+    const url = media.url || media.formats?.large?.url || media.formats?.medium?.url || media.formats?.small?.url || '';
+    if (!url) return '';
+
+    return url.startsWith('http') ? url : `${baseUrl}${url}`;
+}
+
+const StellarBanner = ({ data }: { data: StellarBannerItem[] }) => {
     if (!data?.length) return null;
     const baseUrl = process.env.NEXT_PUBLIC_IMPLAN_STATIC || '';
 
     return (
         <Box sx={{ width: '100%', overflow: 'hidden' }}>
             {data.map((item, index) => {
-                const desktopUrl = item.media_desktop?.url ? `${baseUrl}${item.media_desktop.url}` : '';
-                const mobileUrl = item.media_mobile?.url ? `${baseUrl}${item.media_mobile.url}` : desktopUrl;
-                const hasButtons = item.buttons && item.buttons.length > 0;
+                const desktopUrl = getMediaUrl(item.media_desktop, baseUrl);
+                const mobileUrl = getMediaUrl(item.media_mobile, baseUrl) || desktopUrl;
+                const hasButtons = !!item.buttons?.length;
 
                 return (
                     <Box
-                        key={index}
+                        key={item.id || index}
                         sx={{
                             width: '100%',
                             position: 'relative',
@@ -41,9 +65,9 @@ const StellarBanner = ({ data }: { data: any[] }) => {
                                         width: '100%',
                                     }}
                                 >
-                                    {item.buttons.map((btn: any, btnIndex: number) => (
+                                    {item.buttons?.map((btn, btnIndex) => (
                                         <Button
-                                            key={btnIndex}
+                                            key={btn.id || btnIndex}
                                             variant="contained"
                                             color="inherit"
                                             href={btn.url}

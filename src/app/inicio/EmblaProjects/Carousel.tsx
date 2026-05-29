@@ -131,14 +131,23 @@ const Carousel = (props: PropType) => {
                 alignItems: 'center'
             }}>
                 <Box className={styles.embla__arrow__buttons} sx={{ display: 'flex', gap: 1 }}>
-                    <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-                    <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+                    <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} aria-label='Proyecto previo' />
+                    <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} aria-label='Proyecto siguiente' />
                 </Box>
 
                 <Box className={styles.embla__dots}>
                     {scrollSnaps.map((_, index) => (
                         <CarouselDotButton
                             key={index}
+                            sx={{
+                                '&:focus-visible': {
+                                    outline: '3px solid',
+                                    outlineColor: 'secondary.main',
+                                    outlineOffset: '2px',
+                                    borderRadius: '4px'
+                                }
+                            }}
+                            aria-label={`Proyecto ${index + 1}`}
                             onClick={() => onDotButtonClick(index)}
                             className={`${styles.embla__dot} ${index === selectedIndex ? styles['embla__dot--selected'] : ''}`}
                         />
