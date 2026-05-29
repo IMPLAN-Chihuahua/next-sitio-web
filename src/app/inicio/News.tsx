@@ -3,8 +3,7 @@ import React from 'react'
 import { Box, Button, Grid, Typography, Link as MuiLink } from '@mui/material'
 import Link from 'next/link'
 import { Novedades } from '../editorial/definitions';
-import { Add, Article, ChevronRight, Feed, OpenInNew } from '@mui/icons-material';
-
+import { AutoStoriesOutlined, ChevronRight, SubjectOutlined } from '@mui/icons-material';
 const News = ({ data }: { data: Novedades[] }) => {
     if (data.length === 0) return null;
 
@@ -45,15 +44,35 @@ const News = ({ data }: { data: Novedades[] }) => {
                         >
                             <Grid container spacing={4}>
                                 <Grid size={{ xs: 12, md: 8 }}>
-                                    <Box
-                                        sx={{
-                                            width: '100%',
-                                            height: { xs: 250, md: 400 },
-                                            backgroundImage: `url(${getImageUrl(featured)})`,
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center',
-                                        }}
-                                    />
+                                    {featured.cover ? (
+                                        <Box
+                                            sx={{
+                                                width: '100%',
+                                                height: { xs: 250, md: 400 },
+                                                backgroundImage: `url(${getImageUrl(featured)})`,
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
+                                            }}
+                                        />
+                                    ) : (
+                                        <Box
+                                            sx={{
+                                                width: '100%',
+                                                height: { xs: 250, md: 400 },
+                                                bgcolor: 'primary.300',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <AutoStoriesOutlined
+                                                sx={{
+                                                    fontSize: 80,
+                                                    color: 'primary.600',
+                                                }}
+                                            />
+                                        </Box>
+                                    )}
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -94,16 +113,37 @@ const News = ({ data }: { data: Novedades[] }) => {
                                     }
                                 }}
                             >
-                                <Box
-                                    sx={{
-                                        width: '100%',
-                                        height: 200,
-                                        backgroundImage: `url(${getImageUrl(item)})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        mb: 2
-                                    }}
-                                />
+                                {item.cover ? (
+                                    <Box
+                                        sx={{
+                                            width: '100%',
+                                            height: 200,
+                                            backgroundImage: `url(${getImageUrl(item)})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                            mb: 2,
+                                        }}
+                                    />
+                                ) : (
+                                    <Box
+                                        sx={{
+                                            width: '100%',
+                                            height: 200,
+                                            bgcolor: 'primary.300',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            mb: 2,
+                                        }}
+                                    >
+                                        <SubjectOutlined
+                                            sx={{
+                                                fontSize: 64,
+                                                color: 'primary.600',
+                                            }}
+                                        />
+                                    </Box>
+                                )}
 
                                 <Typography className="secondary-title" fontWeight="bold" sx={{ transition: 'color 0.3s ease' }}>
                                     {item.title}
