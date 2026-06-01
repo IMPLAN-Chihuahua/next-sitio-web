@@ -12,6 +12,7 @@ import { AdquisicionDirecta, LicitacionPage, Subasta } from "./definitions";
 import { OpenInNew, ExpandMore } from "@mui/icons-material";
 import { formatISO } from "date-fns";
 import { SubastasTable } from "./components/SubastasTable";
+import Link from "next/link";
 
 const queryForPage = qs.stringify({
   populate: '*'
@@ -113,7 +114,6 @@ export default async function LicitacionesPage() {
           <SubtitleH2 title="Subastas" />
           <SubastasTable subastas={subastas} />
         </Box>
-
         {planesOrdenados.length > 1 && (
           <Box my={4} component={'section'}>
             <Accordion variant="outlined" sx={{ borderRadius: 1 }}>

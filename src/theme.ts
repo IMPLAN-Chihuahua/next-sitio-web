@@ -77,7 +77,8 @@ const theme = createTheme({
         },
       },
       defaultProps: {
-        color: blue[900]
+        color: blue[900],
+        underline: 'hover'
       }
     },
     MuiModal: {

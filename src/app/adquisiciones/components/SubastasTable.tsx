@@ -9,29 +9,7 @@ const getFileUrl = (url?: string) => {
   return `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${url}`;
 };
 
-const renderArchivoGrupos = (grupos?: any[]) => {
-  if (!grupos?.length) return null;
 
-  return (
-    <Box>
-      {grupos.flatMap((grupo) =>
-        grupo.Archivo?.map((archivo: any) => (
-          <Link
-            key={`${grupo.id}-${archivo.id}`}
-            href={getFileUrl(archivo.url)}
-            target="_blank"
-            display="block"
-            mt={1}
-            maxWidth="fit-content"
-            underline="none"
-          >
-            {grupo.Nombre}
-          </Link>
-        )) ?? []
-      )}
-    </Box>
-  );
-};
 
 export const SubastasTable = (props: { subastas: Subasta[] }) => {
   return (
@@ -60,7 +38,7 @@ export const SubastasTable = (props: { subastas: Subasta[] }) => {
                         href={getFileUrl(urlConvocatoria)}
                         target='_blank'
                         display={'block'}
-                        underline="none"
+                        maxWidth={'fit-content'}
                       >
                         {subasta.identificador}
                       </Link>
@@ -69,13 +47,12 @@ export const SubastasTable = (props: { subastas: Subasta[] }) => {
                     )}
                   </TableCell>
                   <TableCell width={300}>{subasta.shortDescripcion}</TableCell>
-
                   {/* Usamos el renderizador para Bases y Resolución */}
                   <TableCell>
-                    {renderArchivoGrupos(subasta.bases)}
+                    <ArchivosAdjuntos grupos={subasta.bases} />
                   </TableCell>
                   <TableCell>
-                    {renderArchivoGrupos(subasta.resolucion)}
+                    <ArchivosAdjuntos grupos={subasta.resolucion} />
                   </TableCell>
 
                   <TableCell>
@@ -96,3 +73,30 @@ export const SubastasTable = (props: { subastas: Subasta[] }) => {
     </TableContainer>
   )
 }
+
+
+
+const ArchivosAdjuntos = (props: { grupos?: any[] }) => {
+  const { grupos = [] } = props;
+
+  if (!grupos.length) return null;
+
+  return (
+    <Box>
+      {grupos.flatMap((grupo) =>
+        grupo.Archivo?.map((archivo: any) => (
+          <Link
+            key={`${grupo.id}-${archivo.id}`}
+            href={getFileUrl(archivo.url)}
+            target="_blank"
+            display="block"
+            mt={1}
+            maxWidth="fit-content"
+          >
+            {grupo.Nombre}
+          </Link>
+        ))
+      )}
+    </Box>
+  );
+};
