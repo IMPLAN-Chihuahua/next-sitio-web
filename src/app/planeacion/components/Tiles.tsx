@@ -193,7 +193,7 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
     >
       <CardActionArea
         LinkComponent={Link}
-        href={`/instrumentos-planeacion/${instrumento.nombreCortoSlug}`}
+        href={`/planeacion/${instrumento.nombreCortoSlug}`}
         disableTouchRipple
         disableRipple
       >
@@ -227,7 +227,7 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
         <Box display={'flex'} flexDirection={'column'} height={'100%'}>
           <MuiLink
             component={Link}
-            href={`/instrumentos-planeacion/${instrumento.nombreCortoSlug}`}
+            href={`/planeacion/${instrumento.nombreCortoSlug}`}
             color="primary.800"
             title={`${instrumento.nombre} ${aboutInstrumento}`}
             sx={{

@@ -7,7 +7,7 @@ import InstrumentosTiles from './components/Tiles';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Instrumentos de Planeación | IMPLAN'
+  title: 'Planeación | IMPLAN'
 };
 
 

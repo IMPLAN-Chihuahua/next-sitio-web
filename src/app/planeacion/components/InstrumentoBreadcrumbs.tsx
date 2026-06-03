@@ -9,7 +9,7 @@ export const InstrumentoDetailPageBreadcrumbs = (props: { currentPageTitle: stri
   return (
     <Breadcrumbs>
       <MuiLink variant="body2" component={Link} href='/'>Inicio</MuiLink>
-      <MuiLink variant="body2" component={Link} href='/instrumentos-planeacion'>Instrumentos de planeación</MuiLink>
+      <MuiLink variant="body2" component={Link} href='/planeacion'>Planeación</MuiLink>
       <Typography variant="body2">{props.currentPageTitle}</Typography>
     </Breadcrumbs>
   )

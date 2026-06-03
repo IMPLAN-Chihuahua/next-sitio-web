@@ -22,8 +22,8 @@ const navLinks = [{
   }]
 },
 {
-  label: 'Instrumentos de planeación',
-  href: '/instrumentos-planeacion',
+  label: 'Planeación',
+  href: 'planeacion',
   menuItems: []
 },
 {

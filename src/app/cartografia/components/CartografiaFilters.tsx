@@ -1,7 +1,6 @@
 'use client'
 
 import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
-import TemasInstrumentoPlaneacionAutocomplete from "@/app/instrumentos-planeacion/components/TemasDatosAbiertosAutocomplete";
 import { Clear } from "@mui/icons-material";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
