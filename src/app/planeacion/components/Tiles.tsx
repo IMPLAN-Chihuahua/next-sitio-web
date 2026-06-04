@@ -10,7 +10,7 @@ import { InstrumentoPlaneacion } from "../definitions";
 import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
-import { ArchiveOutlined, Clear, Landscape, StarBorderOutlined, StarOutline } from "@mui/icons-material";
+import { ArchiveOutlined, Clear, Landscape, Star, StarBorderOutlined, StarOutline } from "@mui/icons-material";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { formatISO, parseISO } from "date-fns";
 import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
@@ -177,6 +177,7 @@ type InstrumentoCardProps = {
 }
 const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
   let aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : ''
+  const [starHovered, setStarHovered] = useState(false);
 
   const coverUrl = instrumento.cover?.url
     ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${instrumento.cover.url}`
@@ -219,11 +220,14 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
             color: '#fbc02d',
           }
         }}
+        onMouseEnter={() => setStarHovered(true)}
+        onMouseLeave={() => setStarHovered(false)}
       >
-        <StarBorderOutlined
-          className="estrella"
-          sx={{ color: '#999', transition: 'color 0.3s' }}
-        />
+        {starHovered
+          ? <Star className="estrella" sx={{ color: '#fbc02d', transition: 'color 0.3s' }} />
+          : <StarBorderOutlined className="estrella" sx={{ color: '#999', transition: 'color 0.3s' }} />
+        }
+
 
         <Typography
           className="texto"

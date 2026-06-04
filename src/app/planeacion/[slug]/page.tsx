@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Grid, Toolbar, Typography, Link as MuiLink, Divider, Card, CardMedia, CardContent, Stack, Paper, Alert, AlertTitle } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, Toolbar, Typography, Link as MuiLink, Divider, Card, CardMedia, CardContent, Stack, Paper, Alert, AlertTitle, Chip } from "@mui/material";
 import qs from 'qs'
 import { InstrumentoDetailPageBreadcrumbs } from "../components/InstrumentoBreadcrumbs";
 import { InstrumentoPlaneacion } from "../definitions";
@@ -9,7 +9,7 @@ import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
 import CartografiaCard from "../components/CartografiaCard";
 import { filesize } from "filesize";
-import { Landscape } from "@mui/icons-material";
+import { ArchiveOutlined, Landscape, StarBorderOutlined } from "@mui/icons-material";
 
 
 export default async function InstrumentoPlaneacionPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -66,6 +66,36 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
           <Grid size={{ xs: 12, md: 8 }}>
             <Typography component={'h1'} fontWeight={600} fontSize={36}>{page.data.nombre}</Typography>
             <Typography color='primary.600' fontSize={16} fontWeight={600}>{page.data.tema.descripcion}</Typography>
+            <Stack direction="row" spacing={1} mt={1}>
+              {page.data.destacado && (
+                <Chip
+                  icon={<StarBorderOutlined sx={{ fontSize: '16px !important' }} />}
+                  label="Destacado"
+                  size="small"
+                  sx={{
+                    border: '1px solid #fbc02d',
+                    color: '#b8860b',
+                    backgroundColor: '#fffde7',
+                    fontWeight: 500,
+                  }}
+                />
+              )}
+              {!page.data.vigente && (
+                <Chip
+                  icon={<ArchiveOutlined sx={{ fontSize: '16px !important' }} />}
+                  label="Histórico"
+                  size="small"
+                  title="Documento histórico. Su contenido puede estar desactualizado o haber sido reemplazado por una versión más reciente."
+                  sx={{
+                    border: '1px solid #ccc',
+                    color: '#777',
+                    backgroundColor: '#f5f5f5',
+                    fontWeight: 500,
+                    cursor: 'default',
+                  }}
+                />
+              )}
+            </Stack>
             <Typography fontWeight={500} mt={1}>
               Publicado el {
                 page.data.fechaAprobacion !== null
