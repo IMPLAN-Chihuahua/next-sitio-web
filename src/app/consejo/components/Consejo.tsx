@@ -6,7 +6,6 @@ import ConsejoCard from './ConsejoCard'
 import { Consejero, SectorType } from '../definitions'
 import { SubtitleH2 } from '@/app/components/Titles'
 
-// Configuración de los filtros (Etiqueta visible vs Valor interno)
 const FILTERS = [
     { label: 'Todos', value: 'ALL', color: 'default' },
     { label: 'Social', value: SectorType.SOCIAL, color: 'success' }, // Verde
@@ -53,7 +52,7 @@ const Consejo = ({ data }: { data: Consejero[] }) => {
                             borderRadius: 2,
                             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                             '& .MuiOutlinedInput-root': {
-                                '& fieldset': { border: 'none' }, // Quitamos borde gris default para look moderno
+                                '& fieldset': { border: 'none' },
                             }
                         }}
                         InputProps={{
@@ -110,7 +109,6 @@ const Consejo = ({ data }: { data: Consejero[] }) => {
                             </Grid>
                         ))
                     ) : (
-                        // Estado vacío si no hay resultados
                         <Box sx={{ width: '100%', textAlign: 'center', py: 10 }}>
                             <Typography variant="h6" color="text.disabled">
                                 No se encontraron consejeros con esos criterios.
