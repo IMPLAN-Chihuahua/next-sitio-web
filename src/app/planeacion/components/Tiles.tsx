@@ -10,7 +10,7 @@ import { InstrumentoPlaneacion } from "../definitions";
 import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
-import { Clear, Landscape } from "@mui/icons-material";
+import { ArchiveOutlined, Clear, Landscape, StarBorderOutlined, StarOutline } from "@mui/icons-material";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { formatISO, parseISO } from "date-fns";
 import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
@@ -31,8 +31,9 @@ const InstrumentosTiles = () => {
   const values = useWatch({ control: methods.control })
   const { page, changePage } = useUrlPagination(1);
 
+
   const filterObj = {
-    fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug', 'anioPublicacion'],
+    fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug', 'anioPublicacion', 'vigente', 'destacado'],
     populate: [
       'tema',
       'cover'
@@ -41,7 +42,7 @@ const InstrumentosTiles = () => {
       pageSize: 6,
       page
     },
-    sort: ['anioPublicacion:desc'],
+    sort: ['destacado:asc', 'vigente:asc', 'anioPublicacion:desc'],
     filters: {
       $and: [
         {
@@ -86,7 +87,6 @@ const InstrumentosTiles = () => {
     meta: { pagination: Pagination }
   }>(`/instrumentos-planeacion?${queryParams.toString()}`, cmsFetcher)
   const [instrumentos, setInstrumentos] = useState<InstrumentoPlaneacion[]>([]);
-
   useEffect(() => {
     if (!data?.data) return;
 
@@ -96,7 +96,7 @@ const InstrumentosTiles = () => {
   const handleClearFiltros = useCallback(() => {
     methods.reset();
   }, []);
-
+  console.log(instrumentos)
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
     changePage(val);
 
@@ -173,7 +173,7 @@ const InstrumentosTiles = () => {
 
 
 type InstrumentoCardProps = {
-  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug' | 'anioPublicacion'>
+  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug' | 'anioPublicacion' | 'vigente' | 'destacado'>
 }
 const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
   let aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : ''
@@ -188,40 +188,122 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
         height: '100%',
         maxWidth: '450px',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        position: 'relative',
       }}
     >
+      {instrumento.destacado && <Box
+        sx={{
+          position: 'absolute',
+          top: 8,
+          left: 8,
+          zIndex: 2,
+          display: 'flex',
+          alignItems: 'center',
+          border: '1px solid #ccc',
+          borderRadius: '20px',
+          padding: '6px',
+          backgroundColor: 'white',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            borderColor: '#fbc02d',
+          },
+          '&:hover .texto': {
+            maxWidth: '80px',
+            opacity: 1,
+            paddingLeft: '4px',
+            paddingRight: '8px',
+          },
+          '&:hover .estrella': {
+            color: '#fbc02d',
+          }
+        }}
+      >
+        <StarBorderOutlined
+          className="estrella"
+          sx={{ color: '#999', transition: 'color 0.3s' }}
+        />
+
+        <Typography
+          className="texto"
+          variant="caption"
+          sx={{
+            color: '#555',
+            fontWeight: '500',
+            maxWidth: 0,
+            opacity: 0,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            transition: 'all 0.3s ease-in-out',
+          }}
+        >
+          Destacado
+        </Typography>
+      </Box>}
+
+
       <CardActionArea
         LinkComponent={Link}
         href={`/planeacion/${instrumento.nombreCortoSlug}`}
         disableTouchRipple
         disableRipple
       >
-        {
-          instrumento.cover ? (
-            <CardMedia
-              component='img'
-              sx={{ height: '480px', maxHeight: '480px' }}
-              image={coverUrl}
-              title={instrumento.cover?.caption || `${instrumento.nombre} ${aboutInstrumento}`}
-            />
-
-          ) : (
-            <Box
-              height='480px'
-              bgcolor={'primary.300'}
-              display='flex'
-              justifyContent={'center'}
-              alignItems={'center'}
-            >
-              <Landscape
+        <Box position="relative">
+          {
+            instrumento.cover ? (
+              <CardMedia
+                component='img'
                 sx={{
-                  fontSize: 80,
-                  color: 'primary.600'
-                }} />
+                  height: '480px', maxHeight: '480px',
+                  filter: instrumento.vigente ? 'none' : 'grayscale(60%) opacity(0.7)',
+                }}
+                image={coverUrl}
+                title={instrumento.cover?.caption || `${instrumento.nombre} ${aboutInstrumento}`}
+              />
+
+            ) : (
+              <Box
+                height='480px'
+                bgcolor={'primary.300'}
+                display='flex'
+                justifyContent={'center'}
+                alignItems={'center'}
+
+              >
+                <Landscape
+                  sx={{
+                    fontSize: 80,
+                    color: 'primary.600'
+                  }} />
+              </Box>
+            )
+          }
+
+          {!instrumento.vigente && (
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 8,
+                right: 8,
+                zIndex: 2,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                border: '1px solid #ccc',
+                borderRadius: '20px',
+                padding: '4px 10px',
+                backgroundColor: 'white',
+                filter: 'grayscale(0)',
+              }}
+            >
+              <ArchiveOutlined sx={{ fontSize: 16, color: '#999' }} />
+              <Typography variant="caption" sx={{ color: '#777', fontWeight: 500 }}>
+                Histórico
+              </Typography>
             </Box>
-          )
-        }
+          )}
+        </Box>
       </CardActionArea>
       <CardContent sx={{ flex: 1 }}>
         <Box display={'flex'} flexDirection={'column'} height={'100%'}>
@@ -260,6 +342,7 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
               color="text.secondary">{instrumento.descripcion}</Typography>
           </Box>
         </Box>
+        {/* Histórico */}
       </CardContent>
     </Card>
   )

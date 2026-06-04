@@ -28,7 +28,7 @@ export default async function ConsejoPage() {
     const data_json = await res_header.json();
 
     consejo = json.data || [];
-    data = data_json.data || {}; // Protección por si viene null
+    data = data_json.data || {};
   } catch (err) {
     console.error("Error fetching data: ", err);
   }

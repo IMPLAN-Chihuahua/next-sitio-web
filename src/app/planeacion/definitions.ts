@@ -28,4 +28,6 @@ export type InstrumentoPlaneacion = {
   descripcion: string;
   datosGeograficos: DatoGeografico[];
   anioPublicacion: number;
+  vigente: boolean;
+  destacado: boolean;
 }
