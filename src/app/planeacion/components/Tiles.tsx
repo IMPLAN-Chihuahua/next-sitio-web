@@ -1,7 +1,7 @@
 'use client'
 
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
-import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Pagination as MuiPagination, Typography, Link as MuiLink, Stack, Button, Alert, CircularProgress } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Pagination as MuiPagination, Typography, Link as MuiLink, Stack, Button, Alert, CircularProgress, Tooltip } from "@mui/material";
 import useSWRImmutable from "swr/immutable";
 import qs from 'qs'
 import { cmsFetcher } from "@/app/services/http";
@@ -281,27 +281,33 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
           }
 
           {!instrumento.vigente && (
-            <Box
-              sx={{
-                position: 'absolute',
-                bottom: 8,
-                right: 8,
-                zIndex: 2,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-                border: '1px solid #ccc',
-                borderRadius: '20px',
-                padding: '4px 10px',
-                backgroundColor: 'white',
-                filter: 'grayscale(0)',
-              }}
-            >
-              <ArchiveOutlined sx={{ fontSize: 16, color: '#999' }} />
-              <Typography variant="caption" sx={{ color: '#777', fontWeight: 500 }}>
-                Histórico
-              </Typography>
-            </Box>
+            <Tooltip
+              title='Este instrumento es de carácter histórico, por lo que su contenido puede no reflejar la normativa o situación urbana vigente.'
+              placement='top'
+              arrow>
+
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: 8,
+                  right: 8,
+                  zIndex: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: '1px solid #ccc',
+                  borderRadius: '20px',
+                  padding: '4px 10px',
+                  backgroundColor: 'white',
+                  filter: 'grayscale(0)',
+                }}
+              >
+                <ArchiveOutlined sx={{ fontSize: 16, color: '#999' }} />
+                <Typography variant="caption" sx={{ color: '#777', fontWeight: 500 }}>
+                  Histórico
+                </Typography>
+              </Box>
+            </Tooltip>
           )}
         </Box>
       </CardActionArea>
