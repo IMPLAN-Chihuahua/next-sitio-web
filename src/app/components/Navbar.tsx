@@ -23,7 +23,7 @@ const navLinks = [{
 },
 {
   label: 'Planeación',
-  href: 'planeacion',
+  href: '/planeacion',
   menuItems: []
 },
 {
