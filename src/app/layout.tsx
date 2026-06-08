@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
 };
 
-
 const montserrat = Montserrat({
   weight: ['300', '400', '500', '700'],
   display: 'swap',
@@ -30,6 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={montserrat.variable}>
+      <head>
+        {/* Google Material Icons */}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+      </head>
       <body style={{ minHeight: '100vh', margin: 0, display: 'flex', flexDirection: 'column' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>

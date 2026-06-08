@@ -13,7 +13,7 @@ export default async function Footer() {
 
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/footer?populate[0]=logo&populate[1]=grupos&populate[2]=grupos.enlaces`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 1000 },
     });
     const json = await res.json();
     data = json.data as FooterType;
