@@ -39,7 +39,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
         textDecoration: 'none',
         display: 'block',
         perspective: '1000px',
-        // Desktop (>600px): se giran las tarjetas solas al pasar el mouse
+        // Desktop (>900px): se giran las tarjetas solas al pasar el mouse
         ...(!esMovil && {
           '&:hover .capa-frontal': { opacity: 0, transform: 'rotateY(90deg)' },
           '&:hover .capa-trasera': { opacity: 1, transform: 'rotateY(0deg)' },
@@ -48,7 +48,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
             boxShadow: '0 14px 40px #e7a34344',
           },
         }),
-        // Móvil (<600px): doble click, el primero para mostrar la descripcion y el segundo para ir al link
+        // Móvil (<900px): doble click, el primero para mostrar la descripcion y el segundo para ir al link
         ...(esMovil && volteada && {
           '& .capa-frontal': { opacity: 0, transform: 'rotateY(90deg)' },
           '& .capa-trasera': { opacity: 1, transform: 'rotateY(0deg)' },
@@ -153,7 +153,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
 }
  
 export default function Links({ titulo, enlaces }: Props) {
-  const esMovil = !useMediaQuery('(min-width:600px)');
+  const esMovil = !useMediaQuery('(min-width:900px)');
  
   return (
     <Box sx={{ mb: 6 }}>
