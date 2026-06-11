@@ -153,7 +153,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
 }
  
 export default function Links({ titulo, enlaces }: Props) {
-  const esMovil = !useMediaQuery('(min-width:900px)');
+  const esMovil = !useMediaQuery('(min-width:900px)');  //funcion para manejar los px de si es movil o web
  
   return (
     <Box sx={{ mb: 6 }}>
