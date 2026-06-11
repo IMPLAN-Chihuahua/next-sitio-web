@@ -37,8 +37,8 @@ const navLinks = [{
   menuItems: []
 },
 {
-  label: 'Adquisiciones',
-  href: '/adquisiciones',
+  label: 'Transparencia',
+  href: '/transparencia',
   menuItems: []
 }]
 
