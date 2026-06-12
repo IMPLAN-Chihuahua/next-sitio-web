@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Container } from '@mui/material'
+import { Box, Button, Stack } from '@mui/material'
 import { Media } from '../definitions';
 
 type StellarButton = {
@@ -41,59 +41,72 @@ const StellarBanner = ({ data }: { data: StellarBannerItem[] }) => {
                         sx={{
                             width: '100%',
                             position: 'relative',
-                            height: { xs: '60vh', md: '500px' },
-                            backgroundImage: {
-                                xs: `url(${mobileUrl})`,
-                                md: `url(${desktopUrl})`
-                            },
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            borderRadius: 0,
                             display: 'flex',
                             alignItems: 'center',
+                            justifyContent: 'center',
                         }}
                     >
-                        <Container maxWidth="xl">
-                            {hasButtons && (
-                                <Stack
-                                    direction={{ xs: 'column', sm: 'row' }}
-                                    spacing={2}
-                                    justifyContent="flex-end"
-                                    alignItems="center"
-                                    sx={{
-                                        width: '100%',
-                                    }}
-                                >
-                                    {item.buttons?.map((btn, btnIndex) => (
-                                        <Button
-                                            key={btn.id || btnIndex}
-                                            variant="contained"
-                                            color="inherit"
-                                            href={btn.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            sx={{
-                                                px: 4,
-                                                py: 1.5,
-                                                fontWeight: 'bold',
-                                                textTransform: 'none',
-                                                fontSize: '1rem',
-                                                borderRadius: 2,
-                                                backdropFilter: 'blur(4px)',
-                                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                                color: '#000',
-                                                '&:hover': {
-                                                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                                                }
-                                            }}
-                                        >
-                                            {btn.text}
-                                        </Button>
-                                    ))}
-                                </Stack>
-                            )}
-                        </Container>
+                        <Box
+                            component="img"
+                            src={desktopUrl}
+                            alt={item.title || 'Banner'}
+                            sx={{
+                                width: '100%',
+                                height: 'auto',
+                                display: { xs: 'none', md: 'block' }
+                            }}
+                        />
+
+                        <Box
+                            component="img"
+                            src={mobileUrl}
+                            alt={item.title || 'Banner Móvil'}
+                            sx={{
+                                width: '100%',
+                                height: 'auto',
+                                display: { xs: 'block', md: 'none' }
+                            }}
+                        />
+
+                        {hasButtons && (
+                            <Stack
+                                direction={{ xs: 'column', sm: 'row' }}
+                                spacing={2}
+                                sx={{
+                                    position: 'absolute',
+                                    right: { xs: '5%', md: '10%' },
+                                    bottom: { xs: '10%', md: '15%' },
+                                    zIndex: 10,
+                                }}
+                            >
+                                {item.buttons?.map((btn, btnIndex) => (
+                                    <Button
+                                        key={btn.id || btnIndex}
+                                        variant="contained"
+                                        color="inherit"
+                                        href={btn.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        sx={{
+                                            px: 4,
+                                            py: 1.5,
+                                            fontWeight: 'bold',
+                                            textTransform: 'none',
+                                            fontSize: '1rem',
+                                            borderRadius: 2,
+                                            backdropFilter: 'blur(4px)',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                            color: '#000',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(255, 255, 255, 1)',
+                                            }
+                                        }}
+                                    >
+                                        {btn.text}
+                                    </Button>
+                                ))}
+                            </Stack>
+                        )}
                     </Box>
                 )
             })}
