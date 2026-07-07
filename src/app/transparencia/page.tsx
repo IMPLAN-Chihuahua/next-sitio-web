@@ -3,7 +3,8 @@ import { Box, Container } from "@mui/material";
 import PageBanner from '../components/PageBanner';
 import Links from './components/Links_Cards';
 import ExternalLinksCarousel from './components/ExternalLinksCarousel';
- 
+import FreshDivider from '../components/FreshDivider';
+
 export const metadata: Metadata = {
   title: 'Transparencia'
 };
@@ -48,8 +49,9 @@ export default async function TransparenciaPage() {
         <Links
           titulo="Enlaces Internos"
           enlaces={dataPage.Internal_links || dataPage.internal_links || []}
-        />
+          />
  
+          <FreshDivider/>
         <ExternalLinksCarousel
           titulo="Enlaces Externos"
           enlaces={dataPage.external_links || []}
