@@ -1,86 +1,171 @@
 import React from 'react'
-import { Box, Paper, Typography, Stack, Tooltip, IconButton } from '@mui/material'
-import { Mic, HowToVote, Block } from '@mui/icons-material' // Iconos de Material UI
-import { Consejero, SectorType } from '../definitions' // Asegúrate de que la ruta sea correcta
+import { Box, Paper, Typography, Stack, Tooltip } from '@mui/material'
+import { Mic, HowToVote, Block } from '@mui/icons-material'
+import { Consejero, SectorType } from '../definitions'
 
 // Mapeo de colores por sector para la franja izquierda
 const getSectorColor = (sector: string | null) => {
-    if (!sector) return '#9e9e9e'; // Gris por defecto
+    if (!sector) return '#9e9e9e'
 
     switch (sector) {
         case SectorType.SOCIAL:
-            return '#2e7d32'; // Verde fuerte
+            return '#2E7D32'
+
         case SectorType.PUBLICO:
+            return '#1565C0'
+
         case SectorType.PUBLICO_FEDERAL:
+            return '#0288D1'
+
         case SectorType.PUBLICO_ESTATAL:
+            return '#1976D2'
+
         case SectorType.PUBLICO_MUNICIPAL:
-            return '#1565c0'; // Azul institucional
+            return '#0D47A1'
+
         case SectorType.PRIVADO:
-            return '#d32f2f'; // Rojo/Vino
+            return '#D32F2F'
+
         case SectorType.TECNICO_ACADEMICO:
-            return '#fbc02d'; // Amarillo/Dorado
+            return '#F9A825'
+
         default:
-            return '#9e9e9e';
+            return '#9e9e9e'
     }
 }
 
-const ConsejoCard = ({ data }: { data: Consejero }) => {
-    const sectorColor = getSectorColor(data.sector);
+const formatSector = (sector: string | null) => {
+    if (!sector) return ''
 
-    // Lógica para el texto del Tooltip
-    let statusText = "Sin voz ni voto";
-    if (data.has_voice && data.can_vote) statusText = "Con voz y voto";
-    else if (data.has_voice) statusText = "Solo voz";
-    else if (data.can_vote) statusText = "Solo voto";
+    return sector.replaceAll('_', ' ')
+}
+
+const ConsejoCard = ({ data }: { data: Consejero }) => {
+    const sectorColor = getSectorColor(data.sector)
+
+    let statusText = 'Sin voz ni voto'
+
+    if (data.has_voice && data.can_vote) statusText = 'Con voz y voto'
+    else if (data.has_voice) statusText = 'Solo voz'
+    else if (data.can_vote) statusText = 'Solo voto'
 
     return (
         <Paper
-            elevation={2}
+            elevation={1}
             sx={{
                 position: 'relative',
                 overflow: 'hidden',
                 borderRadius: 2,
                 display: 'flex',
                 flexDirection: 'column',
+                width: '100%',
                 height: '100%',
-                transition: 'transform 0.2s, box-shadow 0.2s',
+                minHeight: 235,
+                bgcolor: 'white',
+                border: '1px solid',
+                borderColor: 'grey.200',
+                boxShadow: '0 3px 10px rgba(0, 0, 0, 0.08)',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 6
-                }
+                    transform: 'translateY(-3px)',
+                    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.12)',
+                },
             }}
         >
-            {/* Franja de color del Sector (Izquierda) */}
-            <Box sx={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: '6px',
-                bgcolor: sectorColor,
-                zIndex: 1
-            }} />
+            {/* Franja de color del sector */}
+            <Box
+                sx={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: '6px',
+                    bgcolor: sectorColor,
+                    zIndex: 1,
+                }}
+            />
 
-            {/* Contenido Principal (Parte Blanca) */}
-            <Box sx={{ pl: 3, pr: 2, pt: 2, pb: 2, flexGrow: 1 }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                    {/* Nombre y Título */}
-                    <Box sx={{ pr: 1 }}>
-                        <Typography variant="subtitle1" fontWeight={800} lineHeight={1.2} sx={{ mb: 0.5, textTransform: 'uppercase' }}>
+            {/* Contenido principal */}
+            <Box
+                sx={{
+                    pl: 3,
+                    pr: 2,
+                    pt: 2,
+                    pb: 1.5,
+                    flex: 1,
+                    minHeight: 0,
+                }}
+            >
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                    spacing={1.5}
+                    sx={{ height: '100%' }}
+                >
+                    <Box sx={{ minWidth: 0, flex: 1 }}>
+                        <Typography
+                            variant="subtitle1"
+                            fontWeight={900}
+                            lineHeight={1.15}
+                            sx={{
+                                mb: 0.6,
+                                textTransform: 'uppercase',
+                                color: '#111827',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
                             {data.nombre}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" lineHeight={1.3} sx={{ fontSize: '0.8rem' }}>
+
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            lineHeight={1.35}
+                            sx={{
+                                fontSize: '0.82rem',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
                             {data.title}
                         </Typography>
-                        {/* Etiqueta del Sector (Opcional, visualmente ayuda) */}
-                        <Typography variant="caption" sx={{ color: sectorColor, fontWeight: 'bold', fontSize: '0.65rem', mt: 1, display: 'block', textTransform: 'uppercase' }}>
-                            {data.sector ? data.sector.replace('_', ' ') : ''}
+
+                        <Typography
+                            variant="caption"
+                            sx={{
+                                color: sectorColor,
+                                fontWeight: 900,
+                                fontSize: '0.68rem',
+                                mt: 1,
+                                display: 'block',
+                                textTransform: 'uppercase',
+                                letterSpacing: 0.2,
+                            }}
+                        >
+                            {formatSector(data.sector)}
                         </Typography>
                     </Box>
 
-                    {/* Iconos de Estado (Voz/Voto) */}
+                    {/* Iconos de estado */}
                     <Tooltip title={statusText} arrow placement="top">
-                        <Stack direction="row" spacing={0.5} sx={{ color: 'text.secondary', bgcolor: 'grey.100', borderRadius: 5, px: 1, py: 0.5 }}>
+                        <Stack
+                            direction="row"
+                            spacing={0.5}
+                            sx={{
+                                flexShrink: 0,
+                                color: 'text.secondary',
+                                bgcolor: 'grey.100',
+                                borderRadius: 999,
+                                px: 1,
+                                py: 0.5,
+                            }}
+                        >
                             {data.has_voice ? (
                                 <Mic sx={{ fontSize: 18 }} />
                             ) : (
@@ -97,25 +182,55 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                 </Stack>
             </Box>
 
-            {/* Sección Suplente (Parte Gris) */}
-            {data.suplente && (
-                <Box sx={{
-                    bgcolor: '#f5f5f5', // Gris muy claro
-                    px: 3, // Alineado con el padding de arriba (considerando la franja)
+            {/* Sección suplente */}
+            <Box
+                sx={{
+                    mt: 'auto',
+                    bgcolor: '#f5f5f5',
+                    px: 3,
                     py: 1.5,
                     borderTop: '1px solid',
-                    borderColor: 'grey.200'
-                }}>
-                    <Typography variant="caption" fontWeight="bold" color="text.secondary" display="block" sx={{ mb: 0 }}>
-                        SUPLENTE
+                    borderColor: 'grey.200',
+                    minHeight: 66,
+                }}
+            >
+                {data.suplente ? (
+                    <>
+                        <Typography
+                            variant="caption"
+                            fontWeight={900}
+                            color="text.secondary"
+                            display="block"
+                            sx={{ mb: 0.2 }}
+                        >
+                            SUPLENTE
+                        </Typography>
+
+                        <Typography
+                            variant="body2"
+                            fontWeight={500}
+                            sx={{
+                                fontSize: '0.85rem',
+                                lineHeight: 1.25,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            {data.suplente}
+                        </Typography>
+                    </>
+                ) : (
+                    <Typography
+                        variant="caption"
+                        color="text.disabled"
+                        sx={{ fontWeight: 700 }}
+                    >
+                        SIN SUPLENTE
                     </Typography>
-                    <Typography variant="body2" fontWeight={500} sx={{ fontSize: '0.85rem' }}>
-                        {data.suplente}
-                    </Typography>
-                </Box>
-            )}
-            {/* Si no tiene suplente, renderizamos una caja vacía o con altura mínima para que las cards se alineen si usas grid masonery, 
-                 pero con Flexbox normal esto es opcional */}
+                )}
+            </Box>
         </Paper>
     )
 }
