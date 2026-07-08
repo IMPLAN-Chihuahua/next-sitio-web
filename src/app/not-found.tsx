@@ -4,7 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Typography, Container, Stack, Button } from '@mui/material';
+import legacyUrlMap from './legacy-url-map.json';
+
+const suggestedPages = legacyUrlMap.suggestedPages;
 
 export default function NotFound() {
     const router = useRouter();
@@ -77,6 +80,58 @@ export default function NotFound() {
                                 objectFit: 'contain',
                             }}
                         />
+                    </Box>
+
+                    <Box
+                        component="section"
+                        aria-labelledby="suggested-pages-title"
+                        sx={{
+                            width: '100%',
+                            maxWidth: 640,
+                            mb: 3,
+                        }}
+                    >
+                        <Typography
+                            id="suggested-pages-title"
+                            component="h2"
+                            fontWeight={700}
+                            sx={{
+                                color: 'primary.900',
+                                fontSize: { xs: '1rem', md: '1.1rem' },
+                                mb: 1.5,
+                            }}
+                        >
+                            Tal vez buscabas
+                        </Typography>
+
+                        <Stack
+                            direction="row"
+                            gap={1}
+                            flexWrap="wrap"
+                            justifyContent="center"
+                        >
+                            {suggestedPages.map((page) => (
+                                <Button
+                                    key={page.path}
+                                    component={Link}
+                                    href={page.path}
+                                    variant="outlined"
+                                    sx={{
+                                        borderRadius: 1,
+                                        textTransform: 'none',
+                                        fontWeight: 700,
+                                        borderColor: 'primary.200',
+                                        color: 'primary.900',
+                                        '&:hover': {
+                                            borderColor: 'secondary.main',
+                                            backgroundColor: 'primary.50',
+                                        },
+                                    }}
+                                >
+                                    {page.title}
+                                </Button>
+                            ))}
+                        </Stack>
                     </Box>
 
                     <Typography
