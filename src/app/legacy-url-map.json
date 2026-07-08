@@ -1,0 +1,338 @@
+{
+  "redirects": [
+    {
+      "oldPath": "/CalleMorelos.html",
+      "newPath": "/estudios-y-propuestas/peatonalizacion-calle-morelos",
+      "statusCode": 301,
+      "title": "Peatonalizacion Calle Morelos",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/VenustianoCarranza.html",
+      "newPath": "/estudios-y-propuestas/rehabilitacion-de-imagen-urbana-de-la-av-venustiano-carranza",
+      "statusCode": 301,
+      "title": "Rehabilitacion de Imagen Urbana de la Av. Venustiano Carranza",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ProyectoCE1.html",
+      "newPath": "/estudios-y-propuestas/rehabilitacion-de-imagen-urbana-de-la-av-venustiano-carranza",
+      "statusCode": 301,
+      "title": "Rehabilitacion de Imagen Urbana de la Av. Venustiano Carranza",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/QuintaTouche.html",
+      "newPath": "/estudios-y-propuestas/rehabilitacion-quinta-touche",
+      "statusCode": 301,
+      "title": "Rehabilitacion Quinta Touche",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/PlazaDeArmas.html",
+      "newPath": "/estudios-y-propuestas/mejoracion-de-accesibilidad-en-la-plaza-de-armas",
+      "statusCode": 301,
+      "title": "Mejoracion de accesibilidad en la Plaza de Armas",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CorredorEscultorico.html",
+      "newPath": "/estudios-y-propuestas/corredor-escultorico",
+      "statusCode": 301,
+      "title": "Corredor Escultorico",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Proyecto81.html",
+      "newPath": "/estudios-y-propuestas/corredor-escultorico",
+      "statusCode": 301,
+      "title": "Corredor Escultorico",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ParqueLerdo.html",
+      "newPath": "/estudios-y-propuestas/parque-lerdo",
+      "statusCode": 301,
+      "title": "Parque Lerdo",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ParqueRejon.html",
+      "newPath": "/estudios-y-propuestas/parque-metropolitano-el-rejon",
+      "statusCode": 301,
+      "title": "Parque Metropolitano El Rejon",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Proyecto7.html",
+      "newPath": "/estudios-y-propuestas/parque-metropolitano-el-rejon",
+      "statusCode": 301,
+      "title": "Parque Metropolitano El Rejon",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ParqueEncino.html",
+      "newPath": "/estudios-y-propuestas/parque-el-encino",
+      "statusCode": 301,
+      "title": "Parque El Encino",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EdificioDelReal.html",
+      "newPath": "/estudios-y-propuestas/edificio-del-real",
+      "statusCode": 301,
+      "title": "Edificio del Real",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CentroHistorico.html",
+      "newPath": "/estudios-y-propuestas/remodelacion-de-imagen-urbana-del-centro-historico",
+      "statusCode": 301,
+      "title": "Remodelacion de Imagen Urbana del Centro Historico",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioCruceSeguros.html",
+      "newPath": "/estudios-y-propuestas/cruces-seguros",
+      "statusCode": 301,
+      "title": "Cruces seguros",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/GuiaMetodologica.html",
+      "newPath": "/estudios-y-propuestas/guia-metodologica-centro-de-estudios-estrategicos",
+      "statusCode": 301,
+      "title": "Guia Metodologica Centro de Estudios Estrategicos",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/InsumosAtlasMunicipalRiesgos.html",
+      "newPath": "/estudios-y-propuestas/insumos-para-la-actualizacion-del-atlas-municipal-de-riesgos-en-el-centro-de-poblacion-de-chihuahua",
+      "statusCode": 301,
+      "title": "Insumos para la actualizacion del Atlas Municipal de Riesgos en el Centro de Poblacion de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/IndicadoresDesarrolloSostenible.html",
+      "newPath": "/estudios-y-propuestas/indicadores-para-el-desarrollo-urbano-sostenible-del-municipio-de-chihuahua",
+      "statusCode": 301,
+      "title": "Indicadores para el Desarrollo Urbano Sostenible del Municipio de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioCE1_V1.html",
+      "newPath": "/estudios-y-propuestas/estudio-de-factibilidad-de-modelos-de-densificacion",
+      "statusCode": 301,
+      "title": "Estudio de Factibilidad de Modelos de Densificacion",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioModelosDensificacion.html",
+      "newPath": "/estudios-y-propuestas/estudio-de-factibilidad-de-modelos-de-densificacion",
+      "statusCode": 301,
+      "title": "Estudio de Factibilidad de Modelos de Densificacion",
+      "category": "Estudio",
+      "match": "likely"
+    },
+    {
+      "oldPath": "/CostoCiudad.html",
+      "newPath": "/estudios-y-propuestas/costo-ciudad-aproximacion-a-un-modelo",
+      "statusCode": 301,
+      "title": "Costo Ciudad - Aproximacion a un modelo",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CostoCiudadAproximacionCostos.html",
+      "newPath": "/estudios-y-propuestas/costo-ciudad-aproximacion-a-los-costos-de-la-infraestructura",
+      "statusCode": 301,
+      "title": "Costo Ciudad - Aproximacion a los costos de la infraestructura",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ViviendaInformal.html",
+      "newPath": "/estudios-y-propuestas/estudio-sobre-la-vivienda-informal-en-la-ciudad-de-chihuahua-causas-efectos-y-politica-publica",
+      "statusCode": 301,
+      "title": "Estudio sobre la Vivienda Informal en la Ciudad de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioLuisHAlvarez.html",
+      "newPath": "/estudios-y-propuestas/estudio-tecnico-blvd-luis-h-alvarez",
+      "statusCode": 301,
+      "title": "Estudio Tecnico Blvd. Luis H. Alvarez",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioPoliticas.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-el-diseno-de-politicas-publicas-para-la-gestion-de-uso-de-suelo-e-infraestructura-para-la-industria-en-la-ciudad-de-chihuahua",
+      "statusCode": 301,
+      "title": "Estudio para el diseno de politicas publicas para la gestion de uso de suelo e infraestructura para la industria en la ciudad de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioVivienda.html",
+      "newPath": "/estudios-y-propuestas/investigacion-de-aceptacion-de-vivienda-densificada-en-segmentos-economica-popular-y-tradicional-en-chihuahua",
+      "statusCode": 301,
+      "title": "Investigacion de aceptacion de vivienda densificada",
+      "category": "Estudio",
+      "match": "likely"
+    },
+    {
+      "oldPath": "/ReformaEnergetica.html",
+      "newPath": "/estudios-y-propuestas/aprovechamiento-para-la-reforma-energetica",
+      "statusCode": 301,
+      "title": "Aprovechamiento para la reforma energetica",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ValoracionAnva.html",
+      "newPath": "/estudios-y-propuestas/valoracion-de-servicios-ambientales-de-las-areas-naturales-de-valor-ambiental-anva-y-de-preservacion-ecologica-pe-del-centro-de-poblacion-de-la-ciudad-de-chihuahua",
+      "statusCode": 301,
+      "title": "Valoracion de servicios ambientales de las areas naturales de valor ambiental",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioMultimodal.html",
+      "newPath": "/estudios-y-propuestas/actualizacion-multimodal-del-macromodelo-de-chihuahua",
+      "statusCode": 301,
+      "title": "Actualizacion multimodal del macromodelo de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioEPMH.html",
+      "newPath": "/estudios-y-propuestas/estudios-base-para-la-elaboracion-del-plan-municipal-hidrico",
+      "statusCode": 301,
+      "title": "Estudios base para la elaboracion del Plan Municipal Hidrico",
+      "category": "Estudio",
+      "match": "likely"
+    },
+    {
+      "oldPath": "/EstudioDefinicionIncentivosUrbanos.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-la-definicion-de-incentivos-urbanos",
+      "statusCode": 301,
+      "title": "Estudio para la definicion de incentivos urbanos",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstadoDelArteAgua.html",
+      "newPath": "/estudios-y-propuestas/estado-del-arte-en-materia-del-agua",
+      "statusCode": 301,
+      "title": "Estado del arte en materia del agua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/MesaDeLosCaballos.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-la-caracterizacion-y-diagnostico-ambiental-morfologico-de-la-mesa-de-los-caballos",
+      "statusCode": 301,
+      "title": "Estudio para la caracterizacion y diagnostico ambiental morfologico de la Mesa de Los Caballos",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioInsumosHidricaMunicipal.html",
+      "newPath": "/estudios-y-propuestas/insumos-para-la-planeacion-hidrica-municipal-y-actualizacion-de-la-base-de-datos-geografica-para-la-gestion-hidrica",
+      "statusCode": 301,
+      "title": "Insumos para la Planeacion Hidrica Municipal",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Proyecto6.html",
+      "newPath": "/estudios-y-propuestas",
+      "statusCode": 302,
+      "title": "Parque Metropolitano Tres Presas",
+      "category": "Proyecto",
+      "match": "no-new-detail-page"
+    },
+    {
+      "oldPath": "/Proyectos.html",
+      "newPath": "/estudios-y-propuestas",
+      "statusCode": 301,
+      "title": "Proyectos",
+      "category": "Index",
+      "match": "section"
+    }
+  ],
+  "suggestedPages": [
+    {
+      "path": "/estudios-y-propuestas",
+      "title": "Estudios y propuestas",
+      "keywords": ["estudios", "proyectos", "propuestas", "trabajos de planeacion"]
+    },
+    {
+      "path": "/planeacion",
+      "title": "Planeacion",
+      "keywords": ["planeacion", "pdu", "instrumentos", "planes"]
+    },
+    {
+      "path": "/cartografia",
+      "title": "Cartografia",
+      "keywords": ["cartografia", "mapas", "sigmun"]
+    },
+    {
+      "path": "/transparencia",
+      "title": "Transparencia",
+      "keywords": ["transparencia", "cuenta publica", "licitaciones"]
+    },
+    {
+      "path": "/avisos-privacidad",
+      "title": "Avisos de privacidad",
+      "keywords": ["privacidad", "aviso de privacidad", "datos personales"]
+    },
+    {
+      "path": "/preguntas-frecuentes",
+      "title": "Preguntas frecuentes",
+      "keywords": ["faq", "preguntas frecuentes", "ayuda"]
+    }
+  ],
+  "unmatched": [
+    {
+      "oldPath": "/EstudiosAmbientales.html",
+      "reason": "Puede corresponder a mas de un estudio ambiental; revisar antes de redirigir."
+    },
+    {
+      "oldPath": "/PSAMUS.html",
+      "reason": "No encontre slug equivalente exacto en trabajos-planeacion."
+    },
+    {
+      "oldPath": "/ForoCiudades.html",
+      "reason": "Parece contenido editorial o evento, no trabajo de planeacion."
+    },
+    {
+      "oldPath": "/ForoFCCUU.html",
+      "reason": "Parece contenido editorial o evento, no trabajo de planeacion."
+    },
+    {
+      "oldPath": "/ForoFCCUU2020.html",
+      "reason": "Parece contenido editorial o evento, no trabajo de planeacion."
+    }
+  ]
+}
