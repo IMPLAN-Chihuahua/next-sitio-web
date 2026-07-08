@@ -19,7 +19,7 @@ export default async function CentroEstudiosPage() {
         cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${trabajosPlaneacionPage.data.cover.url}`}
       />
       <Container>
-        <SubtitleH2 title="Estudios y proyectos" />
+        <SubtitleH2 title="Estudios y propuestas" />
         <Typography>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima quibusdam nesciunt quo cupiditate ab consequatur.
           Libero commodi laborum dolor saepe, delectus vitae veniam recusandae quidem. Vero nesciunt necessitatibus sint consequuntur.

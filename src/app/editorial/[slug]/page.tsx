@@ -11,10 +11,10 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import { Novedades } from "@/app/editorial/definitions";
 import { Media, MultipleMedia } from "@/app/definitions";
-import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions";
+import { ShareOptions } from "@/app/estudios-y-propuestas/components/ShareOptions";
 import { NovedadBreadcrumbs } from "../components/Breadcrumbs";
-import { ClasificacionSpan } from "@/app/estudios-y-proyectos/components/Tile";
-import Carousel, { Slide } from "@/app/estudios-y-proyectos/components/Carousel";
+import { ClasificacionSpan } from "@/app/estudios-y-propuestas/components/Tile";
+import Carousel, { Slide } from "@/app/estudios-y-propuestas/components/Carousel";
 import { ImagesMasonry } from "../components/Masonry";
 
 type DetailPageMetadataProps = {

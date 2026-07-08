@@ -4,7 +4,7 @@ import { InstrumentoDetailPageBreadcrumbs } from "../components/InstrumentoBread
 import { InstrumentoPlaneacion } from "../definitions";
 import Image from "next/image";
 import { parseISO } from "date-fns";
-import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions";
+import { ShareOptions } from "@/app/estudios-y-propuestas/components/ShareOptions";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
 import CartografiaCard from "../components/CartografiaCard";

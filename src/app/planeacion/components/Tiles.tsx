@@ -9,7 +9,7 @@ import { Pagination, Tag, TemaInstrumentoPlaneacion } from "@/app/definitions";
 import { InstrumentoPlaneacion } from "../definitions";
 import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import { AnioAutocomplete } from "@/app/estudios-y-proyectos/components/Tiles";
+import { AnioAutocomplete } from "@/app/estudios-y-propuestas/components/Tiles";
 import { ArchiveOutlined, Clear, Landscape, Star, StarBorderOutlined, StarOutline } from "@mui/icons-material";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { formatISO, parseISO } from "date-fns";

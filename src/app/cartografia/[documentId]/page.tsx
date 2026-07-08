@@ -2,7 +2,7 @@
 import { Box, Container, Grid, Table, TableBody, TableCell, TableContainer, Link as MuiLink, TableRow, Toolbar, Typography } from "@mui/material";
 import qs from 'qs'
 import CartografiaDetailPageBreadcrumbs from "../components/CartografiaDetailPageBreadcrumbs";
-import { ShareOptions } from "@/app/estudios-y-proyectos/components/ShareOptions";
+import { ShareOptions } from "@/app/estudios-y-propuestas/components/ShareOptions";
 import Image from "next/image";
 import { filesize } from 'filesize'
 import { DatoGeografico } from "../definitions";

@@ -20,7 +20,7 @@ import qs from 'qs';
 import { cmsFetcher } from '@/app/services/http';
 import { Novedades } from '../definitions';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ClasificacionSpan } from '@/app/estudios-y-proyectos/components/Tile';
+import { ClasificacionSpan } from '@/app/estudios-y-propuestas/components/Tile';
 import { Image, Landscape } from '@mui/icons-material';
 import { parse } from 'date-fns';
 

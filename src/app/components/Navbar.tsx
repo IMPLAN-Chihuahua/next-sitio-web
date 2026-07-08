@@ -32,8 +32,8 @@ const navLinks = [{
   menuItems: []
 },
 {
-  label: 'Estudios y proyectos',
-  href: '/estudios-y-proyectos',
+  label: 'Estudios y propuestas',
+  href: '/estudios-y-propuestas',
   menuItems: []
 },
 {

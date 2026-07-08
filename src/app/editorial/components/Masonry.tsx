@@ -1,7 +1,7 @@
 'use client'
 
 import { MultipleMedia } from "@/app/definitions"
-import Carousel, { Slide } from "@/app/estudios-y-proyectos/components/Carousel"
+import Carousel, { Slide } from "@/app/estudios-y-propuestas/components/Carousel"
 import theme from "@/theme"
 import { KeyboardArrowDown, KeyboardArrowUp, Visibility, VisibilityOff } from "@mui/icons-material"
 import { Box, Button, Collapse, ImageList, ImageListItem, ImageListItemBar, useMediaQuery } from "@mui/material"
@@ -36,7 +36,7 @@ export const ImagesMasonry = (props: { images: MultipleMedia }) => {
             size='large'
             disableFocusRipple
             disableTouchRipple
-            sx={{ mb: 3}}>
+            sx={{ mb: 3 }}>
             {open ? 'Ocultar' : 'Mostrar'} todo ({props.images.length})
           </Button>
           <Collapse in={open}>

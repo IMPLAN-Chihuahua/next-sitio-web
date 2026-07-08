@@ -16,7 +16,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
         <Grid container >
           <Grid bgcolor={'primary.200'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={1}>
             {props.trabajoPlaneacion.cover ? (
-              <Link href={`/estudios-y-proyectos/${props.trabajoPlaneacion.slug}`}>
+              <Link href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${coverImage}`}
                   layout="fill"
@@ -29,7 +29,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
                 />
               </Link>
             ) : (
-              <Link href={`/estudios-y-proyectos/${props.trabajoPlaneacion.slug}`}>
+              <Link href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}>
                 <Box
                   display={'flex'}
                   justifyContent={'center'}
@@ -53,7 +53,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
               color='primary.800'
               underline="none"
               display={'inline-block'}
-              href={`/estudios-y-proyectos/${props.trabajoPlaneacion.slug}`}
+              href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}
               fontWeight={600}>{props.trabajoPlaneacion.nombre}</MuiLink>
             <Typography fontSize={18} mt={.5} fontWeight={500} color="primary.700">{props.trabajoPlaneacion.categoria} • {props.trabajoPlaneacion.ficha.anio}</Typography>
             <Typography mt={.5}>{
