@@ -35,6 +35,7 @@
     "use-debounce": "^10.0.6"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.12.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
