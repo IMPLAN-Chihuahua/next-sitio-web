@@ -59,7 +59,7 @@ export default async function LicitacionesPage() {
   const planMasReciente = planesOrdenados[0];
 
   return (
-    <main>
+    <>
       <PageBanner
         cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.cover.url}`}
         title="¿Cómo compramos?"
@@ -147,6 +147,6 @@ export default async function LicitacionesPage() {
         )}
 
       </Container>
-    </main>
+    </>
   )
 }

@@ -21,7 +21,7 @@ export default async function QuienesSomosPage() {
   const rendicionCuentasPage = await rendicionPageReq.json() as { data: RendicionDeCuentasPage };
 
   return (
-    <main>
+    <>
       <Toolbar variant='dense' />
       <Container sx={{ my: 3 }}>
         <CuentaPublicaSection availableYears={cuentaPublicaYears} />
@@ -38,6 +38,6 @@ export default async function QuienesSomosPage() {
           </Suspense>
         </Box>
       </Container>
-    </main>
+    </>
   )
 }

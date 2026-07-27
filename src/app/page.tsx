@@ -46,7 +46,7 @@ export default async function Home() {
   } = data;
 
   return (
-    <main>
+    <>
       <LandingPageBanner phrases={heroPhrases} />
       <Box sx={{
         bgcolor: 'white',
@@ -75,6 +75,6 @@ export default async function Home() {
           </Container>
         </Box>
       </Box>
-    </main>
+    </>
   );
 }

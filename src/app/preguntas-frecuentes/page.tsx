@@ -18,9 +18,9 @@ export default async function PreguntasFrecuentesPage() {
     }
 
     return (
-        <main>
+        <>
             <Toolbar variant='dense' />
             <AccordionFAQ data={data.FAQ} urlContacto={data.urlContacto} />
-        </main>
+        </>
     )
 }

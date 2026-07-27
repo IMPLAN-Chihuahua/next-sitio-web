@@ -40,7 +40,7 @@ export default async function ConsejoPage() {
 
 
   return (
-    <main>
+    <>
       <PageBanner
         title={data?.banner?.text}
         description={data?.banner?.textEmphasis}
@@ -52,6 +52,6 @@ export default async function ConsejoPage() {
       <ConsejoCards data={consejo} />
 
 
-    </main>
+    </>
   )
 }

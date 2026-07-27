@@ -20,7 +20,7 @@ export default async function CartografiaDetailPage({ params }: { params: Promis
   const page: { data: DatoGeografico } = await req.json();
 
   return (
-    <main>
+    <>
       <Toolbar variant="dense" />
       <Container sx={{ mt: 3 }}>
         <CartografiaDetailPageBreadcrumbs currentPageTitle={page.data.objetoGeografico} />
@@ -134,6 +134,6 @@ export default async function CartografiaDetailPage({ params }: { params: Promis
           </ul>
         </Box>
       </Container>
-    </main >
+    </ >
   )
 }

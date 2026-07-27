@@ -14,7 +14,7 @@ export default async function DatosAbiertosPage() {
   const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/cartografia-page?populate=*`)
   const page = await req.json();
 
-  return (<main>
+  return (<>
     <PageBanner
       cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
       description={page.data.descripcion}
@@ -23,7 +23,7 @@ export default async function DatosAbiertosPage() {
 
     <Container sx={{ my: 4 }}>
       <SubtitleH2 title='Datos abiertos' />
-      <MDXRemote 
+      <MDXRemote
         source={page.data.datosAbiertosContent}
       />
 
@@ -32,5 +32,5 @@ export default async function DatosAbiertosPage() {
       </Suspense>
 
     </Container>
-  </main>)
+  </>)
 }

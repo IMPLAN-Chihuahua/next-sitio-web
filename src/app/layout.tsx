@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import { Box, CssBaseline } from "@mui/material";
 import LocalizationProvider from "./components/AppLocalizationProvider";
 import ScrollToTop from "./components/ScrollToTop";
+import AxeCore from "./components/AxeCore";
 
 export const metadata: Metadata = {
   title: "IMPLAN Chihuahua",
@@ -34,12 +35,13 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </head>
       <body style={{ minHeight: '100vh', margin: 0, display: 'flex', flexDirection: 'column' }}>
+        <AxeCore />
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <LocalizationProvider>
               <CssBaseline />
               <Navbar />
-              <Box flex={1}>
+              <Box component={'main'} flex={1}>
                 {children}
               </Box>
               <Footer />

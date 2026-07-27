@@ -12,7 +12,7 @@ export default async function CentroEstudiosPage() {
 
 
   return (
-    <main>
+    <>
       <PageBanner
         title={trabajosPlaneacionPage.data.titulo}
         description={trabajosPlaneacionPage.data.descripcion}
@@ -29,6 +29,6 @@ export default async function CentroEstudiosPage() {
           <TrabajosTiles />
         </Suspense>
       </Container>
-    </main>
+    </>
   )
 }
