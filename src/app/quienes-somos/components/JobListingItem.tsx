@@ -14,7 +14,7 @@ import {
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import PublicIcon from '@mui/icons-material/Public';
-import SchoolIcon from '@mui/icons-material/School'; // IMPORTANTE: Agregué este icono
+import SchoolIcon from '@mui/icons-material/School';
 
 export interface JobOpeningProps {
     title: string;
@@ -41,13 +41,14 @@ const JobListingItem: React.FC<JobOpeningProps> = ({ title, description, applyUr
 
     return (
         <>
-            <Box sx={{ py: 4 }}>
+            <Box sx={{ py: 4, bgcolor: '#ffffff', px: { xs: 2, md: 4 } }}>
                 <Grid container spacing={2} alignItems={isMobile ? "flex-start" : "center"}>
                     <Grid size={{ xs: 12, md: 9 }}>
-                        <Typography variant="h6" component="h3" fontWeight="bold" gutterBottom>
+                        <Typography variant="h6" component="h3" fontWeight="bold" gutterBottom sx={{ color: '#111827' }}>
                             {title}
                         </Typography>
-                        <Typography variant="body1" color="text.secondary" sx={{ mb: 2, maxWidth: '90%' }}>
+
+                        <Typography variant="body1" sx={{ color: 'text.primary', mb: 2, maxWidth: '90%' }}>
                             {description}
                         </Typography>
 
@@ -59,9 +60,13 @@ const JobListingItem: React.FC<JobOpeningProps> = ({ title, description, applyUr
                                     icon={getIcon(badge.iconType)}
                                     variant="outlined"
                                     sx={{
-                                        fontWeight: 500,
+                                        fontWeight: 600,
                                         borderRadius: '8px',
-                                        borderColor: 'grey.300'
+                                        borderColor: 'grey.300',
+                                        color: '#111827',
+                                        '& .MuiChip-icon': {
+                                            color: '#4b5563'
+                                        }
                                     }}
                                 />
                             ))}
@@ -71,7 +76,6 @@ const JobListingItem: React.FC<JobOpeningProps> = ({ title, description, applyUr
                     <Grid size={{ xs: 12, md: 3 }} display="flex" justifyContent={isMobile ? "flex-start" : "flex-end"}>
                         <Button
                             variant="text"
-                            color="primary"
                             endIcon={<ArrowOutwardIcon />}
                             href={applyUrl}
                             target="_blank"
@@ -79,7 +83,11 @@ const JobListingItem: React.FC<JobOpeningProps> = ({ title, description, applyUr
                                 fontWeight: 'bold',
                                 fontSize: '1rem',
                                 textTransform: 'none',
-                                mt: isMobile ? 2 : 0
+                                mt: isMobile ? 2 : 0,
+                                color: '#231703',
+                                '&:hover': {
+                                    bgcolor: 'rgba(231, 162, 67, 0.1)',
+                                }
                             }}
                         >
                             Aplicar
