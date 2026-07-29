@@ -29,7 +29,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
   const page: { data: InstrumentoPlaneacion } = await req.json();
 
   return (
-    <Box component={'main'} minHeight={'90vh'}>
+    <Box minHeight={'90vh'}>
       <Toolbar variant="dense" />
       <Container sx={{ my: 3 }}>
         <InstrumentoDetailPageBreadcrumbs currentPageTitle={page.data.nombre} />

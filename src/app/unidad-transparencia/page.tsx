@@ -19,7 +19,7 @@ export default async function UnidadTransparenciaPage() {
   const page: { data: UnidadTransparenciaPageType } = await req.json();
 
 
-  return (<Box component='main' minHeight={'85vh'}>
+  return (<Box minHeight={'85vh'}>
     <Toolbar variant="dense" />
     <Container sx={{ my: 3 }}>
       <MDXRemote

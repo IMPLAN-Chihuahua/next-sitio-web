@@ -30,7 +30,7 @@ export default async function Footer() {
   const fullLogoPath = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${logoUrl}`;
 
   return (
-    <Box bgcolor={'primary.900'}>
+    <Box component={'footer'} bgcolor={'primary.900'}>
       <Grid container sx={{
         minHeight: { md: 350, xs: 'auto' },
         py: { xs: 5, md: 6 },
@@ -87,17 +87,19 @@ export default async function Footer() {
               display: 'flex',
               justifyContent: { xs: 'center', md: 'flex-start' },
             }}>
-              <IconButton>
+              <IconButton aria-label="Visitar nuestro perfil de Facebook">
                 <FacebookIcon />
               </IconButton>
               <IconButton sx={{
                 '& .MuiSvgIcon-root': {
                   fontSize: '35px'
                 }
-              }}>
+              }}
+                aria-label="Visitar nuestro canal de Youtube"
+              >
                 <YouTubeIcon />
               </IconButton>
-              <IconButton>
+              <IconButton aria-label="Visitar nuestro perfil de Instagram">
                 <InstagramIcon />
               </IconButton>
             </Box>

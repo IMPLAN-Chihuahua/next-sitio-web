@@ -28,10 +28,9 @@ export default async function EditorialPage() {
   const featuredPosts = editorialData?.featuredPosts || [];
 
   return (
-    <Box component="main" sx={{ mb: 3 }}>
+    <Box sx={{ mb: 3 }}>
       <Toolbar variant='dense' />
       <Container maxWidth="lg" sx={{ minHeight: '80vh' }}>
-        <SubtitleH2 title="Editorial" />
         <Destacados data={featuredPosts} />
         <Articulos />
       </Container>

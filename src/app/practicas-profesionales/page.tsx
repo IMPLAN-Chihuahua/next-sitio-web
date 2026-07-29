@@ -2,7 +2,7 @@ import { Box, Container, Toolbar, Typography } from "@mui/material";
 import PageBanner from "../components/PageBanner";
 import FreshDivider from "../components/FreshDivider";
 import Careers from "./components/Careers";
-import { SubtitleH2 } from "../components/Titles";
+import { SubtitleH2, TitleH1 } from "../components/Titles";
 
 
 export default async function PracticasProfesionalesPage() {
@@ -20,9 +20,17 @@ export default async function PracticasProfesionalesPage() {
   }
 
   return (
-    <Container component={'main'}>
+    <Container >
       <Toolbar variant="dense" />
-      <SubtitleH2 title="Vacantes" />
+      <TitleH1 title="Vacantes" />
+      <Typography
+        variant="h6"
+        component="h2"
+        color="text.secondary"
+        sx={{ fontWeight: 'normal' }}
+      >
+        Oportunidades disponibles
+      </Typography>
       <Careers data={data?.vacantes} />
     </Container>
   )

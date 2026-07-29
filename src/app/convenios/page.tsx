@@ -8,7 +8,7 @@ import { ConveniosTable } from "./components/ConveniosTable";
 export default function ConveniosPage() {
 
   return (
-    <Box component={'main'}>
+    <Box >
       {/* <PageBanner
         title="Convenios"
         description="En el IMPLAN estamos comprometidos con la transparencia y queremos que conozcas nuestra información."

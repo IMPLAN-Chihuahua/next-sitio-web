@@ -68,6 +68,7 @@ const ImplanImageLink = () => {
         height={50}
         alt='Volver al inicio - IMPLAN Chihuahua'
         draggable={false}
+        priority
         style={{
           objectFit: 'contain',
           color: 'white',
@@ -87,6 +88,8 @@ const DesktopNavbar = () => {
     <CustomDesktopTopBar>
       <ImplanImageLink />
       <Box
+        component="nav"
+        aria-label="Navegación principal"
         alignItems='center'
         columnGap={{ xs: 2, lg: 4 }}
         ml={{ md: 'auto' }}
@@ -99,13 +102,11 @@ const DesktopNavbar = () => {
             : <NavbarLinkButton key={idx} href={item.href} label={item.label} />
           )
         }
-
       </Box>
       <MobileDrawer />
     </CustomDesktopTopBar >
   )
 }
-
 
 const appBarStyle = {
   background: 'rgba(32, 32, 34, 0.75)',
@@ -118,7 +119,7 @@ const appBarStyle = {
 const CustomDesktopTopBar = ({ children }: { children: ReactNode }) => {
   return (
     <AppBar
-      component='nav'
+      component='header'
       position="fixed"
       variant="outlined"
       sx={{

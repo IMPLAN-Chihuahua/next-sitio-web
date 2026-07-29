@@ -16,7 +16,7 @@ export default async function InstrumentosPlaneacionPage() {
   const page: { data: InstrumentosPageType } = await req.json();
 
 
-  return (<Box component={'main'} minHeight='100vh'>
+  return (<Box minHeight='100vh'>
     <PageBanner
       cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
       title={`${page.data.titulo}`}

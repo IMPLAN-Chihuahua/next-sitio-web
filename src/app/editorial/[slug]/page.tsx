@@ -68,7 +68,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     }
 
     return (
-        <Box component={'main'}>
+        <Box >
             <Toolbar variant="dense" />
             <Container maxWidth="lg" sx={{ mt: 3, mb: 10 }}>
                 <NovedadBreadcrumbs currentPageTitle={article.title} />

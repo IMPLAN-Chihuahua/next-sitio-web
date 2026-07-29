@@ -69,7 +69,7 @@ export default async function EstudioPage({ params }: { params: Promise<{ slug: 
   const page: { data: TrabajoPlaneacion } = await req.json();
 
   return (
-    <Box component={'main'}>
+    <Box >
       <Toolbar variant="dense" />
       <Container sx={{ mt: 3 }}>
         <HeaderSection
