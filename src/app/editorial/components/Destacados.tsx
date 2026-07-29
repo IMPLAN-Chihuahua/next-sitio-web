@@ -1,82 +1,192 @@
-import { Box, Card, CardMedia, Container, Grid, Typography, CardContent, Chip } from '@mui/material'
+'use client'
+import { Box, Container, Typography, Chip, Stack } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Novedades } from '../definitions';
 import Link from 'next/link';
-import { Image } from '@mui/icons-material';
+import { Image as ImageIcon } from '@mui/icons-material';
+import { parse } from 'date-fns';
 
+const dateFormatOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
 
-const Destacados = ({ data }: { data: Novedades[] }) => {
-    // Si no hay posts destacados, no renderizamos esta sección para que no quede un hueco en blanco
+export default function Destacados({ data }: { data: Novedades[] }) {
     if (!data || data.length === 0) return null;
 
-    // Helper para sacar la URL completa de la imagen
-    const getImageUrl = (entry: Novedades) => {
-        const url = entry?.cover?.url;
-        return url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${url}` : '';
-    };
+    const destacados = data.slice(0, 3);
+
+    const mainPost = destacados[0];
+    const secondaryPosts = destacados.slice(1);
 
     return (
-        <Container maxWidth='lg'>
+        <Container sx={{ mb: 6 }}>
+
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h5" fontWeight={700}>Artículos Destacados</Typography>
+                <Typography
+                    variant="h6"
+                    component={'h1'}
+                    sx={{
+                        letterSpacing: 4,
+                        color: 'text.secondary',
+                        display: 'block',
+                        mb: -1,
+                        fontWeight: 600,
+                        mt: 2
+                    }}
+                >
+                    EDITORIAL
+                </Typography>
+
+                <Typography
+                    variant="h4"
+                    component={'h2'}
+                    fontWeight={700}
+                    sx={{
+                        color: 'text.primary',
+                        letterSpacing: '-1px'
+                    }}
+                >
+                    Artículos Destacados
+                </Typography>
             </Box>
-            <Grid container spacing={4} sx={{ mb: 8 }}>
-                {data.map((item) => (
-                    <Grid size={{ xs: 12, md: 6 }} key={item.id}>
 
-                        <Link href={`/editorial/${item.slug}`} style={{ textDecoration: 'none' }}>
-                            <Card sx={{
-                                borderRadius: 4,
-                                boxShadow: 3,
-                                height: '100%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                transition: 'transform 0.2s',
-                                '&:hover': { transform: 'translateY(-4px)' }
-                            }}>
-                                {
-                                    item.cover ? (
-                                        <CardMedia
-                                            component="img"
-                                            height="300px"
-                                            image={getImageUrl(item)}
-                                            alt={`Imagen de ${item.title}`}
-                                            sx={{
-                                                bgcolor: 'grey.300',
-                                                objectFit: 'cover',
-                                                flex: 1,
-                                            }}
-                                            loading="lazy"
-                                        />
+            <Grid container spacing={3}>
 
-                                    ) : (
-                                        <Box
-                                            sx={{
-                                                minHeight: '300px',
-                                                flex: 1,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                bgcolor: 'grey.300'
-                                            }}
-                                        >
-                                            <Image sx={{ fontSize: 50, color: 'grey.700' }} />
-                                        </Box>
-                                    )
-                                }
-                                <CardContent sx={{ p: 4, flexGrow: 1 }}>
-                                    <Chip label="Destacado" size="small" sx={{ mb: 2, bgcolor: 'primary.main', color: 'white' }} />
+                <Grid size={{ xs: 12, md: 8 }}>
+                    <FeaturedCard item={mainPost} isLarge={true} />
+                </Grid>
 
-                                    <Typography variant="h4" fontWeight={600} sx={{ color: 'text.primary' }}>
-                                        {item.title}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                {secondaryPosts.length > 0 && (
+                    <Grid size={{ xs: 12, md: 4 }}>
+                        <Stack spacing={3} sx={{ height: '100%' }}>
+                            {secondaryPosts.map((post) => (
+                                <FeaturedCard key={post.id} item={post} isLarge={false} />
+                            ))}
+                        </Stack>
                     </Grid>
-                ))}
+                )}
+
             </Grid>
         </Container>
-    )
+    );
 }
 
-export default Destacados
+const FeaturedCard = ({ item, isLarge }: { item: Novedades, isLarge: boolean }) => {
+
+    const imageUrl = item?.cover?.url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${item.cover.url}` : '';
+    const autor = item?.autor?.[0] ? `${item.autor[0].nombres} ${item.autor[0].apellidos}` : 'IMPLAN';
+    const fecha = item?.fechaPublicacion ? parse(item.fechaPublicacion, 'yyyy-MM-dd', new Date()).toLocaleDateString('es-MX', dateFormatOptions) : '';
+
+    return (
+        <Box
+            component={Link}
+            href={`/editorial/${item.slug}`}
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'relative',
+                borderRadius: 1,
+                overflow: 'hidden',
+                textDecoration: 'none',
+                minHeight: isLarge ? { xs: 400, md: 500 } : { xs: 300, md: 'auto' },
+                flex: isLarge ? 'none' : 1,
+
+                backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+                backgroundColor: 'grey.300',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+
+                '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.95) 100%)',
+                    zIndex: 1,
+                    transition: 'background 0.3s ease',
+                },
+                '&:hover::after': {
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,1) 100%)',
+                },
+                '& .card-content': { transition: 'transform 0.3s ease' },
+                '&:hover .card-content': { transform: 'translateY(-4px)' }
+            }}
+        >
+            {!imageUrl && (
+                <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 0 }}>
+                    <ImageIcon sx={{ fontSize: 64, color: 'grey.500' }} />
+                </Box>
+            )}
+
+            <Box
+                className="card-content"
+                sx={{
+                    position: 'relative',
+                    zIndex: 2,
+                    p: isLarge ? { xs: 3, md: 5 } : 3,
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <Typography
+                    variant="caption"
+                    sx={{
+                        color: 'rgba(255,255,255,0.9)',
+                        fontWeight: 500,
+                        textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 1,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden'
+                    }}
+                >
+                    Por: {autor} | {fecha}
+                </Typography>
+
+                <Box>
+                    <Chip
+                        label="Destacado"
+                        size="small"
+                        sx={{
+                            bgcolor: '#e7a243',
+                            color: '#111827',
+                            fontWeight: 700,
+                            mb: 1.5
+                        }}
+                    />
+                    <Typography
+                        variant={isLarge ? "h4" : "h6"}
+                        component="h3"
+                        fontWeight={700}
+                        sx={{
+                            color: '#ffffff',
+                            mb: 1,
+                            textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                            lineHeight: 1.2,
+                            display: '-webkit-box',
+                            WebkitLineClamp: isLarge ? 4 : 3,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                        }}
+                    >
+                        {item.title}
+                    </Typography>
+
+                    {isLarge && item.description && (
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                color: 'rgba(255,255,255,0.85)',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden'
+                            }}
+                        >
+                            {item.description}
+                        </Typography>
+                    )}
+                </Box>
+            </Box>
+        </Box>
+    );
+}
