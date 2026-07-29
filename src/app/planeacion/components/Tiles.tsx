@@ -96,7 +96,6 @@ const InstrumentosTiles = () => {
   const handleClearFiltros = useCallback(() => {
     methods.reset();
   }, []);
-  console.log(instrumentos)
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
     changePage(val);
 
