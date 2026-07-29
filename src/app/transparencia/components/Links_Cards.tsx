@@ -1,12 +1,13 @@
-'use client'; 
- 
+'use client';
+
 import { useState } from 'react';
-import { Box, Card, CardContent, Typography, Icon } from "@mui/material"; 
+import { Box, Card, CardContent, Typography, Icon } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { SubtitleH2 } from '../../components/Titles';
 import Link from 'next/link';
- 
+import { visuallyHidden } from '@mui/utils';
+
 interface Enlace {
   id: number;
   icon?: string;
@@ -15,24 +16,24 @@ interface Enlace {
   descriptionUrl: string;
   url: string;
 }
- 
+
 interface Props {
   titulo: string;
   enlaces: Enlace[];
 }
- 
+
 function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
   const [volteada, setVolteada] = useState(false);
- 
+
   const handleTouchStart = () => {
     if (!volteada) setVolteada(true);
   };
- 
+
   // Si el usuario toca la trasera sin estar volteada aún, evitamos navegación accidental
   const handleTraseraTouch = (e: React.TouchEvent) => {
     if (!volteada) e.preventDefault();
   };
- 
+
   return (
     <Box
       sx={{
@@ -99,7 +100,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
                 {link.icon}
               </Icon>
             )}
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            <Typography variant="h5" component="h3" color='primary.secondary' sx={{ fontWeight: 600 }}>
               {link.text}
             </Typography>
             {/* Hint solo en móvil */}
@@ -110,7 +111,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
             )}
           </CardContent>
         </Box>
- 
+
         {/* TRASERA movil es el Link navegable; en desktop el Box padre ya es Link */}
         <Box
           className="capa-trasera"
@@ -151,14 +152,17 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
     </Box>
   );
 }
- 
+
 export default function Links({ titulo, enlaces }: Props) {
   const esMovil = !useMediaQuery('(min-width:900px)');  //funcion para manejar los px de si es movil o web
- 
+
   return (
     <Box sx={{ mb: 6 }}>
+      <Typography component="h1" sx={visuallyHidden}>
+        Transparencia
+      </Typography>
       <SubtitleH2 title={titulo} />
- 
+
       <Grid container spacing={3} sx={{ mt: 1 }}>
         {enlaces?.map((link) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={link.id}>

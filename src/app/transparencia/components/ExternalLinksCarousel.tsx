@@ -31,7 +31,7 @@ interface Props {
 }
 
 export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
-  const autoplay = Autoplay({ delay: 4500, stopOnInteraction: true });
+  const autoplay = Autoplay({ delay: 6000, stopOnInteraction: true, stopOnMouseEnter: true });
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: 'center' },
@@ -100,12 +100,13 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
             {enlaces.map((link) => (
               <Box
                 key={link.id}
-                sx={{ flex: '0 0 100%', minWidth: 0, px: 2, pb: 1}}
+                sx={{ flex: '0 0 100%', minWidth: 0, px: 2, pb: 1 }}
               >
                 <Card
                   component="a"
                   href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
                   target="_blank"
+
                   rel="noopener noreferrer"
                   sx={{
                     textDecoration: 'none',
@@ -117,6 +118,7 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                     overflow: 'visible',
                     mb: 1,
                     height: { md: 260 },
+                    backgroundColor: '#ffffff',
                     minHeight: { xs: 200 },
                     transition: 'all 0.3s ease',
                     '&:hover': {
@@ -164,21 +166,22 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                       justifyContent: 'center',
                       alignItems: { xs: 'center', md: link.image ? 'flex-start' : 'center' },
                       textAlign: { xs: 'center', md: link.image ? 'left' : 'center' },
-                      overflow: 'hidden',                 
+                      overflow: 'hidden',
                       '&:last-child': { pb: { xs: 3, md: 4 } },
                     }}
                   >
                     <Typography
                       variant="h5"
+                      component={'h3'}
                       color="text.primary"
                       sx={{
-                          fontWeight: 700,
-                          mb: 1.5,
-                          lineHeight: 1.3,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
+                        fontWeight: 700,
+                        mb: 1.5,
+                        lineHeight: 1.3,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
                       }}
                     >
                       {link.text}
@@ -189,19 +192,18 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                         variant="body2"
                         color="text.secondary"
                         sx={{
-                            mb: 3,
-                            lineHeight: 1.6,
-                            maxWidth:'100%',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
+                          mb: 3,
+                          lineHeight: 1.6,
+                          maxWidth: '100%',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
                         }}
                       >
                         {link.descriptionUrl}
                       </Typography>
                     )}
-
                     <Box
                       sx={{
                         display: 'inline-flex',
@@ -210,15 +212,20 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                         px: 2,
                         py: 0.75,
                         borderRadius: '999px',
-                        backgroundColor:'#e7a243',
-                        color: '#fff',
-                        flexShrink: 0,                 
+                        backgroundColor: 'transparent',
+                        border: '2px solid #e7a243', // Borde en tu amarillo
+                        color: '#4B5563', // Texto en gris medio/oscuro
+                        flexShrink: 0,
+                        transition: 'all 0.2s',
+                        '&:hover': {
+                          backgroundColor: '#f9fafb', // Un fondito súper tenue al hacer hover
+                        }
                       }}
                     >
-                      <Typography variant="button" sx={{ textTransform: 'none', fontWeight: 600, fontSize: '0.8rem', color: '#ffffff'}}>
+                      <Typography variant="button" sx={{ textTransform: 'none', fontWeight: 700, fontSize: '0.8rem' }}>
                         Visitar sitio
                       </Typography>
-                      <Icon sx={{ fontSize: 16 }}>arrow_forward</Icon>
+                      <Icon sx={{ fontSize: 16, color: '#e7a243' }}>arrow_forward</Icon>
                     </Box>
                   </CardContent>
                 </Card>

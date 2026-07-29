@@ -62,8 +62,16 @@ export default function Articulos() {
 
     return (
         <Box sx={{ mb: 8 }}>
-            <Typography variant="h5" component="h2" fontWeight={700} sx={{ mb: 3 }}>
-                Publicaciones Recientes
+            <Typography
+                variant="h5"
+                component={'h4'}
+                fontWeight={700}
+                sx={{
+                    color: 'text.primary',
+                    letterSpacing: '-1px'
+                }}
+            >
+                Publicaciones recientes
             </Typography>
 
             {isLoading ? (
@@ -89,6 +97,7 @@ export default function Articulos() {
                                     >
                                         <Link href={`/editorial/${item.slug}`} style={{ textDecoration: 'none' }} aria-label={`Leer artículo: ${item.title}`}>
                                             <Card sx={{
+                                                bgcolor: '#ffffff',
                                                 height: '100%',
                                                 borderRadius: 1,
                                                 display: 'flex',
@@ -132,8 +141,9 @@ export default function Articulos() {
                                                         component="h3"
                                                         fontWeight={600}
                                                         sx={{
+                                                            color: '#111827',
                                                             mb: 1,
-                                                            color: 'text.primary',
+                                                            // color: 'text.primary',
                                                             lineHeight: 1.3,
                                                             display: '-webkit-box',
                                                             WebkitLineClamp: 2,
@@ -167,8 +177,8 @@ export default function Articulos() {
 
                                                         <Typography
                                                             variant="body2"
-                                                            color="text.secondary"
                                                             sx={{
+                                                                color: '#333333',
                                                                 display: '-webkit-box',
                                                                 WebkitLineClamp: 3,
                                                                 WebkitBoxOrient: 'vertical',

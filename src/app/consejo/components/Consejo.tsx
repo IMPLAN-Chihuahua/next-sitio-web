@@ -13,7 +13,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import ConsejoCard from './ConsejoCard'
 import { Consejero, SectorType } from '../definitions'
-import { SubtitleH2 } from '@/app/components/Titles'
+import { SubtitleH2, TitleH1 } from '@/app/components/Titles'
 
 const BOARD_SECTORS = [
     {
@@ -149,7 +149,7 @@ const Consejo = ({ data }: { data: Consejero[] }) => {
         <Box sx={{ pb: 10, bgcolor: '#fafafa', minHeight: '100vh' }}>
             <Container maxWidth="xl">
                 <Box sx={{ mb: 5, textAlign: 'center', maxWidth: 800, mx: 'auto' }}>
-                    <SubtitleH2 title="Consejeros" />
+                    <TitleH1 title="Consejeros" />
 
                     <TextField
                         fullWidth
@@ -284,17 +284,28 @@ const Consejo = ({ data }: { data: Consejero[] }) => {
                                                 mb: 1.5,
                                             }}
                                         >
-                                            <Typography
-                                                sx={{
-                                                    fontWeight: 900,
-                                                    color: group.color,
-                                                    textTransform: 'uppercase',
-                                                    fontSize: '0.95rem',
-                                                    letterSpacing: 0.5,
-                                                }}
-                                            >
-                                                {group.label}
-                                            </Typography>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                                                <Box
+                                                    sx={{
+                                                        width: 14,
+                                                        height: 14,
+                                                        borderRadius: '50%',
+                                                        bgcolor: group.color,
+                                                        flexShrink: 0
+                                                    }}
+                                                />
+                                                <Typography
+                                                    sx={{
+                                                        fontWeight: 900,
+                                                        color: 'text.primary',
+                                                        textTransform: 'uppercase',
+                                                        fontSize: '0.95rem',
+                                                        letterSpacing: 0.5,
+                                                    }}
+                                                >
+                                                    {group.label}
+                                                </Typography>
+                                            </Box>
 
                                             <Box
                                                 sx={{

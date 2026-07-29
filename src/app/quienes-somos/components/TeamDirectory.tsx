@@ -136,11 +136,12 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
         <Box sx={{ bgcolor: '#f9fafb' }}>
             <Container maxWidth="lg">
                 <Box textAlign="center" mb={8}>
-                    <Typography variant="h3" fontWeight="800" gutterBottom color="text.primary">
+                    <Typography variant="h3" component="h1" fontWeight="800" gutterBottom color="text.primary">
                         Conócenos
                     </Typography>
                     <Typography
                         variant="h6"
+                        component="p"
                         color="text.secondary"
                         sx={{ maxWidth: 700, mx: 'auto', fontWeight: 'normal' }}
                     >

@@ -3,7 +3,7 @@ import { Accordion, Box, Container, Typography, AccordionSummary, AccordionDetai
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FaqItem } from './definitions';
-import { SubtitleH2 } from '../components/Titles';
+import { TitleH1 } from '../components/Titles';
 
 const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: string }) => {
     const [expanded, setExpanded] = useState<number | false>(false);
@@ -15,7 +15,7 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
     return (
         <Container sx={{ mb: 3 }}>
 
-            <SubtitleH2 title='Preguntas frecuentes' />
+            <TitleH1 title='Preguntas frecuentes' />
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {data.length > 0 ? (
@@ -38,7 +38,7 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
                                 id={`${faq.id}-header`}
                                 sx={{ px: 0 }}
                             >
-                                <Typography variant="subtitle1" fontWeight="600" color="#101828">
+                                <Typography variant="body1" component={'p'} fontWeight="600" color="#101828">
                                     {faq.question}
                                 </Typography>
                             </AccordionSummary>
@@ -70,14 +70,14 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
                         </Accordion>
                     ))
                 ) : (
-                    <Typography textAlign="center" color="text.secondary">
+                    <Typography variant="body1" component={'p'} textAlign="center" color="text.secondary">
                         No hay preguntas en esta categoría.
                     </Typography>
                 )}
             </Box>
 
             <Box sx={{ textAlign: 'center', bgcolor: '#F9FAFB', p: 4, borderRadius: 4 }}>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                <Typography variant="body1" component={'p'} fontWeight="bold" gutterBottom>
                     ¿No encontraste lo que buscabas?
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
@@ -89,6 +89,7 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
                     target="_blank"
                     sx={{
                         mt: 1,
+                        color: 'black',
                         bgcolor: 'secondary.main',
                         textTransform: 'none',
                         borderRadius: '8px',

@@ -33,7 +33,13 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
                             >
                                 Plataformas
                             </Typography>
-                            <Typography variant='h5' color='textSecondary' sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }}>
+
+                            <Typography
+                                variant='h5'
+                                component='p'
+                                color='textSecondary'
+                                sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }}
+                            >
                                 Conoce nuestras plataformas y soluciones tecnológicas
                             </Typography>
                         </Box>
@@ -95,7 +101,7 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
                                                             variant="h5"
                                                             component="span"
                                                             fontWeight={isActive ? 'bold' : 'normal'}
-                                                            color={isActive ? 'text.primary' : 'text.disabled'}
+                                                            color={isActive ? 'text.primary' : 'text.secondary'}
                                                             sx={{
                                                                 position: 'relative',
                                                                 display: 'inline-block',
@@ -147,9 +153,6 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
 
 const Project = ({ data }: { data: Platform }) => {
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-    console.log(data.media.formats)
-    console.log(data.media.formats)
-    console.log(data.media.formats)
     const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.large?.url || data.media.url}`;
     const getShortDescription = (text: string, maxLength = 70) => {
         if (text.length <= maxLength) return text;
@@ -247,7 +250,12 @@ const Project = ({ data }: { data: Platform }) => {
                                 }
                             }}
                         >
-                            <Typography variant='h4' fontWeight={800} sx={{ fontSize: { xs: '1.55rem', md: '2rem' }, color: 'white', lineHeight: 1.1 }}>
+                            <Typography
+                                variant='h4'
+                                component='h3'
+                                fontWeight={800}
+                                sx={{ fontSize: { xs: '1.55rem', md: '2rem' }, color: 'white', lineHeight: 1.1 }}
+                            >
                                 {data.name}
                             </Typography>
                             <Typography variant='body1' sx={{ mt: 1, color: 'rgba(255,255,255,0.78)', fontWeight: 500 }}>

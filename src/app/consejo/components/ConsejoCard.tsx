@@ -3,7 +3,6 @@ import { Box, Paper, Typography, Stack, Tooltip } from '@mui/material'
 import { Mic, HowToVote, Block } from '@mui/icons-material'
 import { Consejero, SectorType } from '../definitions'
 
-// Mapeo de colores por sector para la franja izquierda
 const getSectorColor = (sector: string | null) => {
     if (!sector) return '#9e9e9e'
 
@@ -72,7 +71,6 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                 },
             }}
         >
-            {/* Franja de color del sector */}
             <Box
                 sx={{
                     position: 'absolute',
@@ -85,7 +83,6 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                 }}
             />
 
-            {/* Contenido principal */}
             <Box
                 sx={{
                     pl: 3,
@@ -106,6 +103,7 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                     <Box sx={{ minWidth: 0, flex: 1 }}>
                         <Typography
                             variant="subtitle1"
+                            component="h2"
                             fontWeight={900}
                             lineHeight={1.15}
                             sx={{
@@ -136,25 +134,33 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                             {data.title}
                         </Typography>
 
-                        <Typography
-                            variant="caption"
-                            sx={{
-                                color: sectorColor,
-                                fontWeight: 900,
-                                fontSize: '0.68rem',
-                                mt: 1,
-                                display: 'block',
-                                textTransform: 'uppercase',
-                                letterSpacing: 0.2,
-                            }}
-                        >
-                            {formatSector(data.sector)}
-                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+                            <Box
+                                sx={{
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: '50%',
+                                    bgcolor: sectorColor
+                                }}
+                            />
+                            <Typography
+                                variant="caption"
+                                sx={{
+                                    color: 'text.secondary',
+                                    fontWeight: 900,
+                                    fontSize: '0.68rem',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: 0.2,
+                                }}
+                            >
+                                {formatSector(data.sector)}
+                            </Typography>
+                        </Box>
                     </Box>
 
-                    {/* Iconos de estado */}
                     <Tooltip title={statusText} arrow placement="top">
                         <Stack
+                            role='group'
                             direction="row"
                             spacing={0.5}
                             sx={{
@@ -182,7 +188,6 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                 </Stack>
             </Box>
 
-            {/* Sección suplente */}
             <Box
                 sx={{
                     mt: 'auto',
@@ -224,7 +229,7 @@ const ConsejoCard = ({ data }: { data: Consejero }) => {
                 ) : (
                     <Typography
                         variant="caption"
-                        color="text.disabled"
+                        color="text.secondary"
                         sx={{ fontWeight: 700 }}
                     >
                         SIN SUPLENTE

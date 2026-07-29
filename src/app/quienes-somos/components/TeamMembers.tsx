@@ -83,11 +83,10 @@ const TeamMemberCard = ({
                 </Box>
             </Box>
 
-            <Typography variant="h6" fontWeight="bold" color="text.primary">
-                {name}
+            <Typography variant="h6" component="h2" fontWeight="bold" color="text.primary">                {name}
             </Typography>
 
-            <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
+            <Typography variant="body1" color="text.primary" sx={{ mt: 0.5 }}>
                 {role}
             </Typography>
 
