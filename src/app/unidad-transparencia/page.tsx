@@ -1,6 +1,6 @@
 import { Box, Container, Toolbar } from "@mui/material";
 import PageBanner from "../components/PageBanner";
-import { SubtitleH2 } from "../components/Titles";
+import { SubtitleH2, TitleH1 } from "../components/Titles";
 import { UnidadTransparenciaPageType } from "./definitions";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import Image from "next/image";
@@ -25,6 +25,7 @@ export default async function UnidadTransparenciaPage() {
       <MDXRemote
         source={page.data.contenido}
         components={{
+          h1: props => <TitleH1 title={props.children} />,
           h2: props => <SubtitleH2 title={props.children} />,
           img: props => <Box position={'relative'} width={{ xs: '100%', md: '70%' }} height={{ xs: 400, md: 350 }} mx='auto' display='flex' justifyContent='center'>
             <Image

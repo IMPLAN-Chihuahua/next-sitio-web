@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FaqItem } from './definitions';
 import { TitleH1 } from '../components/Titles';
+import { visuallyHidden } from '@mui/utils';
 
 const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: string }) => {
     const [expanded, setExpanded] = useState<number | false>(false);
@@ -16,7 +17,9 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
         <Container sx={{ mb: 3 }}>
 
             <TitleH1 title='Preguntas frecuentes' />
-
+            <Typography component="h2" sx={visuallyHidden}>
+                Categorías y preguntas
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {data.length > 0 ? (
                     data.map((faq) => (
@@ -38,12 +41,12 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
                                 id={`${faq.id}-header`}
                                 sx={{ px: 0 }}
                             >
-                                <Typography variant="body1" component={'p'} fontWeight="600" color="#101828">
+                                <Typography variant="body1" fontWeight="600" color="#101828">
                                     {faq.question}
                                 </Typography>
                             </AccordionSummary>
                             <AccordionDetails sx={{ px: 0, pb: 3 }}>
-                                <Typography variant="body2" color="text.secondary" lineHeight={1.6}>
+                                <Typography variant="body2" color="text.primary" lineHeight={1.6}>
                                     {faq.answer}
                                 </Typography>
                                 {faq.extras && faq.extras.length > 0 && (
@@ -80,7 +83,7 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
                 <Typography variant="body1" component={'p'} fontWeight="bold" gutterBottom>
                     ¿No encontraste lo que buscabas?
                 </Typography>
-                <Typography variant="body1" color="text.secondary" paragraph>
+                <Typography variant="body1" color="text.primary" paragraph>
                     Ponte en contacto con nosotros
                 </Typography>
                 <Button

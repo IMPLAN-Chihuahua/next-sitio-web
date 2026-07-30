@@ -6,13 +6,13 @@ import PageBanner from "../components/PageBanner";
 import LicitacionesTable from "./components/LicitacionesTable";
 import qs from 'qs';
 import LicitacionCard from "./components/LicitacionCard";
-import { SubtitleH2 } from "../components/Titles";
+import { SubtitleH2, TitleH1 } from "../components/Titles";
 import AdquisicionesDirectasTable from "./components/AdquisicionesDirectasTable";
 import { AdquisicionDirecta, LicitacionPage, Subasta } from "./definitions";
 import { OpenInNew, ExpandMore } from "@mui/icons-material";
 import { formatISO } from "date-fns";
 import { SubastasTable } from "./components/SubastasTable";
-import Link from "next/link";
+import { visuallyHidden } from '@mui/utils';
 
 const queryForPage = qs.stringify({
   populate: '*'
@@ -83,8 +83,11 @@ export default async function LicitacionesPage() {
         )}
 
         <Box component='section' my={2}>
-          <SubtitleH2 title="Proceso de compra" />
+          <TitleH1 title="Proceso de compra" />
           <Typography>Al igual que tú, el IMPLAN compara opciones y presupuestos antes de realizar una compra.</Typography>
+          <Typography component="h2" sx={visuallyHidden}>
+            Pasos del proceso
+          </Typography>
           <Grid container spacing={2} my={2}>
             {
               (licitacionesPage.data.procesoCompra as any[]).map((proceso, idx) => (
@@ -118,7 +121,7 @@ export default async function LicitacionesPage() {
           <Box my={4} component={'section'}>
             <Accordion variant="outlined" sx={{ borderRadius: 1 }}>
               <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                <Typography variant="h6" component={'h4'} sx={{ fontWeight: 600 }}>
                   Historial de Planes de Adquisición
                 </Typography>
               </AccordionSummary>

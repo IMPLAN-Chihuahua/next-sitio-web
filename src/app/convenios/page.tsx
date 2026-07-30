@@ -1,6 +1,6 @@
 import { Box, Container, Toolbar } from "@mui/material";
 import PageBanner from "../components/PageBanner";
-import { SubtitleH2 } from "../components/Titles";
+import { SubtitleH2, TitleH1 } from "../components/Titles";
 import { ConveniosTable } from "./components/ConveniosTable";
 
 
@@ -15,7 +15,7 @@ export default function ConveniosPage() {
       /> */}
       <Toolbar variant="dense" />
       <Container sx={{ my: 3 }}>
-        <SubtitleH2 title="Convenios del Instituto" />
+        <TitleH1 title="Convenios del Instituto" />
         <ConveniosTable />
       </Container>
     </Box>

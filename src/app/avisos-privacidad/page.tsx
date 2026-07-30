@@ -1,5 +1,5 @@
 import { Box, Container, Toolbar, Typography } from "@mui/material";
-import { SubtitleH2 } from "../components/Titles";
+import { SubtitleH2, TitleH1 } from "../components/Titles";
 import { AvisosPrivacidadTable } from "./components/AvisosPrivacidadTable";
 import { AvisoPrivacidad } from "./definitions";
 import qs from 'qs'
@@ -18,7 +18,7 @@ export default async function AvisoPrivacidadPage() {
     <Box>
       <Toolbar variant="dense" />
       <Container sx={{ my: 3 }}>
-        <SubtitleH2 title="Avisos de privacidad" />
+        <TitleH1 title="Avisos de privacidad" />
         <AvisosPrivacidadTable avisos={avisos} />
       </Container>
     </Box>
