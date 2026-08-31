@@ -1,11 +1,16 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, {
+    useDeferredValue,
+    useMemo,
+    useState,
+} from 'react';
 import {
     useRouter,
     usePathname,
     useSearchParams,
 } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 import {
     Box,
@@ -38,6 +43,9 @@ import { getContrastRatio } from '@mui/material/styles';
 import { Criterio } from './types';
 import { blocksToPlainText } from './utils';
 import PoelInfo from './PoelInfo';
+
+const MotionTableRow =
+    motion.create(TableRow);
 
 
 function hashString(value: string): number {
@@ -93,23 +101,124 @@ function getCategoryColors(category: string) {
 }
 
 
+function normalizeSearchText(value: string): string {
+    return value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+
+function normalizeSearchCode(value: string): string {
+    return normalizeSearchText(value)
+        .replace(/[^a-z0-9]/g, '');
+}
+
+
+function getCodeSearchVariants(
+    value: string
+): string[] {
+    const base =
+        normalizeSearchCode(value);
+
+    const variants = new Set([
+        base,
+        base.replaceAll(
+            'chih',
+            'chh'
+        ),
+        base.replaceAll(
+            'chh',
+            'chih'
+        ),
+    ]);
+
+    for (const variant of [
+        ...variants,
+    ]) {
+        if (
+            variant.startsWith(
+                'uga'
+            )
+        ) {
+            variants.add(
+                variant.slice(3)
+            );
+        }
+    }
+
+    return [...variants].filter(
+        Boolean
+    );
+}
+
+
+function codeVariantsMatchSearch(
+    codeVariants: string[],
+    queryVariants: string[]
+): boolean {
+    return queryVariants.some(
+        (queryVariant) =>
+            codeVariants.some(
+                (codeVariant) =>
+                    codeVariant.includes(
+                        queryVariant
+                    )
+            )
+    );
+}
+
+
+function codeVariantsEqualSearch(
+    codeVariants: string[],
+    queryVariants: string[]
+): boolean {
+    return queryVariants.some(
+        (queryVariant) =>
+            codeVariants.includes(
+                queryVariant
+            )
+    );
+}
+
+
+interface IndexedCriterio {
+    criterio: Criterio;
+    textoPlano: string;
+    textoBusqueda: string;
+    categoriaBusqueda: string;
+    codigoBusqueda: string[];
+}
+
+
 function CriterioRow({
     criterio,
+    textoPlano,
 }: {
     criterio: Criterio;
+    textoPlano: string;
 }) {
     const [open, setOpen] =
         useState(false);
 
-    const textoPlano =
-        blocksToPlainText(
-            criterio.descripcion
-        );
-
     return (
         <React.Fragment>
-            <TableRow
+            <MotionTableRow
                 hover
+                initial={{
+                    opacity: 0,
+                    y: 3,
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0,
+                }}
+                transition={{
+                    duration: 0.12,
+                    ease: 'easeOut',
+                }}
                 onClick={() =>
                     setOpen(!open)
                 }
@@ -235,7 +344,7 @@ function CriterioRow({
                         )}
                     </IconButton>
                 </TableCell>
-            </TableRow>
+            </MotionTableRow>
 
             {/* Detalle expandido */}
             <TableRow>
@@ -354,6 +463,8 @@ export default function CriteriosExplorer({
      */
     const [busqueda, setBusqueda] =
         useState('');
+    const busquedaDiferida =
+        useDeferredValue(busqueda);
 
     const [categoria, setCategoria] =
         useState('');
@@ -366,15 +477,45 @@ export default function CriteriosExplorer({
         setRowsPerPage,
     ] = useState(25);
 
+    const indexedData = useMemo(
+        (): IndexedCriterio[] =>
+            initialData.map((criterio) => {
+                const textoPlano =
+                    blocksToPlainText(
+                        criterio.descripcion
+                    );
+
+                return {
+                    criterio,
+                    textoPlano,
+                    textoBusqueda:
+                        normalizeSearchText(
+                            textoPlano
+                        ),
+                    categoriaBusqueda:
+                        normalizeSearchText(
+                            criterio.categoria
+                                ?.nombre ??
+                            ''
+                        ),
+                    codigoBusqueda:
+                        getCodeSearchVariants(
+                            criterio.codigo
+                        ),
+                };
+            }),
+        [initialData]
+    );
+
     /*
      * Categorías disponibles
      */
     const categorias = useMemo(() => {
         const nombres = new Set(
-            initialData
+            indexedData
                 .map(
-                    (c) =>
-                        c.categoria
+                    ({ criterio }) =>
+                        criterio.categoria
                             ?.nombre
                 )
                 .filter(
@@ -388,7 +529,7 @@ export default function CriteriosExplorer({
         return Array.from(
             nombres
         ).sort();
-    }, [initialData]);
+    }, [indexedData]);
 
 
     function quitarCodigo(
@@ -463,7 +604,7 @@ export default function CriteriosExplorer({
      * todos los filtros
      */
     const resultado = useMemo(() => {
-        let items = initialData;
+        let items = indexedData;
 
         /*
          * Filtro desde URL
@@ -471,16 +612,19 @@ export default function CriteriosExplorer({
         if (
             codigosURL.length > 0
         ) {
-            const set = new Set(
-                codigosURL
+            const codigoVariants =
+                codigosURL.map(
+                    getCodeSearchVariants
             );
 
             items = items.filter(
-                (c) =>
-                    set.has(
-                        c.codigo
-                            .trim()
-                            .toUpperCase()
+                (item) =>
+                    codigoVariants.some(
+                        (variants) =>
+                            codeVariantsEqualSearch(
+                                item.codigoBusqueda,
+                                variants
+                            )
                     )
             );
         }
@@ -490,8 +634,8 @@ export default function CriteriosExplorer({
          */
         if (categoria) {
             items = items.filter(
-                (c) =>
-                    c.categoria
+                ({ criterio }) =>
+                    criterio.categoria
                         ?.nombre ===
                     categoria
             );
@@ -500,31 +644,35 @@ export default function CriteriosExplorer({
         /*
          * Búsqueda
          */
-        if (busqueda.trim()) {
+        if (busquedaDiferida.trim()) {
             const q =
-                busqueda
-                    .trim()
-                    .toLowerCase();
+                normalizeSearchText(
+                    busquedaDiferida
+                );
+            const qCodigo =
+                getCodeSearchVariants(q);
 
             items = items.filter(
-                (c) =>
-                    c.codigo
-                        .toLowerCase()
-                        .includes(q) ||
-                    blocksToPlainText(
-                        c.descripcion
+                (item) =>
+                    codeVariantsMatchSearch(
+                        item.codigoBusqueda,
+                        qCodigo
+                    ) ||
+                    item.textoBusqueda.includes(
+                        q
+                    ) ||
+                    item.categoriaBusqueda.includes(
+                        q
                     )
-                        .toLowerCase()
-                        .includes(q)
             );
         }
 
         return items;
     }, [
-        initialData,
+        indexedData,
         codigosURL,
         categoria,
-        busqueda,
+        busquedaDiferida,
     ]);
 
 
@@ -918,13 +1066,16 @@ export default function CriteriosExplorer({
 
                         <TableBody>
                             {paginados.map(
-                                (c) => (
+                                (item) => (
                                     <CriterioRow
                                         key={
-                                            `${c.tipo}-${c.codigo}`
+                                            `${item.criterio.tipo}-${item.criterio.codigo}`
                                         }
                                         criterio={
-                                            c
+                                            item.criterio
+                                        }
+                                        textoPlano={
+                                            item.textoPlano
                                         }
                                     />
                                 )
@@ -932,7 +1083,17 @@ export default function CriteriosExplorer({
 
                             {paginados.length ===
                                 0 && (
-                                    <TableRow>
+                                    <MotionTableRow
+                                        initial={{
+                                            opacity: 0,
+                                        }}
+                                        animate={{
+                                            opacity: 1,
+                                        }}
+                                        transition={{
+                                            duration: 0.16,
+                                        }}
+                                    >
                                         <TableCell
                                             colSpan={
                                                 4
@@ -955,7 +1116,7 @@ export default function CriteriosExplorer({
                                                 búsqueda.
                                             </Typography>
                                         </TableCell>
-                                    </TableRow>
+                                    </MotionTableRow>
                                 )}
                         </TableBody>
                     </Table>
