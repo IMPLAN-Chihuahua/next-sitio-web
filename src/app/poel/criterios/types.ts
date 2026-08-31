@@ -25,3 +25,11 @@ export interface Criterio {
     categoria: Categoria | null;
     tipo: CriterioTipo;
 }
+
+export interface IndexedCriterio {
+    criterio: Criterio;
+    textoPlano: string;
+    textoBusqueda: string;
+    categoriaBusqueda: string;
+    codigoBusqueda: string[];
+}

@@ -1,11 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import {
-    CircularProgress,
-    Container,
-    Box,
-    Toolbar,
-} from '@mui/material';
+import { CircularProgress, Container, Box, Toolbar } from '@mui/material';
 
 import { Criterio } from './types';
 import CriteriosExplorer from './CriteriosExplorer';
@@ -44,12 +39,7 @@ type LineamientoEcologicoResponse = {
 };
 
 async function getCriterios(): Promise<Criterio[]> {
-    const url =
-        `${process.env.NEXT_PUBLIC_IMPLAN_CMS}` +
-        `/criterio-ecologicos` +
-        `?populate=categoria_poel` +
-        `&pagination[pageSize]=900` +
-        `&sort=codigo:asc`;
+    const url = `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/criterio-ecologicos?populate=categoria_poel&pagination[pageSize]=900&sort=codigo:asc`;
 
     const res = await fetch(url, {
         next: {
@@ -58,9 +48,7 @@ async function getCriterios(): Promise<Criterio[]> {
     });
 
     if (!res.ok) {
-        throw new Error(
-            `No se pudo cargar criterios ecológicos (${res.status})`
-        );
+        throw new Error(`No se pudo cargar criterios ecológicos (${res.status})`);
     }
     const json = await res.json();
 
@@ -73,17 +61,11 @@ async function getCriterios(): Promise<Criterio[]> {
             tipo: 'criterio',
         }))
         .filter((item: Criterio) => Boolean(item.codigo))
-        .sort((a: Criterio, b: Criterio) =>
-            collator.compare(a.codigo, b.codigo)
-        );
+        .sort((a: Criterio, b: Criterio) => collator.compare(a.codigo, b.codigo));
 }
 
 async function getLineamientosEcologicos(): Promise<Criterio[]> {
-    const url =
-        `${process.env.NEXT_PUBLIC_IMPLAN_CMS}` +
-        `/lineamiento-ecologicos` +
-        `?pagination[pageSize]=900` +
-        `&sort=clave_uga:asc`;
+    const url = `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/lineamiento-ecologicos?pagination[pageSize]=900&sort=clave_uga:asc`;
 
     const res = await fetch(url, {
         next: {
@@ -92,9 +74,7 @@ async function getLineamientosEcologicos(): Promise<Criterio[]> {
     });
 
     if (!res.ok) {
-        throw new Error(
-            `No se pudo cargar lineamientos ecológicos (${res.status})`
-        );
+        throw new Error(`No se pudo cargar lineamientos ecológicos (${res.status})`);
     }
 
     const json = await res.json();
@@ -102,44 +82,21 @@ async function getLineamientosEcologicos(): Promise<Criterio[]> {
     return ((json.data ?? []) as LineamientoEcologicoResponse[])
         .map((item): Criterio => ({
             id: item.id,
-            codigo:
-                item.clave_uga ??
-                item.claveUga ??
-                item.codigo ??
-                '',
-            descripcion: strapiTextToBlocks(
-                item.lineamiento ??
-                    item.descripcion ??
-                    item.descripcion_sumaria
-            ),
+            codigo: item.clave_uga ?? item.claveUga ?? item.codigo ?? '',
+            descripcion: strapiTextToBlocks(item.lineamiento ?? item.descripcion ?? item.descripcion_sumaria),
             categoria: LINEAMIENTO_ECOLOGICO,
             tipo: 'lineamiento',
         }))
         .filter((item: Criterio) => Boolean(item.codigo))
-        .sort((a: Criterio, b: Criterio) =>
-            collator.compare(a.codigo, b.codigo)
-        );
+        .sort((a: Criterio, b: Criterio) => collator.compare(a.codigo, b.codigo));
 }
 
 async function CriteriosContent() {
-    const [criterios, lineamientos] =
-        await Promise.all([
-            getCriterios(),
-            getLineamientosEcologicos(),
-        ]);
+    const [criterios, lineamientos] = await Promise.all([getCriterios(), getLineamientosEcologicos()]);
 
-    const rows = [
-        ...criterios,
-        ...lineamientos,
-    ].sort((a, b) =>
-        collator.compare(a.codigo, b.codigo)
-    );
+    const rows = [...criterios, ...lineamientos].sort((a, b) => collator.compare(a.codigo, b.codigo));
 
-    return (
-        <CriteriosExplorer
-            initialData={rows}
-        />
-    );
+    return <CriteriosExplorer initialData={rows} />;
 }
 
 export default function CriteriosPage() {
@@ -148,17 +105,7 @@ export default function CriteriosPage() {
             <Toolbar variant="dense" />
 
             <Container sx={{ my: 3 }}>
-                <Suspense
-                    fallback={
-                        <Box
-                            display="flex"
-                            justifyContent="center"
-                            py={5}
-                        >
-                            <CircularProgress />
-                        </Box>
-                    }
-                >
+                <Suspense fallback={<Box display="flex" justifyContent="center" py={5}><CircularProgress /></Box>}>
                     <CriteriosContent />
                 </Suspense>
             </Container>

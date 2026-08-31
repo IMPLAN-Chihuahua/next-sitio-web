@@ -2,14 +2,7 @@
 
 import { useState } from 'react';
 
-import {
-    Box,
-    Button,
-    Collapse,
-    Paper,
-    Stack,
-    Typography,
-} from '@mui/material';
+import { Box, Button, Collapse, Paper, Stack, Typography } from '@mui/material';
 
 import LandscapeOutlinedIcon from '@mui/icons-material/LandscapeOutlined';
 import TrackChangesOutlinedIcon from '@mui/icons-material/TrackChangesOutlined';
@@ -80,11 +73,7 @@ function InfoList({
                     {icon}
                 </Box>
 
-                <Typography
-                    variant="subtitle1"
-                    component="p"
-                    fontWeight={700}
-                >
+                <Typography variant="subtitle1" component="p" fontWeight={700}>
                     {title}
                 </Typography>
             </Stack>
@@ -125,10 +114,7 @@ function InfoList({
                             {index + 1}
                         </Box>
 
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                        >
+                        <Typography variant="body2" color="text.secondary">
                             {item}
                         </Typography>
                     </Box>
@@ -205,21 +191,9 @@ export default function PoelInfo() {
                         </Box>
 
                         <Box sx={{ minWidth: 0 }}>
-                            <Typography
-                                fontWeight={700}
-                                sx={{
-                                    lineHeight: 1.2,
-                                }}
-                            >
-                                Programa de Ordenamiento Ecológico Local
-                            </Typography>
+                            <Typography fontWeight={700} sx={{ lineHeight: 1.2 }}>Programa de Ordenamiento Ecológico Local</Typography>
 
-                            <Typography
-                                variant="caption"
-                                color="text.secondary"
-                            >
-                                POEL 2019 · Municipio de Chihuahua
-                            </Typography>
+                            <Typography variant="caption" color="text.secondary">POEL 2019 · Municipio de Chihuahua</Typography>
                         </Box>
                     </Stack>
                 ) : (
@@ -263,10 +237,7 @@ export default function PoelInfo() {
             </Box>
 
             {/* TODO el contenido colapsable */}
-            <Collapse
-                in={!collapsed}
-                timeout={300}
-            >
+            <Collapse in={!collapsed} timeout={300}>
                 <Box
                     sx={{
                         px: {
@@ -336,83 +307,21 @@ export default function PoelInfo() {
 
                         {/* Texto */}
                         <Box>
-                            <Typography
-                                component="h2"
-                                sx={{
-                                    fontSize: {
-                                        xs: '1.35rem',
-                                        md: '1.65rem',
-                                    },
-
-                                    fontWeight: 800,
-                                    lineHeight: 1.2,
-
-                                    mb: 0.5,
-
-                                    color: 'text.primary',
-                                }}
-                            >
+                            <Typography component="h2" sx={{ fontSize: { xs: '1.35rem', md: '1.65rem' }, fontWeight: 800, lineHeight: 1.2, mb: 0.5, color: 'text.primary' }}>
                                 Programa de Ordenamiento Ecológico Local
                             </Typography>
 
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    color: 'text.secondary',
-                                    fontWeight: 500,
-                                    mb: 2,
-                                }}
-                            >
-                                del Municipio de Chihuahua (POEL 2019),
-                                publicado en la Gaceta Municipal No. 62 del 15
-                                de abril de 2019.
+                            <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500, mb: 2 }}>
+                                del Municipio de Chihuahua (POEL 2019), publicado en la Gaceta Municipal No. 62 del 15 de abril de 2019.
                             </Typography>
 
-                            <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                sx={{
-                                    lineHeight: 1.75,
-                                }}
-                            >
-                                El Programa de Ordenamiento Ecológico Local del
-                                Municipio de Chihuahua (POEL) es un instrumento
-                                de política ambiental orientado a regular e
-                                inducir el uso del suelo y las actividades
-                                productivas en el territorio municipal. Su
-                                finalidad es proteger el medio ambiente,
-                                preservar los recursos naturales y promover su
-                                aprovechamiento sustentable, con base en el
-                                análisis de las características ambientales,
-                                las tendencias de deterioro y las potencialidades
-                                del municipio. Para ello, organiza el territorio
-                                en{' '}
-                                <Box
-                                    component="span"
-                                    sx={{
-                                        color: 'text.primary',
-                                        fontWeight: 700,
-                                    }}
-                                >
-                                    138 Unidades de Gestión Ambiental (UGA)
-                                </Box>
-                                , en las que se definen políticas ambientales,
-                                lineamientos ecológicos, usos del suelo
-                                compatibles y criterios de regulación ecológica
-                                para orientar el desarrollo sostenible.
+                            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.75 }}>
+                                El Programa de Ordenamiento Ecológico Local del Municipio de Chihuahua (POEL) es un instrumento de política ambiental orientado a regular e inducir el uso del suelo y las actividades productivas en el territorio municipal. Su finalidad es proteger el medio ambiente, preservar los recursos naturales y promover su aprovechamiento sustentable, con base en el análisis de las características ambientales, las tendencias de deterioro y las potencialidades del municipio. Para ello, organiza el territorio en{' '}
+                                <Box component="span" sx={{ color: 'text.primary', fontWeight: 700 }}>138 Unidades de Gestión Ambiental (UGA)</Box>, en las que se definen políticas ambientales, lineamientos ecológicos, usos del suelo compatibles y criterios de regulación ecológica para orientar el desarrollo sostenible.
                             </Typography>
 
-                            <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                sx={{
-                                    lineHeight: 1.75,
-                                    mt: 1,
-                                }}
-                            >
-                                En conjunto, el POEL establece una base técnica
-                                y normativa para orientar decisiones públicas y
-                                privadas sobre el territorio municipal.
+                            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.75, mt: 1 }}>
+                                En conjunto, el POEL establece una base técnica y normativa para orientar decisiones públicas y privadas sobre el territorio municipal.
                             </Typography>
                         </Box>
                     </Box>
