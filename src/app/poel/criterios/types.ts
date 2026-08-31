@@ -16,9 +16,12 @@ export interface Categoria {
     slug: string;
 }
 
+export type CriterioTipo = 'criterio' | 'lineamiento';
+
 export interface Criterio {
     id: number;
     codigo: string;
     descripcion: StrapiBlock[];
     categoria: Categoria | null;
+    tipo: CriterioTipo;
 }
