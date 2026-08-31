@@ -190,9 +190,7 @@ function CriterioRow({
                                 '-webkit-box',
 
                             WebkitLineClamp:
-                                open
-                                    ? 'none'
-                                    : 2,
+                                2,
 
                             WebkitBoxOrient:
                                 'vertical',
@@ -901,7 +899,6 @@ export default function CriteriosExplorer({
                                     }}
                                 >
                                     Descripción
-                                    Sumaria
                                 </TableCell>
 
                                 <TableCell
