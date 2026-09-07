@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "titulo": "PDU2040 Séptima Actualización",
+        "categoria": "REVISIÓN Y OPINIÓN",
+        "descripcion": "Tablero de revisión y opinión ciudadana sobre el Plan Director Urbano.",
+        "estado": "activo",
+        "url": "https://example.com/pdu2040",
+        "color": "#16466B",
+        "orden": 1
+    },
+    {
+        "id": 2,
+        "titulo": "Ciudad Cercana",
+        "categoria": "REVISIÓN Y OPINIÓN",
+        "descripcion": "Tablero de revisión y opinión sobre el programa Ciudad Cercana.",
+        "estado": "activo",
+        "url": "https://example.com/ciudad-cercana",
+        "color": "#25652B",
+        "orden": 2
+    },
+    {
+        "id": 3,
+        "titulo": "Avance PDU2040",
+        "categoria": "INDICADORES",
+        "descripcion": "Tablero de indicadores de avance del Plan Director Urbano. Vinculado con Chihuahua Métrica.",
+        "estado": "desarrollo",
+        "url": null,
+        "color": null,
+        "orden": 3
+    },
+    {
+        "id": 4,
+        "titulo": "Calculadora de Densidad por Compatibilidad",
+        "categoria": "CALCULADORA",
+        "descripcion": "Herramienta para calcular la densidad permitida según la compatibilidad de usos de suelo.",
+        "estado": "desarrollo",
+        "url": null,
+        "color": null,
+        "orden": 4
+    },
+    {
+        "id": 5,
+        "titulo": "Calculadora de Restricciones",
+        "categoria": "CALCULADORA",
+        "descripcion": "Herramienta para el cálculo de restricciones de construcción según zona y uso.",
+        "estado": "desarrollo",
+        "url": null,
+        "color": null,
+        "orden": 5
+    }
+]
