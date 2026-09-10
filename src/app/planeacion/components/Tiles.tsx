@@ -1,21 +1,21 @@
 'use client'
 
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
-import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Pagination as MuiPagination, Typography, Link as MuiLink, Stack, Button, Alert, CircularProgress, Tooltip } from "@mui/material";
+import { Box, Grid, Pagination as MuiPagination, Typography, Stack, Button, Alert, CircularProgress } from "@mui/material";
 import useSWRImmutable from "swr/immutable";
 import qs from 'qs'
 import { cmsFetcher } from "@/app/services/http";
-import { Pagination, Tag, TemaInstrumentoPlaneacion } from "@/app/definitions";
+import { Pagination, TemaInstrumentoPlaneacion } from "@/app/definitions";
 import { InstrumentoPlaneacion } from "../definitions";
-import Link from "next/link";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { AnioAutocomplete } from "@/app/estudios-y-propuestas/components/Tiles";
-import { ArchiveOutlined, Clear, Landscape, Star, StarBorderOutlined, StarOutline } from "@mui/icons-material";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { formatISO, parseISO } from "date-fns";
+import { Clear } from "@mui/icons-material";
+import { ChangeEvent, useState } from "react";
+import { formatISO } from "date-fns";
 import TemasInstrumentoPlaneacionAutocomplete from "./TemasDatosAbiertosAutocomplete";
 import { AnimatePresence, motion } from "framer-motion";
 import { useUrlPagination } from "@/app/hooks/useUrlPagination";
+import CardTiles from "./CardTiles";
 
 
 const MotionGrid = motion.create(Grid);
@@ -86,16 +86,11 @@ const InstrumentosTiles = () => {
     data: InstrumentoPlaneacion[],
     meta: { pagination: Pagination }
   }>(`/instrumentos-planeacion?${queryParams.toString()}`, cmsFetcher)
-  const [instrumentos, setInstrumentos] = useState<InstrumentoPlaneacion[]>([]);
-  useEffect(() => {
-    if (!data?.data) return;
+  const instrumentos = data?.data ?? [];
 
-    setInstrumentos(data.data);
-  }, [data])
-
-  const handleClearFiltros = useCallback(() => {
+  const handleClearFiltros = () => {
     methods.reset();
-  }, []);
+  };
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
     changePage(val);
 
@@ -175,185 +170,32 @@ type InstrumentoCardProps = {
   instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug' | 'anioPublicacion' | 'vigente' | 'destacado'>
 }
 const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
-  let aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : ''
-  const [starHovered, setStarHovered] = useState(false);
+  const aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : ''
+  const title = `${instrumento.nombre} ${aboutInstrumento}`.trim();
 
   const coverUrl = instrumento.cover?.url
     ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${instrumento.cover.url}`
-    : 'https://thumbs.dreamstime.com/b/web-324671543.jpg';
+    : null;
 
   return (
-    <Card variant="outlined"
-      sx={{
-        height: '100%',
-        maxWidth: '450px',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
+    <CardTiles
+      tipo="rectangular-vertical"
+      title={title}
+      href={`/planeacion/${instrumento.nombreCortoSlug}`}
+      image={{
+        url: coverUrl,
+        title: instrumento.cover?.caption || title,
+        alt: instrumento.cover?.alternativeText || title,
       }}
-    >
-      {instrumento.destacado && <Box
-        sx={{
-          position: 'absolute',
-          top: 8,
-          left: 8,
-          zIndex: 2,
-          display: 'flex',
-          alignItems: 'center',
-          border: '1px solid #ccc',
-          borderRadius: '20px',
-          padding: '6px',
-          backgroundColor: 'white',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          '&:hover': {
-            borderColor: '#fbc02d',
-          },
-          '&:hover .texto': {
-            maxWidth: '80px',
-            opacity: 1,
-            paddingLeft: '4px',
-            paddingRight: '8px',
-          },
-          '&:hover .estrella': {
-            color: '#fbc02d',
-          }
-        }}
-        onMouseEnter={() => setStarHovered(true)}
-        onMouseLeave={() => setStarHovered(false)}
-      >
-        {starHovered
-          ? <Star className="estrella" sx={{ color: '#fbc02d', transition: 'color 0.3s' }} />
-          : <StarBorderOutlined className="estrella" sx={{ color: '#999', transition: 'color 0.3s' }} />
-        }
-
-
-        <Typography
-          className="texto"
-          variant="caption"
-          sx={{
-            color: '#555',
-            fontWeight: '500',
-            maxWidth: 0,
-            opacity: 0,
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            transition: 'all 0.3s ease-in-out',
-          }}
-        >
-          Destacado
-        </Typography>
-      </Box>}
-
-
-      <CardActionArea
-        LinkComponent={Link}
-        href={`/planeacion/${instrumento.nombreCortoSlug}`}
-        disableTouchRipple
-        disableRipple
-      >
-        <Box position="relative">
-          {
-            instrumento.cover ? (
-              <CardMedia
-                component='img'
-                sx={{
-                  height: '480px', maxHeight: '480px',
-                  filter: instrumento.vigente ? 'none' : 'grayscale(60%) opacity(0.7)',
-                }}
-                image={coverUrl}
-                title={instrumento.cover?.caption || `${instrumento.nombre} ${aboutInstrumento}`}
-              />
-
-            ) : (
-              <Box
-                height='480px'
-                bgcolor={'primary.300'}
-                display='flex'
-                justifyContent={'center'}
-                alignItems={'center'}
-
-              >
-                <Landscape
-                  sx={{
-                    fontSize: 80,
-                    color: 'primary.600'
-                  }} />
-              </Box>
-            )
-          }
-
-          {!instrumento.vigente && (
-            <Tooltip
-              title='Este instrumento es de carácter histórico, por lo que su contenido puede no reflejar la normativa o situación urbana vigente.'
-              placement='top'
-              arrow>
-
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 8,
-                  right: 8,
-                  zIndex: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  border: '1px solid #ccc',
-                  borderRadius: '20px',
-                  padding: '4px 10px',
-                  backgroundColor: 'white',
-                  filter: 'grayscale(0)',
-                }}
-              >
-                <ArchiveOutlined sx={{ fontSize: 16, color: '#999' }} />
-                <Typography variant="caption" sx={{ color: '#777', fontWeight: 500 }}>
-                  Histórico
-                </Typography>
-              </Box>
-            </Tooltip>
-          )}
-        </Box>
-      </CardActionArea>
-      <CardContent sx={{ flex: 1 }}>
-        <Box display={'flex'} flexDirection={'column'} height={'100%'}>
-          <MuiLink
-            component={Link}
-            href={`/planeacion/${instrumento.nombreCortoSlug}`}
-            color="primary.800"
-            title={`${instrumento.nombre} ${aboutInstrumento}`}
-            sx={{
-              lineHeight: '1.5rem',
-              textDecoration: 'none',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              wordBreak: 'break-word',
-              overflow: 'hidden'
-            }}
-            height={'3rem'}
-            maxHeight={'3rem'}
-            variant="h3"
-            mb={2.5}
-            fontSize={18}
-            fontWeight={600}>{instrumento.nombre} {aboutInstrumento}</MuiLink>
-          <Box mt={'auto'}>
-            <Typography variant="body2">{instrumento?.tema.descripcion}</Typography>
-            <Typography
-              sx={{
-                display: '-webkit-box',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-                wordBreak: 'break-word',
-                overflow: 'hidden'
-              }}
-              mt={.5}
-              variant="body2"
-              color="text.secondary">{instrumento.descripcion}</Typography>
-          </Box>
-        </Box>
-        {/* Histórico */}
-      </CardContent>
-    </Card>
+      imageMuted={!instrumento.vigente}
+      category={instrumento?.tema.descripcion}
+      description={instrumento.descripcion}
+      destacado={instrumento.destacado}
+      historico={!instrumento.vigente}
+      historicoLabel="Histórico"
+      historicoTooltip="Este instrumento es de carácter histórico, por lo que su contenido puede no reflejar la normativa o situación urbana vigente."
+      contentSx={{ minHeight: 235 }}
+    />
   )
 }
 
