@@ -1,21 +1,12 @@
 'use client';
 
-import { Box, Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const tabs = [
-    {
-        label: 'Datos Abiertos',
-        value: 'datos-abiertos',
-    },
-    {
-        label: 'Tableros',
-        value: 'tableros',
-    },
-    {
-        label: 'Guías y Manuales',
-        value: 'guias-manuales',
-    },
+    { label: 'Datos Abiertos', value: 'datos-abiertos' },
+    { label: 'Tableros', value: 'tableros' },
+    { label: 'Guías y Manuales', value: 'guias-manuales' },
 ];
 
 export default function PlaneacionTabs() {
@@ -58,11 +49,7 @@ export default function PlaneacionTabs() {
             }}
         >
             {tabs.map((tab) => (
-                <Tab
-                    key={tab.value}
-                    label={tab.label}
-                    value={tab.value}
-                />
+                <Tab key={tab.value} label={tab.label} value={tab.value} />
             ))}
         </Tabs>
     );

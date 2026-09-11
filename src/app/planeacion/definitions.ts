@@ -41,6 +41,7 @@ export interface Tablero {
   titulo: string;
   categoria: string;
   descripcion: string;
+  cover?: Media | null;
 
   url: string | null;
 
@@ -80,6 +81,7 @@ export interface GuiaManual {
   titulo: string;
   categoria: string;
   descripcion: string;
+  cover?: Media | null;
 
   documento: GuiaManualDocumento | null;
 

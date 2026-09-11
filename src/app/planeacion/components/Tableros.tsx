@@ -1,11 +1,6 @@
-import {
-    Box,
-    Typography,
-} from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import {
-    Tablero,
-} from '../definitions';
+import { Tablero } from '../definitions';
 
 import TableroCard from './TableroCard';
 
@@ -14,20 +9,19 @@ async function getTableros(): Promise<Tablero[]> {
     const url =
         `${process.env.NEXT_PUBLIC_IMPLAN_CMS}` +
         `/tableros` +
-        `?filters[activo][$eq]=true` +
+        `?populate=cover` +
+        `&filters[activo][$eq]=true` +
         `&sort=createdAt:asc` +
         `&pagination[pageSize]=100`;
 
     const req = await fetch(url, {
         next: {
-            revalidate: 3600,
+            revalidate: 1,
         },
     });
 
     if (!req.ok) {
-        throw new Error(
-            `No se pudieron cargar los tableros (${req.status})`
-        );
+        throw new Error(`No se pudieron cargar los tableros (${req.status})`);
     }
 
     const response = await req.json();
@@ -39,36 +33,21 @@ async function getTableros(): Promise<Tablero[]> {
 export default async function Tableros() {
     const tableros = await getTableros();
 
-    const activos = tableros.filter(
-        (tablero) => !tablero.enDesarrollo
-    );
+    const activos = tableros.filter((tablero) => !tablero.enDesarrollo);
 
-    const desarrollo = tableros.filter(
-        (tablero) => tablero.enDesarrollo
-    );
+    const desarrollo = tableros.filter((tablero) => tablero.enDesarrollo);
 
     return (
         <Box>
             {/* INTRODUCCIÓN */}
-            <Box
-                sx={{
-                    mb: 5,
-                    maxWidth: 850,
-                }}
-            >
-                <Typography
-                    sx={{
-                        color: 'text.secondary',
-                        lineHeight: 1.7,
-                    }}
-                >
-                    Tableros interactivos de revisión, consulta y seguimiento
-                    de los planes municipales.
-                    <br />
+            <Box sx={{
+                pt: 2
+            }}>
+                <Typography sx={{ mb: 4, color: 'black' }} variant='h6'>
+                    Tableros interactivos de revisión, consulta y seguimiento de los planes municipales.
                     Calculadoras y nuevos tableros en ArcGIS en desarrollo.
                 </Typography>
             </Box>
-
 
             {/* ACTIVOS */}
             {activos.length > 0 && (
@@ -92,10 +71,7 @@ export default async function Tableros() {
                         }}
                     >
                         {activos.map((tablero) => (
-                            <TableroCard
-                                key={tablero.documentId ?? tablero.id}
-                                tablero={tablero}
-                            />
+                            <TableroCard key={tablero.documentId ?? tablero.id} tablero={tablero} />
                         ))}
                     </Box>
                 </Box>
@@ -124,10 +100,7 @@ export default async function Tableros() {
                         }}
                     >
                         {desarrollo.map((tablero) => (
-                            <TableroCard
-                                key={tablero.documentId ?? tablero.id}
-                                tablero={tablero}
-                            />
+                            <TableroCard key={tablero.documentId ?? tablero.id} tablero={tablero} />
                         ))}
                     </Box>
                 </Box>
@@ -137,11 +110,7 @@ export default async function Tableros() {
 }
 
 
-function SectionTitle({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+function SectionTitle({ children }: { children: React.ReactNode; }) {
     return (
         <Typography
             sx={{

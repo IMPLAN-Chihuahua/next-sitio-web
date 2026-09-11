@@ -2,19 +2,7 @@ import { ReactNode } from 'react';
 
 import NextLink from 'next/link';
 
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Chip,
-  Link as MuiLink,
-  SxProps,
-  Theme,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, CardMedia, Chip, Link as MuiLink, SxProps, Theme, Tooltip, Typography, } from '@mui/material';
 
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
@@ -22,10 +10,7 @@ import LandscapeIcon from '@mui/icons-material/Landscape';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 
-export type CardTilesTipo =
-  | 'rectangular-vertical'
-  | 'rectangular-horizontal'
-  | 'cuadrado';
+export type CardTilesTipo = 'rectangular-vertical' | 'rectangular-horizontal' | 'cuadrado';
 
 export type CardTilesAction = {
   href?: string | null;
@@ -87,37 +72,9 @@ const maxWidthByTipo: Record<CardTilesTipo, number | string> = {
   cuadrado: '100%',
 };
 
-const toSxArray = (sx?: SxProps<Theme>) => (
-  Array.isArray(sx) ? sx : sx ? [sx] : []
-);
+const toSxArray = (sx?: SxProps<Theme>) => (Array.isArray(sx) ? sx : sx ? [sx] : []);
 
-export default function CardTiles({
-  title,
-  description,
-  category,
-  categoryVariant = 'text',
-  href,
-  image,
-  imageMuted,
-  imageFallbackIcon,
-  icon,
-  action,
-  tipo = 'rectangular-vertical',
-  inactive = false,
-  destacado = false,
-  destacadoLabel = 'Destacado',
-  historico = false,
-  historicoLabel = 'Historico',
-  historicoTooltip,
-  statusLabel,
-  topAccent = false,
-  titleLineClamp = 2,
-  descriptionLineClamp = 3,
-  maxWidth,
-  minHeight,
-  cardSx,
-  contentSx,
-}: CardTilesProps) {
+export default function CardTiles({ title, description, category, categoryVariant = 'text', href, image, imageMuted, imageFallbackIcon, icon, action, tipo = 'rectangular-vertical', inactive = false, destacado = false, destacadoLabel = 'Destacado', historico = false, historicoLabel = 'Historico', historicoTooltip, statusLabel, topAccent = false, titleLineClamp = 2, descriptionLineClamp = 3, maxWidth, minHeight, cardSx, contentSx }: CardTilesProps) {
   const hasImage = Boolean(image?.url);
   const actionExternal = action?.external ?? true;
 
@@ -142,6 +99,8 @@ export default function CardTiles({
     title
   );
 
+  console.log(image)
+
   return (
     <Card
       variant="outlined"
@@ -160,18 +119,6 @@ export default function CardTiles({
           borderRadius: 1,
           borderStyle: inactive ? 'dashed' : 'solid',
           transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
-          ...(topAccent && !inactive && {
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: -1,
-              left: -1,
-              right: -1,
-              zIndex: 1,
-              height: 5,
-              bgcolor: 'secondary.main',
-            },
-          }),
           ...(!inactive && {
             '&:hover': {
               transform: 'translateY(-2px)',
@@ -375,27 +322,7 @@ export default function CardTiles({
   );
 }
 
-function CardMediaBlock({
-  href,
-  image,
-  title,
-  tipo,
-  muted,
-  historico,
-  historicoLabel,
-  historicoTooltip,
-  fallbackIcon,
-}: {
-  href?: string | null;
-  image?: CardTilesImage;
-  title: string;
-  tipo: CardTilesTipo;
-  muted: boolean;
-  historico: boolean;
-  historicoLabel: string;
-  historicoTooltip?: string;
-  fallbackIcon?: ReactNode;
-}) {
+function CardMediaBlock({ href, image, title, tipo, muted, historico, historicoLabel, historicoTooltip, fallbackIcon }: { href?: string | null; image?: CardTilesImage; title: string; tipo: CardTilesTipo; muted: boolean; historico: boolean; historicoLabel: string; historicoTooltip?: string; fallbackIcon?: ReactNode; }) {
   const media = (
     <Box position="relative">
       {image?.url ? (
@@ -486,15 +413,7 @@ function CardMediaBlock({
   );
 }
 
-function CategoryLabel({
-  children,
-  inactive,
-  variant,
-}: {
-  children: ReactNode;
-  inactive: boolean;
-  variant: 'text' | 'chip';
-}) {
+function CategoryLabel({ children, inactive, variant }: { children: ReactNode; inactive: boolean; variant: 'text' | 'chip'; }) {
   if (variant === 'chip') {
     return (
       <Chip

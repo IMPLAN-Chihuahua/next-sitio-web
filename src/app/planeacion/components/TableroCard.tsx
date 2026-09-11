@@ -2,9 +2,7 @@ import { Tablero } from '../definitions';
 import CardTiles from './CardTiles';
 
 
-interface Props {
-    tablero: Tablero;
-}
+interface Props { tablero: Tablero; }
 
 
 const categorias: Record<string, string> = {
@@ -16,14 +14,14 @@ const categorias: Record<string, string> = {
 };
 
 
-export default function TableroCard({
-    tablero,
-}: Props) {
+export default function TableroCard({ tablero }: Props) {
     const isActive = !tablero.enDesarrollo;
 
-    const categoria =
-        categorias[tablero.categoria] ??
-        tablero.categoria.toUpperCase();
+    const categoria = categorias[tablero.categoria] ?? tablero.categoria.toUpperCase();
+
+    const coverUrl = tablero.cover?.url
+        ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${tablero.cover.url}`
+        : null;
 
     return (
         <CardTiles
@@ -31,18 +29,11 @@ export default function TableroCard({
             title={tablero.titulo}
             category={categoria}
             description={tablero.descripcion}
+            image={coverUrl ? { url: coverUrl, title: tablero.cover?.caption || tablero.titulo, alt: tablero.cover?.alternativeText || tablero.titulo } : undefined}
             inactive={!isActive}
             topAccent={isActive}
             descriptionLineClamp={4}
-            action={
-                tablero.url
-                    ? {
-                        href: tablero.url,
-                        label: 'Abrir tablero',
-                        external: true,
-                    }
-                    : undefined
-            }
+            action={tablero.url ? { href: tablero.url, label: 'Abrir tablero', external: true } : undefined}
         />
     );
 }

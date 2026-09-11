@@ -34,10 +34,7 @@ const InstrumentosTiles = () => {
 
   const filterObj = {
     fields: ['nombre', 'version', 'descripcion', 'fechaAprobacion', 'nombreCortoSlug', 'anioPublicacion', 'vigente', 'destacado'],
-    populate: [
-      'tema',
-      'cover'
-    ],
+    populate: ['tema', 'cover'],
     pagination: {
       pageSize: 6,
       page
@@ -147,18 +144,8 @@ const InstrumentosTiles = () => {
         </AnimatePresence>
       </Grid>
 
-      <Box
-        my={2}
-        display={'flex'}
-        justifyContent={'center'}
-        alignItems={'center'}
-      >
-        <MuiPagination
-          page={page}
-          onChange={handlePageChange}
-          count={data?.meta.pagination.pageCount || 0}
-          size='medium'
-        />
+      <Box my={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <MuiPagination page={page} onChange={handlePageChange} count={data?.meta.pagination.pageCount || 0} size='medium' />
       </Box>
     </Box>
   )
@@ -166,9 +153,7 @@ const InstrumentosTiles = () => {
 
 
 
-type InstrumentoCardProps = {
-  instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug' | 'anioPublicacion' | 'vigente' | 'destacado'>
-}
+type InstrumentoCardProps = { instrumento: Pick<InstrumentoPlaneacion, 'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' | 'fechaAprobacion' | 'nombreCortoSlug' | 'anioPublicacion' | 'vigente' | 'destacado'> }
 const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
   const aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : ''
   const title = `${instrumento.nombre} ${aboutInstrumento}`.trim();
@@ -182,11 +167,7 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
       tipo="rectangular-vertical"
       title={title}
       href={`/planeacion/${instrumento.nombreCortoSlug}`}
-      image={{
-        url: coverUrl,
-        title: instrumento.cover?.caption || title,
-        alt: instrumento.cover?.alternativeText || title,
-      }}
+      image={{ url: coverUrl, title: instrumento.cover?.caption || title, alt: instrumento.cover?.alternativeText || title }}
       imageMuted={!instrumento.vigente}
       category={instrumento?.tema.descripcion}
       description={instrumento.descripcion}
@@ -204,12 +185,7 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
 const InstrumentosFilters = ({ handleClearFiltros, showClearFilterButton }: { handleClearFiltros: () => void, showClearFilterButton: boolean }) => {
 
   return (
-    <Stack
-      direction={{ xs: 'column', md: 'row' }}
-      columnGap={2}
-      rowGap={2}
-      flexWrap={'wrap'}
-    >
+    <Stack direction={{ xs: 'column', md: 'row' }} columnGap={2} rowGap={2} flexWrap={'wrap'}>
       <AnioAutocomplete />
       <TemasInstrumentoPlaneacionAutocomplete name='temas' label='Tema datos abiertos' />
       {
