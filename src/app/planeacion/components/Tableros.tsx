@@ -2,7 +2,15 @@ import { Box, Typography } from '@mui/material';
 
 import { Tablero } from '../definitions';
 
-import TableroCard from './TableroCard';
+import PlaneacionTileCard from './PlaneacionTileCard';
+
+const categorias: Record<string, string> = {
+    'revision-opinion': 'REVISIÓN Y OPINIÓN',
+    'indicadores': 'INDICADORES',
+    'calculadora': 'CALCULADORA',
+    'consulta': 'CONSULTA',
+    'seguimiento': 'SEGUIMIENTO',
+};
 
 
 async function getTableros(): Promise<Tablero[]> {
@@ -71,7 +79,16 @@ export default async function Tableros() {
                         }}
                     >
                         {activos.map((tablero) => (
-                            <TableroCard key={tablero.documentId ?? tablero.id} tablero={tablero} />
+                            <PlaneacionTileCard
+                                key={tablero.documentId ?? tablero.id}
+                                title={tablero.titulo}
+                                category={getTableroCategoria(tablero)}
+                                description={tablero.descripcion}
+                                cover={tablero.cover}
+                                inactive={tablero.enDesarrollo}
+                                descriptionLineClamp={4}
+                                action={getTableroAction(tablero)}
+                            />
                         ))}
                     </Box>
                 </Box>
@@ -100,7 +117,16 @@ export default async function Tableros() {
                         }}
                     >
                         {desarrollo.map((tablero) => (
-                            <TableroCard key={tablero.documentId ?? tablero.id} tablero={tablero} />
+                            <PlaneacionTileCard
+                                key={tablero.documentId ?? tablero.id}
+                                title={tablero.titulo}
+                                category={getTableroCategoria(tablero)}
+                                description={tablero.descripcion}
+                                cover={tablero.cover}
+                                inactive={tablero.enDesarrollo}
+                                descriptionLineClamp={4}
+                                action={getTableroAction(tablero)}
+                            />
                         ))}
                     </Box>
                 </Box>
@@ -109,6 +135,10 @@ export default async function Tableros() {
     );
 }
 
+
+const getTableroCategoria = (tablero: Tablero) => categorias[tablero.categoria] ?? tablero.categoria.toUpperCase();
+
+const getTableroAction = (tablero: Tablero) => tablero.url ? { href: tablero.url, label: 'Abrir tablero', external: true } : undefined;
 
 function SectionTitle({ children }: { children: React.ReactNode; }) {
     return (

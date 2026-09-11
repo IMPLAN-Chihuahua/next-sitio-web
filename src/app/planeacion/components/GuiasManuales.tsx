@@ -1,10 +1,17 @@
 import { Box, Typography } from '@mui/material';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 
 import { GuiaManual } from '../definitions';
 
-import GuiaManualCard from './GuiaManualCard';
+import PlaneacionTileCard from './PlaneacionTileCard';
+
+const categorias: Record<string, string> = {
+    'diseno-urbano': 'DISEÑO URBANO',
+    'equipamiento': 'EQUIPAMIENTO',
+    'paisaje': 'PAISAJE',
+    'bioclimatico': 'BIOCLIMÁTICO',
+};
 
 
 async function getGuiasManuales(): Promise<GuiaManual[]> {
@@ -55,7 +62,16 @@ export default async function GuiasManuales() {
             {activos.length > 0 && (
                 <GuidesSection title="ACTIVOS">
                     {activos.map((guia) => (
-                        <GuiaManualCard key={guia.documentId ?? guia.id} guia={guia} />
+                        <PlaneacionTileCard
+                            key={guia.documentId ?? guia.id}
+                            title={guia.titulo}
+                            category={getGuiaCategoria(guia)}
+                            description={guia.descripcion}
+                            cover={guia.cover}
+                            inactive={guia.enDesarrollo}
+                            fallbackIcon={<MenuBookOutlinedIcon />}
+                            action={getGuiaAction(guia)}
+                        />
                     ))}
                 </GuidesSection>
             )}
@@ -63,13 +79,32 @@ export default async function GuiasManuales() {
             {desarrollo.length > 0 && (
                 <GuidesSection title="EN DESARROLLO">
                     {desarrollo.map((guia) => (
-                        <GuiaManualCard key={guia.documentId ?? guia.id} guia={guia} />
+                        <PlaneacionTileCard
+                            key={guia.documentId ?? guia.id}
+                            title={guia.titulo}
+                            category={getGuiaCategoria(guia)}
+                            description={guia.descripcion}
+                            cover={guia.cover}
+                            inactive={guia.enDesarrollo}
+                            fallbackIcon={<MenuBookOutlinedIcon />}
+                            action={getGuiaAction(guia)}
+                        />
                     ))}
                 </GuidesSection>
             )}
         </Box>
     );
 }
+
+const getGuiaCategoria = (guia: GuiaManual) => categorias[guia.categoria] ?? guia.categoria.toUpperCase();
+
+const getGuiaHref = (guia: GuiaManual) => guia.documento ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${guia.documento.url}` : guia.urlExterna;
+
+const getGuiaAction = (guia: GuiaManual) => {
+    const href = getGuiaHref(guia);
+
+    return href ? { href, label: guia.documento ? 'Descargar guía' : 'Abrir guía' } : undefined;
+};
 
 function GuidesSection({ title, children }: { title: string; children: React.ReactNode; }) {
     return (

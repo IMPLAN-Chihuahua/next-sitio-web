@@ -2,7 +2,6 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 
 import { Suspense } from 'react';
 
-import { SubtitleH2 } from '../../components/Titles';
 import InstrumentosTiles from './Tiles';
 
 export default function DatosAbiertos() {

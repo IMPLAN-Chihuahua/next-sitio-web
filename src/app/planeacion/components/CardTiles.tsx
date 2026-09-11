@@ -119,6 +119,18 @@ export default function CardTiles({ title, description, category, categoryVarian
           borderRadius: 1,
           borderStyle: inactive ? 'dashed' : 'solid',
           transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+          ...(topAccent && !inactive && {
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: -1,
+              left: -1,
+              right: -1,
+              zIndex: 1,
+              height: 5,
+              bgcolor: 'secondary.main',
+            },
+          }),
           ...(!inactive && {
             '&:hover': {
               transform: 'translateY(-2px)',
