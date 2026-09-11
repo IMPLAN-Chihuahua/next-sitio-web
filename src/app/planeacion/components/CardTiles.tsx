@@ -45,7 +45,6 @@ export type CardTilesProps = {
   historicoLabel?: string;
   historicoTooltip?: string;
   statusLabel?: string;
-  topAccent?: boolean;
   titleLineClamp?: number;
   descriptionLineClamp?: number;
   maxWidth?: number | string;
@@ -74,7 +73,7 @@ const maxWidthByTipo: Record<CardTilesTipo, number | string> = {
 
 const toSxArray = (sx?: SxProps<Theme>) => (Array.isArray(sx) ? sx : sx ? [sx] : []);
 
-export default function CardTiles({ title, description, category, categoryVariant = 'text', href, image, imageMuted, imageFallbackIcon, icon, action, tipo = 'rectangular-vertical', inactive = false, destacado = false, destacadoLabel = 'Destacado', historico = false, historicoLabel = 'Historico', historicoTooltip, statusLabel, topAccent = false, titleLineClamp = 2, descriptionLineClamp = 3, maxWidth, minHeight, cardSx, contentSx }: CardTilesProps) {
+export default function CardTiles({ title, description, category, categoryVariant = 'text', href, image, imageMuted, imageFallbackIcon, icon, action, tipo = 'rectangular-vertical', inactive = false, destacado = false, destacadoLabel = 'Destacado', historico = false, historicoLabel = 'Historico', historicoTooltip, statusLabel, titleLineClamp = 2, descriptionLineClamp = 3, maxWidth, minHeight, cardSx, contentSx }: CardTilesProps) {
   const hasImage = Boolean(image?.url);
   const actionExternal = action?.external ?? true;
 
@@ -119,18 +118,6 @@ export default function CardTiles({ title, description, category, categoryVarian
           borderRadius: 1,
           borderStyle: inactive ? 'dashed' : 'solid',
           transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
-          ...(topAccent && !inactive && {
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: -1,
-              left: -1,
-              right: -1,
-              zIndex: 1,
-              height: 5,
-              bgcolor: 'secondary.main',
-            },
-          }),
           ...(!inactive && {
             '&:hover': {
               transform: 'translateY(-2px)',

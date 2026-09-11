@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 import { Tablero } from '../definitions';
 
-import PlaneacionTileCard from './PlaneacionTileCard';
+import CardTiles, { CardTilesAction, CardTilesImage } from './CardTiles';
 
 const categorias: Record<string, string> = {
     'revision-opinion': 'REVISIÓN Y OPINIÓN',
@@ -79,13 +79,15 @@ export default async function Tableros() {
                         }}
                     >
                         {activos.map((tablero) => (
-                            <PlaneacionTileCard
+                            <CardTiles
                                 key={tablero.documentId ?? tablero.id}
+                                tipo="rectangular-horizontal"
                                 title={tablero.titulo}
                                 category={getTableroCategoria(tablero)}
                                 description={tablero.descripcion}
-                                cover={tablero.cover}
+                                image={getTableroImage(tablero)}
                                 inactive={tablero.enDesarrollo}
+                                contentSx={{ minHeight: tablero.cover?.url ? 185 : 215 }}
                                 descriptionLineClamp={4}
                                 action={getTableroAction(tablero)}
                             />
@@ -117,13 +119,15 @@ export default async function Tableros() {
                         }}
                     >
                         {desarrollo.map((tablero) => (
-                            <PlaneacionTileCard
+                            <CardTiles
                                 key={tablero.documentId ?? tablero.id}
+                                tipo="rectangular-horizontal"
                                 title={tablero.titulo}
                                 category={getTableroCategoria(tablero)}
                                 description={tablero.descripcion}
-                                cover={tablero.cover}
+                                image={getTableroImage(tablero)}
                                 inactive={tablero.enDesarrollo}
+                                contentSx={{ minHeight: tablero.cover?.url ? 185 : 215 }}
                                 descriptionLineClamp={4}
                                 action={getTableroAction(tablero)}
                             />
@@ -138,7 +142,13 @@ export default async function Tableros() {
 
 const getTableroCategoria = (tablero: Tablero) => categorias[tablero.categoria] ?? tablero.categoria.toUpperCase();
 
-const getTableroAction = (tablero: Tablero) => tablero.url ? { href: tablero.url, label: 'Abrir tablero', external: true } : undefined;
+const getTableroImage = (tablero: Tablero): CardTilesImage | undefined => {
+    const coverUrl = tablero.cover?.url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${tablero.cover.url}` : null;
+
+    return coverUrl ? { url: coverUrl, title: tablero.cover?.caption || tablero.titulo, alt: tablero.cover?.alternativeText || tablero.titulo } : undefined;
+};
+
+const getTableroAction = (tablero: Tablero): CardTilesAction | undefined => tablero.url ? { href: tablero.url, label: 'Abrir tablero', external: true } : undefined;
 
 function SectionTitle({ children }: { children: React.ReactNode; }) {
     return (

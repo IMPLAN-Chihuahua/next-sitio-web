@@ -1,10 +1,8 @@
 import { Box, Typography } from '@mui/material';
 
-import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
-
 import { GuiaManual } from '../definitions';
 
-import PlaneacionTileCard from './PlaneacionTileCard';
+import CardTiles, { CardTilesAction, CardTilesImage } from './CardTiles';
 
 const categorias: Record<string, string> = {
     'diseno-urbano': 'DISEÑO URBANO',
@@ -62,14 +60,16 @@ export default async function GuiasManuales() {
             {activos.length > 0 && (
                 <GuidesSection title="ACTIVOS">
                     {activos.map((guia) => (
-                        <PlaneacionTileCard
+                        <CardTiles
                             key={guia.documentId ?? guia.id}
+                            tipo="rectangular-horizontal"
                             title={guia.titulo}
                             category={getGuiaCategoria(guia)}
                             description={guia.descripcion}
-                            cover={guia.cover}
+                            image={getGuiaImage(guia)}
+                            descriptionLineClamp={3}
                             inactive={guia.enDesarrollo}
-                            fallbackIcon={<MenuBookOutlinedIcon />}
+                            contentSx={{ minHeight: guia.cover?.url ? 185 : 215 }}
                             action={getGuiaAction(guia)}
                         />
                     ))}
@@ -79,14 +79,16 @@ export default async function GuiasManuales() {
             {desarrollo.length > 0 && (
                 <GuidesSection title="EN DESARROLLO">
                     {desarrollo.map((guia) => (
-                        <PlaneacionTileCard
+                        <CardTiles
                             key={guia.documentId ?? guia.id}
+                            tipo="rectangular-horizontal"
                             title={guia.titulo}
                             category={getGuiaCategoria(guia)}
                             description={guia.descripcion}
-                            cover={guia.cover}
+                            image={getGuiaImage(guia)}
+                            descriptionLineClamp={3}
                             inactive={guia.enDesarrollo}
-                            fallbackIcon={<MenuBookOutlinedIcon />}
+                            contentSx={{ minHeight: guia.cover?.url ? 185 : 215 }}
                             action={getGuiaAction(guia)}
                         />
                     ))}
@@ -98,9 +100,15 @@ export default async function GuiasManuales() {
 
 const getGuiaCategoria = (guia: GuiaManual) => categorias[guia.categoria] ?? guia.categoria.toUpperCase();
 
+const getGuiaImage = (guia: GuiaManual): CardTilesImage | undefined => {
+    const coverUrl = guia.cover?.url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${guia.cover.url}` : null;
+
+    return coverUrl ? { url: coverUrl, title: guia.cover?.caption || guia.titulo, alt: guia.cover?.alternativeText || guia.titulo } : undefined;
+};
+
 const getGuiaHref = (guia: GuiaManual) => guia.documento ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${guia.documento.url}` : guia.urlExterna;
 
-const getGuiaAction = (guia: GuiaManual) => {
+const getGuiaAction = (guia: GuiaManual): CardTilesAction | undefined => {
     const href = getGuiaHref(guia);
 
     return href ? { href, label: guia.documento ? 'Descargar guía' : 'Abrir guía' } : undefined;
