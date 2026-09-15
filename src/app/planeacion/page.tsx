@@ -14,6 +14,7 @@ import DatosAbiertos from './components/DatosAbiertos';
 import Tableros from './components/Tableros';
 import GuiasManuales from './components/GuiasManuales';
 import { InstrumentoDetailPageBreadcrumbs } from './components/InstrumentoBreadcrumbs';
+import SistemaPlaneacion from './components/SistemaPlaneacion';
 
 export const metadata: Metadata = {
   title: 'Planeación | IMPLAN',
@@ -60,6 +61,8 @@ export default async function InstrumentosPlaneacionPage({
 
       <Container >
         <InstrumentoDetailPageBreadcrumbs currentPageTitle={tab} />
+        {tab === 'sistemas-planeacion' && <SistemaPlaneacion />}
+
         {tab === 'datos-abiertos' && <DatosAbiertos />}
 
         {tab === 'tableros' && <Tableros />}

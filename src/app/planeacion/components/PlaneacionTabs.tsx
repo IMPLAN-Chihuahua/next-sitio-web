@@ -4,6 +4,7 @@ import { Tab, Tabs } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const tabs = [
+    { label: 'Sistemas de Planeación', value: 'sistemas-planeacion' },
     { label: 'Datos Abiertos', value: 'datos-abiertos' },
     { label: 'Tableros', value: 'tableros' },
     { label: 'Guías y Manuales', value: 'guias-manuales' },
@@ -13,7 +14,7 @@ export default function PlaneacionTabs() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const currentTab = searchParams.get('tab') ?? 'datos-abiertos';
+    const currentTab = searchParams.get('tab') ?? 'sistemas-planeacion';
 
     const handleChange = (_event: React.SyntheticEvent, value: string) => {
         router.push(`/planeacion?tab=${value}`, {
