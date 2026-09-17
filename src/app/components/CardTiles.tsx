@@ -9,6 +9,7 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import LandscapeIcon from '@mui/icons-material/Landscape';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import { getTileCardSx } from './tileCardStyles';
 
 export type CardTilesTipo = 'rectangular-vertical' | 'rectangular-horizontal' | 'cuadrado';
 
@@ -105,6 +106,7 @@ export default function CardTiles({ title, description, category, categoryVarian
     <Card
       variant="outlined"
       sx={[
+        getTileCardSx(inactive),
         {
           position: 'relative',
           display: 'flex',
@@ -114,11 +116,6 @@ export default function CardTiles({ title, description, category, categoryVarian
           maxWidth: maxWidth ?? maxWidthByTipo[tipo],
           aspectRatio: !image && tipo === 'cuadrado' ? { sm: '1 / 1' } : undefined,
           width: '100%',
-          bgcolor: inactive ? '#fafafa' : '#fff',
-          borderColor: inactive ? '#D9DDE3' : 'divider',
-          borderRadius: 1,
-          borderStyle: inactive ? 'dashed' : 'solid',
-          transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
           ...(topAccent && !inactive && {
             '&::before': {
               content: '""',
@@ -129,13 +126,6 @@ export default function CardTiles({ title, description, category, categoryVarian
               zIndex: 1,
               height: 5,
               bgcolor: 'secondary.main',
-            },
-          }),
-          ...(!inactive && {
-            '&:hover': {
-              transform: 'translateY(-2px)',
-              borderColor: 'secondary.main',
-              boxShadow: '0 6px 20px rgba(0,0,0,0.06)',
             },
           }),
         },

@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, Chip, Grid, Typography, Link as MuiLink } from "@mui/material";
+import { Box, Card, CardContent, Grid, Typography, Link as MuiLink } from "@mui/material";
 import { TrabajoPlaneacion } from "../definitions";
 import Image from "next/image";
 import LandscapeIcon from '@mui/icons-material/Landscape';
 import Link from "next/link";
-import { Tag } from "@/app/definitions";
+import { getTileCardSx } from '@/app/components/tileCardStyles';
 
 
 
@@ -11,7 +11,7 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
   const hasSmallImage = props.trabajoPlaneacion.cover?.formats?.small !== undefined || props.trabajoPlaneacion.cover?.formats?.small !== null;
   const coverImage = hasSmallImage ? props.trabajoPlaneacion.cover?.formats?.small.url : props.trabajoPlaneacion.cover?.url;
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={getTileCardSx()}>
       <CardContent>
         <Grid container >
           <Grid bgcolor={'primary.200'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={1}>
