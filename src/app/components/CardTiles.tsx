@@ -33,6 +33,8 @@ export type CardTilesProps = {
   categoryVariant?: 'text' | 'chip';
   href?: string | null;
   image?: CardTilesImage;
+  imageBadge?: ReactNode;
+  imageFit?: 'cover' | 'contain';
   imageMuted?: boolean;
   imageFallbackIcon?: ReactNode;
   icon?: ReactNode;
@@ -74,7 +76,7 @@ const maxWidthByTipo: Record<CardTilesTipo, number | string> = {
 
 const toSxArray = (sx?: SxProps<Theme>) => (Array.isArray(sx) ? sx : sx ? [sx] : []);
 
-export default function CardTiles({ title, description, category, categoryVariant = 'text', href, image, imageMuted, imageFallbackIcon, icon, action, tipo = 'rectangular-vertical', inactive = false, destacado = false, destacadoLabel = 'Destacado', historico = false, historicoLabel = 'Historico', historicoTooltip, statusLabel, topAccent = false, titleLineClamp = 2, descriptionLineClamp = 3, maxWidth, minHeight, cardSx, contentSx }: CardTilesProps) {
+export default function CardTiles({ title, description, category, categoryVariant = 'text', href, image, imageBadge, imageFit = 'cover', imageMuted, imageFallbackIcon, icon, action, tipo = 'rectangular-vertical', inactive = false, destacado = false, destacadoLabel = 'Destacado', historico = false, historicoLabel = 'Historico', historicoTooltip, statusLabel, topAccent = false, titleLineClamp = 2, descriptionLineClamp = 3, maxWidth, minHeight, cardSx, contentSx }: CardTilesProps) {
   const hasImage = Boolean(image?.url);
   const actionExternal = action?.external ?? true;
 
@@ -110,7 +112,7 @@ export default function CardTiles({ title, description, category, categoryVarian
           height: '100%',
           minHeight: minHeight ?? (hasImage ? undefined : contentMinHeightByTipo[tipo]),
           maxWidth: maxWidth ?? maxWidthByTipo[tipo],
-          aspectRatio: !hasImage && tipo === 'cuadrado' ? { sm: '1 / 1' } : undefined,
+          aspectRatio: !image && tipo === 'cuadrado' ? { sm: '1 / 1' } : undefined,
           width: '100%',
           bgcolor: inactive ? '#fafafa' : '#fff',
           borderColor: inactive ? '#D9DDE3' : 'divider',
@@ -214,6 +216,8 @@ export default function CardTiles({ title, description, category, categoryVarian
         <CardMediaBlock
           href={href}
           image={image}
+          imageBadge={imageBadge}
+          imageFit={imageFit}
           title={title}
           tipo={tipo}
           muted={imageMuted ?? inactive}
@@ -332,7 +336,7 @@ export default function CardTiles({ title, description, category, categoryVarian
   );
 }
 
-function CardMediaBlock({ href, image, title, tipo, muted, historico, historicoLabel, historicoTooltip, fallbackIcon }: { href?: string | null; image?: CardTilesImage; title: string; tipo: CardTilesTipo; muted: boolean; historico: boolean; historicoLabel: string; historicoTooltip?: string; fallbackIcon?: ReactNode; }) {
+function CardMediaBlock({ href, image, imageBadge, imageFit, title, tipo, muted, historico, historicoLabel, historicoTooltip, fallbackIcon }: { href?: string | null; image?: CardTilesImage; imageBadge?: ReactNode; imageFit: 'cover' | 'contain'; title: string; tipo: CardTilesTipo; muted: boolean; historico: boolean; historicoLabel: string; historicoTooltip?: string; fallbackIcon?: ReactNode; }) {
   const media = (
     <Box position="relative">
       {image?.url ? (
@@ -345,7 +349,7 @@ function CardMediaBlock({ href, image, title, tipo, muted, historico, historicoL
             display: 'block',
             width: '100%',
             aspectRatio: mediaRatioByTipo[tipo],
-            objectFit: 'cover',
+            objectFit: imageFit,
             filter: muted ? 'grayscale(60%) opacity(0.7)' : 'none',
           }}
         />
@@ -369,6 +373,27 @@ function CardMediaBlock({ href, image, title, tipo, muted, historico, historicoL
             />
           )}
         </Box>
+      )}
+
+      {imageBadge && (
+        <Typography
+          component="span"
+          variant="body2"
+          sx={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+            maxWidth: 'calc(100% - 20px)',
+            p: 1,
+            bgcolor: 'primary.50',
+            color: 'text.primary',
+            fontWeight: 500,
+            overflowWrap: 'anywhere',
+            pointerEvents: 'none',
+          }}
+        >
+          {imageBadge}
+        </Typography>
       )}
 
       {historico && (
