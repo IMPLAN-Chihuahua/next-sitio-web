@@ -15,7 +15,7 @@ import { formatISO } from 'date-fns';
 import TemasInstrumentoPlaneacionAutocomplete from './TemasDatosAbiertosAutocomplete';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUrlPagination } from '@/app/hooks/useUrlPagination';
-import CardTiles from './CardTiles';
+import CardTiles from '@/app/components/CardTiles';
 
 const MotionGrid = motion.create(Grid);
 

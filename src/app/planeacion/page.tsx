@@ -29,7 +29,7 @@ type Props = {
 export default async function InstrumentosPlaneacionPage({
   searchParams,
 }: Props) {
-  const { tab = 'datos-abiertos' } = await searchParams;
+  const { tab = 'sistemas-planeacion' } = await searchParams;
 
   const req = await fetch(
     `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumento-planeacion-page?populate=*`

@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 import { Tablero } from '../definitions';
 
-import CardTiles, { CardTilesAction, CardTilesImage } from './CardTiles';
+import CardTiles, { CardTilesAction, CardTilesImage } from '@/app/components/CardTiles';
 
 const categorias: Record<string, string> = {
     'revision-opinion': 'REVISIÓN Y OPINIÓN',

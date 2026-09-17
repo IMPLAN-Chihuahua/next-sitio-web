@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 import { GuiaManual } from '../definitions';
 
-import CardTiles, { CardTilesAction, CardTilesImage } from './CardTiles';
+import CardTiles, { CardTilesAction, CardTilesImage } from '@/app/components/CardTiles';
 
 const categorias: Record<string, string> = {
     'diseno-urbano': 'DISEÑO URBANO',
