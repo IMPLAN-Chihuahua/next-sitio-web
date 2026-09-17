@@ -11,13 +11,14 @@ import { DatoGeografico } from "../definitions";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { CartografiaFilters } from "./CartografiaFilters";
 import { ChangeEvent, useCallback, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useUrlPagination } from "@/app/hooks/useUrlPagination";
 
 
 const MotionGrid = motion.create(Grid);
 
 const CartografiaTiles = () => {
+  const reduceMotion = useReducedMotion();
   const [search, setSearch] = useState('');
   const { page, changePage } = useUrlPagination(1);
 
@@ -118,15 +119,15 @@ const CartografiaTiles = () => {
           <AnimatePresence mode="popLayout">
             {
               isLoading
-                ? (<CircularProgress />)
+                ? (<CircularProgress aria-label="Cargando datos geográficos" />)
                 : datosGeograficos.length > 0
                   ? datosGeograficos.map((geografico) => (
                     <MotionGrid
-                      layout
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.3 }}
+                      layout={!reduceMotion}
+                      initial={reduceMotion ? false : { scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: reduceMotion ? 1 : 0.8 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.3 }}
                       key={geografico.documentId}
                       size={{ xs: 12, md: 4 }}
                     >
@@ -134,10 +135,7 @@ const CartografiaTiles = () => {
                     </MotionGrid>
                   ))
                   : (
-                    <MotionGrid
-                      size={12}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}>
+                    <MotionGrid size={12}>
                       <Typography>No se encontraron datos geográficos</Typography>
                     </MotionGrid>
                   )

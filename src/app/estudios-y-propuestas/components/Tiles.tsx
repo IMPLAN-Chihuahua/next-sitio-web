@@ -4,21 +4,21 @@ import { Alert, Autocomplete, Box, Button, CircularProgress, Pagination, Stack, 
 import qs from 'qs';
 import { TrabajoPlaneacion } from "../definitions";
 import TrabajoTile from "./Tile";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { ColaboradorExterno, Pagination as PaginationType, Tag } from "@/app/definitions";
 import { eachYearOfInterval } from "date-fns";
 import ColaboradoresExternosAutocomplete from "@/app/components/ColaboradoresExternosAutocomplete";
 import TagsAutocomplete from "@/app/components/TagsAutocomplete";
 import { Controller, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
 import ClearIcon from '@mui/icons-material/Clear';
-import { TrabajosTilesSkeletons } from "./Skeleton";
 import SearchAndFiltersLayout from "@/app/components/SearchAndFiltersLayout";
 import useSWRImmutable from "swr/immutable";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useUrlPagination } from "@/app/hooks/useUrlPagination";
 
 
 export default function TrabajosTiles() {
+  const reduceMotion = useReducedMotion();
   const methods = useForm<{ anio: number[], colaboradoresExternos: Array<ColaboradorExterno>, tags: Array<Tag> }>({
     defaultValues: {
       anio: [],
@@ -88,13 +88,7 @@ export default function TrabajosTiles() {
     meta: { pagination: PaginationType }
   }>(`/trabajos-planeacion?${estudiosQueryParams.toString()}`, cmsFetcher);
 
-  const [trabajos, setTrabajos] = useState<TrabajoPlaneacion[]>([])
-
-  useEffect(() => {
-    if (!data?.data) return;
-
-    setTrabajos(data.data)
-  }, [data]);
+  const trabajos = data?.data ?? [];
 
 
 
@@ -135,17 +129,17 @@ export default function TrabajosTiles() {
         <AnimatePresence mode='popLayout'>
           {
             isLoading
-              ? (<CircularProgress />)
+              ? (<CircularProgress aria-label="Cargando estudios y propuestas" />)
               : trabajos.length > 0
                 ? trabajos.map(trabajo => (
                   <Box
                     key={trabajo.documentId}
                     sx={{ mb: 2.5, width: '100%', maxWidth: { xs: '450px', md: '100%' } }}
-                    layout
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.3 }}
+                    layout={!reduceMotion}
+                    initial={reduceMotion ? false : { scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: reduceMotion ? 1 : 0.8 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.3 }}
                     component={motion.div}>
                     <TrabajoTile trabajoPlaneacion={trabajo} />
                   </Box>

@@ -5,6 +5,7 @@ import { Clear } from "@mui/icons-material";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { TemasCartografiaAutocomplete } from "./TemasCartografiaAutocomplete";
+import { useId } from "react";
 
 
 const CartografiaFilters = ({ handleClearFiltros, showClearFilterButton }: { handleClearFiltros: () => void, showClearFilterButton: boolean }) => {
@@ -37,19 +38,20 @@ const CartografiaFilters = ({ handleClearFiltros, showClearFilterButton }: { han
 
 const GeometriaSelect = () => {
   const { control, } = useFormContext();
+  const labelId = useId();
 
 
   return (
     <Controller
       control={control}
       name='geometria'
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <FormControl sx={{ minWidth: '220px' }}>
-          <InputLabel id='geometria-select'>Geometría</InputLabel>
+          <InputLabel id={labelId}>Geometría</InputLabel>
           <Select
             value={field.value}
             onChange={field.onChange}
-            labelId="geometria-selec"
+            labelId={labelId}
             label='Geometría'
           >
             <MenuItem value='Puntos'>Puntos</MenuItem>

@@ -429,6 +429,7 @@ function CardMediaBlock({ href, image, imageBadge, imageFit, title, tipo, muted,
     <CardActionArea
       component={NextLink}
       href={href}
+      aria-label={`Ver ${title}`}
       disableRipple
       disableTouchRipple
       sx={{ display: 'block' }}

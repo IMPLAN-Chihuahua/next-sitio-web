@@ -2,7 +2,7 @@
 
 import { Search, Tune } from "@mui/icons-material"
 import { Badge, Collapse, FormControl, Grid, InputLabel, OutlinedInput, ToggleButton } from "@mui/material"
-import { ReactNode, useState } from "react";
+import { ReactNode, useId, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 
@@ -15,6 +15,8 @@ type SearchAndFiltersLayoutProps = {
 }
 const SearchAndFiltersLayout = ({ onDebouncedSearchChange, hasDirtyFields = false, Filters, searchBarPlaceholder }: SearchAndFiltersLayoutProps) => {
   const [openFilters, setOpenFilters] = useState(false);
+  const searchId = useId();
+  const filtersId = useId();
 
   const toggleFilterDisplay = () => setOpenFilters(pre => !pre);
 
@@ -26,8 +28,9 @@ const SearchAndFiltersLayout = ({ onDebouncedSearchChange, hasDirtyFields = fals
     <Grid container my={2} spacing={2}>
       <Grid size={{ xs: 12, md: 11 }}>
         <FormControl variant="outlined" fullWidth>
-          <InputLabel>Buscar</InputLabel>
+          <InputLabel htmlFor={searchId}>Buscar</InputLabel>
           <OutlinedInput
+            id={searchId}
             placeholder={searchBarPlaceholder || 'Buscar por nombre'}
             onChange={(e) => handleDebouncedSearch(e.currentTarget.value)}
             sx={{ minWidth: '300px' }}
@@ -46,6 +49,9 @@ const SearchAndFiltersLayout = ({ onDebouncedSearchChange, hasDirtyFields = fals
         >
           <ToggleButton
             value='check'
+            aria-label="Filtros de búsqueda"
+            aria-expanded={openFilters}
+            aria-controls={filtersId}
             selected={openFilters}
             onChange={toggleFilterDisplay}
             sx={{
@@ -58,7 +64,7 @@ const SearchAndFiltersLayout = ({ onDebouncedSearchChange, hasDirtyFields = fals
         </Badge>
       </Grid>
       <Grid size={12}>
-        <Collapse in={openFilters}>
+        <Collapse id={filtersId} in={openFilters}>
           {Filters}
         </Collapse>
       </Grid>

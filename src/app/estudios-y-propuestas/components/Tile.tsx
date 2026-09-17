@@ -8,18 +8,22 @@ import { getTileCardSx } from '@/app/components/tileCardStyles';
 
 
 export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacion }) {
-  const hasSmallImage = props.trabajoPlaneacion.cover?.formats?.small !== undefined || props.trabajoPlaneacion.cover?.formats?.small !== null;
-  const coverImage = hasSmallImage ? props.trabajoPlaneacion.cover?.formats?.small.url : props.trabajoPlaneacion.cover?.url;
+  const coverImage = props.trabajoPlaneacion.cover?.formats?.small?.url || props.trabajoPlaneacion.cover?.url;
+  const coverLinkLabel = `Ver ${props.trabajoPlaneacion.nombre}`;
   return (
     <Card variant="outlined" sx={getTileCardSx()}>
       <CardContent>
         <Grid container >
           <Grid bgcolor={'primary.200'} height={250} size={{ xs: 12, md: 3 }} position={'relative'} borderRadius={1}>
-            {props.trabajoPlaneacion.cover ? (
-              <Link href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}>
+            {coverImage ? (
+              <Link
+                href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}
+                aria-label={coverLinkLabel}
+                style={{ display: 'block', position: 'relative', height: '100%' }}
+              >
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${coverImage}`}
-                  layout="fill"
+                  fill
                   style={{
                     objectFit: 'cover',
                     borderRadius: '5px'
@@ -29,7 +33,11 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
                 />
               </Link>
             ) : (
-              <Link href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}>
+              <Link
+                href={`/estudios-y-propuestas/${props.trabajoPlaneacion.slug}`}
+                aria-label={coverLinkLabel}
+                style={{ display: 'block', height: '100%' }}
+              >
                 <Box
                   display={'flex'}
                   justifyContent={'center'}
