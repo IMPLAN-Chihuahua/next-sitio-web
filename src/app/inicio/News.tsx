@@ -4,6 +4,9 @@ import { Box, Button, Grid, Typography, Link as MuiLink } from '@mui/material'
 import Link from 'next/link'
 import { Novedades } from '../editorial/definitions';
 import { AutoStoriesOutlined, ChevronRight, SubjectOutlined } from '@mui/icons-material';
+
+
+
 const News = ({ data }: { data: Novedades[] }) => {
     if (data.length === 0) return null;
 
@@ -16,18 +19,12 @@ const News = ({ data }: { data: Novedades[] }) => {
     };
 
     return (
-        <Box sx={{
-            pl: { xs: 2, md: 10 },
-            pr: { xs: 2, md: 10 },
-            mb: 10,
-        }}>
-            <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant='h4' fontWeight={800}>
-                    Novedades
-                </Typography>
-            </Box>
+        <Box my={3}>
+            <Typography variant='h1' component='h2' gutterBottom>
+                Novedades
+            </Typography>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={2}>
                 <Grid size={{ xs: 12 }}>
                     <Link href={`/editorial/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <Box
@@ -43,7 +40,7 @@ const News = ({ data }: { data: Novedades[] }) => {
                             }}
                         >
                             <Grid container spacing={4}>
-                                <Grid size={{ xs: 12, md: 8 }}>
+                                <Grid size={{ xs: 12, md: 7 }}>
                                     {featured.cover ? (
                                         <Box
                                             sx={{
@@ -75,16 +72,21 @@ const News = ({ data }: { data: Novedades[] }) => {
                                     )}
                                 </Grid>
 
-                                <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                    <Typography className="featured-title" variant="h5" fontWeight="bold" gutterBottom sx={{ transition: 'color 0.3s ease' }}>
+                                <Grid size={{ xs: 12, md: 5 }} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                                    <Typography variant="h2" component='h3' gutterBottom >
                                         {featured.title}
                                     </Typography>
                                     <Typography
                                         variant="body1"
                                         color="text.secondary"
                                         sx={{
+                                            lineHeight: '1.5rem',
+                                            textDecoration: 'none',
                                             display: '-webkit-box',
-                                            overflow: 'hidden',
+                                            WebkitLineClamp: 5,
+                                            WebkitBoxOrient: 'vertical',
+                                            wordBreak: 'break-word',
+                                            overflow: 'hidden'
                                         }}
                                     >
                                         {featured.description?.replace(/"/g, '')}
@@ -145,7 +147,7 @@ const News = ({ data }: { data: Novedades[] }) => {
                                     </Box>
                                 )}
 
-                                <Typography className="secondary-title" fontWeight="bold" sx={{ transition: 'color 0.3s ease' }}>
+                                <Typography variant='h4' component='h3'>
                                     {item.title}
                                 </Typography>
                             </Box>
@@ -159,14 +161,12 @@ const News = ({ data }: { data: Novedades[] }) => {
                 justifyContent: 'center'
             }}>
                 <Button
-                    LinkComponent={MuiLink}
+                    LinkComponent={Link}
                     href="/editorial"
-                    variant="contained"
+                    variant="outlined"
                     endIcon={<ChevronRight />}
-                    sx={{ mt: 2, fontWeight: 600 }}
-                    color='secondary'
+                    sx={{ mt: 2, fontWeight: 600, borderRadius: '50px' }}
                     size="large"
-                    target='_blank'
                 >
                     Ver más
                 </Button>

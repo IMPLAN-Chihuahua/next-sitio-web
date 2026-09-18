@@ -5,9 +5,12 @@ import { EmblaOptionsType } from 'embla-carousel'
 import { CarouselDotButton, useDotButton } from './CarouselDotButton'
 import { PrevButton, NextButton, usePrevNextbuttons } from './CarouselArrowButtons'
 import styles from './Carousel.module.css'
-import { Box, Button, Grid, Typography, Stack, Paper } from '@mui/material'
+import { Box, Button, Grid, Typography, Stack, Paper, IconButton } from '@mui/material'
 import { Project } from '@/app/definitions'
 import Image from "next/image";
+import VerMasButton from '@/app/components/VerMasButton'
+import { ArrowLeft, ChevronRight, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
+import Link from 'next/link'
 
 type PropType = {
     slides: Project[],
@@ -28,133 +31,194 @@ const Carousel = (props: PropType) => {
     } = usePrevNextbuttons(emblaApi)
 
     return (
-        <Box className={styles.embla} dir="ltr" >
+        <Box className={styles.embla} dir="ltr" mx={{ md: 5 }}>
             <Box className={styles.embla__viewport} ref={emblaRef}>
                 <Box className={styles.embla__container}>
                     {slides.map((project, index) => (
-                        <Box className={styles.embla__slide} key={index} sx={{ px: { xs: 1, md: 2 } }}>
-                            <Paper
-                                elevation={0}
+                        <Box
+                            className={styles.embla__slide}
+                            sx={{
+                                flex: "0 0 92%",
+                            }}
+                            key={index}>
+                            <Grid
+                                component={Paper}
+                                variant='outlined'
+                                container
                                 sx={{
-                                    border: '1px solid',
-                                    borderColor: 'grey.200',
-                                    overflow: 'hidden',
-                                    height: { xs: 'auto', md: '100%' },
-                                    transition: 'all 0.3s ease-in-out',
-
-                                }}
-                            >
-                                <Grid container sx={{
-                                    flexDirection: { xs: 'column-reverse', md: 'row' },
-                                    alignItems: 'center',
-                                    height: { xs: 'auto', md: '100%' },
-                                    bgcolor: 'background.paper'
+                                    height: { xs: '100%', md: '450px' },
+                                    p: { xs: 1, md: 3 }
                                 }}>
-                                    <Grid size={{ xs: 12, md: 6 }} sx={{
-                                        p: { xs: 3, md: 5 },
-                                        textAlign: { xs: 'center', md: 'left' }
-                                    }}>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <Typography
+                                        variant='h2'
+                                        component='h3'
+                                        mt={{ md: 3 }}
+                                    >
+                                        {project.title}
+                                    </Typography>
+
+                                    <Box sx={{ mx: { xs: 'auto', md: 0 }, my: 2 }}>
                                         <Typography
-                                            variant='h4'
-                                            fontWeight={'bold'}
-                                            sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}
-                                        >
-                                            {project.title}
+                                            sx={{
+                                                fontSize: { xs: '0.9rem', md: '1.05rem' },
+                                                color: 'text.secondary',
+                                                lineHeight: 1.6,
+                                                textDecoration: 'none',
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 4,
+                                                WebkitBoxOrient: 'vertical',
+                                                wordBreak: 'break-word',
+                                                overflow: 'hidden'
+                                            }}>
+                                            {project.description}
                                         </Typography>
+                                    </Box>
 
-                                        <Box sx={{ maxWidth: 500, mx: { xs: 'auto', md: 0 }, my: 2 }}>
-                                            <Typography sx={{ fontSize: { xs: '0.9rem', md: '1.05rem' }, color: 'text.secondary', lineHeight: 1.6 }}>
-                                                {project.description}
-                                            </Typography>
-                                        </Box>
-
-                                        <Stack
-                                            direction="row"
-                                            spacing={2}
-                                            justifyContent={{ xs: 'center', md: 'flex-start' }}
-                                            sx={{ mb: { xs: 2, md: 0 }, mt: 3 }}
-                                        >
-                                            {project.buttons.map((btn, idx) => (
-                                                <Button
-                                                    key={idx}
-                                                    variant='contained'
-                                                    sx={{ textTransform: "none", px: 4, fontWeight: 'bold', boxShadow: 'none' }}
-                                                    href={btn.url}
-                                                    target="_blank"
-                                                >
-                                                    {btn.text}
-                                                </Button>
-                                            ))}
-                                        </Stack>
-                                    </Grid>
-
-                                    <Grid size={{ xs: 12, md: 6 }} sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        pt: { xs: 4, md: 0 },
-                                        pb: { xs: 0, md: 0 },
-                                        height: { xs: 'auto', md: '100%' },
-                                        width: '100%'
-                                    }}>
-                                        <Box sx={{
-                                            position: 'relative',
-                                            width: { xs: '90%', md: '80%' },
-                                            height: { xs: '220px', md: '320px' },
-                                            boxShadow: { xs: 'none', md: '0px 4px 20px rgba(0,0,0,0.15)' },
-                                            overflow: 'hidden'
-                                        }}>
-                                            <Image
-                                                src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${project.media[0].formats?.medium?.url ||
-                                                    project.media[0].formats?.small?.url ||
-                                                    project.media[0].url
-                                                    }`}
-                                                unoptimized={true}
-                                                alt={project.title}
-                                                fill
-                                                loading="eager"
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </Box>
-                                    </Grid>
+                                    <Stack
+                                        direction="row"
+                                        spacing={2}
+                                        justifyContent={{ xs: 'center', md: 'flex-start' }}
+                                        sx={{ mb: { xs: 2, md: 0 }, mt: 3 }}
+                                    >
+                                        {project.buttons.map((btn, idx) => (
+                                            <VerMasButton
+                                                key={idx}
+                                                href={btn.url}
+                                                target={'blank'}
+                                            >
+                                                {btn.text}
+                                            </VerMasButton>
+                                        ))}
+                                    </Stack>
                                 </Grid>
-                            </Paper>
+
+                                <Grid size={{ xs: 12, md: 6 }} sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    justifyContent: 'flex-end',
+                                }}>
+                                    <Box sx={{
+                                        position: 'relative',
+                                        width: { xs: '100%', md: '80%' },
+                                        height: { xs: '280px', md: '380px' },
+                                        overflow: 'hidden',
+                                        borderRadius: 1,
+                                    }}>
+                                        <Image
+                                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${project.media[0].formats?.medium?.url ||
+                                                project.media[0].formats?.small?.url ||
+                                                project.media[0].url
+                                                }`}
+                                            unoptimized={true}
+                                            alt={project.title}
+                                            fill
+                                            loading="eager"
+                                            style={{ objectFit: 'cover', userSelect: 'none' }}
+                                        />
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
                     ))}
                 </Box>
             </Box>
 
             <Box className={styles.embla__controls} sx={{
-                px: { xs: 1, md: 2 },
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
+                justifyContent: 'center',
+                gridTemplateColumns: 'repeat(3, 1fr)',
             }}>
-                <Box className={styles.embla__arrow__buttons} sx={{ display: 'flex', gap: 1 }}>
-                    <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} aria-label='Proyecto previo' />
-                    <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} aria-label='Proyecto siguiente' />
+                <Box
+                    alignSelf={'center'}
+                    justifySelf={{ xs: 'center', md: 'flex-start' }}
+                    sx={{
+                        gridRowStart: { xs: 2, md: 1 },
+                        gridColumn: { xs: '1/4', md: '1/1' }
+                    }}
+                >
+                    <Button
+                        LinkComponent={Link}
+                        href="/planeacion"
+                        variant="outlined"
+                        endIcon={<ChevronRight />}
+                        sx={{
+                            color: 'primary.100',
+                            fontWeight: 600, borderRadius: '50px'
+                        }}
+                        size="large"
+                    >
+                        Ver más
+                    </Button>
                 </Box>
+                <Box
+                    className={styles.embla__arrow__buttons}
+                    sx={{
+                        gridColumnStart: 2,
+                        justifySelf: 'center'
+                    }}>
+                    <IconButton
+                        className={styles.embla__arrow__button}
+                        type='button'
+                        disabled={prevBtnDisabled}
+                        onClick={onPrevButtonClick}
+                        aria-label='Instrumento previo'
+                        sx={{
+                            color: 'primary.50',
+                            ':hover': {
+                                bgcolor: 'primary.800'
+                            },
+                            '&.Mui-disabled': {
+                                color: 'primary.500'
+                            }
+                        }}
+                    >
+                        <KeyboardArrowLeft sx={{
+                            fontSize: 40
+                        }} />
+                    </IconButton>
 
-                <Box className={styles.embla__dots}>
-                    {scrollSnaps.map((_, index) => (
-                        <CarouselDotButton
-                            key={index}
-                            sx={{
-                                '&:focus-visible': {
-                                    outline: '3px solid',
-                                    outlineColor: 'secondary.main',
-                                    outlineOffset: '2px',
-                                    borderRadius: '4px'
-                                }
-                            }}
-                            aria-label={`Proyecto ${index + 1}`}
-                            onClick={() => onDotButtonClick(index)}
-                            className={`${styles.embla__dot} ${index === selectedIndex ? styles['embla__dot--selected'] : ''}`}
-                        />
-                    ))}
+                    <IconButton
+                        className={styles.embla__arrow__button}
+                        type='button'
+                        disabled={nextBtnDisabled}
+                        sx={{
+                            color: 'primary.50',
+                            ':hover': {
+                                bgcolor: 'primary.800'
+                            },
+                            '&.Mui-disabled': {
+                                color: 'primary.500'
+                            }
+                        }}
+                        onClick={onNextButtonClick}
+                        aria-label='Siguiente instrumento'
+                    >
+                        <KeyboardArrowRight sx={{
+                            fontSize: 40
+                        }} />
+                    </IconButton>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumnStart: 3,
+                        alignSelf: 'center',
+                        justifySelf: 'end'
+                    }}
+                >
+                    {
+                        scrollSnaps.length > 0 && (
+
+                            <Typography
+                                sx={{ userSelect: 'none' }}
+                                fontSize={18}
+                                fontWeight={500}
+                                color='primary.100'>{selectedIndex + 1} / {scrollSnaps.length}</Typography>
+                        )
+                    }
                 </Box>
             </Box>
-        </Box>
+        </Box >
     )
 }
 

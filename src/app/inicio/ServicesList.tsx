@@ -5,22 +5,17 @@ import { Box, Button, Grid, Stack, Typography, Container } from '@mui/material'
 const ServicesList = ({ data }: { data: Section[] }) => {
     if (!data?.length) return null;
     return (
-        <Box sx={{ width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
+        <Box>
             {data.map((item, index) => {
                 const isEven = index % 2 === 0;
                 return (
                     <Box
                         key={index}
                         sx={{
-                            bgcolor: isEven ? 'transparent' : '#f8f9fa',
-                            py: { xs: 8, md: 10 },
-                            display: 'flex',
-                            justifyContent: 'center'
+                            py: 6,
                         }}
                     >
-                        <Container maxWidth="lg">
-                            <Service service={item} reverse={!isEven} />
-                        </Container>
+                        <Service service={item} reverse={!isEven} />
                     </Box>
                 )
             })}
@@ -40,15 +35,9 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
                     <Box sx={{ width: '40px', height: '4px', bgcolor: 'primary.main', mb: 2 }} />
 
                     <Typography
-                        variant="h4"
-                        component="h2"
-                        sx={{
-                            fontWeight: 800,
-                            color: '#1a1a1a',
-                            fontSize: { xs: '2rem', md: '2.5rem' },
-                            lineHeight: 1.2,
-                            mb: 3
-                        }}
+                        variant="h1"
+                        component={'h2'}
+                        gutterBottom
                     >
                         {service.title}
                     </Typography>
@@ -57,9 +46,8 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
                         variant="body1"
                         sx={{
                             lineHeight: 1.8,
-                            color: 'text.secondary',
                             fontSize: { xs: 16, md: 18 },
-                            textAlign: 'justify'
+
                         }}
                     >
                         {service.description}
@@ -88,7 +76,7 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
 
             <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Box sx={{
-                    height: { xs: '300px', md: '450px' },
+                    height: { xs: '350px', md: '480px' },
                     width: '100%',
                     position: 'relative',
                     '&::after': {
@@ -112,11 +100,7 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         borderRadius: 1,
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                        transition: 'transform 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.02)'
-                        }
+                        transition: 'transform 0.3s ease'
                     }} />
                 </Box>
             </Grid>

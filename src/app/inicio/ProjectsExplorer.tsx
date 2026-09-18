@@ -5,6 +5,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import React, { useState } from 'react'
 import { Platform } from '../definitions'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
+import { Overlay } from '../components/LandingPageBanner';
+import { Launch } from '@mui/icons-material';
 
 const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -14,155 +16,131 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
     const activePlatform = data[selectedIndex]
 
     return (
-        <Container maxWidth="xl">
-            <Box sx={{ width: '100%' }}>
-                <Grid container sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    columnGap: { md: 4, lg: 6 },
-                }}>
-                    <Grid size={{ xs: 12, md: 3 }} sx={{ mb: { xs: 4, md: 0 } }}>
-                        <Box sx={{ mb: 2, px: { xs: 2, md: 0 } }}>
-                            <Typography variant='h2' fontWeight={'bold'}
-                                sx={{
-                                    lineHeight: 1,
-                                    marginTop: '-6px',
-                                    fontSize: { xs: '2.5rem', md: '3.75rem' }
-                                }}
-                            >
-                                Plataformas
-                            </Typography>
+        <Grid
+            container
+            sx={{ py: 3 }}
+            columnSpacing={2}
+        >
+            <Grid size={{ xs: 12, md: 4 }}>
+                <Box sx={{ mb: 2 }}>
+                    <Typography variant='h1' component={'h2'} gutterBottom>
+                        Plataformas
+                    </Typography>
 
-                            <Typography
-                                variant='h5'
-                                component='p'
-                                color='textSecondary'
-                                sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }}
-                            >
-                                Conoce nuestras plataformas y soluciones tecnológicas
-                            </Typography>
-                        </Box>
+                    <Typography fontSize={'1.2rem'}>
+                        Conoce nuestras plataformas y soluciones tecnológicas
+                    </Typography>
+                </Box>
 
-                        <Box sx={{ position: 'relative', width: '100%', mb: 2 }}>
-                            <List component={'nav'}
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: { xs: 'row', md: 'column' },
-                                    overflowX: { xs: 'auto', md: 'visible' },
-                                    width: '100%',
-                                    maxWidth: '100vw',
-                                    gap: { xs: 2, md: 0 },
-                                    pb: 2,
-                                    scrollSnapType: { xs: 'x mandatory', md: 'none' },
+                <Box sx={{ position: 'relative', width: '100%' }}>
+                    <List component={'nav'}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'row', md: 'column' },
+                            overflowX: { xs: 'auto', md: 'visible' },
+                            width: '100%',
+                            maxWidth: '100vw',
+                            gap: { xs: 2, md: 0 },
+                            pb: 2,
+                            scrollSnapType: { xs: 'x mandatory', md: 'none' },
 
-                                    '&::-webkit-scrollbar': {
-                                        height: '3px',
-                                        display: { xs: 'block', md: 'none' }
-                                    },
-                                    '&::-webkit-scrollbar-track': {
-                                        backgroundColor: '#e0e0e0',
-                                        borderRadius: '4px',
-                                    },
-                                    '&::-webkit-scrollbar-thumb': {
-                                        backgroundColor: '#000000',
-                                        borderRadius: '4px',
-                                    }
-                                }}>
-                                {data.map((item: Platform, index: number) => {
-                                    const isActive = index === selectedIndex;
-                                    return (
-                                        <ListItemButton
-                                            key={index}
-                                            disableRipple
-                                            onClick={() => setSelectedIndex(index)}
-                                            sx={{
-                                                whiteSpace: 'nowrap',
-                                                flexShrink: 0,
-                                                alignItems: 'center',
-                                                justifyContent: { xs: 'center', md: 'flex-start' },
-                                                mr: { xs: 0, md: 0 },
-                                                pl: { xs: 2, md: 2 },
-                                                pr: { xs: 2, md: 0 },
-                                                mb: { xs: 0, md: 1 },
+                            '&::-webkit-scrollbar': {
+                                height: '3px',
+                                display: { xs: 'block', md: 'none' }
+                            },
+                            '&::-webkit-scrollbar-track': {
+                                backgroundColor: '#e0e0e0',
+                                borderRadius: '4px',
+                            },
+                            '&::-webkit-scrollbar-thumb': {
+                                backgroundColor: '#000000',
+                                borderRadius: '4px',
+                            }
+                        }}>
+                        {data.map((item: Platform, index: number) => {
+                            const isActive = index === selectedIndex;
+                            return (
+                                <ListItemButton
+                                    key={index}
+                                    disableRipple
+                                    onClick={() => setSelectedIndex(index)}
+                                    sx={{
+                                        whiteSpace: 'nowrap',
+                                        flexShrink: 0,
+                                        alignItems: 'center',
+                                        justifyContent: { xs: 'center', md: 'flex-start' },
+                                        mr: { xs: 0, md: 0 },
+                                        pl: { xs: 2, md: 2 },
+                                        pr: { xs: 2, md: 0 },
+                                        mb: { xs: 0, md: 1 },
 
-                                                color: isActive
-                                                    ? { xs: 'white', md: 'primary.main' }
-                                                    : 'text.secondary',
+                                        color: isActive
+                                            ? { xs: 'white', md: 'primary.main' }
+                                            : 'text.secondary',
 
-                                                transition: 'all 0.3s ease',
-                                                scrollSnapAlign: 'start',
-                                            }}
-                                        >
-                                            <ListItemText
-                                                primary={
-                                                    <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                                                        <Typography
-                                                            variant="h5"
-                                                            component="span"
-                                                            fontWeight={isActive ? 'bold' : 'normal'}
-                                                            color={isActive ? 'text.primary' : 'text.secondary'}
-                                                            sx={{
-                                                                position: 'relative',
-                                                                display: 'inline-block',
-                                                                whiteSpace: 'nowrap',
-                                                                '&::after': {
-                                                                    content: '""',
-                                                                    position: 'absolute',
-                                                                    left: 0,
-                                                                    bottom: -1,
-                                                                    height: '2px',
-                                                                    width: isActive ? '100%' : '0%',
-                                                                    backgroundColor: '#000',
-                                                                    transition: 'width 0.3s ease-in-out',
-                                                                },
-                                                            }}
-                                                        >
-                                                            {item.name}
-                                                        </Typography>
-                                                        {isActive && (
-                                                            <Typography
-                                                                component="span"
-                                                                variant="caption"
-                                                                fontWeight="bold"
-                                                                sx={{ ml: 0.5, mt: 1, display: { xs: 'none', md: 'inline' } }}
-                                                            >
-                                                                {String(index + 1).padStart(2, '0')}
-                                                            </Typography>
-                                                        )}
-                                                    </Box>
-                                                }
-                                            />
-                                        </ListItemButton>
-                                    )
-                                })}
-                            </List>
-                        </Box>
-                    </Grid>
+                                        transition: 'all 0.3s ease',
+                                        scrollSnapAlign: 'start',
+                                    }}
+                                >
+                                    <ListItemText
+                                        primary={
+                                            <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                                                <Typography
+                                                    variant="h5"
+                                                    component="span"
+                                                    fontWeight={isActive ? 'bold' : 'normal'}
+                                                    color={isActive ? 'text.primary' : 'text.secondary'}
+                                                    sx={{
+                                                        position: 'relative',
+                                                        display: 'inline-block',
+                                                        whiteSpace: 'nowrap',
+                                                        '&::after': {
+                                                            content: '""',
+                                                            position: 'absolute',
+                                                            left: 0,
+                                                            bottom: -1,
+                                                            height: '2px',
+                                                            width: isActive ? '100%' : '0%',
+                                                            backgroundColor: '#000',
+                                                            transition: 'width 0.3s ease-in-out',
+                                                        },
+                                                    }}
+                                                >
+                                                    {item.name}
+                                                </Typography>
+                                                {isActive && (
+                                                    <Typography
+                                                        component="span"
+                                                        variant="caption"
+                                                        fontWeight="bold"
+                                                        sx={{ ml: 0.5, mt: 1, display: { xs: 'none', md: 'inline' } }}
+                                                    >
+                                                        {String(index + 1).padStart(2, '0')}
+                                                    </Typography>
+                                                )}
+                                            </Box>
+                                        }
+                                    />
+                                </ListItemButton>
+                            )
+                        })}
+                    </List>
+                </Box>
+            </Grid>
 
-                    <Grid size={{
-                        xs: 12, md: 8.5
-                    }}>
-                        <Project key={selectedIndex} data={activePlatform} />
-                    </Grid>
-                </Grid>
-            </Box>
-        </Container>
+            <Grid size={{
+                xs: 12, md: 8
+            }}>
+                <Project key={selectedIndex} data={activePlatform} />
+            </Grid>
+        </Grid>
     )
 }
 
 const Project = ({ data }: { data: Platform }) => {
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.large?.url || data.media.url}`;
-    const getShortDescription = (text: string, maxLength = 70) => {
-        if (text.length <= maxLength) return text;
 
-        const nextSpaceIndex = text.indexOf(' ', maxLength);
-        const endIndex = nextSpaceIndex === -1 ? text.length : nextSpaceIndex;
-
-        return `${text.slice(0, endIndex).trim()}...`;
-    };
-    const shortDescription = getShortDescription(data.description);
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -220,8 +198,8 @@ const Project = ({ data }: { data: Platform }) => {
 
                     <Box component={motion.div} variants={itemVariants} sx={{
                         position: { xs: 'relative', md: 'absolute' },
-                        top: { md: 44 },
-                        right: { md: 36 },
+                        top: { md: 34 },
+                        right: { md: 28 },
                         width: { xs: '100%', md: 380 },
                         zIndex: 2,
                         mt: { xs: 0, md: 0 },
@@ -236,7 +214,7 @@ const Project = ({ data }: { data: Platform }) => {
                                 borderRadius: 1,
                                 position: 'relative',
                                 backdropFilter: 'blur(12px)',
-                                boxShadow: { md: '0 18px 40px rgba(0, 0, 0, 0.24)' },
+                                // boxShadow: { md: '0 18px 40px rgba(0, 0, 0, 0.24)' },
                                 borderTop: '4px solid rgba(255, 255, 255, 0.42)',
                                 '&::before': {
                                     content: '""',
@@ -245,24 +223,36 @@ const Project = ({ data }: { data: Platform }) => {
                                     left: 0,
                                     width: '72px',
                                     height: '4px',
-                                    bgcolor: '#1a1a1a',
+                                    // bgcolor: '#1a1a1a',
                                     display: { xs: 'none', md: 'block' }
                                 }
                             }}
                         >
                             <Typography
-                                variant='h4'
+                                variant='h3'
                                 component='h3'
                                 fontWeight={800}
-                                sx={{ fontSize: { xs: '1.55rem', md: '2rem' }, color: 'white', lineHeight: 1.1 }}
+                                color='white'
                             >
                                 {data.name}
                             </Typography>
                             <Typography variant='body1' sx={{ mt: 1, color: 'rgba(255,255,255,0.78)', fontWeight: 500 }}>
                                 {data.catchPhrase}
                             </Typography>
-                            <Typography variant="body2" fontSize={16} sx={{ mt: 3, lineHeight: 1.55, color: 'rgba(255,255,255,0.88)' }}>
-                                {shortDescription}
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    mt: 3,
+                                    lineHeight: 1.55,
+                                    color: 'rgba(255,255,255,0.88)',
+                                    textDecoration: 'none',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 4,
+                                    WebkitBoxOrient: 'vertical',
+                                    wordBreak: 'break-word',
+                                    overflow: 'hidden'
+                                }}>
+                                {data.description}
                             </Typography>
                             <Button
                                 onClick={() => setIsDetailsOpen(true)}
@@ -289,22 +279,15 @@ const Project = ({ data }: { data: Platform }) => {
                         alignSelf: { xs: 'flex-start', md: 'auto' }
                     }}>
                         <Button
-                            sx={{
-                                borderRadius: 0,
-                                px: 5,
-                                py: 1.5,
-                                fontSize: '1rem',
-                                fontWeight: 'bold',
-                                boxShadow: 3,
-                                transition: 'transform 0.2s',
-                                '&:hover': { transform: 'scale(1.05)' },
-
-                            }}
+                            size='large'
                             variant='contained'
+                            disableElevation
                             color='secondary'
-
+                            disableRipple
+                            sx={{ fontWeight: 600, textTransform: 'none', borderRadius: '50px' }}
                             href={data.url}
                             target="_blank"
+                            endIcon={<Launch />}
                             rel="noopener noreferrer"
                         >
                             Explorar
@@ -325,7 +308,7 @@ const Project = ({ data }: { data: Platform }) => {
                     }}
                 >
                     <DialogTitle component="div" sx={{ pr: 6 }}>
-                        <Typography variant="h5" component="h2" fontWeight={800}>
+                        <Typography variant="h5" component="h3">
                             {data.name}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
@@ -340,12 +323,16 @@ const Project = ({ data }: { data: Platform }) => {
                         </IconButton>
                     </DialogTitle>
                     <DialogContent>
-                        <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
+                        <Typography variant="body1" sx={{ lineHeight: 1.7 }} gutterBottom>
                             {data.description}
                         </Typography>
                         <Button
-                            sx={{ mt: 3, borderRadius: 0, px: 4, py: 1.25, fontWeight: 'bold' }}
-                            variant="contained"
+                            variant="text"
+                            sx={{
+                                color: 'primary.800',
+                                textTransform: 'none'
+                            }}
+                            endIcon={<Launch />}
                             href={data.url}
                             target="_blank"
                             rel="noopener noreferrer"

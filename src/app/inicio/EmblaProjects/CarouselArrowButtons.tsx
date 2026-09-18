@@ -55,7 +55,6 @@ export const usePrevNextbuttons = (emblaApi: EmblaCarouselType | undefined): Use
 type PropType = ButtonProps
 export const PrevButton = (props: PropType) => {
     const { ...restProps } = props;
-
     return (
         <IconButton
             className={styles.embla__arrow__button}

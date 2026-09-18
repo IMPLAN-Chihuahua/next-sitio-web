@@ -9,11 +9,7 @@ const ProjectSlider = ({ data }: { data: Project[] }) => {
     const OPTIONS: EmblaOptionsType = { direction: 'ltr' }
 
     return (
-        <Box sx={{
-            mt: 5,
-        }}>
-            <Carousel slides={data} options={OPTIONS} />
-        </Box>
+        <Carousel slides={data} options={OPTIONS} />
     )
 }
 

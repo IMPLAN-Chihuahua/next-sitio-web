@@ -1,5 +1,5 @@
-import { Box, Container, Divider } from "@mui/material";
-import LandingPageBanner from "./components/LandingPageBanner";
+import { Box, Container, Divider, Toolbar, Typography } from "@mui/material";
+import LandingPageBanner, { Overlay } from "./components/LandingPageBanner";
 import ProjectsExplorer from "./inicio/ProjectsExplorer";
 import ServicesList from "./inicio/ServicesList";
 import StellarBanner from "./inicio/StellarBanner";
@@ -48,33 +48,34 @@ export default async function Home() {
   return (
     <>
       <LandingPageBanner phrases={heroPhrases} />
-      <Box sx={{
-        bgcolor: 'white',
-        backgroundSize: '20px 20px',
-      }}>
-        <Container>
-          <ServicesList data={sections} />
+      <Container>
+        <Box py={3} />
+        <ServicesList data={sections} />
+        <Box py={3} />
+        <ProjectsExplorer data={platforms} />
+      </Container>
+      <Box py={3} />
+      <Box
+        sx={{
+          background: 'linear-gradient(65deg, rgb(32, 32, 34) 0%,  rgba(30, 34, 38, 0.94) 100%)',
+          color: 'primary.50',
+        }}
+        py={4}>
+        <Container maxWidth='xl'>
+          <Typography
+            variant="h1"
+            color='inherit'
+            component={'h2'}
+            gutterBottom
+          >Instrumentos de planeación</Typography>
+          <ProjectSlider data={projects} />
         </Container>
-        <Box sx={{
-          bgcolor: 'grey.50',
-          mb: 10,
-          p: 2
-        }}>
-          <ProjectsExplorer data={platforms} />
-        </Box>
-
-        <StellarBanner data={stellar} />
-
-        <Box sx={{
-          bgcolor: 'white',
-        }}>
-          <Container maxWidth={'xl'}>
-            <ProjectSlider data={projects} />
-            <FreshDivider />
-            <News data={newsData} />
-          </Container>
-        </Box>
       </Box>
+      <Box py={3} />
+
+      <Container>
+        <News data={newsData} />
+      </Container>
     </>
   );
 }
