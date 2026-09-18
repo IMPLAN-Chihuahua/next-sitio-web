@@ -1,6 +1,6 @@
 'use client';
 
-import { createTheme } from "@mui/material"
+import { createTheme, responsiveFontSizes } from "@mui/material"
 import { blue } from "@mui/material/colors";
 import { Montserrat } from 'next/font/google';
 import { esES } from '@mui/x-data-grid/locales'
@@ -13,9 +13,39 @@ const montserrat = Montserrat({
 
 
 // Obtener colores de 50-900 https://m2.material.io/inline-tools/color/
-const theme = createTheme({
+const _theme = createTheme({
   typography: {
     fontFamily: montserrat.style.fontFamily,
+    h1: {
+      fontSize: '2.6rem',
+      fontWeight: 700,
+      lineHeight: 1.4,
+    },
+    h2: {
+      fontSize: '2.1rem',
+      fontWeight: 600,
+      lineHeight: 1.2
+    },
+    h3: {
+      fontSize: '1.6rem',
+      fontWeight: 500,
+      lineHeight: 1.2
+    },
+    h4: {
+      fontSize: '1.4rem',
+      fontWeight: 500,
+      lineHeight: 1.2
+    },
+    h5: {
+      fontSize: '1.3rem',
+      fontWeight: 500,
+      color: '#414143',
+      lineHeight: 1.2
+    },
+    h6: {
+      fontSize: '1.1rem',
+      lineHeight: 1.2
+    },
     allVariants: {
       color: '#202022',
       fontFamily: montserrat.style.fontFamily,
@@ -55,6 +85,18 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          variants: [{
+            props: { variant: 'outlined' },
+            style: {
+              color: '#414143'
+            }
+          }]
+        }
+      }
+    },
     MuiButtonBase: {
       styleOverrides: {
         root: {
@@ -78,7 +120,7 @@ const theme = createTheme({
       },
       defaultProps: {
         color: blue[900],
-        underline: 'hover'
+        underline: 'always'
       }
     },
     MuiModal: {
@@ -111,5 +153,6 @@ const theme = createTheme({
   esES
 )
 
+const theme = responsiveFontSizes(_theme);
 
 export default theme;
