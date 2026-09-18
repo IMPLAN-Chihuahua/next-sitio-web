@@ -1,6 +1,7 @@
 import {
   Box, Button, Container, Grid, Link as MuiLink, Typography,
-  Accordion, AccordionSummary, AccordionDetails
+  Accordion, AccordionSummary, AccordionDetails,
+  Toolbar
 } from "@mui/material";
 import PageBanner from "../components/PageBanner";
 import LicitacionesTable from "./components/LicitacionesTable";
@@ -13,6 +14,7 @@ import { OpenInNew, ExpandMore } from "@mui/icons-material";
 import { formatISO } from "date-fns";
 import { SubastasTable } from "./components/SubastasTable";
 import { visuallyHidden } from '@mui/utils';
+import { TransparenciaBreadcrumbs } from "../transparencia/components/Breadcrumbs";
 
 const queryForPage = qs.stringify({
   populate: '*'
@@ -60,30 +62,26 @@ export default async function LicitacionesPage() {
 
   return (
     <>
-      <PageBanner
-        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${licitacionesPage.data.cover.url}`}
-        title="¿Cómo compramos?"
-        description="En el IMPLAN estamos comprometidos con la transparencia y queremos que conozcas cómo invertimos tus impuestos"
-      />
+      <Toolbar variant="dense" />
       <Container sx={{ my: 3 }}>
+        <TransparenciaBreadcrumbs currentPageTitle="Adquisiciones" />
 
         {planMasReciente && planMasReciente.document && (
           <Button
             LinkComponent={MuiLink}
             href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${planMasReciente.document.url}`}
-            variant="contained"
+            variant="outlined"
             endIcon={<OpenInNew />}
             sx={{ mt: 2, fontWeight: 600 }}
-            color='secondary'
             size="large"
             target='_blank'
           >
             Plan de adquisiciones {planMasReciente.year}
           </Button>
         )}
-
         <Box component='section' my={2}>
-          <TitleH1 title="Proceso de compra" />
+          <Typography variant='h1' gutterBottom>Adquisiciones</Typography>
+          <Typography variant='h2'>Proceso de compra</Typography>
           <Typography>Al igual que tú, el IMPLAN compara opciones y presupuestos antes de realizar una compra.</Typography>
           <Typography component="h2" sx={visuallyHidden}>
             Pasos del proceso
