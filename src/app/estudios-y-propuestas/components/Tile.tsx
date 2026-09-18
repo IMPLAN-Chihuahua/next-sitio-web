@@ -104,7 +104,7 @@ export const ClasificacionSpan = ({ clasificacion }: { clasificacion: { hexColor
         height={8}
         borderRadius={50}
         mr={.7} />
-      <Typography variant="body2">{clasificacion.name}</Typography>
+      <Typography fontSize={16} variant="body2">{clasificacion.name}</Typography>
     </Box>
   )
 }

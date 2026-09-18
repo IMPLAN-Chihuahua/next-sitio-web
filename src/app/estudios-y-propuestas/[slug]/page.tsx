@@ -100,8 +100,8 @@ const HeaderSection = ({ nombre, categoria, ficha }: { nombre: string, categoria
   return (
     <Box component='section'>
       <TrabajoPageBreadcrumbs currentPageTitle={nombre} />
-      <Typography component={'h1'} mt={3} fontWeight={600} fontSize={36}>{nombre}</Typography>
-      <Typography mb={3} color='primary.700' fontSize={16} fontWeight={600}>{categoria} • {ficha.anio}</Typography>
+      <Typography variant={'h1'} mt={3} gutterBottom>{nombre}</Typography>
+      <Typography mb={3} color='primary.700' fontSize={20} fontWeight={600}>{categoria} • {ficha.anio}</Typography>
     </Box>
   )
 }
@@ -112,8 +112,8 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
   return (
     <Grid container sx={{ my: { xs: 2.5, md: 4.5 } }} columnSpacing={3}>
       <Grid size={{ xs: 12, md: 3 }}>
-        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Inversión</Typography>
-        <Typography variant='body2'>{
+        <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>Inversión</Typography>
+        <Typography fontSize={16} variant='body2'>{
           ficha.inversion
             ? getFormattedInversion(ficha.inversion)
             : ficha.esDesarrolloInterno
@@ -121,12 +121,12 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
               : 'Inversión: Ninguno'
         }</Typography>
         {
-          ficha.helperTextInversion && <Typography variant="body2" color='textSecondary'>({ficha.helperTextInversion})</Typography>
+          ficha.helperTextInversion && <Typography fontSize={15} variant="body2" color='textSecondary'>({ficha.helperTextInversion})</Typography>
         }
       </Grid>
       <Grid size={{ xs: 12, md: 3.5 }} mt={{ xs: 2, md: 0 }}>
-        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Colaboradores</Typography>
-        <Typography variant="body2">
+        <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>Colaboradores</Typography>
+        <Typography variant="body2" fontSize={16}>
           {
             ficha.colaboradoresExternos.length > 0
               ? ficha.colaboradoresExternos.map(colaborador => `${colaborador.nombre} ${colaborador.acronimo ? `(${colaborador.acronimo})` : ''}`).join(', ')
@@ -135,7 +135,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 3.5 }} mt={{ xs: 2, md: 0 }}>
-        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Clasificación</Typography>
+        <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>Clasificación</Typography>
         {
           ficha.clasificaciones.length > 0
             ? ficha.clasificaciones.map(clasificacion => (
@@ -145,7 +145,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
         }
       </Grid>
       <Grid size={{ xs: 12, md: 2 }} mt={{ xs: 2, md: 0 }}>
-        <Typography fontSize={15} mb={.7} fontWeight={600} color='primary.800'>Compartir</Typography>
+        <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>Compartir</Typography>
         <ShareOptions />
       </Grid>
     </Grid>
@@ -209,14 +209,14 @@ const ContentSection = ({ contenido }: { contenido: string }) => {
         <MDXRemote
           source={contenido}
           components={{
-            p: props => <Typography mb={3}>{props.children}</Typography>,
-            a: props => <MuiLink lineHeight={1.8} href={props.href}>{props.children}</MuiLink>,
-            li: props => <Typography lineHeight={1.8} component={'li'} ml={2}>{props.children}</Typography>,
-            ul: props => <Box component='ul' lineHeight={1.8} mb={1.3}>{props.children}</Box>,
-            ol: props => <Box component='ol' lineHeight={1.8} mb={1.3}>{props.children}</Box>,
-            h2: props => <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>{props.children}</Typography>,
-            h3: props => <Typography component={'h3'} my={1} fontSize={20} fontWeight={500} color='primary.800'>{props.children}</Typography>,
-            h4: props => <Typography component='h4' fontSize={18} fontWeight={600} color='primary.800'>{props.children}</Typography>,
+            p: props => <Typography mb={3} sx={{ fontSize: '1.15rem', lineHeight: 1.5 }}>{props.children}</Typography>,
+            a: props => <MuiLink sx={{ fontSize: '1.15rem', lineHeight: 1.5 }} lineHeight={1.8} href={props.href}>{props.children}</MuiLink>,
+            li: props => <Typography lineHeight={1.5} fontSize={'1.15rem'} component={'li'} ml={2}>{props.children}</Typography>,
+            ul: props => <Box component='ul' lineHeight={1.5} fontSize={'1.15rem'} mb={1.3}>{props.children}</Box>,
+            ol: props => <Box component='ol' lineHeight={1.5} fontSize={'1.15rem'} mb={1.3}>{props.children}</Box>,
+            h2: props => <Typography variant='h2' gutterBottom>{props.children}</Typography>,
+            h3: props => <Typography variant='h3' gutterBottom>{props.children}</Typography>,
+            h4: props => <Typography variant='h4' gutterBottom>{props.children}</Typography>,
             LocalVideo: props => (<Box>
               <video width='100%' height='auto' controls disablePictureInPicture>
                 <source src={props.src} type={props.type}></source>
@@ -241,17 +241,17 @@ const ObjetivosSection = ({ objetivos }: { objetivos: ObjetivosEstudio | null })
 
   return (
     <Box component={'section'} my={4}>
-      <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>Objetivos</Typography>
+      <Typography variant={'h2'} my={1}>Objetivos</Typography>
       {
         objetivos.general && (
           <>
-            <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>General</Typography>
+            <Typography variant={'h3'} mb={1}>General</Typography>
             <Box bgcolor={'primary.200'} p={3}>
               <Suspense fallback={<CircularProgress />}>
                 <MDXRemote
                   source={objetivos.general}
                   components={{
-                    p: props => <Typography mt={1} textAlign={'center'}>{props.children}</Typography>
+                    p: props => <Typography mt={1} sx={{ fontSize: '1.15rem', lineHeight: 1.5 }} textAlign={'center'}>{props.children}</Typography>
                   }}
                 />
               </Suspense>
@@ -262,7 +262,7 @@ const ObjetivosSection = ({ objetivos }: { objetivos: ObjetivosEstudio | null })
       {
         objetivos.especificos.length > 0 && (
           <Box mt={2}>
-            <Typography component={'h3'} mb={1} fontSize={20} fontWeight={500} color='primary.800'>Específicos</Typography>
+            <Typography variant={'h3'} mb={1}>Específicos</Typography>
             <Box component={'ol'} ml={5}>
               {
                 objetivos.especificos.map(especifico => (
@@ -270,7 +270,7 @@ const ObjetivosSection = ({ objetivos }: { objetivos: ObjetivosEstudio | null })
                     source={especifico.descripcion}
                     key={especifico.id}
                     components={{
-                      p: props => <li style={{ marginBottom: '5px' }}><Typography>{props.children}</Typography></li>,
+                      p: props => <li style={{ marginBottom: '5px' }}><Typography sx={{ fontSize: '1.15rem', lineHeight: 1.5 }}>{props.children}</Typography></li>,
                       a: props => <MuiLink target={'_blank'} href={props.href}>{props.children}</MuiLink>
                     }}
                   />
@@ -294,10 +294,12 @@ const ArchivosAdjuntosSection = ({ archivosAdjuntos }: { archivosAdjuntos: Multi
   return (
     <Box component='section' my={4}>
       <Typography component={'h2'} fontSize={24} my={1} fontWeight={500}>Archivos adjuntos</Typography>
-      <ul style={{ listStyle: 'none' }}>
+      <ul style={{ marginLeft: '1rem' }}>
         {
           archivosAdjuntos.map((adjunto) => (
-            <li key={adjunto.documentId} style={{ display: 'flex', alignItems: 'center', marginTop: '5px', marginBottom: '5px' }}>
+            <li
+              key={adjunto.documentId}
+            >
               <MuiLink
                 target='_blank'
                 href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${adjunto.url}`}>{
@@ -333,19 +335,19 @@ const AcercaDeSection = ({ categoria, ficha }: { categoria: string, ficha: Ficha
         <Table aria-label={`Metadatos del ${categoria.toLowerCase()}`}>
           <TableBody>
             <TableRow>
-              <TableCell sx={{ width: { md: '250px' } }}>
-                <Typography fontWeight={500}>Código</Typography>
+              <TableCell sx={{ width: { md: '280px' } }}>
+                <Typography fontSize={'1.15rem'} fontWeight={500} lineHeight={1.5}>Código</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{ficha.codigo}</Typography>
+                <Typography fontSize={'1.15rem'} lineHeight={1.5}>{ficha.codigo}</Typography>
               </TableCell>
             </TableRow>
             <TableRow sx={{ bgcolor: 'primary.100' }}>
               <TableCell sx={{ width: { md: '250px' } }}>
-                <Typography fontWeight={500}>Departamentos asignados</Typography>
+                <Typography fontSize={'1.15rem'} fontWeight={500} lineHeight={1.5}>Departamentos asignados</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{
+                <Typography fontSize={'1.15rem'} lineHeight={1.5}>{
                   ficha.departamentosAsignados.length > 0
                     ? ficha.departamentosAsignados.map(d => d.nombre).join(', ')
                     : 'No establecido'
@@ -354,26 +356,26 @@ const AcercaDeSection = ({ categoria, ficha }: { categoria: string, ficha: Ficha
             </TableRow>
             <TableRow>
               <TableCell sx={{ width: { md: '250px' } }}>
-                <Typography fontWeight={500}>Periodicidad</Typography>
+                <Typography fontSize={'1.15rem'} fontWeight={500} lineHeight={1.5}>Periodicidad</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{ficha.periodicidad}</Typography>
+                <Typography fontSize={'1.15rem'} lineHeight={1.5}>{ficha.periodicidad}</Typography>
               </TableCell>
             </TableRow>
             <TableRow sx={{ bgcolor: 'primary.100' }}>
               <TableCell sx={{ width: { md: '250px' } }}>
-                <Typography fontWeight={500}>Localización</Typography>
+                <Typography fontSize={'1.15rem'} fontWeight={500} lineHeight={1.5}>Localización</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{ficha.localizacion ? ficha.localizacion : 'No establecida'}</Typography>
+                <Typography fontSize={'1.15rem'} lineHeight={1.5}>{ficha.localizacion ? ficha.localizacion : 'No establecida'}</Typography>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell sx={{ width: { md: '250px' } }}>
-                <Typography fontWeight={500}>Superficie</Typography>
+                <Typography fontSize={'1.15rem'} fontWeight={500} lineHeight={1.5}>Superficie</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{
+                <Typography fontSize={'1.15rem'} lineHeight={1.5}>{
                   ficha.superficieM2
                     ? `${new Intl.NumberFormat().format(ficha.superficieM2)} m²`
                     : ficha.superficieHas

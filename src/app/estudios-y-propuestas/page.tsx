@@ -18,8 +18,10 @@ export default async function CentroEstudiosPage() {
         description={trabajosPlaneacionPage.data.descripcion}
         cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${trabajosPlaneacionPage.data.cover.url}`}
       />
-      <Container>
-        <SubtitleH2 title="Estudios y propuestas" />
+      <Container sx={{ my: 3 }}>
+        <Typography variant="h2" gutterBottom>
+          Estudios y propuestas
+        </Typography>
         <Typography>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima quibusdam nesciunt quo cupiditate ab consequatur.
           Libero commodi laborum dolor saepe, delectus vitae veniam recusandae quidem. Vero nesciunt necessitatibus sint consequuntur.

@@ -12,9 +12,10 @@ import Image from "next/image";
 const CarouselContext = createContext(null);
 
 
-export default function Carousel(props: { children: ReactNode }) {
+export default function Carousel(props: { children: ReactNode, ariaLabelItem?: string }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ direction: 'ltr' });
   const { nextBtnDisabled, prevBtnDisabled, onNextButtonClick, onPrevButtonClick } = usePrevNextbuttons(emblaApi);
+  const { selectedIndex, scrollSnaps } = useDotButton(emblaApi);
 
   return (
     <Box className={styles.embla}>
@@ -23,12 +24,48 @@ export default function Carousel(props: { children: ReactNode }) {
           {props.children}
         </div>
       </Box>
-      <Box className={styles.embla__controls} mt={1.5} display={'flex'} justifyContent={'flex-end'}>
-        <Box className={styles.embla__dots}>
-          <Box className={styles.embla__arrow__buttons} sx={{ display: 'flex', gap: 1 }}>
-            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-          </Box>
+      <Box
+        className={styles.embla__controls}
+        mt={1.5}
+        display={'grid'}
+        sx={{
+          alignItems: 'center',
+          gridTemplateColumns: 'repeat(3, 1fr)'
+        }}
+      >
+        <Box
+          className={styles.embla__arrow__buttons}
+          sx={{
+            display: 'flex',
+            gap: 1,
+            gridColumnStart: 2,
+            justifyContent: 'center'
+          }}
+        >
+          <PrevButton
+            onClick={onPrevButtonClick}
+            aria-label={`Siguiente ${props.ariaLabelItem ? props.ariaLabelItem.toLowerCase() : 'elemento'}`}
+            disabled={prevBtnDisabled}
+          />
+          <NextButton
+            onClick={onNextButtonClick}
+            disabled={nextBtnDisabled}
+            aria-label={`${props.ariaLabelItem ? props.ariaLabelItem : 'Elemento'} previo`}
+          />
+        </Box>
+        <Box>
+          {
+            scrollSnaps.length > 0 && (
+              <Typography
+                sx={{ userSelect: 'none' }}
+                textAlign={'right'}
+                fontWeight={500}
+                color='textSecondary'
+                fontSize={18}>
+                {selectedIndex + 1} / {scrollSnaps.length}
+              </Typography>
+            )
+          }
         </Box>
       </Box>
     </Box>
