@@ -108,7 +108,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
                 {article.momentosDestacados && article.momentosDestacados.length > 0 && (
                     <Box>
-                        <Typography variant="h3" sx={{ mt: 4, mb: 2, fontSize: '1.5rem', fontWeight: 600, color: 'primary.800' }}>
+                        <Typography variant="h3" sx={{ mt: 4, mb: 2 }}>
                             Momentos destacados
                         </Typography>
                         <ImagesMasonry images={article.momentosDestacados} />
@@ -128,7 +128,7 @@ const HeaderSection = ({ article }: { article: Novedades }) => {
 
     return (
         <Box component='header' mt={2}>
-            <Typography component={'h1'} mt={4} mb={2} fontWeight={600} fontSize={36}>
+            <Typography variant={'h1'} gutterBottom>
                 {article.title}
             </Typography>
             {article.autor && article.autor.length > 0 && (
@@ -149,18 +149,18 @@ const HeaderSection = ({ article }: { article: Novedades }) => {
                                 }}
                             />
                             <Box>
-                                <Typography fontWeight={700} lineHeight={1.2}>
+                                <Typography fontWeight={600} lineHeight={1.2}>
                                     {autor.prefix ? `${autor.prefix} ` : ''}{autor.nombres} {autor.apellidos}
                                 </Typography>
-                                <Typography variant="caption" color="text.secondary">
-                                    {autor.titulo || 'Redacción IMPLAN'}
+                                <Typography variant="caption">
+                                    {autor.titulo || 'IMPLAN'}
                                 </Typography>
                             </Box>
                         </Stack>
                     ))}
                 </Stack>
             )}
-            <Typography color="text.secondary" fontSize={20} fontWeight={400} mb={2} lineHeight={1.6}>
+            <Typography sx={{ fontSize: '1.15rem', lineHeight: 1.5 }} mb={2}>
                 {article.description}
             </Typography>
         </Box>
@@ -226,8 +226,7 @@ const ContentSection = ({ content }: { content: string }) => {
                 <MDXRemote
                     source={content}
                     components={{
-                        p: props => <Typography component="div" className="mdx-paragraph" {...props} />,
-
+                        p: props => <Typography className="mdx-paragraph" {...props}>{props.children}</Typography>,
                         a: props => <MuiLink href={props.href} target="_blank" underline="hover">{props.children}</MuiLink>,
                         img: props => (
                             <Box my={4} textAlign="center">
