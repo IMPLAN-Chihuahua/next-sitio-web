@@ -10,7 +10,7 @@ export const FooterGroupLink = ({ enlace }: { enlace: { href: string, label: str
     <MuiLink
       component={Link}
       href={enlace.href}
-      color='primary.400'
+      color='primary.300'
       variant="body1"
     >
       {

@@ -76,7 +76,7 @@ export default async function Footer() {
             />
             <Box my={1.5}>
               <Typography
-                color='primary.400'
+                color='primary.300'
                 textAlign={{ xs: 'center', md: 'start' }}
                 variant='body2'
               >
@@ -134,7 +134,7 @@ export default async function Footer() {
                               <MuiLink
                                 href={enlace.href}
                                 target={enlace.external ? '_blank' : '_self'}
-                                color='primary.400'
+                                color='primary.300'
                                 variant="body1"
                               >
                                 {
