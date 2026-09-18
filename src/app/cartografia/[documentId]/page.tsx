@@ -22,24 +22,24 @@ export default async function CartografiaDetailPage({ params }: { params: Promis
   return (
     <>
       <Toolbar variant="dense" />
-      <Container sx={{ mt: 3 }}>
+      <Container sx={{ my: 3 }}>
         <CartografiaDetailPageBreadcrumbs currentPageTitle={page.data.objetoGeografico} />
-        <Typography component={'h1'} mt={4} fontWeight={600} fontSize={36}>{page.data.objetoGeografico}</Typography>
-        <Typography mb={3} color='primary.700' fontSize={16} fontWeight={600}>{page.data.tema.descripcion} • {page.data.edicion}</Typography>
-        <Typography>
+        <Typography variant='h1' gutterBottom>{page.data.objetoGeografico}</Typography>
+        <Typography mb={3} color='primary.700' fontSize={17} fontWeight={600}>{page.data.tema.descripcion} • {page.data.edicion}</Typography>
+        <Typography sx={{ fontSize: '1.15rem', lineHeight: 1.5 }}>
           {
             page.data.descripcion
           }
         </Typography>
         <Box mt={1} mb={3}>
-          <Typography fontSize={15} fontWeight={600} color='primary.800'>
+          <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>
             Compartir
           </Typography>
           <ShareOptions />
         </Box>
 
         <Box component={'section'} my={3}>
-          <Typography component={'h2'} fontSize={24} fontWeight={500}>Acerca de</Typography>
+          <Typography variant={'h2'}>Acerca de</Typography>
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 5 }}>
               <Box
@@ -119,8 +119,8 @@ export default async function CartografiaDetailPage({ params }: { params: Promis
         </Box>
 
         <Box component='section' my={3}>
-          <Typography component={'h2'} fontSize={24} fontWeight={500}>Archivos descargables</Typography>
-          <ul style={{ listStyle: 'none' }}>
+          <Typography variant={'h2'}>Archivos descargables</Typography>
+          <ul style={{ marginLeft: '1rem' }}>
             {
               page.data.archivosDescargables.map((archivo, idx) => (
                 <li key={archivo.documentId}>
