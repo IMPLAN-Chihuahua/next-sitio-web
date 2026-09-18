@@ -24,6 +24,7 @@ export default async function QuienesSomosPage() {
     <>
       <Toolbar variant='dense' />
       <Container sx={{ my: 3 }}>
+        <Typography variant='h1' gutterBottom>Rendición de cuentas</Typography>
         <CuentaPublicaSection availableYears={cuentaPublicaYears} />
         <Box>
           <Suspense fallback={<CircularProgress />}>

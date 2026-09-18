@@ -14,8 +14,7 @@ const AccordionFAQ = ({ data, urlContacto }: { data: FaqItem[], urlContacto: str
     };
 
     return (
-        <Container sx={{ mb: 3 }}>
-
+        <Container sx={{ my: 3 }}>
             <TitleH1 title='Preguntas frecuentes' />
             <Typography component="h2" sx={visuallyHidden}>
                 Categorías y preguntas

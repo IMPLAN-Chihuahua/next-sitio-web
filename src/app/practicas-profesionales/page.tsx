@@ -20,15 +20,10 @@ export default async function PracticasProfesionalesPage() {
   }
 
   return (
-    <Container >
+    <Container sx={{ my: 3 }}>
       <Toolbar variant="dense" />
       <TitleH1 title="Vacantes" />
-      <Typography
-        variant="h6"
-        component="h2"
-        color="text.secondary"
-        sx={{ fontWeight: 'normal' }}
-      >
+      <Typography>
         Oportunidades disponibles
       </Typography>
       <Careers data={data?.vacantes} />

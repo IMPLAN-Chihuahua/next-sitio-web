@@ -158,7 +158,7 @@ export default function Links({ titulo, enlaces }: Props) {
 
   return (
     <Box sx={{ mb: 6 }}>
-      <Typography component="h1" sx={visuallyHidden}>
+      <Typography variant="h1" sx={visuallyHidden}>
         Transparencia
       </Typography>
       <SubtitleH2 title={titulo} />
