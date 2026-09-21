@@ -1,35 +1,75 @@
 import type { Metadata } from 'next';
-import { Box, CircularProgress, Container, Toolbar, Typography } from "@mui/material";
+
+import {
+  Box,
+  Container,
+} from '@mui/material';
+
 import PageBanner from '../components/PageBanner';
+
 import { InstrumentosPageType } from './definitions';
-import { SubtitleH2 } from '../components/Titles';
-import InstrumentosTiles from './components/Tiles';
-import { Suspense } from 'react';
+
+import PlaneacionTabs from './components/PlaneacionTabs';
+import DatosAbiertos from './components/DatosAbiertos';
+import Tableros from './components/Tableros';
+import GuiasManuales from './components/GuiasManuales';
+import { InstrumentoDetailPageBreadcrumbs } from './components/InstrumentoBreadcrumbs';
+import SistemaPlaneacion from './components/SistemaPlaneacion';
 
 export const metadata: Metadata = {
-  title: 'Planeación | IMPLAN'
+  title: 'Planeación | IMPLAN',
 };
 
+type Props = {
+  searchParams: Promise<{
+    tab?: string;
+  }>;
+};
 
-export default async function InstrumentosPlaneacionPage() {
-  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumento-planeacion-page?populate=*`)
-  const page: { data: InstrumentosPageType } = await req.json();
+export default async function InstrumentosPlaneacionPage({
+  searchParams,
+}: Props) {
+  const { tab = 'sistemas-planeacion' } = await searchParams;
+
+  const req = await fetch(
+    `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumento-planeacion-page?populate=*`
+  );
+
+  const page: {
+    data: InstrumentosPageType;
+  } = await req.json();
+
+  return (
+    <Box minHeight="100vh">
+      <PageBanner
+        cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
+        title={page.data.titulo}
+        description={page.data.descripcion}
+      />
+
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          borderBottom: 1,
+          borderColor: 'divider',
+        }}
+      >
+        <Container>
+          <PlaneacionTabs />
+        </Container>
+      </Box>
+
+      <Container >
+        <InstrumentoDetailPageBreadcrumbs currentPageTitle={tab} />
+        {tab === 'sistemas-planeacion' && <SistemaPlaneacion />}
+
+        {tab === 'datos-abiertos' && <DatosAbiertos />}
+
+        {tab === 'tableros' && <Tableros />}
 
 
-  return (<Box minHeight='100vh'>
-    <PageBanner
-      cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
-      title={`${page.data.titulo}`}
-      description={page.data.descripcion}
-    />
-    <Container>
-      <SubtitleH2 title='Datos abiertos' />
-      <Typography>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias illo eos commodi beatae a recusandae ratione, nihil esse dolor reiciendis eaque, deleniti voluptate ab fuga consectetur ipsam unde modi libero.
-      </Typography>
-      <Suspense fallback={<Box display="flex" justifyContent="center" py={10}><CircularProgress /></Box>}>
-        <InstrumentosTiles />
-      </Suspense>
-    </Container>
-  </Box>)
+        {tab === 'guias-manuales' && <GuiasManuales />}
+      </Container>
+    </Box>
+  );
 }

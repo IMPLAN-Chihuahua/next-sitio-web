@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Box, CircularProgress, Container, Typography } from "@mui/material";
+import { Box, CircularProgress, Container } from "@mui/material";
 import PageBanner from '../components/PageBanner';
 import { SubtitleH2 } from '../components/Titles';
 import CartografiaTiles from './components/Tiles';
@@ -27,7 +27,7 @@ export default async function DatosAbiertosPage() {
         source={page.data.datosAbiertosContent}
       />
 
-      <Suspense fallback={<Box display="flex" justifyContent="center" py={10}><CircularProgress /></Box>}>
+      <Suspense fallback={<Box display="flex" justifyContent="center" py={10}><CircularProgress aria-label="Cargando cartografía" /></Box>}>
         <CartografiaTiles />
       </Suspense>
 

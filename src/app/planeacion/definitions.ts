@@ -31,3 +31,66 @@ export type InstrumentoPlaneacion = {
   vigente: boolean;
   destacado: boolean;
 }
+
+export type TableroEstado = 'activo' | 'desarrollo';
+
+export interface Tablero {
+  id: number;
+  documentId?: string;
+
+  titulo: string;
+  categoria: string;
+  descripcion: string;
+  cover?: Media | null;
+
+  url: string | null;
+
+  enDesarrollo: boolean;
+  activo: boolean;
+
+  createdAt: string;
+  updatedAt: string;
+  publishedAt?: string | null;
+}
+
+export interface GuiaManualDocumento {
+  id: number;
+  documentId?: string;
+
+  name: string;
+  alternativeText?: string | null;
+  caption?: string | null;
+
+  width?: number | null;
+  height?: number | null;
+
+  hash: string;
+  ext: string;
+  mime: string;
+
+  size: number;
+  url: string;
+
+  previewUrl?: string | null;
+}
+
+export interface GuiaManual {
+  id: number;
+  documentId?: string;
+
+  titulo: string;
+  categoria: string;
+  descripcion: string;
+  cover?: Media | null;
+
+  documento: GuiaManualDocumento | null;
+
+  urlExterna: string | null;
+
+  enDesarrollo: boolean;
+  activo: boolean;
+
+  createdAt: string;
+  updatedAt: string;
+  publishedAt?: string | null;
+}

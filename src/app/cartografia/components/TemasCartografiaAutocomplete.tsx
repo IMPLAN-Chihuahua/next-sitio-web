@@ -13,14 +13,14 @@ export const TemasCartografiaAutocomplete = ({ name, label = '' }: { name: strin
   const { data, isLoading } = useSWRImmutable<{ data: TemaCartografia[], meta: { pagination: Pagination } }>('/temas-cartografia?pagination[pageSize]=100', cmsFetcher)
 
   if (isLoading) {
-    return <CircularProgress />
+    return <CircularProgress aria-label="Cargando temas de cartografía" />
   }
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <Autocomplete
           noOptionsText='No se encontraron opciones'
           multiple

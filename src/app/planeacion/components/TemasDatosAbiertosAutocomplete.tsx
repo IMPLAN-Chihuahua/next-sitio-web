@@ -19,7 +19,7 @@ export default function TemasInstrumentoPlaneacionAutocomplete({ label, name }: 
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <Autocomplete
           noOptionsText='No se encontraron opciones'
           multiple
