@@ -229,9 +229,60 @@ const ContentSection = ({ content }: { content: string }) => {
                         p: props => <Typography className="mdx-paragraph" {...props}>{props.children}</Typography>,
                         a: props => <MuiLink href={props.href} target="_blank" underline="hover">{props.children}</MuiLink>,
                         img: props => (
-                            <Box my={4} textAlign="center">
-                                <img src={props.src} alt={props.alt} style={{ maxWidth: '600px', borderRadius: '5px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                                {props.alt && <Typography variant="caption" display="block" color="text.secondary">{props.alt}</Typography>}
+                            //     <Box
+                            //         my={4}
+                            //         textAlign="center"
+                            //         component={'span'}
+                            //         maxWidth={'600px'}
+                            //         minWidth={'200px'}
+                            //         px={1}
+                            //         display={'inline-flex'}
+                            //         flexDirection={'column'}
+                            //         position={'relative'}
+                            //     >
+                            //         <img
+                            //             src={props.src}
+                            //             alt={props.alt}
+                            //             style={{
+
+                            //                 borderRadius: '5px',
+                            //                 boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+
+                            //             }}
+                            //         />
+                            //     </Box>
+                            <Box
+                                component='span'
+                                display={'inline-flex'}
+                                position={'relative'}
+                                flexDirection={'column'}
+                                height={580}
+                                minHeight={300}
+                                width={'100%'}
+                            >
+                                <Image
+                                    src={props.src}
+                                    alt={props.alt}
+                                    layout="fill"
+                                    unoptimized
+                                    style={{
+                                        objectFit: 'contain',
+                                        bottom: 0,
+                                        top: 0,
+                                        paddingBottom: 20
+                                    }}
+                                />
+                                {props.alt && <Typography
+                                    bottom={0}
+                                    left={0}
+                                    right={0}
+                                    position={'absolute'}
+                                    variant="caption"
+                                    display="block"
+                                    textAlign={'center'}
+                                    bgcolor={'primary.50'}
+                                    color="text.secondary"
+                                >{props.alt}</Typography>}
                             </Box>
                         ),
                         LocalVideo: props => (
