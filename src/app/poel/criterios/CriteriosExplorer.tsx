@@ -103,11 +103,11 @@ export default function CriteriosExplorer({ initialData }: Props) {
 
     return (
         <Box sx={{ p: { xs: 2, md: 4 } }}>
-            <Typography variant="h4" component="h1" fontWeight={700} gutterBottom>
+            <Typography variant="h1" gutterBottom>
                 Criterios de Regulación Ecológica
             </Typography>
 
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+            <Typography variant="body1" sx={{ mb: 3 }}>
                 Busque y consulte las normas ambientales aplicables en el municipio.
             </Typography>
 

@@ -7,7 +7,7 @@ const CartografiaDetailPageBreadcrumbs = ({ currentPageTitle }: { currentPageTit
 
 
   return (
-    <Breadcrumbs>
+    <Breadcrumbs sx={{ mb: 3 }}>
       <MuiLink variant="body2" component={Link} href='/'>Inicio</MuiLink>
       <MuiLink variant="body2" component={Link} href='/cartografia'>Cartografía</MuiLink>
       <Typography variant="body2">{currentPageTitle}</Typography>

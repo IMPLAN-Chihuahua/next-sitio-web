@@ -8,7 +8,7 @@ import Link from "next/link"
 export const TransparenciaBreadcrumbs = ({ currentPageTitle }: { currentPageTitle: string }) => {
 
     return (
-        <Breadcrumbs>
+        <Breadcrumbs sx={{ mb: 3 }}>
             <MuiLink variant="body2" component={Link} href='/'>Inicio</MuiLink>
             <MuiLink variant="body2" component={Link} href='/transparencia'>Transparencia</MuiLink>
             <Typography variant="body2">{currentPageTitle}</Typography>

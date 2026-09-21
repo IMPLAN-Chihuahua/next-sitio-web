@@ -36,7 +36,6 @@ export default async function TransparenciaPage() {
 
   return (
     <Box minHeight='100vh'>
-
       <PageBanner
         cover={dataPage.cover?.url
           ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${dataPage.cover.url}`
@@ -45,7 +44,7 @@ export default async function TransparenciaPage() {
         description={dataPage.description}
       />
 
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ my: 3 }}>
         <Links
           titulo="Enlaces Internos"
           enlaces={dataPage.Internal_links || dataPage.internal_links || []}
