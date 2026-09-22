@@ -3,6 +3,7 @@ import { SubtitleH2, TitleH1 } from "../components/Titles";
 import { AvisosPrivacidadTable } from "./components/AvisosPrivacidadTable";
 import { AvisoPrivacidad } from "./definitions";
 import qs from 'qs'
+import { TransparenciaBreadcrumbs } from "../transparencia/components/Breadcrumbs";
 
 
 
@@ -13,12 +14,13 @@ export default async function AvisoPrivacidadPage() {
   })
   const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/avisos-privacidad?${queryParams}`);
   const { data: avisos }: { data: AvisoPrivacidad[] } = await req.json();
-
+  const pageTitle = 'Avisos de privacidad'
   return (
     <Box>
       <Toolbar variant="dense" />
       <Container sx={{ my: 3 }}>
-        <TitleH1 title="Avisos de privacidad" />
+        <TransparenciaBreadcrumbs currentPageTitle={pageTitle} />
+        <TitleH1 title={pageTitle} />
         <AvisosPrivacidadTable avisos={avisos} />
       </Container>
     </Box>
