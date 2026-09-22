@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Card, CardContent, Typography, Icon } from "@mui/material";
+import { Box, Card, CardContent, Typography, Icon, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { SubtitleH2 } from '../../components/Titles';
 import Link from 'next/link';
 import { visuallyHidden } from '@mui/utils';
+import VerMasButton from '@/app/components/VerMasButton';
+import CardTiles from '@/app/components/CardTiles';
+import { Launch } from '@mui/icons-material';
 
 interface Enlace {
   id: number;
@@ -63,13 +66,11 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
       <Card
         className="tarjeta-contenedor"
         elevation={0}
+        variant='outlined'
         sx={{
           position: 'relative',
           height: '220px',
           width: '100%',
-          borderRadius: '16px',
-          backgroundColor: 'transparent',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.22)',
           transition: 'all 0.3s ease',
         }}
       >
@@ -85,7 +86,6 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'background.paper',
             borderRadius: '16px',
             transition: 'opacity 0.25s ease, transform 0.3s ease',
             opacity: 1,
@@ -95,12 +95,8 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
           }}
         >
           <CardContent sx={{ textAlign: 'center' }}>
-            {link.icon && (
-              <Icon sx={{ fontSize: 48, color: '#e7a243', mb: 1.5 }}>
-                {link.icon}
-              </Icon>
-            )}
-            <Typography variant="h5" component="h3" color='primary.secondary' sx={{ fontWeight: 600 }}>
+
+            <Typography variant="h5" component="h3" sx={{ fontWeight: 600 }}>
               {link.text}
             </Typography>
             {/* Hint solo en móvil */}
@@ -126,9 +122,7 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'primary.main',
             color: '#ffffff',
-            borderRadius: '16px',
             textDecoration: 'none',
             transition: 'opacity 0.25s ease 0.25s, transform 0.3s ease 0.2s',
             opacity: 0,
@@ -137,14 +131,14 @@ function TarjetaLink({ link, esMovil }: { link: Enlace; esMovil: boolean }) {
           }}
         >
           <CardContent sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant="body2" sx={{ fontWeight: 400, lineHeight: 1.5, color: '#ffffff', opacity: 0.9, mb: 2 }}>
+            <Typography variant="body2" sx={{ fontWeight: 400, lineHeight: 1.5, color: 'primary.800', opacity: 0.9, mb: 2 }}>
               {link.descriptionUrl}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 'auto' }}>
-              <Typography variant="button" sx={{ color: '#ffffff', fontWeight: 'bold', textTransform: 'none', letterSpacing: '0.5px' }}>
+              <Typography variant="button" sx={{ color: 'primary.800', fontWeight: 'bold', textTransform: 'none', letterSpacing: '0.5px' }}>
                 Ingresar a la sección
               </Typography>
-              <Icon sx={{ color: '#ffffff', fontSize: 20 }}>arrow_forward</Icon>
+              <Icon sx={{ color: 'primary.800', fontSize: 20 }}>arrow_forward</Icon>
             </Box>
           </CardContent>
         </Box>
@@ -164,20 +158,24 @@ export default function Links({ titulo, enlaces }: Props) {
       <SubtitleH2 title={titulo} />
 
       <Grid container spacing={3} sx={{ mt: 1 }}>
-        {enlaces?.map((link) => (
+        {enlaces?.map((link, idx) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={link.id}>
-            {/* Desktop: el Box entero es un Link */}
-            {!esMovil ? (
-              <Box
-                component={Link}
-                href={link.url}
-                sx={{ textDecoration: 'none', display: 'block' }}
-              >
-                <TarjetaLink link={link} esMovil={false} />
-              </Box>
-            ) : (
-              <TarjetaLink link={link} esMovil={true} />
-            )}
+            <CardTiles
+              title={link.text}
+              tipo='rectangular-vertical'
+              description={link.descriptionUrl}
+              descriptionLineClamp={5}
+              {...(
+                link.icon
+                && {
+                  icon: <Icon>{link.icon}</Icon>
+                })}
+              action={{
+                label: 'Ver más',
+                href: link.url,
+                external: link.url.startsWith('http'),
+              }}
+            />
           </Grid>
         ))}
       </Grid>
