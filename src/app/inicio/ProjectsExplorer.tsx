@@ -209,12 +209,11 @@ const Project = ({ data }: { data: Platform }) => {
                             elevation={0}
                             sx={{
                                 p: { xs: 3, md: 4 },
-                                bgcolor: 'rgba(30, 34, 38, 0.94)',
+                                bgcolor: 'primary.900',
                                 color: 'white',
                                 borderRadius: 1,
                                 position: 'relative',
                                 backdropFilter: 'blur(12px)',
-                                // boxShadow: { md: '0 18px 40px rgba(0, 0, 0, 0.24)' },
                                 borderTop: '4px solid rgba(255, 255, 255, 0.42)',
                                 '&::before': {
                                     content: '""',
@@ -236,7 +235,7 @@ const Project = ({ data }: { data: Platform }) => {
                             >
                                 {data.name}
                             </Typography>
-                            <Typography variant='body1' sx={{ mt: 1, color: 'rgba(255,255,255,0.78)', fontWeight: 500 }}>
+                            <Typography variant='body1' sx={{ mt: 1, color: 'primary.50', fontWeight: 500 }}>
                                 {data.catchPhrase}
                             </Typography>
                             <Typography
@@ -244,7 +243,7 @@ const Project = ({ data }: { data: Platform }) => {
                                 sx={{
                                     mt: 3,
                                     lineHeight: 1.55,
-                                    color: 'rgba(255,255,255,0.88)',
+                                    color: 'primary.100',
                                     textDecoration: 'none',
                                     display: '-webkit-box',
                                     WebkitLineClamp: 4,
@@ -282,9 +281,17 @@ const Project = ({ data }: { data: Platform }) => {
                             size='large'
                             variant='contained'
                             disableElevation
-                            color='secondary'
+                            color='primary'
                             disableRipple
-                            sx={{ fontWeight: 600, textTransform: 'none', borderRadius: '50px' }}
+                            sx={{ 
+                                fontWeight: 600, 
+                                textTransform: 'none', 
+                                borderRadius: '50px',
+                                bgcolor: 'primary.900',
+                                ':hover': {
+                                    bgcolor: 'primary.800'
+                                }
+                             }}
                             href={data.url}
                             target="_blank"
                             endIcon={<Launch />}
