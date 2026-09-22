@@ -86,6 +86,7 @@ export default async function Tableros() {
                                 category={getTableroCategoria(tablero)}
                                 description={tablero.descripcion}
                                 image={getTableroImage(tablero)}
+                                imageFit="contain"
                                 inactive={tablero.enDesarrollo}
                                 contentSx={{ minHeight: tablero.cover?.url ? 185 : 215 }}
                                 descriptionLineClamp={4}
@@ -126,6 +127,7 @@ export default async function Tableros() {
                                 category={getTableroCategoria(tablero)}
                                 description={tablero.descripcion}
                                 image={getTableroImage(tablero)}
+                                imageFit="contain"
                                 inactive={tablero.enDesarrollo}
                                 contentSx={{ minHeight: tablero.cover?.url ? 185 : 215 }}
                                 descriptionLineClamp={4}

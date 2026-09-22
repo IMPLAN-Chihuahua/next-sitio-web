@@ -10,12 +10,13 @@ import { Pagination, TemaInstrumentoPlaneacion } from '@/app/definitions';
 import { InstrumentoPlaneacion } from '../definitions';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { AnioAutocomplete } from '@/app/estudios-y-propuestas/components/Tiles';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { formatISO } from 'date-fns';
 import TemasInstrumentoPlaneacionAutocomplete from './TemasDatosAbiertosAutocomplete';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUrlPagination } from '@/app/hooks/useUrlPagination';
 import CardTiles from '@/app/components/CardTiles';
+import type { GrupoPlaneacion } from '../data/sistema-planeacion';
 
 const MotionGrid = motion.create(Grid);
 
@@ -29,6 +30,9 @@ type InstrumentoPlaneacionConEstado = InstrumentoPlaneacion & {
 type InstrumentosTilesProps = {
   seccion: SeccionInstrumento;
   incluirSinSeccion?: boolean;
+  compact?: boolean;
+  expandedCatalog?: boolean;
+  grupo?: GrupoPlaneacion | null;
 };
 
 type FormValues = {
@@ -36,14 +40,18 @@ type FormValues = {
   temas: TemaInstrumentoPlaneacion[];
 };
 
-const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosTilesProps) => {
+const InstrumentosTiles = ({ seccion, incluirSinSeccion = false, compact = false, expandedCatalog = false, grupo = null }: InstrumentosTilesProps) => {
+  const sectionRef = useRef<HTMLElement>(null);
   const methods = useForm<FormValues>({
     defaultValues: { anio: [], temas: [] }
   });
 
   const values = useWatch({ control: methods.control });
   const [search, setSearch] = useState('');
-  const { page, changePage } = useUrlPagination(1);
+  const { page: urlPage, changePage: changeUrlPage } = useUrlPagination(1);
+  const [catalogPage, setCatalogPage] = useState(1);
+  const page = compact ? catalogPage : urlPage;
+  const changePage = compact ? setCatalogPage : changeUrlPage;
 
   const seccionFilter = incluirSinSeccion
     ? {
@@ -92,7 +100,13 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosT
           ]
         },
         ...temasFilter,
-        ...aniosFilter
+        ...aniosFilter,
+        ...(grupo ? [{ estado: { $eq: 'vigente' } }, {
+          $or: [
+            { nombre: { $containsi: { parciales: 'parcial', sectoriales: 'sectorial', maestros: 'maestro' }[grupo] } },
+            { tema: { descripcion: { $containsi: { parciales: 'parcial', sectoriales: 'sectorial', maestros: 'maestro' }[grupo] } } }
+          ]
+        }] : [])
       ]
     }
   };
@@ -115,7 +129,11 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosT
 
   const handlePageChange = (_: ChangeEvent<unknown>, val: number) => {
     changePage(val);
-    window.scrollTo({ top: 550, behavior: 'auto' });
+    if (compact) {
+      sectionRef.current?.parentElement?.scrollIntoView({ block: 'start', behavior: 'auto' });
+    } else {
+      window.scrollTo({ top: 550, behavior: 'auto' });
+    }
   };
 
   if (error) {
@@ -131,7 +149,10 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosT
     : 'Tema datos abiertos';
 
   return (
-    <Box component="section">
+    <Box component="section" ref={sectionRef} sx={compact ? {
+      '& .MuiOutlinedInput-root': { minWidth: '0 !important' },
+      '& > .MuiFormControl-root': { minWidth: 0 },
+    } : undefined}>
       <FormProvider {...methods}>
         <SearchAndFiltersLayout
           Filters={
@@ -150,7 +171,7 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosT
         />
       </FormProvider>
 
-      <Grid container spacing={2} sx={{ my: 3 }} minHeight="600px">
+      <Grid data-instrumentos-results container spacing={compact ? 3 : 2} sx={{ my: 3 }} minHeight={compact ? undefined : '600px'}>
         <AnimatePresence mode="popLayout">
           {isLoading ? (
             <Grid size={12} display="flex" justifyContent="center" py={10}>
@@ -165,11 +186,11 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosT
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.3 }}
                 key={instrumento.documentId}
-                size={{ xs: 12, md: 4 }}
+                size={compact ? (expandedCatalog ? { xs: 12, sm: 6, lg: 4, xl: 3 } : { xs: 12, sm: 6, xl: 4 }) : { xs: 12, md: 4 }}
                 justifyContent={{ xs: 'center' }}
                 display="flex"
               >
-                <InstrumentoTile instrumento={instrumento} />
+                <InstrumentoTile instrumento={instrumento} compact={compact} />
               </MotionGrid>
             ))
           ) : (
@@ -193,6 +214,7 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false }: InstrumentosT
 };
 
 type InstrumentoCardProps = {
+  compact?: boolean;
   instrumento: Pick<
     InstrumentoPlaneacionConEstado,
     'cover' | 'nombre' | 'descripcion' | 'tema' | 'version' |
@@ -201,7 +223,7 @@ type InstrumentoCardProps = {
   >;
 };
 
-const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
+const InstrumentoTile = ({ instrumento, compact = false }: InstrumentoCardProps) => {
   const aboutInstrumento = instrumento.anioPublicacion ? `• ${instrumento.anioPublicacion}` : '';
   const title = `${instrumento.nombre} ${aboutInstrumento}`.trim();
 
@@ -213,7 +235,7 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
 
   return (
     <CardTiles
-      tipo="rectangular-vertical"
+      tipo={compact ? 'rectangular-horizontal' : 'rectangular-vertical'}
       title={title}
       href={`/planeacion/${instrumento.nombreCortoSlug}`}
       image={{
@@ -228,7 +250,9 @@ const InstrumentoTile = ({ instrumento }: InstrumentoCardProps) => {
       historico={esHistorico}
       historicoLabel="Histórico"
       historicoTooltip="Este instrumento es de carácter histórico, por lo que su contenido puede no reflejar la normativa o situación urbana vigente."
-      contentSx={{ minHeight: 235 }}
+      contentSx={compact ? { minHeight: 220, p: 2 } : { minHeight: 235 }}
+      titleLineClamp={compact ? 3 : 2}
+      action={compact ? { href: `/planeacion/${instrumento.nombreCortoSlug}`, label: 'Ver estudio', external: false } : undefined}
     />
   );
 };

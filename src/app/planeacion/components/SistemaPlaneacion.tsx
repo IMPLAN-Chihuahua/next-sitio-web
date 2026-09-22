@@ -6,7 +6,7 @@ import {
 
 import { Suspense } from 'react';
 
-import InstrumentosTiles from './Tiles';
+import SistemaPlaneacionExplorer from './SistemaPlaneacionExplorer';
 
 
 export default function SistemaPlaneacion() {
@@ -41,9 +41,7 @@ export default function SistemaPlaneacion() {
                 }
             >
 
-                <InstrumentosTiles
-                    seccion="sistema_planeacion"
-                />
+                <SistemaPlaneacionExplorer />
             </Suspense>
         </>
     );

@@ -59,7 +59,10 @@ export default async function InstrumentosPlaneacionPage({
         </Container>
       </Box>
 
-      <Container >
+      <Container
+        maxWidth={tab === 'sistemas-planeacion' ? false : 'lg'}
+        sx={tab === 'sistemas-planeacion' ? { px: { xs: 2, sm: 3, lg: 5, xl: 7 } } : undefined}
+      >
         <InstrumentoDetailPageBreadcrumbs currentPageTitle={tab} />
         {tab === 'sistemas-planeacion' && <SistemaPlaneacion />}
 
