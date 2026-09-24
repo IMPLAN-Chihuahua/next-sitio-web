@@ -25,7 +25,7 @@ function Nodo({ nodo, selected, onSelect }: { nodo: NodoPlaneacion; selected: bo
 
 export default function SistemaPlaneacionExplorer() {
     const [grupo, setGrupo] = useState<GrupoPlaneacion | null>(null);
-    const [diagramOpen, setDiagramOpen] = useState(true);
+    const [diagramOpen, setDiagramOpen] = useState(false);
     const catalogRef = useRef<HTMLElement>(null);
     const layoutRef = useRef<HTMLDivElement>(null);
 
