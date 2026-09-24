@@ -14,7 +14,7 @@ export function TitleH1({ title }: { title: string }) {
 export function SubtitleH2({ title }: { title: string }) {
   return (
     <>
-      <Typography variant='h2'>
+      <Typography variant='h2' gutterBottom>
         {title}
       </Typography>
     </>

@@ -53,6 +53,7 @@ const Carousel = (props: PropType) => {
                                     <Typography
                                         variant='h2'
                                         component='h3'
+                                        sx={{ userSelect: 'none' }}
                                         mt={{ md: 3 }}
                                     >
                                         {project.title}
@@ -69,7 +70,8 @@ const Carousel = (props: PropType) => {
                                                 WebkitLineClamp: 4,
                                                 WebkitBoxOrient: 'vertical',
                                                 wordBreak: 'break-word',
-                                                overflow: 'hidden'
+                                                overflow: 'hidden',
+                                                userSelect: 'none'
                                             }}>
                                             {project.description}
                                         </Typography>

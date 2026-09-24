@@ -31,7 +31,8 @@ export default async function TransparenciaPage() {
     const page = await req.json();
     dataPage = page?.data ?? null;
   } catch (error) {
-    console.error('Error fetching transparencia-page:', error);
+    console.error(error);
+    throw new Error('Error al obtener metadatos de transparencia');
   }
 
   return (
@@ -46,10 +47,10 @@ export default async function TransparenciaPage() {
 
       <Container maxWidth="lg" sx={{ my: 3 }}>
         <Links
-          titulo="Enlaces Internos"
+          titulo="Instituto"
           enlaces={dataPage.Internal_links || dataPage.internal_links || []}
         />
-        <FreshDivider />
+
         <ExternalLinksCarousel
           titulo="Enlaces Externos"
           enlaces={dataPage.external_links || []}

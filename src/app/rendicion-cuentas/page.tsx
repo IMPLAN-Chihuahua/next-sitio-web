@@ -6,6 +6,7 @@ import { CuentaPublicaSection } from './components/ReportesTable';
 import { Suspense } from 'react';
 import { MDXRemote } from 'next-mdx-remote-client/rsc';
 import { RendicionDeCuentasPage } from './definitions';
+import { TransparenciaBreadcrumbs } from '../transparencia/components/Breadcrumbs';
 
 
 export const metadata: Metadata = {
@@ -19,12 +20,13 @@ export default async function QuienesSomosPage() {
 
   const rendicionPageReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/rendicion-cuentas-page?populate[0]=cover`);
   const rendicionCuentasPage = await rendicionPageReq.json() as { data: RendicionDeCuentasPage };
-
+  const pageTitle = 'Rendición de cuentas'
   return (
     <>
       <Toolbar variant='dense' />
       <Container sx={{ my: 3 }}>
-        <Typography variant='h1' gutterBottom>Rendición de cuentas</Typography>
+        <TransparenciaBreadcrumbs currentPageTitle={pageTitle} />
+        <Typography variant='h1' gutterBottom>{pageTitle}</Typography>
         <CuentaPublicaSection availableYears={cuentaPublicaYears} />
         <Box>
           <Suspense fallback={<CircularProgress />}>

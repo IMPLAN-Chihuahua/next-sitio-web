@@ -57,7 +57,7 @@ export default async function Home() {
       <Box py={3} />
       <Box
         sx={{
-          background: 'linear-gradient(65deg, rgb(32, 32, 34) 0%,  rgba(30, 34, 38, 0.94) 100%)',
+          background: 'linear-gradient(65deg, rgb(32, 32, 34) 60%,  rgb(65, 65, 67) 100%)',
           color: 'primary.50',
         }}
         py={4}>

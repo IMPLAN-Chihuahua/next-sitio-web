@@ -229,28 +229,6 @@ const ContentSection = ({ content }: { content: string }) => {
                         p: props => <Typography className="mdx-paragraph" {...props}>{props.children}</Typography>,
                         a: props => <MuiLink href={props.href} target="_blank" underline="hover">{props.children}</MuiLink>,
                         img: props => (
-                            //     <Box
-                            //         my={4}
-                            //         textAlign="center"
-                            //         component={'span'}
-                            //         maxWidth={'600px'}
-                            //         minWidth={'200px'}
-                            //         px={1}
-                            //         display={'inline-flex'}
-                            //         flexDirection={'column'}
-                            //         position={'relative'}
-                            //     >
-                            //         <img
-                            //             src={props.src}
-                            //             alt={props.alt}
-                            //             style={{
-
-                            //                 borderRadius: '5px',
-                            //                 boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-
-                            //             }}
-                            //         />
-                            //     </Box>
                             <Box
                                 component='span'
                                 display={'inline-flex'}

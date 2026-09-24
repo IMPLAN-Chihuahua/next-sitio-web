@@ -2,8 +2,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Box, Card, CardContent, Typography, IconButton, Icon } from '@mui/material';
+import { Box, Card, CardContent, Typography, IconButton, Icon, Button } from '@mui/material';
 import { SubtitleH2 } from '../../components/Titles';
+import { Launch } from '@mui/icons-material';
+import { useDotButton } from '@/app/inicio/EmblaProjects/CarouselDotButton';
+import { NextButton, PrevButton, usePrevNextbuttons } from '@/app/inicio/EmblaProjects/CarouselArrowButtons';
 
 interface StrapiImage {
   url: string;
@@ -34,34 +37,12 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
   const autoplay = Autoplay({ delay: 6000, stopOnInteraction: true, stopOnMouseEnter: true });
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: 'center' },
+    { align: 'center'},
     [autoplay]
   );
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const scrollPrev = useCallback(() => {
-    emblaApi?.scrollPrev();
-    autoplay.reset();
-  }, [emblaApi, autoplay]);
-
-  const scrollNext = useCallback(() => {
-    emblaApi?.scrollNext();
-    autoplay.reset();
-  }, [emblaApi, autoplay]);
-
-  const scrollTo = useCallback((index: number) => {
-    emblaApi?.scrollTo(index);
-    autoplay.reset();
-  }, [emblaApi, autoplay]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
-    emblaApi.on('select', onSelect);
-    onSelect();
-    return () => { emblaApi.off('select', onSelect); };
-  }, [emblaApi]);
+  const { scrollSnaps, selectedIndex } = useDotButton(emblaApi)
+  const { nextBtnDisabled, onNextButtonClick, onPrevButtonClick, prevBtnDisabled } = usePrevNextbuttons(emblaApi);
 
   if (!enlaces || enlaces.length === 0) return null;
 
@@ -71,42 +52,25 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
   };
 
   return (
-    <Box sx={{ mb: 6 }}>
+    <Box >
       <SubtitleH2 title={titulo} />
 
-      <Box sx={{ position: 'relative', mt: 3 }}>
+      <Box sx={{ position: 'relative' }}>
 
-        {/* boton anterior */}
-        <IconButton
-          onClick={scrollPrev}
-          aria-label="Anterior"
-          sx={{
-            position: 'absolute',
-            left: { xs: -4, md: -20 },
-            top: '50%',
-            transform: 'translateY(-60%)',
-            zIndex: 10,
-            backgroundColor: 'background.paper',
-            boxShadow: 3,
-            '&:hover': { backgroundColor: '#e7a243', color: '#fff' },
-          }}
-        >
-          <Icon>chevron_left</Icon>
-        </IconButton>
 
-        {/* Embla */}
-        <Box ref={emblaRef} sx={{ overflow: 'hidden', mx: { xs: 3, md: 4 } }}>
+
+        <Box ref={emblaRef} sx={{ overflow: 'hidden' }}>
           <Box sx={{ display: 'flex' }}>
             {enlaces.map((link) => (
               <Box
                 key={link.id}
-                sx={{ flex: '0 0 100%', minWidth: 0, px: 2, pb: 1 }}
+                sx={{ flex: '0 0 89%', minWidth: 0, px: 1 }}
               >
                 <Card
                   component="a"
                   href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
                   target="_blank"
-
+                  variant='outlined'
                   rel="noopener noreferrer"
                   sx={{
                     textDecoration: 'none',
@@ -114,16 +78,16 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'center',
                     borderRadius: '16px',
-                    boxShadow: 3,
                     overflow: 'visible',
                     mb: 1,
+                    mt: 1,
                     height: { md: 260 },
-                    backgroundColor: '#ffffff',
                     minHeight: { xs: 200 },
                     transition: 'all 0.3s ease',
                     '&:hover': {
-                      boxShadow: '0 14px 40px #e7a34344',
-                      transform: 'translateY(-4px)',
+                      boxShadow: '0 6px 20px rgba(0,0,0,0.06)',
+                      borderColor: '#fbc02d',
+                      transform: 'translateY(-2px)'
                     },
                   }}
                 >
@@ -167,7 +131,6 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                       alignItems: { xs: 'center', md: link.image ? 'flex-start' : 'center' },
                       textAlign: { xs: 'center', md: link.image ? 'left' : 'center' },
                       overflow: 'hidden',
-                      '&:last-child': { pb: { xs: 3, md: 4 } },
                     }}
                   >
                     <Typography
@@ -204,71 +167,57 @@ export default function ExternalLinksCarousel({ titulo, enlaces }: Props) {
                         {link.descriptionUrl}
                       </Typography>
                     )}
-                    <Box
-                      sx={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 0.5,
-                        px: 2,
-                        py: 0.75,
-                        borderRadius: '999px',
-                        backgroundColor: 'transparent',
-                        border: '2px solid #e7a243', // Borde en tu amarillo
-                        color: '#4B5563', // Texto en gris medio/oscuro
-                        flexShrink: 0,
-                        transition: 'all 0.2s',
-                        '&:hover': {
-                          backgroundColor: '#f9fafb', // Un fondito súper tenue al hacer hover
-                        }
-                      }}
-                    >
-                      <Typography variant="button" sx={{ textTransform: 'none', fontWeight: 700, fontSize: '0.8rem' }}>
-                        Visitar sitio
-                      </Typography>
-                      <Icon sx={{ fontSize: 16, color: '#e7a243' }}>arrow_forward</Icon>
-                    </Box>
+                    <Button endIcon={<Launch />} sx={{ color: 'primary.800', textTransform: 'none' }} >
+                      Ir a sitio
+                    </Button>
                   </CardContent>
                 </Card>
               </Box>
             ))}
           </Box>
         </Box>
-
-        {/* boton siguiente */}
-        <IconButton
-          onClick={scrollNext}
-          aria-label="Siguiente"
+        <Box
+          mt={1.5}
+          display={'grid'}
           sx={{
-            position: 'absolute',
-            right: { xs: -4, md: -20 },
-            top: '50%',
-            transform: 'translateY(-60%)',
-            zIndex: 10,
-            backgroundColor: 'background.paper',
-            boxShadow: 3,
-            '&:hover': { backgroundColor: '#e7a243', color: '#fff' },
+            alignItems: 'center',
+            gridTemplateColumns: 'repeat(3, 1fr)'
           }}
         >
-          <Icon>chevron_right</Icon>
-        </IconButton>
-      </Box>
-
-      {/* dots */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 3 }}>
-        {enlaces.map((_, index) => (
           <Box
-            key={index}
-            onClick={() => scrollTo(index)}
             sx={{
-              width: selectedIndex === index ? 24 : 8,
-              height: 8,
-              borderRadius: '999px',
-              backgroundColor: selectedIndex === index ? '#e7a3438f' : '#e7a243',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
+              display: 'flex',
+              gap: 1,
+              gridColumnStart: 2,
+              justifyContent: 'center'
             }}
-          />
-        ))}
+          >
+            <PrevButton
+              onClick={onPrevButtonClick}
+              aria-label={'Siguiente enlace'}
+              disabled={prevBtnDisabled}
+            />
+            <NextButton
+              onClick={onNextButtonClick}
+              disabled={nextBtnDisabled}
+              aria-label={'Enlace previo'}
+            />
+          </Box>
+          <Box>
+            {
+              scrollSnaps.length > 0 && (
+                <Typography
+                  sx={{ userSelect: 'none' }}
+                  textAlign={'right'}
+                  fontWeight={500}
+                  color='textSecondary'
+                  fontSize={18}>
+                  {selectedIndex + 1} / {scrollSnaps.length}
+                </Typography>
+              )
+            }
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

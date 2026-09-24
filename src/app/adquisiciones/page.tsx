@@ -66,22 +66,22 @@ export default async function LicitacionesPage() {
       <Container sx={{ my: 3 }}>
         <TransparenciaBreadcrumbs currentPageTitle="Adquisiciones" />
 
-        
+
         <Box component='section' my={2}>
           <Typography variant='h1' gutterBottom>Adquisiciones</Typography>
           {planMasReciente && planMasReciente.document && (
-          <Button
-            LinkComponent={MuiLink}
-            href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${planMasReciente.document.url}`}
-            variant="outlined"
-            endIcon={<OpenInNew />}
-            sx={{ mb: 2, fontWeight: 600 }}
-            size="large"
-            target='_blank'
-          >
-            Plan de adquisiciones {planMasReciente.year}
-          </Button>
-        )}
+            <Button
+              LinkComponent={MuiLink}
+              href={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${planMasReciente.document.url}`}
+              variant="outlined"
+              endIcon={<OpenInNew />}
+              sx={{ mb: 2, fontWeight: 600 }}
+              size="large"
+              target='_blank'
+            >
+              Plan de adquisiciones {planMasReciente.year}
+            </Button>
+          )}
           <Typography variant='h2'>Proceso de compra</Typography>
           <Typography>Al igual que tú, el IMPLAN compara opciones y presupuestos antes de realizar una compra.</Typography>
           <Typography component="h2" sx={visuallyHidden}>
@@ -113,7 +113,7 @@ export default async function LicitacionesPage() {
         </Box>
 
         <Box my={2} component={'section'}>
-          <SubtitleH2 title="Subastas" />
+          <Typography variant="h2" id='subastas'>Subastas</Typography>
           <SubastasTable subastas={subastas} />
         </Box>
         {planesOrdenados.length > 1 && (

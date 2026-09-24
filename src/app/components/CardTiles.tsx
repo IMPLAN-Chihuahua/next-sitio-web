@@ -10,6 +10,7 @@ import LandscapeIcon from '@mui/icons-material/Landscape';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import { getTileCardSx } from './tileCardStyles';
+import Link from 'next/link';
 
 export type CardTilesTipo = 'rectangular-vertical' | 'rectangular-horizontal' | 'cuadrado';
 
@@ -77,7 +78,22 @@ const maxWidthByTipo: Record<CardTilesTipo, number | string> = {
 
 const toSxArray = (sx?: SxProps<Theme>) => (Array.isArray(sx) ? sx : sx ? [sx] : []);
 
-export default function CardTiles({ title, description, category, categoryVariant = 'text', href, image, imageBadge, imageFit = 'cover', imageMuted, imageFallbackIcon, icon, action, tipo = 'rectangular-vertical', inactive = false, destacado = false, destacadoLabel = 'Destacado', historico = false, historicoLabel = 'Historico', historicoTooltip, statusLabel, topAccent = false, titleLineClamp = 2, descriptionLineClamp = 3, maxWidth, minHeight, cardSx, contentSx }: CardTilesProps) {
+export default function CardTiles(props: CardTilesProps) {
+  const {
+    title, description, category,
+    categoryVariant = 'text',
+    href, image, imageBadge, imageFit = 'cover',
+    imageMuted, imageFallbackIcon,
+    icon, action, tipo = 'rectangular-vertical',
+    inactive = false, destacado = false,
+    destacadoLabel = 'Destacado', historico = false,
+    historicoLabel = 'Historico', historicoTooltip,
+    statusLabel, topAccent = false,
+    titleLineClamp = 2, descriptionLineClamp = 3,
+    maxWidth, minHeight,
+    cardSx, contentSx
+  } = props;
+
   const hasImage = Boolean(image?.url);
   const actionExternal = action?.external ?? true;
 
@@ -295,6 +311,9 @@ export default function CardTiles({ title, description, category, categoryVarian
                 href={action.href}
                 target={actionExternal ? '_blank' : undefined}
                 rel={actionExternal ? 'noopener noreferrer' : undefined}
+                {...(!actionExternal && {
+                  component: Link
+                })}
                 underline="none"
                 sx={[
                   {

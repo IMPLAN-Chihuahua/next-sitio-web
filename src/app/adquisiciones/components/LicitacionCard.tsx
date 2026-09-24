@@ -35,7 +35,8 @@ export default function LicitacionCard({ idx, procedimiento, descripcion }: { id
         }}>
         <Box display={'flex'} alignItems={'center'}>
           <Box
-            bgcolor={'secondary.700'}
+            bgcolor={'#eef4ef'}
+            color='primary.main'
             minHeight={40}
             minWidth={40}
             display={'inline-flex'}
@@ -44,7 +45,7 @@ export default function LicitacionCard({ idx, procedimiento, descripcion }: { id
             borderRadius={25}
             sx={{ userSelect: 'none' }}
             fontSize={15}
-            fontWeight={600}>
+            fontWeight={700}>
             {idx}
           </Box>
           <Typography ml={1} fontSize={18} fontWeight={500}>{procedimiento}</Typography>

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Titular } from "./components/Titular";
 import qs from 'qs';
 import { Miembros } from "./components/Miembros";
+import { TransparenciaBreadcrumbs } from "../transparencia/components/Breadcrumbs";
 
 
 
@@ -22,6 +23,7 @@ export default async function UnidadTransparenciaPage() {
   return (<Box minHeight={'85vh'}>
     <Toolbar variant="dense" />
     <Container sx={{ my: 3 }}>
+    <TransparenciaBreadcrumbs currentPageTitle="Unidad de transparencia" />
       <MDXRemote
         source={page.data.contenido}
         components={{
