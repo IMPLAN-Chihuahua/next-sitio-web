@@ -160,7 +160,7 @@ export default function CardTiles(props: CardTilesProps) {
             zIndex: 2,
             height: 24,
             borderColor: 'secondary.main',
-            color: 'secondary.main',
+            color: '#765016',
             fontSize: '0.65rem',
             fontWeight: 700,
           }}
@@ -246,7 +246,6 @@ export default function CardTiles(props: CardTilesProps) {
         <Box display="flex" flexDirection="column" height="100%">
           {category && (
             <CategoryLabel
-              inactive={inactive}
               variant={categoryVariant}
             >
               {category}
@@ -263,7 +262,7 @@ export default function CardTiles(props: CardTilesProps) {
                 justifyContent: 'center',
                 borderRadius: 1.5,
                 bgcolor: inactive ? '#eeeeee' : '#eef4ef',
-                color: inactive ? 'text.disabled' : 'primary.main',
+                color: 'primary.main',
                 mb: 2,
                 '& svg': {
                   fontSize: 21,
@@ -277,7 +276,7 @@ export default function CardTiles(props: CardTilesProps) {
           <Typography
             component="h3"
             sx={{
-              color: inactive ? 'text.disabled' : 'text.primary',
+              color: inactive ? 'primary.800' : 'text.primary',
               fontSize: href ? 18 : '1.1rem',
               fontWeight: 700,
               lineHeight: 1.35,
@@ -292,7 +291,7 @@ export default function CardTiles(props: CardTilesProps) {
               sx={{
                 display: '-webkit-box',
                 overflow: 'hidden',
-                color: inactive ? 'text.disabled' : 'text.secondary',
+                color: 'text.secondary',
                 lineHeight: 1.6,
                 wordBreak: 'break-word',
                 WebkitBoxOrient: 'vertical',
@@ -324,7 +323,7 @@ export default function CardTiles(props: CardTilesProps) {
                     fontSize: '0.9rem',
                     fontWeight: 700,
                     '&:hover': {
-                      color: 'secondary.main',
+                      color: '#765016',
                       textDecoration: 'underline',
                     },
                     '& svg': {
@@ -431,7 +430,7 @@ function CardMediaBlock({ href, image, imageBadge, imageFit, title, tipo, muted,
             }}
           >
             <ArchiveOutlinedIcon sx={{ color: '#999', fontSize: 16 }} />
-            <Typography variant="caption" sx={{ color: '#777', fontWeight: 500 }}>
+            <Typography variant="caption" sx={{ color: '#606062', fontWeight: 500 }}>
               {historicoLabel}
             </Typography>
           </Box>
@@ -458,7 +457,7 @@ function CardMediaBlock({ href, image, imageBadge, imageFit, title, tipo, muted,
   );
 }
 
-function CategoryLabel({ children, inactive, variant }: { children: ReactNode; inactive: boolean; variant: 'text' | 'chip'; }) {
+function CategoryLabel({ children, variant }: { children: ReactNode; variant: 'text' | 'chip'; }) {
   if (variant === 'chip') {
     return (
       <Chip
@@ -468,7 +467,7 @@ function CategoryLabel({ children, inactive, variant }: { children: ReactNode; i
           alignSelf: 'flex-start',
           height: 24,
           bgcolor: '#f3f3f5',
-          color: inactive ? 'text.disabled' : 'text.secondary',
+          color: 'text.secondary',
           fontSize: '0.65rem',
           fontWeight: 700,
           mb: 2,
@@ -483,7 +482,7 @@ function CategoryLabel({ children, inactive, variant }: { children: ReactNode; i
   return (
     <Typography
       sx={{
-        color: inactive ? 'text.disabled' : 'text.secondary',
+        color: 'text.secondary',
         fontSize: '0.75rem',
         fontWeight: 700,
         letterSpacing: '0.08em',

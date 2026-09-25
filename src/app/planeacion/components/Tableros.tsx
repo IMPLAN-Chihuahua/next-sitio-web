@@ -51,7 +51,7 @@ export default async function Tableros() {
             <Box sx={{
                 pt: 2
             }}>
-                <Typography sx={{ mb: 4, color: 'black' }} variant='h6'>
+                <Typography component="p" sx={{ mb: 4, color: 'black' }} variant='h6'>
                     Tableros interactivos de revisión, consulta y seguimiento de los planes municipales.
                     Calculadoras y nuevos tableros en ArcGIS en desarrollo.
                 </Typography>
@@ -155,6 +155,7 @@ const getTableroAction = (tablero: Tablero): CardTilesAction | undefined => tabl
 function SectionTitle({ children }: { children: React.ReactNode; }) {
     return (
         <Typography
+            component="h2"
             sx={{
                 fontSize: '0.8rem',
                 fontWeight: 700,

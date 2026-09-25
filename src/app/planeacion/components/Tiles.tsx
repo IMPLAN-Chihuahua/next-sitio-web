@@ -13,7 +13,7 @@ import { AnioAutocomplete } from '@/app/estudios-y-propuestas/components/Tiles';
 import { ChangeEvent, useRef, useState } from 'react';
 import { formatISO } from 'date-fns';
 import TemasInstrumentoPlaneacionAutocomplete from './TemasDatosAbiertosAutocomplete';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useUrlPagination } from '@/app/hooks/useUrlPagination';
 import CardTiles from '@/app/components/CardTiles';
 import type { GrupoPlaneacion } from '../data/sistema-planeacion';
@@ -41,6 +41,7 @@ type FormValues = {
 };
 
 const InstrumentosTiles = ({ seccion, incluirSinSeccion = false, compact = false, expandedCatalog = false, grupo = null }: InstrumentosTilesProps) => {
+  const reduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const methods = useForm<FormValues>({
     defaultValues: { anio: [], temas: [] }
@@ -175,16 +176,17 @@ const InstrumentosTiles = ({ seccion, incluirSinSeccion = false, compact = false
         <AnimatePresence mode="popLayout">
           {isLoading ? (
             <Grid size={12} display="flex" justifyContent="center" py={10}>
-              <CircularProgress />
+              <CircularProgress aria-label="Cargando instrumentos de planeación" />
             </Grid>
           ) : instrumentos.length > 0 ? (
             instrumentos.map(instrumento => (
               <MotionGrid
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3 }}
+                layout={!reduceMotion}
+                // El texto conserva su contraste durante toda la transición.
+                initial={reduceMotion ? false : { y: 12 }}
+                animate={{ y: 0 }}
+                exit={{ y: reduceMotion ? 0 : 12 }}
+                transition={{ duration: reduceMotion ? 0 : 0.3 }}
                 key={instrumento.documentId}
                 size={compact ? (expandedCatalog ? { xs: 12, sm: 6, lg: 4, xl: 3 } : { xs: 12, sm: 6, xl: 4 }) : { xs: 12, md: 4 }}
                 justifyContent={{ xs: 'center' }}

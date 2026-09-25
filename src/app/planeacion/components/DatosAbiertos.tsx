@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 
 import { Suspense } from 'react';
+import { visuallyHidden } from '@mui/utils';
 
 import InstrumentosTiles from './Tiles';
 
@@ -12,6 +13,7 @@ import InstrumentosTiles from './Tiles';
 export default function DatosAbiertos() {
     return (
         <>
+            <Typography component="h2" sx={visuallyHidden}>Datos abiertos</Typography>
             <Box
                 sx={{
                     pt: 2
@@ -23,6 +25,7 @@ export default function DatosAbiertos() {
                         color: 'black'
                     }}
                     variant="h6"
+                    component="p"
                 >
                     Consulta y descarga información relacionada con los
                     instrumentos de planeación del municipio.
@@ -36,7 +39,7 @@ export default function DatosAbiertos() {
                         justifyContent="center"
                         py={10}
                     >
-                        <CircularProgress />
+                        <CircularProgress aria-label="Cargando datos abiertos" />
                     </Box>
                 }
             >

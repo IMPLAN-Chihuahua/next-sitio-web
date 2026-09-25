@@ -7,9 +7,10 @@ import {
 import { Suspense } from 'react';
 
 import SistemaPlaneacionExplorer from './SistemaPlaneacionExplorer';
+import type { GrupoPlaneacion } from '../data/sistema-planeacion';
 
 
-export default function SistemaPlaneacion() {
+export default function SistemaPlaneacion({ grupo = null }: { grupo?: GrupoPlaneacion | null }) {
     return (
         <>
             <Box
@@ -23,6 +24,7 @@ export default function SistemaPlaneacion() {
                         color: 'black'
                     }}
                     variant="h6"
+                    component="p"
                 >
                     Conoce los instrumentos que integran el Sistema de Planeación
                     del Municipio de Chihuahua.
@@ -36,12 +38,12 @@ export default function SistemaPlaneacion() {
                         justifyContent="center"
                         py={10}
                     >
-                        <CircularProgress />
+                        <CircularProgress aria-label="Cargando instrumentos de planeación" />
                     </Box>
                 }
             >
 
-                <SistemaPlaneacionExplorer />
+                <SistemaPlaneacionExplorer grupo={grupo} />
             </Suspense>
         </>
     );

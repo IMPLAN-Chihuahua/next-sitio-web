@@ -4,7 +4,7 @@ import Image from "next/image";
 
 
 
-export default function PageBanner({ title, description, cover }: { title: string, description: string, cover?: string }) {
+export default function PageBanner({ title, description, cover, titleComponent = 'p' }: { title: string, description: string, cover?: string, titleComponent?: 'h1' | 'p' }) {
 
   return (
     <Box
@@ -34,6 +34,7 @@ export default function PageBanner({ title, description, cover }: { title: strin
         }}
       >
         <Typography
+          component={titleComponent}
           fontSize={{ xs: 40, md: 50 }}
           fontWeight={700}
           color="inherit"

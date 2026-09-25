@@ -50,7 +50,7 @@ export default async function GuiasManuales() {
             <Box sx={{
                 pt: 2
             }}>
-                <Typography sx={{ mb: 4, color: 'black' }} variant='h6'>
+                <Typography component="p" sx={{ mb: 4, color: 'black' }} variant='h6'>
                     Guías y manuales de diseño urbano elaborados por IMPLAN Chihuahua. Estos materiales ofrecen criterios y lineamientos para orientar proyectos de urbanización, paisaje y equipamiento.
 
                 </Typography>
@@ -118,6 +118,7 @@ function GuidesSection({ title, children }: { title: string; children: React.Rea
     return (
         <Box sx={{ mb: 6 }}>
             <Typography
+                component="h2"
                 sx={{
                     fontSize: '0.8rem',
                     fontWeight: 700,

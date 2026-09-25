@@ -10,11 +10,15 @@ const nextConfig: NextConfig = {
     }]
   },
   async redirects() {
-    return legacyUrlMap.redirects.map((redirect) => ({
+    return [{
+      source: '/planeacion-vertical/:path*',
+      destination: '/planeacion/:path*',
+      permanent: true,
+    }, ...legacyUrlMap.redirects.map((redirect) => ({
       source: redirect.oldPath,
       destination: redirect.newPath,
       permanent: redirect.statusCode === 301,
-    }));
+    }))];
   }
 };
 

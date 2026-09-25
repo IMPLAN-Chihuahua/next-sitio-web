@@ -13,8 +13,9 @@ import PlaneacionTabs from './components/PlaneacionTabs';
 import DatosAbiertos from './components/DatosAbiertos';
 import Tableros from './components/Tableros';
 import GuiasManuales from './components/GuiasManuales';
-import { InstrumentoDetailPageBreadcrumbs } from './components/InstrumentoBreadcrumbs';
 import SistemaPlaneacion from './components/SistemaPlaneacion';
+import DiagramaPlaneacion from './components/DiagramaPlaneacion';
+import { sistemaPlaneacion } from './data/sistema-planeacion';
 
 export const metadata: Metadata = {
   title: 'Planeación | IMPLAN',
@@ -23,13 +24,17 @@ export const metadata: Metadata = {
 type Props = {
   searchParams: Promise<{
     tab?: string;
+    grupo?: string;
   }>;
 };
 
 export default async function InstrumentosPlaneacionPage({
   searchParams,
 }: Props) {
-  const { tab = 'sistemas-planeacion' } = await searchParams;
+  const { tab = 'sistemas-planeacion', grupo: grupoParam } = await searchParams;
+  const grupo = tab === 'sistemas-planeacion'
+    ? sistemaPlaneacion.derivados.find(nodo => nodo.grupo === grupoParam)?.grupo ?? null
+    : null;
 
   const req = await fetch(
     `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumento-planeacion-page?populate=*`
@@ -42,6 +47,7 @@ export default async function InstrumentosPlaneacionPage({
   return (
     <Box minHeight="100vh">
       <PageBanner
+        titleComponent="h1"
         cover={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${page.data.cover.url}`}
         title={page.data.titulo}
         description={page.data.descripcion}
@@ -59,12 +65,9 @@ export default async function InstrumentosPlaneacionPage({
         </Container>
       </Box>
 
-      <Container
-        maxWidth={tab === 'sistemas-planeacion' ? false : 'lg'}
-        sx={tab === 'sistemas-planeacion' ? { px: { xs: 2, sm: 3, lg: 5, xl: 7 } } : undefined}
-      >
-        <InstrumentoDetailPageBreadcrumbs currentPageTitle={tab} />
-        {tab === 'sistemas-planeacion' && <SistemaPlaneacion />}
+      <Container maxWidth="lg" sx={{ pt: 3 }}>
+        <DiagramaPlaneacion grupo={grupo} />
+        {tab === 'sistemas-planeacion' && <SistemaPlaneacion grupo={grupo} />}
 
         {tab === 'datos-abiertos' && <DatosAbiertos />}
 
