@@ -60,9 +60,10 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
     let animationFrame: number;
 
+    const autoplay = emblaApi.plugins().autoplay;
+    if (!autoplay) return;
+
     const updateProgress = () => {
-      const autoplay = emblaApi.plugins().autoplay;
-      if (!autoplay) return;
 
       const remaining = autoplay.timeUntilNext();
 
@@ -88,6 +89,10 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
     emblaApi.on('autoplay:timerset', onTimerSet);
     emblaApi.on('autoplay:timerstopped', onTimerStopped);
+
+    if (autoplay.isPlaying()) {
+      updateProgress();
+    }
 
     return () => {
       cancelAnimationFrame(animationFrame);
