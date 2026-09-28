@@ -11,7 +11,7 @@ import { ShareOptions } from "../components/ShareOptions";
 import { Metadata } from "next";
 import { filesize } from "filesize";
 import Carousel, { Slide } from "../components/Carousel";
-import { ImagesMasonry } from "@/app/editorial/components/Masonry";
+import { ImagesMasonry } from "@/app/novedades/components/Masonry";
 
 
 type DetailPageMetadataProps = {
@@ -113,7 +113,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
     <Grid container sx={{ my: { xs: 2.5, md: 4.5 } }} columnSpacing={3}>
       <Grid size={{ xs: 12, md: 3 }}>
         <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>Inversión</Typography>
-        <Typography fontSize={16} variant='body2'>{
+        <Typography variant='body2'>{
           ficha.inversion
             ? getFormattedInversion(ficha.inversion)
             : ficha.esDesarrolloInterno
@@ -126,7 +126,7 @@ const FichaSummary = ({ ficha }: { ficha: FichaTrabajoPlaneacion }) => {
       </Grid>
       <Grid size={{ xs: 12, md: 3.5 }} mt={{ xs: 2, md: 0 }}>
         <Typography fontSize={17} mb={.7} fontWeight={600} color='primary.800'>Colaboradores</Typography>
-        <Typography variant="body2" fontSize={16}>
+        <Typography variant="body2">
           {
             ficha.colaboradoresExternos.length > 0
               ? ficha.colaboradoresExternos.map(colaborador => `${colaborador.nombre} ${colaborador.acronimo ? `(${colaborador.acronimo})` : ''}`).join(', ')

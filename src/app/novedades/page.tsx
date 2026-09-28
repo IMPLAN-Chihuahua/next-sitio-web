@@ -4,6 +4,7 @@ import {
   Container,
   Divider,
   Toolbar,
+  Typography,
 } from '@mui/material';
 import PageBanner from '../components/PageBanner';
 import Destacados from './components/Destacados';
@@ -14,7 +15,7 @@ export default async function EditorialPage() {
   let editorialData: any = {};
 
   try {
-    const editorialRes = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/editorial?populate[featuredPosts][populate]=*`, {
+    const editorialRes = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/editorial`, {
       next: { revalidate: 3600 },
     });
 
@@ -25,13 +26,11 @@ export default async function EditorialPage() {
     console.error("Error fetching editorial data: ", err);
   }
 
-  const featuredPosts = editorialData?.featuredPosts || [];
-
   return (
-    <Box sx={{ my: 3 }}>
+    <Box>
       <Toolbar variant='dense' />
-      <Container maxWidth="lg" sx={{ minHeight: '80vh' }}>
-        <Destacados data={featuredPosts} />
+      <Container maxWidth="lg" sx={{ minHeight: '80vh', my: 3 }}>
+        <Typography variant='h1' gutterBottom>Novedades</Typography>
         <Articulos />
       </Container>
     </Box>

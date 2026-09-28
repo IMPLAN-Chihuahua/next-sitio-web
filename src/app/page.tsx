@@ -17,7 +17,7 @@ export default async function Home() {
       fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/home-page?populate=deep`, {
         next: { revalidate: 3600 },
       }),
-      fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?sort=fechaPublicacion:desc&pagination[limit]=4&populate=*`, {
+      fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?sort[0]=destacado:desc&sort[1]=fechaPublicacion:desc&pagination[limit]=4&populate=*`, {
         next: { revalidate: 3600 },
       })
     ]);
@@ -49,7 +49,7 @@ export default async function Home() {
     <>
       <LandingPageBanner phrases={heroPhrases} />
       <Container>
-        <Box py={3} />
+        <Box py={{ md: 3 }} />
         <ServicesList data={sections} />
         <Box py={3} />
         <ProjectsExplorer data={platforms} />
@@ -72,7 +72,6 @@ export default async function Home() {
         </Container>
       </Box>
       <Box py={3} />
-
       <Container>
         <News data={newsData} />
       </Container>

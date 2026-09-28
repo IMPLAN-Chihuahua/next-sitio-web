@@ -9,7 +9,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-import { Novedades } from "@/app/editorial/definitions";
+import { Novedad } from "@/app/novedades/definitions";
 import { Media, MultipleMedia } from "@/app/definitions";
 import { ShareOptions } from "@/app/estudios-y-propuestas/components/ShareOptions";
 import { NovedadBreadcrumbs } from "../components/Breadcrumbs";
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
     try {
         const page = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?${queryParams}`);
         const json = await page.json();
-        const article: Novedades = json.data?.[0];
+        const article: Novedad = json.data?.[0];
         if (!article) return { title: 'Artículo no encontrado | IMPLAN' };
 
         const imageUrl = article.media?.[0]?.formats?.small?.url || article.media?.[0]?.url;
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
             }
         }
     } catch (err) {
-        return { title: 'Editorial | IMPLAN' }
+        return { title: 'Novedades | IMPLAN' }
     }
 }
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -61,7 +61,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     });
 
     const json = await req.json();
-    const article: Novedades = json.data?.[0];
+    const article: Novedad = json.data?.[0];
 
     if (!article) {
         notFound();
@@ -119,7 +119,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     )
 }
 
-const HeaderSection = ({ article }: { article: Novedades }) => {
+const HeaderSection = ({ article }: { article: Novedad }) => {
     const formatDate = (dateString: string) => {
         if (!dateString) return '';
         const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -212,7 +212,7 @@ const ContentSection = ({ content }: { content: string }) => {
 
     return (
         <Box component='article' my={4} sx={{
-            '& .mdx-paragraph': { mb: 3, fontSize: '1.15rem', lineHeight: 1.8 },
+            '& .mdx-paragraph': { mb: 3, fontSize: '1.15rem', lineHeight: 1.5 },
             '& h2': { mt: 6, mb: 3, fontSize: '1.8rem', fontWeight: 700, color: 'primary.900' },
             '& h3': { mt: 4, mb: 2, fontSize: '1.5rem', fontWeight: 600, color: 'primary.800' },
             '& ul, & ol': { mb: 3, ml: 3, fontSize: '1.15rem', lineHeight: 1.8 },

@@ -87,6 +87,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       <Paper
         elevation={0}
         sx={{
+          zIndex: 120,
           position: 'absolute',
           bottom: 0,
           left: '50%',
@@ -94,26 +95,24 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
           px: { xs: 3, md: 4 },
           py: { xs: 1.25, md: 1 },
           borderRadius: 1,
-          backgroundColor: 'rgba(255, 255, 255, 0.85)',
+          backgroundColor: 'primary.50',
           backdropFilter: 'blur(8px)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.18)',
           textAlign: 'center',
-          display: 'flex',
+          display: { xs: 'none', md: 'flex' },
           alignItems: 'center',
           justifyContent: 'center',
-
         }}
       >
-
-        <Box
-          component="img"
-          src="implan_logo.png"
+        <Image
+          src='/implan_logo.webp'
+          draggable={false}
           alt="IMPLAN Chihuahua"
-          sx={{
-            height: { xs: 82, md: 96 },
-            width: 'auto',
-            maxWidth: { xs: '78vw', md: 420 },
-            display: 'block',
+          height={100}
+          width={340}
+          style={{
+            userSelect: 'none',
+            objectFit: 'contain'
           }}
         />
       </Paper>

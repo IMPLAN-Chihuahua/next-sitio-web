@@ -2,12 +2,13 @@
 import React from 'react'
 import { Box, Button, Grid, Typography, Link as MuiLink } from '@mui/material'
 import Link from 'next/link'
-import { Novedades } from '../editorial/definitions';
+import { Novedad } from '../novedades/definitions';
 import { AutoStoriesOutlined, ChevronRight, SubjectOutlined } from '@mui/icons-material';
+import Image from 'next/image';
 
 
 
-const News = ({ data }: { data: Novedades[] }) => {
+const News = ({ data }: { data: Novedad[] }) => {
     if (data.length === 0) return null;
 
     const featured = data[0];
@@ -26,16 +27,18 @@ const News = ({ data }: { data: Novedades[] }) => {
 
             <Grid container spacing={2}>
                 <Grid size={{ xs: 12 }}>
-                    <Link href={`/editorial/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Link href={`/novedades/${featured.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <Box
                             sx={{
                                 p: { xs: 2, md: 3 },
                                 backgroundColor: 'background.paper',
                                 border: '1px solid',
                                 borderColor: 'divider',
-                                transition: 'all 0.3s ease-in-out',
+                                transition: 'all 0.3s ease',
                                 '&:hover': {
-                                    transform: 'translateY(-4px)',
+                                    boxShadow: '0 6px 20px rgba(0,0,0,0.06)',
+                                    borderColor: '#fbc02d',
+                                    transform: 'translateY(-2px)'
                                 }
                             }}
                         >
@@ -62,10 +65,14 @@ const News = ({ data }: { data: Novedades[] }) => {
                                                 alignItems: 'center',
                                             }}
                                         >
-                                            <AutoStoriesOutlined
-                                                sx={{
-                                                    fontSize: 80,
-                                                    color: 'primary.600',
+                                            <Image
+                                                src='/implan.svg'
+                                                height={60}
+                                                width={70}
+                                                alt=""
+                                                style={{
+                                                    objectFit: 'contain',
+                                                    filter: 'invert(50%) brightness(70%)'
                                                 }}
                                             />
                                         </Box>
@@ -83,7 +90,7 @@ const News = ({ data }: { data: Novedades[] }) => {
                                             lineHeight: '1.5rem',
                                             textDecoration: 'none',
                                             display: '-webkit-box',
-                                            WebkitLineClamp: 5,
+                                            WebkitLineClamp: 4,
                                             WebkitBoxOrient: 'vertical',
                                             wordBreak: 'break-word',
                                             overflow: 'hidden'
@@ -99,7 +106,7 @@ const News = ({ data }: { data: Novedades[] }) => {
 
                 {others.map((item) => (
                     <Grid key={item.id} size={{ xs: 12, md: 4 }}>
-                        <Link href={`/editorial/${item.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Link href={`/novedades/${item.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <Box
                                 sx={{
                                     p: 2,
@@ -109,9 +116,11 @@ const News = ({ data }: { data: Novedades[] }) => {
                                     backgroundColor: 'background.paper',
                                     border: '1px solid',
                                     borderColor: 'divider',
-                                    transition: 'all 0.3s ease-in-out',
+                                    transition: 'all 0.3s ease',
                                     '&:hover': {
-                                        transform: 'translateY(-4px)',
+                                        boxShadow: '0 6px 20px rgba(0,0,0,0.06)',
+                                        borderColor: '#fbc02d',
+                                        transform: 'translateY(-2px)'
                                     }
                                 }}
                             >
@@ -138,10 +147,14 @@ const News = ({ data }: { data: Novedades[] }) => {
                                             mb: 2,
                                         }}
                                     >
-                                        <SubjectOutlined
-                                            sx={{
-                                                fontSize: 64,
-                                                color: 'primary.600',
+                                        <Image
+                                            src='/implan.svg'
+                                            height={50}
+                                            width={60}
+                                            alt=""
+                                            style={{
+                                                objectFit: 'contain',
+                                                filter: 'invert(50%) brightness(70%)'
                                             }}
                                         />
                                     </Box>
@@ -162,7 +175,7 @@ const News = ({ data }: { data: Novedades[] }) => {
             }}>
                 <Button
                     LinkComponent={Link}
-                    href="/editorial"
+                    href="/novedades"
                     variant="outlined"
                     endIcon={<ChevronRight />}
                     sx={{ mt: 2, fontWeight: 600, borderRadius: '50px' }}
