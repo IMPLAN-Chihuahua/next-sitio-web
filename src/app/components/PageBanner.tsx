@@ -47,6 +47,7 @@ export default function PageBanner({ title, description, cover }: { title: strin
           fontSize={26}
           fontWeight={500}
           color="inherit"
+          my={{ xs: 1.5 }}
           sx={{
             textShadow: '1px 1px 2px black'
           }}

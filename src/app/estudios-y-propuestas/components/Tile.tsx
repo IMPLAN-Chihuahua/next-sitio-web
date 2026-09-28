@@ -43,10 +43,14 @@ export default function TrabajoTile(props: { trabajoPlaneacion: TrabajoPlaneacio
                   justifyContent={'center'}
                   height={'100%'}
                   alignItems={'center'}>
-                  <LandscapeIcon
-                    sx={{
-                      fontSize: 80,
-                      color: 'primary.600'
+                  <Image
+                    src='/implan.svg'
+                    height={50}
+                    width={60}
+                    alt=""
+                    style={{
+                      objectFit: 'contain',
+                      filter: 'invert(50%) brightness(70%)'
                     }}
                   />
                 </Box>
@@ -112,7 +116,7 @@ export const ClasificacionSpan = ({ clasificacion }: { clasificacion: { hexColor
         height={8}
         borderRadius={50}
         mr={.7} />
-      <Typography fontSize={16} variant="body2">{clasificacion.name}</Typography>
+      <Typography variant="body2">{clasificacion.name}</Typography>
     </Box>
   )
 }
