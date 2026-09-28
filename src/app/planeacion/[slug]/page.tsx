@@ -53,11 +53,16 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
                     justifyContent={'center'}
                     alignItems={'center'}
                   >
-                    <Landscape
-                      sx={{
-                        fontSize: 80,
-                        color: 'primary.600'
-                      }} />
+                    <Image
+                      src='/implan.svg'
+                      width={80}
+                      height={50}
+                      alt=''
+                      style={{
+                        objectFit: 'contain',
+                        filter: 'invert(50%) brightness(70%)'
+                      }}
+                    />
                   </Box>
                 )
             }
