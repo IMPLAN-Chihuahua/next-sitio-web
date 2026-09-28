@@ -10,12 +10,14 @@ import Fade from "embla-carousel-fade";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
+const CAROUSEL_DELAY = 4_000;
 
 export default function LandingPageBanner({ phrases }: { phrases: Array<{ content: string, emphasis: string, image: string }> }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false, loop: true },
-    [Autoplay({ playOnInit: true, delay: 4_000 }), Fade()]);
+    [Autoplay({ playOnInit: true, delay: CAROUSEL_DELAY }), Fade()]);
 
-  const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false)
+  const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
+  const [autoplayProgress, setAutoplayProgress] = useState(0);
 
   const toggleAutoplay = useCallback(() => {
     const autoplay = emblaApi?.plugins()?.autoplay;
@@ -32,12 +34,68 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
     const autoplay = emblaApi?.plugins()?.autoplay;
     if (!autoplay) return;
 
+    const onPlay = () => setAutoplayIsPlaying(true);
+    const onStop = () => setAutoplayIsPlaying(false);
+    const onReInit = () => setAutoplayIsPlaying(autoplay.isPlaying());
+
     setAutoplayIsPlaying(autoplay.isPlaying());
     emblaApi
-      .on('autoplay:play', () => setAutoplayIsPlaying(true))
-      .on('autoplay:stop', () => setAutoplayIsPlaying(false))
-      .on('reInit', () => setAutoplayIsPlaying(autoplay.isPlaying()))
+      .on('autoplay:play', onPlay)
+      .on('autoplay:stop', onStop)
+      .on('reInit', onReInit);
+
+
+    return () => {
+      emblaApi
+        .off('autoplay:play', onPlay)
+        .off('autoplay:stop', onStop)
+        .off('reInit', onReInit);
+    }
+
   }, [emblaApi]);
+
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    let animationFrame: number;
+
+    const updateProgress = () => {
+      const autoplay = emblaApi.plugins().autoplay;
+      if (!autoplay) return;
+
+      const remaining = autoplay.timeUntilNext();
+
+      if (remaining === null) {
+        setAutoplayProgress(0);
+        return;
+      }
+
+      setAutoplayProgress(1 - remaining / CAROUSEL_DELAY);
+      animationFrame = requestAnimationFrame(updateProgress)
+    }
+
+    const onTimerSet = () => {
+      cancelAnimationFrame(animationFrame);
+
+      setAutoplayProgress(0);
+      updateProgress();
+    }
+
+    const onTimerStopped = () => {
+      cancelAnimationFrame(animationFrame);
+    }
+
+    emblaApi.on('autoplay:timerset', onTimerSet);
+    emblaApi.on('autoplay:timerstopped', onTimerStopped);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+
+      emblaApi.off('autoplay:timerset', onTimerSet);
+      emblaApi.off('autoplay:timerstopped', onTimerStopped);
+    }
+  }, [emblaApi])
 
   if (!phrases.length) return null;
 
@@ -57,31 +115,62 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
             ))}
           </Box>
         </Box>
-        <IconButton
-          onClick={toggleAutoplay}
-          disabled={phrases.length === 0}
-          aria-label={autoplayIsPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
-          disableTouchRipple
-          sx={{
-            position: 'absolute',
-            bottom: 20,
-            right: 20,
-            zIndex: 120,
-            border: '2px solid',
-            borderColor: 'primary.50',
-            '&:focus-visible': {
-              outline: '2px solid #e3a74d',
-              outlineOffset: '2px',
+        <Box
+          position='absolute'
+          bottom={20}
+          right={20}
+          zIndex={120}
+          width={70}
+          height={70}
+        >
+          <IconButton
+            onClick={toggleAutoplay}
+            disabled={phrases.length === 0}
+            aria-label={autoplayIsPlaying ? "Pausar carrusel" : "Reproducir carrusel"}
+            disableTouchRipple
+            sx={{
+              width: '100%',
+              height: '100%',
+              '&:focus-visible': {
+                outline: '2px solid #e3a74d',
+                outlineOffset: '2px',
+              }
+            }}>
+            {
+              autoplayIsPlaying ? (
+                <PauseIcon sx={{ color: 'primary.50', fontSize: 40 }} />
+              ) : (
+                <PlayArrowIcon sx={{ color: 'primary.50', fontSize: 40 }} />
+              )
             }
-          }}>
-          {
-            autoplayIsPlaying ? (
-              <PauseIcon sx={{ color: 'primary.50', fontSize: 40 }} />
-            ) : (
-              <PlayArrowIcon sx={{ color: 'primary.50', fontSize: 40 }} />
-            )
-          }
-        </IconButton>
+          </IconButton>
+          <Box
+            component="svg"
+            viewBox="0 0 65 65"
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              transform: 'rotate(-90deg)',
+              pointerEvents: 'none',
+            }}
+          >
+            <circle
+              cx="32"
+              cy="32"
+              r="30"
+              fill="none"
+              stroke="#fafafc"
+              strokeWidth="4"
+              strokeDasharray={2 * Math.PI * 30}
+              strokeDashoffset={
+                2 * Math.PI * 30 * (1 - autoplayProgress)
+              }
+              strokeLinecap="round"
+            />
+          </Box>
+        </Box>
       </Box>
 
       <Paper
