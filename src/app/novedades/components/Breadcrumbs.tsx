@@ -9,7 +9,7 @@ export const NovedadBreadcrumbs = ({ currentPageTitle }: { currentPageTitle: str
 
   return (
     <Breadcrumbs sx={{ mb: 3 }}>      <MuiLink variant="body2" component={Link} href='/'>Inicio</MuiLink>
-      <MuiLink variant="body2" component={Link} href='/editorial'>Editorial</MuiLink>
+      <MuiLink variant="body2" component={Link} href='/novedades'>Novedades</MuiLink>
       <Typography variant="body2">{currentPageTitle}</Typography>
     </Breadcrumbs>
   )

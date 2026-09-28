@@ -1,14 +1,14 @@
 'use client'
 import { Box, Container, Typography, Chip, Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { Novedades } from '../definitions';
+import { Novedad } from '../definitions';
 import Link from 'next/link';
 import { Image as ImageIcon } from '@mui/icons-material';
 import { parse } from 'date-fns';
 
 const dateFormatOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
 
-export default function Destacados({ data }: { data: Novedades[] }) {
+export default function Destacados({ data }: { data: Novedad[] }) {
     if (!data || data.length === 0) return null;
 
     const destacados = data.slice(0, 3);
@@ -17,36 +17,7 @@ export default function Destacados({ data }: { data: Novedades[] }) {
     const secondaryPosts = destacados.slice(1);
 
     return (
-        <Container sx={{ mb: 6 }}>
-
-            <Box sx={{ mb: 4 }}>
-                <Typography
-                    variant="h6"
-                    component={'h1'}
-                    sx={{
-                        letterSpacing: 4,
-                        color: 'text.secondary',
-                        display: 'block',
-                        mb: -1,
-                        fontWeight: 600,
-                        mt: 2
-                    }}
-                >
-                    EDITORIAL
-                </Typography>
-
-                <Typography
-                    variant="h4"
-                    component={'h2'}
-                    fontWeight={700}
-                    sx={{
-                        color: 'text.primary',
-                        letterSpacing: '-1px'
-                    }}
-                >
-                    Artículos Destacados
-                </Typography>
-            </Box>
+        <Container >
 
             <Grid container spacing={3}>
 
@@ -69,7 +40,7 @@ export default function Destacados({ data }: { data: Novedades[] }) {
     );
 }
 
-const FeaturedCard = ({ item, isLarge }: { item: Novedades, isLarge: boolean }) => {
+const FeaturedCard = ({ item, isLarge }: { item: Novedad, isLarge: boolean }) => {
 
     const imageUrl = item?.cover?.url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${item.cover.url}` : '';
     const autor = item?.autor?.[0] ? `${item.autor[0].nombres} ${item.autor[0].apellidos}` : 'IMPLAN';
