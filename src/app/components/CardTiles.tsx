@@ -11,6 +11,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import { getTileCardSx } from './tileCardStyles';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export type CardTilesTipo = 'rectangular-vertical' | 'rectangular-horizontal' | 'cuadrado';
 
@@ -374,10 +375,14 @@ function CardMediaBlock({ href, image, imageBadge, imageFit, title, tipo, muted,
           }}
         >
           {fallbackIcon ?? (
-            <LandscapeIcon
-              sx={{
-                color: 'primary.600',
-                fontSize: 80,
+            <Image
+              src='/implan.svg'
+              width={80}
+              height={50}
+              alt=''
+              style={{
+                objectFit: 'contain',
+                filter: 'invert(50%) brightness(70%)'
               }}
             />
           )}
