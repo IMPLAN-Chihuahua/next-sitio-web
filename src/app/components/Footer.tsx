@@ -5,7 +5,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import Link from 'next/link';
 import { FooterType } from "../definitions";
-import { OpenInNew } from "@mui/icons-material";
+import { GitHub, OpenInNew } from "@mui/icons-material";
 import { FooterGroupLink } from "./FooterGroupLInk";
 
 export default async function Footer() {
@@ -87,20 +87,42 @@ export default async function Footer() {
               display: 'flex',
               justifyContent: { xs: 'center', md: 'flex-start' },
             }}>
-              <IconButton aria-label="Visitar nuestro perfil de Facebook">
+              <IconButton
+                aria-label="Visitar nuestro perfil de Facebook"
+                LinkComponent={MuiLink}
+                href="https://www.facebook.com/Implan-Chihuahua-108606468095094"
+                target="_blank"
+              >
                 <FacebookIcon />
               </IconButton>
-              <IconButton sx={{
-                '& .MuiSvgIcon-root': {
-                  fontSize: '35px'
-                }
-              }}
+              <IconButton
+                LinkComponent={MuiLink}
+                href="https://www.youtube.com/channel/UCOVGOuYfPdbttVLNz0yjGSg"
+                target="_blank"
+                sx={{
+                  '& .MuiSvgIcon-root': {
+                    fontSize: '35px'
+                  }
+                }}
                 aria-label="Visitar nuestro canal de Youtube"
               >
                 <YouTubeIcon />
               </IconButton>
-              <IconButton aria-label="Visitar nuestro perfil de Instagram">
+              <IconButton
+                aria-label="Visitar nuestro perfil de Instagram"
+                LinkComponent={MuiLink}
+                href="https://www.instagram.com/implanchihuahua"
+                target="_blank"
+              >
                 <InstagramIcon />
+              </IconButton>
+              <IconButton
+                aria-label="Visitar nuestros repositorios en GitHub"
+                LinkComponent={MuiLink}
+                href="https://github.com/IMPLAN-Chihuahua"
+                target="_blank"
+              >
+                <GitHub />
               </IconButton>
             </Box>
           </Box>

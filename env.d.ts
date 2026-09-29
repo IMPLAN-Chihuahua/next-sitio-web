@@ -4,5 +4,6 @@ declare namespace NodeJS {
         NEXT_PUBLIC_GTAG_ID: string;
         NEXT_PUBLIC_IMPLAN_CMS: string;
         NEXT_PUBLIC_IMPLAN_STATIC: string;
+        NEXT_PUBLIC_HOST: string;
     }
 }
