@@ -77,7 +77,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     <Grid container gap={3}>
                         <Grid size={{ xs: 12, md: 'grow' }}>
                             <Typography fontWeight={600} color='primary.800'>Fecha publicación</Typography>
-                            <Typography>{(new Date(article.fechaPublicacion)).toLocaleDateString('es-MX', { dateStyle: 'short' })}</Typography>
+                            <Typography variant="body2">{(new Date(article.fechaPublicacion)).toLocaleDateString('es-MX', { dateStyle: 'short' })}</Typography>
                         </Grid>
                         <Grid size={{ xs: 12, md: 'grow' }}>
                             <Typography fontWeight={600} color='primary.800'>Etiquetas</Typography>
