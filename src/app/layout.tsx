@@ -10,6 +10,8 @@ import { Box, CssBaseline } from "@mui/material";
 import LocalizationProvider from "./components/AppLocalizationProvider";
 import ScrollToTop from "./components/ScrollToTop";
 import AxeCore from "./components/AxeCore";
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 
 export const metadata: Metadata = {
   title: "IMPLAN Chihuahua",
@@ -50,6 +52,7 @@ export default function RootLayout({
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GTAG_ID} />
     </html >
   );
 }

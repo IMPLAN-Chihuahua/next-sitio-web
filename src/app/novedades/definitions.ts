@@ -12,7 +12,7 @@ export type Autor = {
     photo?: Media;
 }
 
-export type Novedades = {
+export type Novedad = {
     readonly id: number;
     readonly documentId: string;
     title: string;
@@ -30,6 +30,7 @@ export type Novedades = {
     publishedAt: string;
     fechaPublicacion: string;
     momentosDestacados: MultipleMedia | null;
+    destacado: boolean | null;
 }
 
 export type EditorialData = {
@@ -37,7 +38,7 @@ export type EditorialData = {
     readonly documentId: string;
     title: string;
     description: string;
-    featuredPosts: Novedades[];
+    featuredPosts: Novedad[];
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
