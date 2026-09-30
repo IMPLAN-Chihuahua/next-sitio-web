@@ -1,21 +1,8 @@
-.levels { list-style: none; padding: 0; margin: 20px 0 0; }
-.level { position: relative; }
-.level + .level { padding-top: 24px; }
-.level + .level::before { content: ''; position: absolute; top: 0; left: 50%; height: 15px; border-left: 1px solid #c7af85; }
-.level + .level::after { content: ''; position: absolute; top: 11px; left: calc(50% - 3px); width: 7px; height: 7px; border-right: 1px solid #c7af85; border-bottom: 1px solid #c7af85; transform: rotate(45deg); }
-.level .levelTitle { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.levelTitle svg { font-size: 20px; color: #7c6949; }
 .node { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; height: 100%; padding: 12px 16px; border: 1px solid #e0ded8; border-radius: 8px; background: #fcfbf8; text-decoration: none; text-align: left; }
 .development { background: #fcfcfd; border-style: dashed; }
 a.node { cursor: pointer; transition: border-color 150ms ease, background 150ms ease; }
 a.node:hover { border-color: #bc934e; background: #faf5e9; }
 .node[aria-current='true'] { border-color: #ae7e2d; background: #faf0d9; }
-.versions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.branches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-
-@media (max-width: 599px) {
-    .versions, .branches { grid-template-columns: minmax(0, 1fr); }
-}
 
 @media (prefers-reduced-motion: reduce) {
     .node { transition: none; }
