@@ -1,55 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import NextLink from 'next/link';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, Link, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { AccountTreeOutlined, ApartmentOutlined, ExpandMore, DomainOutlined, LayersOutlined, LocationCityOutlined } from '@mui/icons-material';
-import styles from './DiagramaPlaneacion.module.css';
-import { GrupoPlaneacion, NodoPlaneacion, sistemaPlaneacion } from '../data/sistema-planeacion';
-
-function Nodo({ nodo, selected }: { nodo: NodoPlaneacion; selected: boolean }) {
-    const development = nodo.estado === 'en_desarrollo';
-    const className = `${styles.node} ${development ? styles.development : ''}`;
-    const content = <>
-        <Typography component="strong" variant="body2" fontWeight={600} color="text.primary">
-            {nodo.titulo}
-        </Typography>
-        {nodo.subtitulo && <Typography component="span" variant="body2" color="text.secondary">{nodo.subtitulo}</Typography>}
-        <Chip
-            component="span"
-            label={development ? 'En desarrollo' : 'Vigente'}
-            size="small"
-            sx={{
-                mt: 'auto',
-                height: 24,
-                borderRadius: 1,
-                typography: 'caption',
-                bgcolor: development ? '#edf2f8' : '#edf4ed',
-                color: development ? '#235b90' : '#286432',
-            }}
-        />
-        {(nodo.url || nodo.grupo) && (
-            <Typography component="span" variant="caption" fontWeight={600} color="primary.800">
-                {nodo.url ? 'Ver estudio →' : 'Ver instrumentos →'}
-            </Typography>
-        )}
-    </>;
-    const href = nodo.url ?? (nodo.grupo
-        ? `/planeacion?tab=sistemas-planeacion${selected ? '' : `&grupo=${nodo.grupo}`}#catalogo-instrumentos`
-        : null);
-
-    return href
-        ? <Link component={NextLink} underline="none" color="text.primary" href={href} className={className} aria-current={selected ? 'true' : undefined}>{content}</Link>
-        : <Box className={className}>{content}</Box>;
-}
+import { AccountTreeOutlined, ExpandMore } from '@mui/icons-material';
+import RuedaPlaneacion from './RuedaPlaneacion';
+import type { GrupoPlaneacion } from '../data/sistema-planeacion';
 
 export default function DiagramaPlaneacion({ grupo = null }: { grupo?: GrupoPlaneacion | null }) {
     const [diagramOpen, setDiagramOpen] = useState(true);
-
-    const renderNode = (nodo: NodoPlaneacion) => (
-        <Nodo key={nodo.id} nodo={nodo} selected={!!grupo && grupo === nodo.grupo} />
-    );
 
     return (
         <Accordion
@@ -105,34 +64,7 @@ export default function DiagramaPlaneacion({ grupo = null }: { grupo?: GrupoPlan
                 <Typography variant="body2" color="text.secondary">
                     Municipio de Chihuahua · Del territorio a los planes específicos.
                 </Typography>
-                <Box component="nav" aria-label="Diagrama del sistema de planeación">
-                    <Box component="ol" className={styles.levels}>
-                        <Box component="li" className={styles.level}>
-                            <Typography component="h4" variant="body2" fontWeight={600} className={styles.levelTitle}>
-                                <DomainOutlined aria-hidden="true" />01 · Nivel metropolitano
-                            </Typography>
-                            {renderNode(sistemaPlaneacion.metropolitano)}
-                        </Box>
-                        <Box component="li" className={styles.level}>
-                            <Typography component="h4" variant="body2" fontWeight={600} className={styles.levelTitle}>
-                                <LocationCityOutlined aria-hidden="true" />02 · Nivel municipal
-                            </Typography>
-                            {renderNode(sistemaPlaneacion.municipal)}
-                        </Box>
-                        <Box component="li" className={styles.level}>
-                            <Typography component="h4" variant="body2" fontWeight={600} className={styles.levelTitle}>
-                                <ApartmentOutlined aria-hidden="true" />03 · Centro de población
-                            </Typography>
-                            <Box className={styles.versions}>{sistemaPlaneacion.desarrolloUrbano.map(renderNode)}</Box>
-                        </Box>
-                        <Box component="li" className={styles.level}>
-                            <Typography component="h4" variant="body2" fontWeight={600} className={styles.levelTitle}>
-                                <LayersOutlined aria-hidden="true" />04 · Instrumentos específicos
-                            </Typography>
-                            <Box className={styles.branches}>{sistemaPlaneacion.derivados.map(renderNode)}</Box>
-                        </Box>
-                    </Box>
-                </Box>
+                <RuedaPlaneacion grupo={grupo} />
             </AccordionDetails>
         </Accordion>
     );

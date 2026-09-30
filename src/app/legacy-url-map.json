@@ -279,60 +279,265 @@
       "title": "Proyectos",
       "category": "Index",
       "match": "section"
+    },
+    {
+      "oldPath": "/AtribucionesNormatividad.html",
+      "newPath": "/transparencia",
+      "statusCode": 301,
+      "title": "Atribuciones y normatividad",
+      "category": "Transparencia",
+      "match": "section"
+    },
+    {
+      "oldPath": "/Cajita.html",
+      "newPath": "/editorial/cajita-ordenada",
+      "statusCode": 301,
+      "title": "Cajita Ordenada",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Consejo.html",
+      "newPath": "/consejo",
+      "statusCode": 301,
+      "title": "Consejo Municipal de Ordenamiento Territorial y Desarrollo Urbano",
+      "category": "Institucional",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Convenios.html",
+      "newPath": "/convenios",
+      "statusCode": 301,
+      "title": "Convenios del IMPLAN Chihuahua",
+      "category": "Transparencia",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CuentaPublica.html",
+      "newPath": "/rendicion-cuentas",
+      "statusCode": 301,
+      "title": "Cuenta Pública",
+      "category": "Rendición de cuentas",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CuentaPublica2.html",
+      "newPath": "/rendicion-cuentas",
+      "statusCode": 301,
+      "title": "Cuenta Pública",
+      "category": "Rendición de cuentas",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Descargables_DA.html",
+      "newPath": "/cartografia",
+      "statusCode": 301,
+      "title": "Cartografía",
+      "category": "Plataforma",
+      "match": "section"
+    },
+    {
+      "oldPath": "/Directorio.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Directorio",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/EquipoTecnico.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Equipo Técnico del IMPLAN Chihuahua",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/EstudioReservasIndustriales.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-el-diseno-de-politicas-publicas-para-la-gestion-de-uso-de-suelo-e-infraestructura-para-la-industria-en-la-ciudad-de-chihuahua",
+      "statusCode": 301,
+      "title": "Estudio para el diseño de políticas públicas para la gestión de uso de suelo e infraestructura para la industria en la Ciudad de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudiosAmbientales.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-la-definicion-del-borde-urbano-zonas-de-valor-ambiental-y-de-preservacion-ecologica",
+      "statusCode": 301,
+      "title": "Estudio para la definición del borde urbano, zonas de valor ambiental y de preservación ecológica",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ForoCiudades.html",
+      "newPath": "/editorial/foro-de-ciudades-2019-que-ciudad-merecemos",
+      "statusCode": 301,
+      "title": "Foro de Ciudades 1.2019: ¿Qué ciudad merecemos?",
+      "category": "Evento",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ForoFCCUU.html",
+      "newPath": "/editorial/foro-de-ciudades-2018-las-personas-en-la-nueva-agenda-urbana-vision-de-ciudad",
+      "statusCode": 301,
+      "title": "Foro de Ciudades 2018: Las Personas en la Nueva Agenda Urbana, Visión de Ciudad",
+      "category": "Evento",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ForoFCCUU2020.html",
+      "newPath": "/editorial/foro-de-ciudades-consulta-publica-diagnostico-y-vision-de-ciudad-2020",
+      "statusCode": 301,
+      "title": "Foro de Ciudades – Consulta Pública: Diagnóstico y Visión de Ciudad 2020",
+      "category": "Evento",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/index.html",
+      "newPath": "/",
+      "statusCode": 301,
+      "title": "Inicio",
+      "category": "Inicio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Licitaciones.html",
+      "newPath": "/adquisiciones",
+      "statusCode": 301,
+      "title": "Licitaciones, adquisiciones y subastas",
+      "category": "Sección",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Mision.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Misión, visión y objetivos",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/Organigrama.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Organigrama",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/PDU2040.html",
+      "newPath": "/planeacion/pdu-2040-7ma-actualizacion",
+      "statusCode": 301,
+      "title": "Archivos descargables PDU 2040",
+      "category": "Planeación",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Practicantes.html",
+      "newPath": "/practicas-profesionales",
+      "statusCode": 301,
+      "title": "Practicantes",
+      "category": "Institucional",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/PreguntasFrecuentes.html",
+      "newPath": "/preguntas-frecuentes",
+      "statusCode": 301,
+      "title": "Preguntas Frecuentes",
+      "category": "Utilidad",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Privacidad.html",
+      "newPath": "/avisos-privacidad",
+      "statusCode": 301,
+      "title": "Avisos de privacidad",
+      "category": "Aviso de privacidad",
+      "match": "section"
+    },
+    {
+      "oldPath": "/PSAMUS.html",
+      "newPath": "/estudios-y-propuestas/diseno-e-implementacion-del-modelo-de-gobernanza-de-la-accesibilidad-y-movilidad-de-la-zona-metropolitana-de-chihuahua",
+      "statusCode": 301,
+      "title": "Diseño e implementación del modelo de gobernanza de la accesibilidad y movilidad de la Zona Metropolitana de Chihuahua",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Transparencia.html",
+      "newPath": "/transparencia",
+      "statusCode": 301,
+      "title": "Artículo 77. Obligaciones de transparencia comunes",
+      "category": "Transparencia",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/UnidadTransparencia.html",
+      "newPath": "/unidad-transparencia",
+      "statusCode": 301,
+      "title": "Unidad de Transparencia",
+      "category": "Transparencia",
+      "match": "confirmed"
     }
   ],
   "suggestedPages": [
     {
       "path": "/estudios-y-propuestas",
       "title": "Estudios y propuestas",
-      "keywords": ["estudios", "proyectos", "propuestas", "trabajos de planeacion"]
+      "keywords": [
+        "estudios",
+        "proyectos",
+        "propuestas",
+        "trabajos de planeacion"
+      ]
     },
     {
       "path": "/planeacion",
       "title": "Planeacion",
-      "keywords": ["planeacion", "pdu", "instrumentos", "planes"]
+      "keywords": [
+        "planeacion",
+        "pdu",
+        "instrumentos",
+        "planes"
+      ]
     },
     {
       "path": "/cartografia",
       "title": "Cartografia",
-      "keywords": ["cartografia", "mapas", "sigmun"]
+      "keywords": [
+        "cartografia",
+        "mapas",
+        "sigmun"
+      ]
     },
     {
       "path": "/transparencia",
       "title": "Transparencia",
-      "keywords": ["transparencia", "cuenta publica", "licitaciones"]
+      "keywords": [
+        "transparencia",
+        "cuenta publica",
+        "licitaciones"
+      ]
     },
     {
       "path": "/avisos-privacidad",
       "title": "Avisos de privacidad",
-      "keywords": ["privacidad", "aviso de privacidad", "datos personales"]
+      "keywords": [
+        "privacidad",
+        "aviso de privacidad",
+        "datos personales"
+      ]
     },
     {
       "path": "/preguntas-frecuentes",
       "title": "Preguntas frecuentes",
-      "keywords": ["faq", "preguntas frecuentes", "ayuda"]
+      "keywords": [
+        "faq",
+        "preguntas frecuentes",
+        "ayuda"
+      ]
     }
   ],
-  "unmatched": [
-    {
-      "oldPath": "/EstudiosAmbientales.html",
-      "reason": "Puede corresponder a mas de un estudio ambiental; revisar antes de redirigir."
-    },
-    {
-      "oldPath": "/PSAMUS.html",
-      "reason": "No encontre slug equivalente exacto en trabajos-planeacion."
-    },
-    {
-      "oldPath": "/ForoCiudades.html",
-      "reason": "Parece contenido editorial o evento, no trabajo de planeacion."
-    },
-    {
-      "oldPath": "/ForoFCCUU.html",
-      "reason": "Parece contenido editorial o evento, no trabajo de planeacion."
-    },
-    {
-      "oldPath": "/ForoFCCUU2020.html",
-      "reason": "Parece contenido editorial o evento, no trabajo de planeacion."
-    }
-  ]
+  "unmatched": []
 }
