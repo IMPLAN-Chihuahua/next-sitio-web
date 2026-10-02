@@ -28,6 +28,13 @@ type CriterioEcologicoResponse = {
     categoria_poel?: Criterio['categoria'];
 };
 
+type RelacionUgaResponse = {
+    clave_uga?: string | null;
+    criterios_ecologicos?: Array<{
+        id: number;
+    }>;
+};
+
 type LineamientoEcologicoResponse = {
     id: number;
     clave_uga?: string | null;
@@ -39,26 +46,42 @@ type LineamientoEcologicoResponse = {
 };
 
 async function getCriterios(): Promise<Criterio[]> {
-    const url = `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/criterio-ecologicos?populate=categoria_poel&pagination[pageSize]=900&sort=codigo:asc`;
+    const criteriosUrl = `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/criterio-ecologicos?populate=categoria_poel&pagination[pageSize]=900&sort=codigo:asc`;
+    const relacionesUrl = `${process.env.NEXT_PUBLIC_IMPLAN_CMS}/lineamiento-ecologicos?fields[0]=clave_uga&populate[criterios_ecologicos][fields][0]=codigo&pagination[pageSize]=900`;
 
-    const res = await fetch(url, {
-        next: {
-            revalidate: 3600,
-        },
-    });
+    const [criteriosRes, relacionesRes] = await Promise.all(
+        [criteriosUrl, relacionesUrl].map((url) => fetch(url, { next: { revalidate: 3600 } }))
+    );
 
-    if (!res.ok) {
-        throw new Error(`No se pudo cargar criterios ecológicos (${res.status})`);
+    if (!criteriosRes.ok) {
+        throw new Error(`No se pudo cargar criterios ecológicos (${criteriosRes.status})`);
     }
-    const json = await res.json();
+    if (!relacionesRes.ok) {
+        throw new Error(`No se pudieron cargar relaciones de criterios ecológicos (${relacionesRes.status})`);
+    }
 
-    return ((json.data ?? []) as CriterioEcologicoResponse[])
+    const [criteriosJson, relacionesJson] = await Promise.all([criteriosRes.json(), relacionesRes.json()]);
+    const clavesUgaPorCriterio = new Map<number, Set<string>>();
+
+    for (const relacion of (relacionesJson.data ?? []) as RelacionUgaResponse[]) {
+        const claveUga = relacion.clave_uga?.trim();
+        if (!claveUga) continue;
+
+        for (const criterio of relacion.criterios_ecologicos ?? []) {
+            const claves = clavesUgaPorCriterio.get(criterio.id) ?? new Set<string>();
+            claves.add(claveUga);
+            clavesUgaPorCriterio.set(criterio.id, claves);
+        }
+    }
+
+    return ((criteriosJson.data ?? []) as CriterioEcologicoResponse[])
         .map((item): Criterio => ({
             id: item.id,
             codigo: item.codigo ?? '',
             descripcion: strapiTextToBlocks(item.descripcion),
             categoria: item.categoria_poel ?? null,
             tipo: 'criterio',
+            clavesUga: Array.from(clavesUgaPorCriterio.get(item.id) ?? []),
         }))
         .filter((item: Criterio) => Boolean(item.codigo))
         .sort((a: Criterio, b: Criterio) => collator.compare(a.codigo, b.codigo));
@@ -86,6 +109,7 @@ async function getLineamientosEcologicos(): Promise<Criterio[]> {
             descripcion: strapiTextToBlocks(item.lineamiento ?? item.descripcion ?? item.descripcion_sumaria),
             categoria: LINEAMIENTO_ECOLOGICO,
             tipo: 'lineamiento',
+            clavesUga: [],
         }))
         .filter((item: Criterio) => Boolean(item.codigo))
         .sort((a: Criterio, b: Criterio) => collator.compare(a.codigo, b.codigo));

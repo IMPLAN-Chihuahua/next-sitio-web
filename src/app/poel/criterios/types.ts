@@ -24,6 +24,7 @@ export interface Criterio {
     descripcion: StrapiBlock[];
     categoria: Categoria | null;
     tipo: CriterioTipo;
+    clavesUga: string[];
 }
 
 export interface IndexedCriterio {
@@ -32,4 +33,5 @@ export interface IndexedCriterio {
     textoBusqueda: string;
     categoriaBusqueda: string;
     codigoBusqueda: string[];
+    clavesUgaBusqueda: string[][];
 }
