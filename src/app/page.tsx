@@ -2,10 +2,9 @@ import { Box, Container, Divider, Toolbar, Typography } from "@mui/material";
 import LandingPageBanner, { Overlay } from "./components/LandingPageBanner";
 import ProjectsExplorer from "./inicio/ProjectsExplorer";
 import ServicesList from "./inicio/ServicesList";
-import StellarBanner from "./inicio/StellarBanner";
 import ProjectSlider from "./inicio/ProjectSlider";
 import News from "./inicio/News";
-import FreshDivider from "./components/FreshDivider";
+import QueInformacionTeInteresa from "./inicio/QueInformacionTeInteresa";
 
 
 export default async function Home() {
@@ -49,7 +48,8 @@ export default async function Home() {
     <>
       <LandingPageBanner phrases={heroPhrases} />
       <Container>
-        <Box py={{ md: 3 }} />
+        <Typography mt={{ xs: 3, md: 9 }} gutterBottom variant="h1" component="h2">¿Qué te interesa consultar?</Typography>
+        <QueInformacionTeInteresa />
         <ServicesList data={sections} />
         <Box py={3} />
         <ProjectsExplorer data={platforms} />
