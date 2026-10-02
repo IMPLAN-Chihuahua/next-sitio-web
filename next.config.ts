@@ -4,10 +4,16 @@ import legacyUrlMap from "./src/app/legacy-url-map.json";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    remotePatterns: [{
-      // TODO: in prod add real hostname of cms
-      hostname: 'localhost'
-    }]
+    remotePatterns: [
+      {
+        hostname: 'localhost'
+      },
+      {
+        protocol: 'https',
+        hostname: 'editorial.implanchihuahua.org',
+        pathname: '/api/uploads/**'
+      }
+    ]
   },
   async redirects() {
     return [{
