@@ -21,13 +21,13 @@ export default function CriteriosExplorer({ initialData }: Props) {
     const searchParams = useSearchParams();
 
     const codigosURL = useMemo(() => {
-        const codigos = [searchParams.get('codigos'), searchParams.get('clave_uga')].filter(Boolean).join(',');
+        const codigos = searchParams.getAll('codigos').join(',');
         if (!codigos) return [];
         return [...new Set(codigos.split(',').map((codigo) => codigo.trim().toUpperCase()).filter(Boolean))];
     }, [searchParams]);
 
     const criteriosRelacionadosURL = useMemo(() => {
-        const criterios = searchParams.getAll('criterio').join(',');
+        const criterios = [...searchParams.getAll('criterio'), ...searchParams.getAll('clave_uga')].join(',');
         if (!criterios) return [];
         return [...new Set(criterios.split(',').map((criterio) => criterio.trim().toUpperCase()).filter(Boolean))];
     }, [searchParams]);
@@ -66,10 +66,8 @@ export default function CriteriosExplorer({ initialData }: Props) {
 
         if (restantes.length > 0) {
             params.set('codigos', restantes.join(','));
-            params.delete('clave_uga');
         } else {
             params.delete('codigos');
-            params.delete('clave_uga');
         }
 
         const query = params.toString();
@@ -81,6 +79,7 @@ export default function CriteriosExplorer({ initialData }: Props) {
         const restantes = criteriosRelacionadosURL.filter((item) => item !== criterio);
         const params = new URLSearchParams(searchParams.toString());
         params.delete('criterio');
+        params.delete('clave_uga');
 
         if (restantes.length > 0) params.set('criterio', restantes.join(','));
 
