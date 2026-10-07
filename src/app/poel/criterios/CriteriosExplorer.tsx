@@ -21,9 +21,15 @@ export default function CriteriosExplorer({ initialData }: Props) {
     const searchParams = useSearchParams();
 
     const codigosURL = useMemo(() => {
-        const codigos = [searchParams.get('codigos'), searchParams.get('clave_uga')].filter(Boolean).join(',');
+        const codigos = searchParams.getAll('codigos').join(',');
         if (!codigos) return [];
         return [...new Set(codigos.split(',').map((codigo) => codigo.trim().toUpperCase()).filter(Boolean))];
+    }, [searchParams]);
+
+    const criteriosRelacionadosURL = useMemo(() => {
+        const criterios = [...searchParams.getAll('criterio'), ...searchParams.getAll('clave_uga')].join(',');
+        if (!criterios) return [];
+        return [...new Set(criterios.split(',').map((criterio) => criterio.trim().toUpperCase()).filter(Boolean))];
     }, [searchParams]);
 
     const [busqueda, setBusqueda] = useState('');
@@ -43,6 +49,7 @@ export default function CriteriosExplorer({ initialData }: Props) {
                     textoBusqueda: normalizeSearchText(textoPlano),
                     categoriaBusqueda: normalizeSearchText(criterio.categoria?.nombre ?? ''),
                     codigoBusqueda: getCodeSearchVariants(criterio.codigo),
+                    clavesUgaBusqueda: criterio.clavesUga.map(getCodeSearchVariants),
                 };
             }),
         [initialData]
@@ -59,10 +66,8 @@ export default function CriteriosExplorer({ initialData }: Props) {
 
         if (restantes.length > 0) {
             params.set('codigos', restantes.join(','));
-            params.delete('clave_uga');
         } else {
             params.delete('codigos');
-            params.delete('clave_uga');
         }
 
         const query = params.toString();
@@ -70,10 +75,13 @@ export default function CriteriosExplorer({ initialData }: Props) {
         setPage(0);
     }
 
-    function quitarTodosLosCodigos() {
+    function quitarCriterioRelacionado(criterio: string) {
+        const restantes = criteriosRelacionadosURL.filter((item) => item !== criterio);
         const params = new URLSearchParams(searchParams.toString());
-        params.delete('codigos');
+        params.delete('criterio');
         params.delete('clave_uga');
+
+        if (restantes.length > 0) params.set('criterio', restantes.join(','));
 
         const query = params.toString();
         router.replace(query ? `${pathname}?${query}` : pathname);
@@ -88,6 +96,13 @@ export default function CriteriosExplorer({ initialData }: Props) {
             items = items.filter((item) => codigoVariants.some((variants) => codeVariantsEqualSearch(item.codigoBusqueda, variants)));
         }
 
+        if (criteriosRelacionadosURL.length > 0) {
+            const criteriosVariants = criteriosRelacionadosURL.map(getCodeSearchVariants);
+            items = items.filter((item) => criteriosVariants.some((criterioVariants) =>
+                item.clavesUgaBusqueda.some((claveVariants) => codeVariantsEqualSearch(claveVariants, criterioVariants))
+            ));
+        }
+
         if (categoria) items = items.filter(({ criterio }) => criterio.categoria?.nombre === categoria);
 
         if (busquedaDiferida.trim()) {
@@ -97,7 +112,7 @@ export default function CriteriosExplorer({ initialData }: Props) {
         }
 
         return items;
-    }, [indexedData, codigosURL, categoria, busquedaDiferida]);
+    }, [indexedData, codigosURL, criteriosRelacionadosURL, categoria, busquedaDiferida]);
 
     const paginados = useMemo(() => resultado.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage), [resultado, page, rowsPerPage]);
 
@@ -142,13 +157,31 @@ export default function CriteriosExplorer({ initialData }: Props) {
                 </Select>
             </Stack>
 
-            {codigosURL.length > 0 && (
+            {(codigosURL.length > 0 || criteriosRelacionadosURL.length > 0) && (
                 <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" sx={{ mb: 2, rowGap: 1 }}>
                     <Typography variant="body2" color="text.secondary" fontWeight={600}>Filtros aplicados:</Typography>
                     {codigosURL.map((codigo) => (
-                        <Chip key={codigo} label={codigo} onDelete={() => quitarCodigo(codigo)} size="small" sx={{ bgcolor: '#faf7cb' }} />
+                        <Chip key={`codigo-${codigo}`} label={`Código: ${codigo}`} onDelete={() => quitarCodigo(codigo)} size="small" sx={{ bgcolor: '#faf7cb' }} />
                     ))}
-                    <Button size="small" color="inherit" onClick={quitarTodosLosCodigos} sx={{ textTransform: 'none', color: 'text.secondary' }}>Quitar todos</Button>
+                    {criteriosRelacionadosURL.map((criterio) => (
+                        <Chip key={`criterio-${criterio}`} label={`Relacionado con: ${criterio}`} onDelete={() => quitarCriterioRelacionado(criterio)} size="small" sx={{ bgcolor: '#faf7cb' }} />
+                    ))}
+                    <Button
+                        size="small"
+                        color="inherit"
+                        onClick={() => {
+                            const params = new URLSearchParams(searchParams.toString());
+                            params.delete('codigos');
+                            params.delete('clave_uga');
+                            params.delete('criterio');
+                            const query = params.toString();
+                            router.replace(query ? `${pathname}?${query}` : pathname);
+                            setPage(0);
+                        }}
+                        sx={{ textTransform: 'none', color: 'text.secondary' }}
+                    >
+                        Quitar todos
+                    </Button>
                 </Stack>
             )}
 

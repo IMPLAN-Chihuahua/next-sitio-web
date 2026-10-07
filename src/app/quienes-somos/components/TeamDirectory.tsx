@@ -120,7 +120,7 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
     }, [data, searchTerm, selectedDept]);
 
 
-    const PLACEHOLDER_IMAGE = 'https://i.pravatar.cc/300?u=placeholder';
+    const PLACEHOLDER_IMAGE = 'https://macromissionary.com/wp-content/uploads/2021/10/dummy-avatar-2.jpg';
 
     const sortedData = useMemo(() => {
         const dataCopy = [...data];

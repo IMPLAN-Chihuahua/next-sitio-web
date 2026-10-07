@@ -20,11 +20,10 @@ export default async function CentroEstudiosPage() {
       />
       <Container sx={{ my: 3 }}>
         <Typography variant="h2" gutterBottom>
-          Estudios y propuestas
+          Conoce nuestros estudios
         </Typography>
         <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima quibusdam nesciunt quo cupiditate ab consequatur.
-          Libero commodi laborum dolor saepe, delectus vitae veniam recusandae quidem. Vero nesciunt necessitatibus sint consequuntur.
+          Consulta estudios, diagnósticos y propuestas desarrollados por el IMPLAN y en colaboración con instituciones y especialistas. Estos trabajos abordan distintos aspectos de la ciudad y el territorio, aportando información técnica para la planeación y la toma de decisiones.
         </Typography>
         <Suspense fallback={<Box display="flex" justifyContent="center" py={10}><CircularProgress /></Box>}>
 
