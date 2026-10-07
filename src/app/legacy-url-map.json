@@ -1,0 +1,543 @@
+{
+  "redirects": [
+    {
+      "oldPath": "/CalleMorelos.html",
+      "newPath": "/estudios-y-propuestas/peatonalizacion-calle-morelos",
+      "statusCode": 301,
+      "title": "Peatonalizacion Calle Morelos",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/VenustianoCarranza.html",
+      "newPath": "/estudios-y-propuestas/rehabilitacion-de-imagen-urbana-de-la-av-venustiano-carranza",
+      "statusCode": 301,
+      "title": "Rehabilitacion de Imagen Urbana de la Av. Venustiano Carranza",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ProyectoCE1.html",
+      "newPath": "/estudios-y-propuestas/rehabilitacion-de-imagen-urbana-de-la-av-venustiano-carranza",
+      "statusCode": 301,
+      "title": "Rehabilitacion de Imagen Urbana de la Av. Venustiano Carranza",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/QuintaTouche.html",
+      "newPath": "/estudios-y-propuestas/rehabilitacion-quinta-touche",
+      "statusCode": 301,
+      "title": "Rehabilitacion Quinta Touche",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/PlazaDeArmas.html",
+      "newPath": "/estudios-y-propuestas/mejoracion-de-accesibilidad-en-la-plaza-de-armas",
+      "statusCode": 301,
+      "title": "Mejoracion de accesibilidad en la Plaza de Armas",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CorredorEscultorico.html",
+      "newPath": "/estudios-y-propuestas/corredor-escultorico",
+      "statusCode": 301,
+      "title": "Corredor Escultorico",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Proyecto81.html",
+      "newPath": "/estudios-y-propuestas/corredor-escultorico",
+      "statusCode": 301,
+      "title": "Corredor Escultorico",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ParqueLerdo.html",
+      "newPath": "/estudios-y-propuestas/parque-lerdo",
+      "statusCode": 301,
+      "title": "Parque Lerdo",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ParqueRejon.html",
+      "newPath": "/estudios-y-propuestas/parque-metropolitano-el-rejon",
+      "statusCode": 301,
+      "title": "Parque Metropolitano El Rejon",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Proyecto7.html",
+      "newPath": "/estudios-y-propuestas/parque-metropolitano-el-rejon",
+      "statusCode": 301,
+      "title": "Parque Metropolitano El Rejon",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ParqueEncino.html",
+      "newPath": "/estudios-y-propuestas/parque-el-encino",
+      "statusCode": 301,
+      "title": "Parque El Encino",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EdificioDelReal.html",
+      "newPath": "/estudios-y-propuestas/edificio-del-real",
+      "statusCode": 301,
+      "title": "Edificio del Real",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CentroHistorico.html",
+      "newPath": "/estudios-y-propuestas/remodelacion-de-imagen-urbana-del-centro-historico",
+      "statusCode": 301,
+      "title": "Remodelacion de Imagen Urbana del Centro Historico",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioCruceSeguros.html",
+      "newPath": "/estudios-y-propuestas/cruces-seguros",
+      "statusCode": 301,
+      "title": "Cruces seguros",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/GuiaMetodologica.html",
+      "newPath": "/estudios-y-propuestas/guia-metodologica-centro-de-estudios-estrategicos",
+      "statusCode": 301,
+      "title": "Guia Metodologica Centro de Estudios Estrategicos",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/InsumosAtlasMunicipalRiesgos.html",
+      "newPath": "/estudios-y-propuestas/insumos-para-la-actualizacion-del-atlas-municipal-de-riesgos-en-el-centro-de-poblacion-de-chihuahua",
+      "statusCode": 301,
+      "title": "Insumos para la actualizacion del Atlas Municipal de Riesgos en el Centro de Poblacion de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/IndicadoresDesarrolloSostenible.html",
+      "newPath": "/estudios-y-propuestas/indicadores-para-el-desarrollo-urbano-sostenible-del-municipio-de-chihuahua",
+      "statusCode": 301,
+      "title": "Indicadores para el Desarrollo Urbano Sostenible del Municipio de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioCE1_V1.html",
+      "newPath": "/estudios-y-propuestas/estudio-de-factibilidad-de-modelos-de-densificacion",
+      "statusCode": 301,
+      "title": "Estudio de Factibilidad de Modelos de Densificacion",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioModelosDensificacion.html",
+      "newPath": "/estudios-y-propuestas/estudio-de-factibilidad-de-modelos-de-densificacion",
+      "statusCode": 301,
+      "title": "Estudio de Factibilidad de Modelos de Densificacion",
+      "category": "Estudio",
+      "match": "likely"
+    },
+    {
+      "oldPath": "/CostoCiudad.html",
+      "newPath": "/estudios-y-propuestas/costo-ciudad-aproximacion-a-un-modelo",
+      "statusCode": 301,
+      "title": "Costo Ciudad - Aproximacion a un modelo",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CostoCiudadAproximacionCostos.html",
+      "newPath": "/estudios-y-propuestas/costo-ciudad-aproximacion-a-los-costos-de-la-infraestructura",
+      "statusCode": 301,
+      "title": "Costo Ciudad - Aproximacion a los costos de la infraestructura",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ViviendaInformal.html",
+      "newPath": "/estudios-y-propuestas/estudio-sobre-la-vivienda-informal-en-la-ciudad-de-chihuahua-causas-efectos-y-politica-publica",
+      "statusCode": 301,
+      "title": "Estudio sobre la Vivienda Informal en la Ciudad de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioLuisHAlvarez.html",
+      "newPath": "/estudios-y-propuestas/estudio-tecnico-blvd-luis-h-alvarez",
+      "statusCode": 301,
+      "title": "Estudio Tecnico Blvd. Luis H. Alvarez",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioPoliticas.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-el-diseno-de-politicas-publicas-para-la-gestion-de-uso-de-suelo-e-infraestructura-para-la-industria-en-la-ciudad-de-chihuahua",
+      "statusCode": 301,
+      "title": "Estudio para el diseno de politicas publicas para la gestion de uso de suelo e infraestructura para la industria en la ciudad de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioVivienda.html",
+      "newPath": "/estudios-y-propuestas/investigacion-de-aceptacion-de-vivienda-densificada-en-segmentos-economica-popular-y-tradicional-en-chihuahua",
+      "statusCode": 301,
+      "title": "Investigacion de aceptacion de vivienda densificada",
+      "category": "Estudio",
+      "match": "likely"
+    },
+    {
+      "oldPath": "/ReformaEnergetica.html",
+      "newPath": "/estudios-y-propuestas/aprovechamiento-para-la-reforma-energetica",
+      "statusCode": 301,
+      "title": "Aprovechamiento para la reforma energetica",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ValoracionAnva.html",
+      "newPath": "/estudios-y-propuestas/valoracion-de-servicios-ambientales-de-las-areas-naturales-de-valor-ambiental-anva-y-de-preservacion-ecologica-pe-del-centro-de-poblacion-de-la-ciudad-de-chihuahua",
+      "statusCode": 301,
+      "title": "Valoracion de servicios ambientales de las areas naturales de valor ambiental",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioMultimodal.html",
+      "newPath": "/estudios-y-propuestas/actualizacion-multimodal-del-macromodelo-de-chihuahua",
+      "statusCode": 301,
+      "title": "Actualizacion multimodal del macromodelo de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioEPMH.html",
+      "newPath": "/estudios-y-propuestas/estudios-base-para-la-elaboracion-del-plan-municipal-hidrico",
+      "statusCode": 301,
+      "title": "Estudios base para la elaboracion del Plan Municipal Hidrico",
+      "category": "Estudio",
+      "match": "likely"
+    },
+    {
+      "oldPath": "/EstudioDefinicionIncentivosUrbanos.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-la-definicion-de-incentivos-urbanos",
+      "statusCode": 301,
+      "title": "Estudio para la definicion de incentivos urbanos",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstadoDelArteAgua.html",
+      "newPath": "/estudios-y-propuestas/estado-del-arte-en-materia-del-agua",
+      "statusCode": 301,
+      "title": "Estado del arte en materia del agua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/MesaDeLosCaballos.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-la-caracterizacion-y-diagnostico-ambiental-morfologico-de-la-mesa-de-los-caballos",
+      "statusCode": 301,
+      "title": "Estudio para la caracterizacion y diagnostico ambiental morfologico de la Mesa de Los Caballos",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudioInsumosHidricaMunicipal.html",
+      "newPath": "/estudios-y-propuestas/insumos-para-la-planeacion-hidrica-municipal-y-actualizacion-de-la-base-de-datos-geografica-para-la-gestion-hidrica",
+      "statusCode": 301,
+      "title": "Insumos para la Planeacion Hidrica Municipal",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Proyecto6.html",
+      "newPath": "/estudios-y-propuestas",
+      "statusCode": 302,
+      "title": "Parque Metropolitano Tres Presas",
+      "category": "Proyecto",
+      "match": "no-new-detail-page"
+    },
+    {
+      "oldPath": "/Proyectos.html",
+      "newPath": "/estudios-y-propuestas",
+      "statusCode": 301,
+      "title": "Proyectos",
+      "category": "Index",
+      "match": "section"
+    },
+    {
+      "oldPath": "/AtribucionesNormatividad.html",
+      "newPath": "/transparencia",
+      "statusCode": 301,
+      "title": "Atribuciones y normatividad",
+      "category": "Transparencia",
+      "match": "section"
+    },
+    {
+      "oldPath": "/Cajita.html",
+      "newPath": "/editorial/cajita-ordenada",
+      "statusCode": 301,
+      "title": "Cajita Ordenada",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Consejo.html",
+      "newPath": "/consejo",
+      "statusCode": 301,
+      "title": "Consejo Municipal de Ordenamiento Territorial y Desarrollo Urbano",
+      "category": "Institucional",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Convenios.html",
+      "newPath": "/convenios",
+      "statusCode": 301,
+      "title": "Convenios del IMPLAN Chihuahua",
+      "category": "Transparencia",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CuentaPublica.html",
+      "newPath": "/rendicion-cuentas",
+      "statusCode": 301,
+      "title": "Cuenta Pública",
+      "category": "Rendición de cuentas",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/CuentaPublica2.html",
+      "newPath": "/rendicion-cuentas",
+      "statusCode": 301,
+      "title": "Cuenta Pública",
+      "category": "Rendición de cuentas",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Descargables_DA.html",
+      "newPath": "/cartografia",
+      "statusCode": 301,
+      "title": "Cartografía",
+      "category": "Plataforma",
+      "match": "section"
+    },
+    {
+      "oldPath": "/Directorio.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Directorio",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/EquipoTecnico.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Equipo Técnico del IMPLAN Chihuahua",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/EstudioReservasIndustriales.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-el-diseno-de-politicas-publicas-para-la-gestion-de-uso-de-suelo-e-infraestructura-para-la-industria-en-la-ciudad-de-chihuahua",
+      "statusCode": 301,
+      "title": "Estudio para el diseño de políticas públicas para la gestión de uso de suelo e infraestructura para la industria en la Ciudad de Chihuahua",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/EstudiosAmbientales.html",
+      "newPath": "/estudios-y-propuestas/estudio-para-la-definicion-del-borde-urbano-zonas-de-valor-ambiental-y-de-preservacion-ecologica",
+      "statusCode": 301,
+      "title": "Estudio para la definición del borde urbano, zonas de valor ambiental y de preservación ecológica",
+      "category": "Estudio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ForoCiudades.html",
+      "newPath": "/editorial/foro-de-ciudades-2019-que-ciudad-merecemos",
+      "statusCode": 301,
+      "title": "Foro de Ciudades 1.2019: ¿Qué ciudad merecemos?",
+      "category": "Evento",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ForoFCCUU.html",
+      "newPath": "/editorial/foro-de-ciudades-2018-las-personas-en-la-nueva-agenda-urbana-vision-de-ciudad",
+      "statusCode": 301,
+      "title": "Foro de Ciudades 2018: Las Personas en la Nueva Agenda Urbana, Visión de Ciudad",
+      "category": "Evento",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/ForoFCCUU2020.html",
+      "newPath": "/editorial/foro-de-ciudades-consulta-publica-diagnostico-y-vision-de-ciudad-2020",
+      "statusCode": 301,
+      "title": "Foro de Ciudades – Consulta Pública: Diagnóstico y Visión de Ciudad 2020",
+      "category": "Evento",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/index.html",
+      "newPath": "/",
+      "statusCode": 301,
+      "title": "Inicio",
+      "category": "Inicio",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Licitaciones.html",
+      "newPath": "/adquisiciones",
+      "statusCode": 301,
+      "title": "Licitaciones, adquisiciones y subastas",
+      "category": "Sección",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Mision.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Misión, visión y objetivos",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/Organigrama.html",
+      "newPath": "/quienes-somos",
+      "statusCode": 301,
+      "title": "Organigrama",
+      "category": "Institucional",
+      "match": "section"
+    },
+    {
+      "oldPath": "/PDU2040.html",
+      "newPath": "/planeacion/pdu-2040-7ma-actualizacion",
+      "statusCode": 301,
+      "title": "Archivos descargables PDU 2040",
+      "category": "Planeación",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Practicantes.html",
+      "newPath": "/practicas-profesionales",
+      "statusCode": 301,
+      "title": "Practicantes",
+      "category": "Institucional",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/PreguntasFrecuentes.html",
+      "newPath": "/preguntas-frecuentes",
+      "statusCode": 301,
+      "title": "Preguntas Frecuentes",
+      "category": "Utilidad",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Privacidad.html",
+      "newPath": "/avisos-privacidad",
+      "statusCode": 301,
+      "title": "Avisos de privacidad",
+      "category": "Aviso de privacidad",
+      "match": "section"
+    },
+    {
+      "oldPath": "/PSAMUS.html",
+      "newPath": "/estudios-y-propuestas/diseno-e-implementacion-del-modelo-de-gobernanza-de-la-accesibilidad-y-movilidad-de-la-zona-metropolitana-de-chihuahua",
+      "statusCode": 301,
+      "title": "Diseño e implementación del modelo de gobernanza de la accesibilidad y movilidad de la Zona Metropolitana de Chihuahua",
+      "category": "Proyecto",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/Transparencia.html",
+      "newPath": "/transparencia",
+      "statusCode": 301,
+      "title": "Artículo 77. Obligaciones de transparencia comunes",
+      "category": "Transparencia",
+      "match": "confirmed"
+    },
+    {
+      "oldPath": "/UnidadTransparencia.html",
+      "newPath": "/unidad-transparencia",
+      "statusCode": 301,
+      "title": "Unidad de Transparencia",
+      "category": "Transparencia",
+      "match": "confirmed"
+    }
+  ],
+  "suggestedPages": [
+    {
+      "path": "/estudios-y-propuestas",
+      "title": "Estudios y propuestas",
+      "keywords": [
+        "estudios",
+        "proyectos",
+        "propuestas",
+        "trabajos de planeacion"
+      ]
+    },
+    {
+      "path": "/planeacion",
+      "title": "Planeacion",
+      "keywords": [
+        "planeacion",
+        "pdu",
+        "instrumentos",
+        "planes"
+      ]
+    },
+    {
+      "path": "/cartografia",
+      "title": "Cartografia",
+      "keywords": [
+        "cartografia",
+        "mapas",
+        "sigmun"
+      ]
+    },
+    {
+      "path": "/transparencia",
+      "title": "Transparencia",
+      "keywords": [
+        "transparencia",
+        "cuenta publica",
+        "licitaciones"
+      ]
+    },
+    {
+      "path": "/avisos-privacidad",
+      "title": "Avisos de privacidad",
+      "keywords": [
+        "privacidad",
+        "aviso de privacidad",
+        "datos personales"
+      ]
+    },
+    {
+      "path": "/preguntas-frecuentes",
+      "title": "Preguntas frecuentes",
+      "keywords": [
+        "faq",
+        "preguntas frecuentes",
+        "ayuda"
+      ]
+    }
+  ],
+  "unmatched": []
+}
