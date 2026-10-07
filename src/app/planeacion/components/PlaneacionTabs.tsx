@@ -26,6 +26,7 @@ export default function PlaneacionTabs() {
         <Tabs
             value={currentTab}
             onChange={handleChange}
+            variant='scrollable'
             sx={{
                 minHeight: 66,
 
