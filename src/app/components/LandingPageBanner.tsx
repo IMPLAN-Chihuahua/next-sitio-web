@@ -4,20 +4,24 @@ import Autoplay from "embla-carousel-autoplay";
 import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from './LandingPageBanner.module.css'
 import Fade from "embla-carousel-fade";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
 const CAROUSEL_DELAY = 4_000;
+const PROGRESS_CIRCUMFERENCE = 2 * Math.PI * 30;
 
 export default function LandingPageBanner({ phrases }: { phrases: Array<{ content: string, emphasis: string, image: string }> }) {
+  const [autoplayPlugin] = useState(() => Autoplay({ playOnInit: true, delay: CAROUSEL_DELAY }));
+  const [fadePlugin] = useState(() => Fade());
   const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: false, loop: true },
-    [Autoplay({ playOnInit: true, delay: CAROUSEL_DELAY }), Fade()]);
+    [autoplayPlugin, fadePlugin]);
 
   const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
-  const [autoplayProgress, setAutoplayProgress] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const progressCircleRef = useRef<SVGCircleElement>(null);
 
   const toggleAutoplay = useCallback(() => {
     const autoplay = emblaApi?.plugins()?.autoplay;
@@ -38,7 +42,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
     const onStop = () => setAutoplayIsPlaying(false);
     const onReInit = () => setAutoplayIsPlaying(autoplay.isPlaying());
 
-    setAutoplayIsPlaying(autoplay.isPlaying());
+    const initialStateFrame = requestAnimationFrame(onReInit);
     emblaApi
       .on('autoplay:play', onPlay)
       .on('autoplay:stop', onStop)
@@ -46,12 +50,25 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
 
     return () => {
+      cancelAnimationFrame(initialStateFrame);
       emblaApi
         .off('autoplay:play', onPlay)
         .off('autoplay:stop', onStop)
         .off('reInit', onReInit);
     }
 
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+
+    emblaApi.on('select', onSelect).on('reInit', onSelect);
+
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect);
+    }
   }, [emblaApi]);
 
 
@@ -68,18 +85,22 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       const remaining = autoplay.timeUntilNext();
 
       if (remaining === null) {
-        setAutoplayProgress(0);
+        progressCircleRef.current?.style.setProperty('stroke-dashoffset', `${PROGRESS_CIRCUMFERENCE}`);
         return;
       }
 
-      setAutoplayProgress(1 - remaining / CAROUSEL_DELAY);
+      const progress = 1 - remaining / CAROUSEL_DELAY;
+      progressCircleRef.current?.style.setProperty(
+        'stroke-dashoffset',
+        `${PROGRESS_CIRCUMFERENCE * (1 - progress)}`
+      );
       animationFrame = requestAnimationFrame(updateProgress)
     }
 
     const onTimerSet = () => {
       cancelAnimationFrame(animationFrame);
 
-      setAutoplayProgress(0);
+      progressCircleRef.current?.style.setProperty('stroke-dashoffset', `${PROGRESS_CIRCUMFERENCE}`);
       updateProgress();
     }
 
@@ -116,7 +137,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
         <Box className={styles.embla__viewport} ref={emblaRef}>
           <Box className={styles.embla__container} height={'85vh'} position={'relative'}>
             {phrases.map((phrase, idx) => (
-              <ContentSlide key={idx} {...phrase} />
+              <ContentSlide key={idx} {...phrase} isSelected={idx === selectedIndex} />
             ))}
           </Box>
         </Box>
@@ -162,16 +183,15 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
             }}
           >
             <circle
+              ref={progressCircleRef}
               cx="32"
               cy="32"
               r="30"
               fill="none"
               stroke="#fafafc"
               strokeWidth="4"
-              strokeDasharray={2 * Math.PI * 30}
-              strokeDashoffset={
-                2 * Math.PI * 30 * (1 - autoplayProgress)
-              }
+              strokeDasharray={PROGRESS_CIRCUMFERENCE}
+              strokeDashoffset={PROGRESS_CIRCUMFERENCE}
               strokeLinecap="round"
             />
           </Box>
@@ -216,7 +236,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 }
 
 
-const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis: string, image: string }) => {
+const ContentSlide = ({ content, emphasis, image, isSelected }: { content: string, emphasis: string, image: string, isSelected: boolean }) => {
   return (
     <Box className={styles.embla__slide} sx={{ userSelect: 'none', position: 'relative' }}>
       <Image
@@ -234,9 +254,11 @@ const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis:
       <Container
         maxWidth='xl'
         component={Box}
+        aria-hidden={!isSelected}
         zIndex={130}
         position={'relative'}
         color={'primary.50'}
+        sx={{ visibility: isSelected ? 'visible' : 'hidden' }}
       >
         <Typography
           component="h1"
