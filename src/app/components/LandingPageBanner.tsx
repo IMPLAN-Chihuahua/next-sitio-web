@@ -21,6 +21,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
   const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const CIRCLE_LENGTH = 2 * Math.PI * 30;
   const progressCircleRef = useRef<SVGCircleElement>(null);
 
   const toggleAutoplay = useCallback(() => {
@@ -85,7 +86,10 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       const remaining = autoplay.timeUntilNext();
 
       if (remaining === null) {
-        progressCircleRef.current?.style.setProperty('stroke-dashoffset', `${PROGRESS_CIRCUMFERENCE}`);
+        progressCircleRef.current?.setAttribute(
+          'stroke-dashoffset',
+          String(CIRCLE_LENGTH)
+        )
         return;
       }
 
@@ -99,8 +103,6 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
     const onTimerSet = () => {
       cancelAnimationFrame(animationFrame);
-
-      progressCircleRef.current?.style.setProperty('stroke-dashoffset', `${PROGRESS_CIRCUMFERENCE}`);
       updateProgress();
     }
 
@@ -190,8 +192,8 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
               fill="none"
               stroke="#fafafc"
               strokeWidth="4"
-              strokeDasharray={PROGRESS_CIRCUMFERENCE}
-              strokeDashoffset={PROGRESS_CIRCUMFERENCE}
+              strokeDasharray={CIRCLE_LENGTH}
+              strokeDashoffset={CIRCLE_LENGTH}
               strokeLinecap="round"
             />
           </Box>
@@ -245,7 +247,7 @@ const ContentSlide = ({ content, emphasis, image, isSelected }: { content: strin
         alt=''
         fill
         unoptimized
-        loading="eager"
+        loading="lazy"
         style={{
           objectFit: 'cover'
         }}
