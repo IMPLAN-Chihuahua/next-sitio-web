@@ -4,7 +4,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from './LandingPageBanner.module.css'
 import Fade from "embla-carousel-fade";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -17,7 +17,8 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
     [Autoplay({ playOnInit: true, delay: CAROUSEL_DELAY }), Fade()]);
 
   const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
-  const [autoplayProgress, setAutoplayProgress] = useState(0);
+  const CIRCLE_LENGTH = 2 * Math.PI * 30;
+  const progressCircleRef = useRef<SVGCircleElement>(null);
 
   const toggleAutoplay = useCallback(() => {
     const autoplay = emblaApi?.plugins()?.autoplay;
@@ -68,18 +69,23 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       const remaining = autoplay.timeUntilNext();
 
       if (remaining === null) {
-        setAutoplayProgress(0);
+        progressCircleRef.current?.setAttribute(
+          'stroke-dashoffset',
+          String(CIRCLE_LENGTH)
+        )
         return;
       }
 
-      setAutoplayProgress(1 - remaining / CAROUSEL_DELAY);
+      const progress = 1 - remaining / CAROUSEL_DELAY;
+      progressCircleRef.current?.setAttribute(
+        'stroke-dashoffset',
+        String(CIRCLE_LENGTH * (1 - progress))
+      )
       animationFrame = requestAnimationFrame(updateProgress)
     }
 
     const onTimerSet = () => {
       cancelAnimationFrame(animationFrame);
-
-      setAutoplayProgress(0);
       updateProgress();
     }
 
@@ -162,16 +168,15 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
             }}
           >
             <circle
+              ref={progressCircleRef}
               cx="32"
               cy="32"
               r="30"
               fill="none"
               stroke="#fafafc"
               strokeWidth="4"
-              strokeDasharray={2 * Math.PI * 30}
-              strokeDashoffset={
-                2 * Math.PI * 30 * (1 - autoplayProgress)
-              }
+              strokeDasharray={CIRCLE_LENGTH}
+              strokeDashoffset={CIRCLE_LENGTH}
               strokeLinecap="round"
             />
           </Box>
@@ -225,7 +230,7 @@ const ContentSlide = ({ content, emphasis, image }: { content: string, emphasis:
         alt=''
         fill
         unoptimized
-        loading="eager"
+        loading="lazy"
         style={{
           objectFit: 'cover'
         }}
