@@ -14,8 +14,31 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://implanchihuahua.org"),
   title: "IMPLAN Chihuahua",
   description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
+  openGraph: {
+    title: "IMPLAN Chihuahua",
+    description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
+    url: "https://implanchihuahua.org/",
+    siteName: "IMPLAN Chihuahua",
+    locale: "es_MX",
+    type: "website",
+    images: [
+      {
+        url: "/implan_icon.webp",
+        width: 1200,
+        height: 630,
+        alt: "IMPLAN Chihuahua",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IMPLAN Chihuahua",
+    description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
+    images: ["/implan_logo.webp"],
+  },
 };
 
 const montserrat = Montserrat({
