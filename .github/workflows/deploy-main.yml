@@ -11,12 +11,42 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Build and restart
+  deploy-legacy:
+    name: Deploy legacy server
     runs-on:
       - self-hosted
       - linux
       - production
+    timeout-minutes: 30
+
+    steps:
+      - name: Update, build and restart
+        shell: bash
+        working-directory: /home/rociomartinez/apps/next-sitio-web
+        run: |
+          set -Eeuo pipefail
+
+          git switch main
+          git fetch origin main
+          git merge --ff-only origin/main
+
+          npm ci
+          npm run build
+
+          if pm2 describe next-sitio-web >/dev/null 2>&1; then
+            pm2 restart next-sitio-web --update-env
+          else
+            pm2 start npm --name next-sitio-web -- start
+          fi
+
+          pm2 save
+
+  deploy-primary:
+    name: Deploy primary server (10.218.108.53)
+    runs-on:
+      - self-hosted
+      - linux
+      - production-primary
     timeout-minutes: 30
 
     steps:
