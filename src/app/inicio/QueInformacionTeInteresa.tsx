@@ -38,10 +38,10 @@ const SLIDES = [{
         href: '/planeacion/pdu-2040-7ma-actualizacion'
     }, {
         label: 'Patrimonio',
-        href: '/',
+        href: 'https://idecuu.mpiochih.gob.mx/implan/apps/storymaps/stories/c734857be5db47d58eae23dbf41b3930',
     }, {
         label: 'Equipamiento',
-        href: '/'
+        href: 'https://idecuu.mpiochih.gob.mx/implan/apps/storymaps/stories/c1c6e9ed25e44e039e1968d3e6a6e8b4'
     }]
 }, {
     icon: <Apartment sx={{ fontSize: 40, color: 'primary.800' }} />,
