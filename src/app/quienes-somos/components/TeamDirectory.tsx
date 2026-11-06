@@ -1,7 +1,7 @@
 'use client'
 import React, { useMemo, useState } from 'react';
 import {
-    Container, Grid, Typography, Box, Link, Dialog, DialogContent, IconButton,
+    Container, Grid, Typography, Box, Link,
     TextField,
     InputAdornment,
     MenuItem,
@@ -12,20 +12,17 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import CloseIcon from '@mui/icons-material/Close';
 import TeamMemberCard from './TeamMembers';
+import OrganigramaDialog from './OrganigramaDialog';
 import { Media, TeamMember } from '@/app/definitions';
-import Image from 'next/image';
 
-import { AccountTree, SupervisorAccount, SvgIconComponent } from "@mui/icons-material";
+import { SupervisorAccount, SvgIconComponent } from "@mui/icons-material";
 import CodeIcon from '@mui/icons-material/Code';
 import GavelIcon from '@mui/icons-material/Gavel';
-import BrushIcon from '@mui/icons-material/Brush';
 import MapIcon from '@mui/icons-material/Map';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CameraAltRoundedIcon from '@mui/icons-material/CameraAltRounded';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import BusinessIcon from '@mui/icons-material/Business';
 import HiveIcon from '@mui/icons-material/Hive';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,7 +46,7 @@ const getDeptStyle = (deptName: string | undefined | null) => {
     return departmentStyles['default'];
 };
 
-const getStrapiImage = (photo: any) => {
+const getStrapiImage = (photo: Media | null) => {
     if (!photo) return null;
 
     const selectedUrl = photo.formats?.small?.url ||
@@ -121,16 +118,6 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
 
 
     const PLACEHOLDER_IMAGE = 'https://macromissionary.com/wp-content/uploads/2021/10/dummy-avatar-2.jpg';
-
-    const sortedData = useMemo(() => {
-        const dataCopy = [...data];
-
-        return dataCopy.sort((a, b) => {
-            const fullNameA = `${a.apellidos} ${a.nombres}`.toLowerCase();
-            const fullNameB = `${b.apellidos} ${b.nombres}`.toLowerCase();
-            return fullNameA.localeCompare(fullNameB, 'es', { sensitivity: 'base' });
-        });
-    }, [data]);
 
     return (
         <Box sx={{ bgcolor: '#f9fafb' }}>
@@ -254,40 +241,12 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
                     </AnimatePresence>
                 </Grid>
 
-                <Dialog
+                <OrganigramaDialog
                     open={openDialog}
                     onClose={handleCloseDialog}
-                    maxWidth="xl"
-                    fullWidth
-                    scroll="body"
-                >
-                    <IconButton
-                        onClick={handleCloseDialog}
-                        sx={{ position: 'absolute', right: 8, top: 8, color: (theme) => theme.palette.grey[500], zIndex: 1, bgcolor: 'white' }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <DialogContent
-                        sx={{
-                            p: 0,
-                            bgcolor: 'background.paper',
-                            position: 'relative',
-                            width: '100%',
-                            height: '80vh',
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <Image
-                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${organigrama.url}`}
-                            alt="Organigrama del Instituto IMPLAN"
-                            fill
-                            unoptimized={true}
-                            style={{
-                                objectFit: 'contain',
-                            }}
-                        />
-                    </DialogContent>
-                </Dialog>
+                    src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${organigrama.url}`}
+                    imagePath={organigrama.url}
+                />
             </Container>
         </Box>
     );
