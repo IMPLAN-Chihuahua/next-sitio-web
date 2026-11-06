@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Update, build and restart
         shell: bash
-        working-directory: /home/rociomartinez/apps/next-sitio-web
+        working-directory: /home/rociomartinez/next-sitio-web
         run: |
           set -Eeuo pipefail
 
