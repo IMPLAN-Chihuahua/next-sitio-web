@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/implan_icon.webp",
+        url: "/share-thumbnail.webp",
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: "IMPLAN Chihuahua",
       },
     ],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "IMPLAN Chihuahua",
     description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
-    images: ["/implan_logo.webp"],
+    images: ["/share-thumbnail.webp"],
   },
 };
 
