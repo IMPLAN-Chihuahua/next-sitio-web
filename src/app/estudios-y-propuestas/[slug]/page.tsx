@@ -36,7 +36,7 @@ export async function generateMetadata({ params, searchParams }: DetailPageMetad
     const images = imageUrl ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl}`] : []
     
     return {
-      title: `${json.data.nombre} | IMPLAN`,
+      title: json.data.nombre,
       description: json.data.resumen,
       openGraph: {
         images
@@ -44,7 +44,7 @@ export async function generateMetadata({ params, searchParams }: DetailPageMetad
     }
   } catch (err) {
     return {
-      title: 'Trabajo de planeación | IMPLAN'
+      title: 'Trabajo de planeación'
     }
   }
 }

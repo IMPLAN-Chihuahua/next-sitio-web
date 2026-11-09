@@ -98,7 +98,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
 
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
-            <Typography component={'h1'} fontWeight={600} fontSize={36}>{page.data.nombre}</Typography>
+            <Typography variant={'h1'}>{page.data.nombre}</Typography>
             <Typography color='primary.600' fontSize={16} fontWeight={600}>{page.data.tema.descripcion}</Typography>
             <Stack direction="row" spacing={1} mt={1}>
               {page.data.destacado && (
