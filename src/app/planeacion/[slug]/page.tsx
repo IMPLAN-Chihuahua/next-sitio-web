@@ -10,6 +10,35 @@ import { Suspense } from "react";
 import CartografiaCard from "../components/CartografiaCard";
 import { filesize } from "filesize";
 import { ArchiveOutlined, Landscape, StarBorderOutlined } from "@mui/icons-material";
+import { Metadata } from "next";
+
+type DetailPageMetadataProps = {
+  params: Promise<{ slug: string }>,
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ params }: DetailPageMetadataProps): Promise<Metadata> {
+  const { slug } = await params;
+  const queryParams = qs.stringify({
+    populate: [
+      'cover'
+    ]
+  }, { encodeValuesOnly: true });
+  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumentos-planeacion/${slug}?${queryParams.toString()}`)
+  const page: { data: InstrumentoPlaneacion } = await req.json();
+  const img = page.data.cover.formats?.small ? page.data.cover.formats?.small.url : page.data.cover.url;
+
+  return {
+    title: page.data.nombre,
+    description: page.data.descripcion,
+    openGraph: {
+      images: [
+        `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${img}`,
+      ]
+    }
+  }
+}
+
 
 
 export default async function InstrumentoPlaneacionPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -69,7 +98,7 @@ export default async function InstrumentoPlaneacionPage({ params }: { params: Pr
 
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
-            <Typography component={'h1'} fontWeight={600} fontSize={36}>{page.data.nombre}</Typography>
+            <Typography variant={'h1'}>{page.data.nombre}</Typography>
             <Typography color='primary.600' fontSize={16} fontWeight={600}>{page.data.tema.descripcion}</Typography>
             <Stack direction="row" spacing={1} mt={1}>
               {page.data.destacado && (

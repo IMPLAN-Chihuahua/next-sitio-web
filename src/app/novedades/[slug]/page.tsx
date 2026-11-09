@@ -5,7 +5,7 @@ import { MDXRemote } from "next-mdx-remote-client/rsc";
 import qs from 'qs';
 import { Suspense } from "react";
 import Image from "next/image";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
@@ -22,9 +22,9 @@ type DetailPageMetadataProps = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({ params }: DetailPageMetadataProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DetailPageMetadataProps, parent: ResolvingMetadata): Promise<Metadata> {
     const slug = (await params).slug;
-
+    
     const queryParams = qs.stringify({
         filters: { slug: { $eq: slug } }
     }, { encodeValuesOnly: true });
@@ -32,17 +32,18 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
     try {
         const page = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?${queryParams}`);
         const json = await page.json();
+        
         const article: Novedad = json.data?.[0];
         if (!article) return { title: 'Artículo no encontrado | IMPLAN' };
-
-        const imageUrl = article.media?.[0]?.formats?.small?.url || article.media?.[0]?.url;
-        const images = imageUrl ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl}`] : [];
+        
+        const novedadImg = article.cover?.formats?.small.url || article.cover?.url;
+        const imgUrl = novedadImg ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${novedadImg}`] : [];
 
         return {
             title: `${article.title} | IMPLAN`,
             description: article.seoDescription || article.description,
             openGraph: {
-                images
+                images: imgUrl
             }
         }
     } catch (err) {

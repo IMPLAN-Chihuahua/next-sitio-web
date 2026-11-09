@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'editorial.implanchihuahua.org',
         pathname: '/api/uploads/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'editorial.implanchihuahua.org',
+        pathname: '/uploads/**'
       }
     ]
   },
