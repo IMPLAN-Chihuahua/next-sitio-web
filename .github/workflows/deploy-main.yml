@@ -70,3 +70,63 @@ jobs:
           fi
 
           pm2 save
+  notify-teams:
+    name: Notify Microsoft Teams
+    needs:
+      - deploy-legacy
+      - deploy-primary
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+      - name: Send deployment result
+        shell: bash
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          LEGACY_RESULT: ${{ needs.deploy-legacy.result }}
+          PRIMARY_RESULT: ${{ needs.deploy-primary.result }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_SHA: ${{ github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -Eeuo pipefail
+
+          if [[ "$LEGACY_RESULT" == "success" &&
+                "$PRIMARY_RESULT" == "success" ]]; then
+            TITLE="✅ Despliegue completado"
+            SUMMARY="El build y despliegue terminaron correctamente."
+          else
+            TITLE="❌ Error en el despliegue"
+            SUMMARY="Uno o más servidores no pudieron completar el proceso."
+          fi
+
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+
+          export MESSAGE="$TITLE
+
+          $SUMMARY
+
+          **Repositorio:** $REPOSITORY
+          **Rama:** $BRANCH
+          **Commit:** $SHORT_SHA
+          **Ejecutado por:** $ACTOR
+          **Servidor legacy:** $LEGACY_RESULT
+          **Servidor principal:** $PRIMARY_RESULT
+
+          [Ver ejecución en GitHub]($RUN_URL)"
+
+          PAYLOAD="$(
+            node -e \
+              'process.stdout.write(JSON.stringify({ text: process.env.MESSAGE }))'
+          )"
+
+          curl \
+            --fail-with-body \
+            --retry 3 \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --data "$PAYLOAD" \
+            "$TEAMS_WEBHOOK_URL"
