@@ -10,6 +10,11 @@ import PageBanner from '../components/PageBanner';
 import Destacados from './components/Destacados';
 import Articulos from './components/Articulos';
 import { SubtitleH2 } from '../components/Titles';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Novedades'
+};
 
 export default async function EditorialPage() {
   let editorialData: any = {};

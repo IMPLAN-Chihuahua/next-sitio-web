@@ -19,7 +19,6 @@ type DetailPageMetadataProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-
 export async function generateMetadata({ params, searchParams }: DetailPageMetadataProps): Promise<Metadata> {
   const queryParams = qs.stringify({
     fields: ['nombre', 'cover', 'resumen'],
@@ -32,8 +31,10 @@ export async function generateMetadata({ params, searchParams }: DetailPageMetad
     const slug = (await params).slug;
     const page = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/trabajos-planeacion/${slug}?${queryParams.toString()}`)
     const json: { data: Pick<TrabajoPlaneacion, 'nombre' | 'cover' | 'resumen'> } = await page.json();
+
     const imageUrl = json.data.cover?.formats?.small?.url || json.data.cover?.url;
-    const images = imageUrl ? [imageUrl] : []
+    const images = imageUrl ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl}`] : []
+    
     return {
       title: `${json.data.nombre} | IMPLAN`,
       description: json.data.resumen,

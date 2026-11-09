@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 
-export default async function QuienesSomosPage() {
+export default async function ReportesFinancieros() {
   const reportesReq = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/reportes-financieros/available-years`);
   const { data: cuentaPublicaYears } = await reportesReq.json();
 

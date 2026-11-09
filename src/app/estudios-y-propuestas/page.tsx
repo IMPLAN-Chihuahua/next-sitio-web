@@ -4,6 +4,12 @@ import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import { SubtitleH2 } from "@/app/components/Titles";
 import TrabajosTiles from "./components/Tiles";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: 'Estudios y propuestas'
+};
 
 
 export default async function CentroEstudiosPage() {
