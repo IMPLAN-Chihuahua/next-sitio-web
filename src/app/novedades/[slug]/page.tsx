@@ -38,13 +38,12 @@ export async function generateMetadata({ params }: DetailPageMetadataProps, pare
         
         const novedadImg = article.cover?.formats?.small.url || article.cover?.url;
         const imgUrl = novedadImg ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${novedadImg}`] : [];
-        const prevImages = (await parent).openGraph?.images || [];
 
         return {
             title: `${article.title} | IMPLAN`,
             description: article.seoDescription || article.description,
             openGraph: {
-                images: [...imgUrl,...prevImages]
+                images: imgUrl
             }
         }
     } catch (err) {
