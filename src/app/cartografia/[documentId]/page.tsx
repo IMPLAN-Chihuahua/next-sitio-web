@@ -6,7 +6,39 @@ import { ShareOptions } from "@/app/estudios-y-propuestas/components/ShareOption
 import Image from "next/image";
 import { filesize } from 'filesize'
 import { DatoGeografico } from "../definitions";
+import { Metadata } from "next";
 
+type DetailPageMetadataProps = {
+  params: Promise<{ documentId: string }>,
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ params }: DetailPageMetadataProps): Promise<Metadata> {
+  const { documentId } = await params;
+
+  const queryParams = qs.stringify({
+    populate: ['cover']
+  });
+
+  try {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/datos-geograficos/${documentId}?${queryParams.toString()}`)
+    const page: { data: DatoGeografico } = await req.json();
+    const imgUrl = page.data.cover.formats?.small ? page.data.cover.formats.small.url : page.data.cover.url;
+    
+    return {
+      title: page.data.objetoGeografico,
+      description: page.data.descripcion,
+      openGraph: {
+        images: [
+          `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imgUrl}`,
+        ]
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    throw new Error('Hubo un problema al obtener metadatos de este elemento');
+  }
+}
 
 
 

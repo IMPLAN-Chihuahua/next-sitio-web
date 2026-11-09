@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { MDXRemote } from 'next-mdx-remote-client/rsc';
 
 export const metadata: Metadata = {
-  title: 'Cartografía | IMPLAN'
+  title: 'Cartografía'
 };
 
 export default async function DatosAbiertosPage() {

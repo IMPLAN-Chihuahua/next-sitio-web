@@ -15,7 +15,10 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://implanchihuahua.org"),
-  title: "IMPLAN Chihuahua",
+  title: {
+    default: "IMPLAN Chihuahua",
+    template: "%s | IMPLAN Chihuahua"
+  },
   description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
   openGraph: {
     title: "IMPLAN Chihuahua",
@@ -54,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={montserrat.variable}>
+    <html lang="es-MX" className={montserrat.variable}>
       <head>
         {/* Google Material Icons */}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />

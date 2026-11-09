@@ -18,7 +18,7 @@ import DiagramaPlaneacion from './components/DiagramaPlaneacion';
 import { sistemaPlaneacion } from './data/sistema-planeacion';
 
 export const metadata: Metadata = {
-  title: 'Planeación | IMPLAN',
+  title: 'Planeación',
 };
 
 type Props = {
