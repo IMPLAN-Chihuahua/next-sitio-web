@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Dialog, IconButton, Tooltip, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,6 +24,14 @@ export default function OrganigramaDialog({ open, onClose, src, imagePath }: Pro
     const [pan, setPan] = useState({ x: 0, y: 0 });
     const drag = useRef<{ x: number; y: number; panX: number; panY: number } | null>(null);
 
+    useEffect(() => {
+        if (!open) return;
+        const root = document.documentElement;
+        const previousOverflowY = root.style.overflowY;
+        root.style.overflowY = 'hidden';
+        return () => { root.style.overflowY = previousOverflowY; };
+    }, [open]);
+
     const changeZoom = (nextZoom: number) => {
         const clamped = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, nextZoom));
         setZoom(clamped);
@@ -41,6 +49,7 @@ export default function OrganigramaDialog({ open, onClose, src, imagePath }: Pro
         <Dialog
             open={open}
             onClose={close}
+            disableScrollLock={false}
             maxWidth={false}
             fullWidth
             aria-labelledby="organigrama-title"
