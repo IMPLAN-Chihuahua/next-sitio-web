@@ -90,6 +90,9 @@ jobs:
           BRANCH: ${{ github.ref_name }}
           ACTOR: ${{ github.actor }}
           COMMIT_SHA: ${{ github.sha }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_COUNT: ${{ github.event.size }}
+          COMPARE_URL: ${{ github.event.compare }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -Eeuo pipefail
@@ -104,6 +107,14 @@ jobs:
           fi
 
           SHORT_SHA="${COMMIT_SHA:0:7}"
+          COMMIT_TITLE="${COMMIT_MESSAGE%%$'\n'*}"
+
+          if [[ -n "$COMPARE_URL" ]]; then
+            CHANGE_DETAILS="**Cambios:** $COMMIT_TITLE
+          **Commits en el push:** $COMMIT_COUNT"
+          else
+            CHANGE_DETAILS="**Cambios:** Ejecución manual"
+          fi
 
           export MESSAGE="$TITLE
 
@@ -112,15 +123,14 @@ jobs:
           **Repositorio:** $REPOSITORY
           **Rama:** $BRANCH
           **Commit:** $SHORT_SHA
+          $CHANGE_DETAILS
           **Ejecutado por:** $ACTOR
           **Servidor legacy:** $LEGACY_RESULT
-          **Servidor principal:** $PRIMARY_RESULT
-
-          [Ver ejecución en GitHub]($RUN_URL)"
+          **Servidor principal:** $PRIMARY_RESULT"
 
           PAYLOAD="$(
             node -e \
-              'process.stdout.write(JSON.stringify({type:"message",attachments:[{contentType:"application/vnd.microsoft.card.adaptive",contentUrl:null,content:{$schema:"http://adaptivecards.io/schemas/adaptive-card.json",type:"AdaptiveCard",version:"1.2",body:[{type:"TextBlock",text:process.env.MESSAGE,wrap:true}]}}]}))'
+              'const actions=[];if(process.env.COMPARE_URL)actions.push({type:"Action.OpenUrl",title:"Ver cambios",url:process.env.COMPARE_URL});actions.push({type:"Action.OpenUrl",title:"Ver ejecución",url:process.env.RUN_URL});process.stdout.write(JSON.stringify({type:"message",attachments:[{contentType:"application/vnd.microsoft.card.adaptive",contentUrl:null,content:{$schema:"http://adaptivecards.io/schemas/adaptive-card.json",type:"AdaptiveCard",version:"1.2",body:[{type:"TextBlock",text:process.env.MESSAGE,wrap:true}],actions}}]}))'
           )"
 
           curl \
