@@ -120,7 +120,7 @@ jobs:
 
           PAYLOAD="$(
             node -e \
-              'process.stdout.write(JSON.stringify({ text: process.env.MESSAGE }))'
+              'process.stdout.write(JSON.stringify({type:"message",attachments:[{contentType:"application/vnd.microsoft.card.adaptive",contentUrl:null,content:{$schema:"http://adaptivecards.io/schemas/adaptive-card.json",type:"AdaptiveCard",version:"1.2",body:[{type:"TextBlock",text:process.env.MESSAGE,wrap:true}]}}]}))'
           )"
 
           curl \
