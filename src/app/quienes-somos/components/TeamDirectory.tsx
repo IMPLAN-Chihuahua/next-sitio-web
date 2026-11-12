@@ -130,7 +130,7 @@ const TeamDirectory = ({ data, organigrama }: { data: TeamMember[], organigrama:
                         variant="h6"
                         component="p"
                         color="text.secondary"
-                        sx={{ maxWidth: 700, mx: 'auto', fontWeight: 'normal' }}
+                        sx={{ maxWidth: 700, mx: 'auto', fontWeight: 'normal', p: 1 }}
                     >
                         Conoce las caras que están detrás del Instituto o{' '}
                         <Link
