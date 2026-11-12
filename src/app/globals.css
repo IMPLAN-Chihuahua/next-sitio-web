@@ -15,3 +15,103 @@ body {
   padding: 0;
   margin: 0;
 }
+
+/* Accessibility toolbar: keep its trigger and sliding panel on the left. */
+.a11y-trigger-btn.a11y-trigger-btn--ltr {
+  right: auto;
+  bottom: 24px;
+  left: 24px;
+  width: 56px;
+  height: 56px;
+}
+
+.a11y-dialog-positioner.a11y-dialog-positioner--ltr {
+  right: auto;
+  left: 0;
+}
+
+/* Root font scaling must not resize or shift the toolbar itself. */
+.a11y-dialog-panel {
+  width: min(384px, 100vw);
+  max-width: 384px;
+}
+
+.a11y-panel-body {
+  padding: 16px;
+  gap: 24px;
+}
+
+.a11y-trigger-btn > .material-symbols-outlined {
+  font-size: 1.75rem !important;
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+}
+
+/* Hide the preset profiles and show each accessibility tool as a compact card. */
+.a11y-panel-body > .a11y-section:first-child {
+  display: none;
+}
+
+/* The site's typography is already readable, so omit the package's font toggle. */
+.a11y-panel-body > .a11y-section:nth-child(2) .a11y-feature-btn:first-child {
+  display: none;
+}
+
+/* Keep font sizing visible first and stationary while its value changes. */
+.a11y-panel-body > .a11y-section:last-child {
+  order: -1;
+}
+
+.a11y-font-controls {
+  gap: 12px;
+}
+
+.a11y-font-btn {
+  padding: 12px;
+}
+
+.a11y-font-size-display {
+  min-width: 48px;
+}
+
+.a11y-feature-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.a11y-feature-btn {
+  position: relative;
+  min-height: 6rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.a11y-feature-icon {
+  font-size: 1.5rem;
+}
+
+.a11y-feature-label {
+  flex: 0;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.a11y-feature-check {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+/* Keep a precise hotspot while still offering a larger, high-contrast cursor. */
+[data-a11y-big-cursor] * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M5 3v35l9-9 7 15 7-3-7-15h13L5 3Z' fill='%23fff' stroke='%23000' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 5 3, auto !important;
+}
+
+@media (max-width: 600px) {
+  .a11y-trigger-btn.a11y-trigger-btn--ltr {
+    bottom: 16px;
+    left: 16px;
+  }
+}
