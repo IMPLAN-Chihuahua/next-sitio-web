@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Licencia
+
+Copyright © 2025–2026 Instituto de Planeación Integral del Municipio de Chihuahua (IMPLAN).
+
+Este proyecto es software libre: puede redistribuirse y modificarse bajo los términos de la GNU Affero General Public License, versión 3.
+
+El proyecto se distribuye sin garantía de ningún tipo. Consulta el archivo [LICENSE](./LICENSE) para conocer los términos completos.
+
+El código fuente se encuentra disponible en [GitHub](https://github.com/IMPLAN-Chihuahua/next-sitio-web).
