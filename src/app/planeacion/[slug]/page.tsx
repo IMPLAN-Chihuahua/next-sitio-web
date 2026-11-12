@@ -10,14 +10,14 @@ import { Suspense } from "react";
 import CartografiaCard from "../components/CartografiaCard";
 import { filesize } from "filesize";
 import { ArchiveOutlined, Landscape, StarBorderOutlined } from "@mui/icons-material";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 
 type DetailPageMetadataProps = {
   params: Promise<{ slug: string }>,
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({ params }: DetailPageMetadataProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DetailPageMetadataProps, parent: ResolvingMetadata): Promise<Metadata> {
   const { slug } = await params;
   const queryParams = qs.stringify({
     populate: [
@@ -26,15 +26,15 @@ export async function generateMetadata({ params }: DetailPageMetadataProps): Pro
   }, { encodeValuesOnly: true });
   const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/instrumentos-planeacion/${slug}?${queryParams.toString()}`)
   const page: { data: InstrumentoPlaneacion } = await req.json();
-  const img = page.data.cover.formats?.small ? page.data.cover.formats?.small.url : page.data.cover.url;
+  const img = page.data.cover?.formats?.small ? page.data.cover?.formats?.small?.url : page.data?.cover?.url;
+  const imgUrl = img ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${img}`] : [];
+  const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: page.data.nombre,
     description: page.data.descripcion,
     openGraph: {
-      images: [
-        `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${img}`,
-      ]
+      images: [...previousImages, ...imgUrl]
     }
   }
 }

@@ -24,7 +24,7 @@ type DetailPageMetadataProps = {
 
 export async function generateMetadata({ params }: DetailPageMetadataProps, parent: ResolvingMetadata): Promise<Metadata> {
     const slug = (await params).slug;
-    
+
     const queryParams = qs.stringify({
         filters: { slug: { $eq: slug } }
     }, { encodeValuesOnly: true });
@@ -32,22 +32,24 @@ export async function generateMetadata({ params }: DetailPageMetadataProps, pare
     try {
         const page = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/entries?${queryParams}`);
         const json = await page.json();
-        
+
         const article: Novedad = json.data?.[0];
         if (!article) return { title: 'Artículo no encontrado | IMPLAN' };
-        
+
         const novedadImg = article.cover?.formats?.small.url || article.cover?.url;
         const imgUrl = novedadImg ? [`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${novedadImg}`] : [];
+        const previousImages = (await parent).openGraph?.images || [];
 
         return {
-            title: `${article.title} | IMPLAN`,
+            title: article.title,
             description: article.seoDescription || article.description,
             openGraph: {
-                images: imgUrl
+                images: [...previousImages, ...imgUrl]
             }
         }
     } catch (err) {
-        return { title: 'Novedades | IMPLAN' }
+        console.error(err);
+        throw new Error('Hubo un problema al obtener datos para etiquetas de Open Graph');
     }
 }
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {

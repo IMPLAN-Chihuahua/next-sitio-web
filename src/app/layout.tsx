@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IMPLAN Chihuahua",
     description: "El IMPLAN es un organismo descentralizado de la administración pública municipal de Chihuahua, Chihuahua.",
-    url: "https://implanchihuahua.org/",
+    url: "https://www.implanchihuahua.org/",
     siteName: "IMPLAN Chihuahua",
     locale: "es_MX",
     type: "website",
