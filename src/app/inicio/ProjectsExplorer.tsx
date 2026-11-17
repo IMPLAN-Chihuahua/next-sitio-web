@@ -1,12 +1,12 @@
 'use client';
 
-import { Box, Grid, List, Typography, ListItemButton, ListItemText, Paper, Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
+import { Box, Grid, List, Typography, ListItemButton, ListItemText, Paper, Button, Container, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import React, { useState } from 'react'
 import { Platform } from '../definitions'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
+import { Overlay } from '../components/LandingPageBanner';
 import { Launch } from '@mui/icons-material';
-import Image from 'next/image';
 
 const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -139,7 +139,7 @@ const ProjectsExplorer = ({ data }: { data: Platform[] }) => {
 
 const Project = ({ data }: { data: Platform }) => {
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-    const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.url}`;
+    const bgImage = `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${data.media.formats?.large?.url || data.media.url}`;
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -187,20 +187,13 @@ const Project = ({ data }: { data: Platform }) => {
                             position: { xs: 'relative', md: 'absolute' },
                             inset: 0,
                             height: { xs: '300px', md: '100%' },
-                            overflow: 'hidden',
+                            backgroundImage: `url(${bgImage})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
                             zIndex: 0,
                             mb: { xs: 2, md: 0 },
                             boxShadow: { md: '0 20px 40px rgba(0,0,0,0.08)' }
-                        }}>
-                            <Image
-                                src={bgImage}
-                                alt=""
-                                fill
-                                sizes="(max-width: 899px) 100vw, 66vw"
-                                quality={75}
-                                style={{ objectFit: 'cover', objectPosition: 'center' }}
-                            />
-                        </Box>
+                        }} />
                     </motion.div>
 
                     <Box component={motion.div} variants={itemVariants} sx={{

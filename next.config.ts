@@ -4,10 +4,6 @@ import legacyUrlMap from "./src/app/legacy-url-map.json";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    formats: ['image/avif', 'image/webp'],
-    qualities: [65, 75],
-    minimumCacheTTL: 86400,
-    dangerouslyAllowLocalIP: process.env.NODE_ENV === 'development',
     remotePatterns: [
       {
         hostname: 'localhost'

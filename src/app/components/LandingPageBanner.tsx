@@ -21,6 +21,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 
   const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const CIRCLE_LENGTH = 2 * Math.PI * 30;
   const progressCircleRef = useRef<SVGCircleElement>(null);
 
   const toggleAutoplay = useCallback(() => {
@@ -87,7 +88,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
       if (remaining === null) {
         progressCircleRef.current?.setAttribute(
           'stroke-dashoffset',
-            String(PROGRESS_CIRCUMFERENCE)
+          String(CIRCLE_LENGTH)
         )
         return;
       }
@@ -138,12 +139,7 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
         <Box className={styles.embla__viewport} ref={emblaRef}>
           <Box className={styles.embla__container} height={'85vh'} position={'relative'}>
             {phrases.map((phrase, idx) => (
-              <ContentSlide
-                key={idx}
-                {...phrase}
-                isSelected={idx === selectedIndex}
-                isFirst={idx === 0}
-              />
+              <ContentSlide key={idx} {...phrase} isSelected={idx === selectedIndex} />
             ))}
           </Box>
         </Box>
@@ -196,8 +192,8 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
               fill="none"
               stroke="#fafafc"
               strokeWidth="4"
-              strokeDasharray={PROGRESS_CIRCUMFERENCE}
-              strokeDashoffset={PROGRESS_CIRCUMFERENCE}
+              strokeDasharray={CIRCLE_LENGTH}
+              strokeDashoffset={CIRCLE_LENGTH}
               strokeLinecap="round"
             />
           </Box>
@@ -242,16 +238,16 @@ export default function LandingPageBanner({ phrases }: { phrases: Array<{ conten
 }
 
 
-const ContentSlide = ({ content, emphasis, image, isSelected, isFirst }: { content: string, emphasis: string, image: string, isSelected: boolean, isFirst: boolean }) => {
+const ContentSlide = ({ content, emphasis, image, isSelected }: { content: string, emphasis: string, image: string, isSelected: boolean }) => {
   return (
     <Box className={styles.embla__slide} sx={{ userSelect: 'none', position: 'relative' }}>
       <Image
+        loader={() => image}
         src={image}
         alt=''
         fill
-        sizes="100vw"
-        quality={65}
-        preload={isFirst}
+        unoptimized
+        loading="lazy"
         style={{
           objectFit: 'cover'
         }}

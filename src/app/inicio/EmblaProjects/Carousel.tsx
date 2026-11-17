@@ -2,14 +2,14 @@
 import React from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { EmblaOptionsType } from 'embla-carousel'
-import { useDotButton } from './CarouselDotButton'
-import { usePrevNextbuttons } from './CarouselArrowButtons'
+import { CarouselDotButton, useDotButton } from './CarouselDotButton'
+import { PrevButton, NextButton, usePrevNextbuttons } from './CarouselArrowButtons'
 import styles from './Carousel.module.css'
 import { Box, Button, Grid, Typography, Stack, Paper, IconButton } from '@mui/material'
 import { Project } from '@/app/definitions'
 import Image from "next/image";
 import VerMasButton from '@/app/components/VerMasButton'
-import { ChevronRight, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
+import { ArrowLeft, ChevronRight, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
 import Link from 'next/link'
 
 type PropType = {
@@ -21,7 +21,7 @@ const Carousel = (props: PropType) => {
     const { slides, options } = props;
 
     const [emblaRef, emblaApi] = useEmblaCarousel(options)
-    const { selectedIndex, scrollSnaps } = useDotButton(emblaApi)
+    const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi)
 
     const {
         prevBtnDisabled,
@@ -109,11 +109,14 @@ const Carousel = (props: PropType) => {
                                         borderRadius: 1,
                                     }}>
                                         <Image
-                                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${project.media[0].url}`}
-                                            alt=""
+                                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${project.media[0].formats?.medium?.url ||
+                                                project.media[0].formats?.small?.url ||
+                                                project.media[0].url
+                                                }`}
+                                            unoptimized={true}
+                                            alt={project.title}
                                             fill
-                                            sizes="(max-width: 899px) 92vw, 40vw"
-                                            quality={75}
+                                            loading="eager"
                                             style={{ objectFit: 'cover', userSelect: 'none' }}
                                         />
                                     </Box>

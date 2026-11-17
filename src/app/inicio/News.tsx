@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography, Link as MuiLink } from '@mui/material'
 import Link from 'next/link'
 import { Novedad } from '../novedades/definitions';
-import { ChevronRight } from '@mui/icons-material';
+import { AutoStoriesOutlined, ChevronRight, SubjectOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 
 
@@ -14,7 +14,7 @@ const News = ({ data }: { data: Novedad[] }) => {
     const featured = data[0];
     const others = data.slice(1, 4);
 
-    const getImageUrl = (entry: Novedad) => {
+    const getImageUrl = (entry: any) => {
         const url = entry?.cover?.url;
         return url ? `${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${url}` : '';
     };
@@ -49,19 +49,11 @@ const News = ({ data }: { data: Novedad[] }) => {
                                             sx={{
                                                 width: '100%',
                                                 height: { xs: 250, md: 400 },
-                                                position: 'relative',
-                                                overflow: 'hidden',
+                                                backgroundImage: `url(${getImageUrl(featured)})`,
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
                                             }}
-                                        >
-                                            <Image
-                                                src={getImageUrl(featured)}
-                                                alt=""
-                                                fill
-                                                sizes="(max-width: 899px) 100vw, 58vw"
-                                                quality={75}
-                                                style={{ objectFit: 'cover', objectPosition: 'center' }}
-                                            />
-                                        </Box>
+                                        />
                                     ) : (
                                         <Box
                                             sx={{
@@ -137,20 +129,12 @@ const News = ({ data }: { data: Novedad[] }) => {
                                         sx={{
                                             width: '100%',
                                             height: 200,
-                                            position: 'relative',
-                                            overflow: 'hidden',
+                                            backgroundImage: `url(${getImageUrl(item)})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
                                             mb: 2,
                                         }}
-                                    >
-                                        <Image
-                                            src={getImageUrl(item)}
-                                            alt=""
-                                            fill
-                                            sizes="(max-width: 899px) 100vw, 33vw"
-                                            quality={75}
-                                            style={{ objectFit: 'cover', objectPosition: 'center' }}
-                                        />
-                                    </Box>
+                                    />
                                 ) : (
                                     <Box
                                         sx={{
