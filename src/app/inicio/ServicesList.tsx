@@ -1,6 +1,7 @@
 import React from 'react'
 import { Section } from '../definitions'
-import { Box, Button, Grid, Stack, Typography, Container } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
+import Image from 'next/image'
 
 const ServicesList = ({ data }: { data: Section[] }) => {
     if (!data?.length) return null;
@@ -24,7 +25,7 @@ const ServicesList = ({ data }: { data: Section[] }) => {
 }
 
 const Service = ({ service, reverse }: { service: Section, reverse: boolean }) => {
-    const imageUrl = service.media.formats?.small?.url || service.media.url;
+    const imageUrl = service.media.url;
 
     return (
         <Grid container spacing={6} alignItems="center" sx={{
@@ -96,12 +97,19 @@ const Service = ({ service, reverse }: { service: Section, reverse: boolean }) =
                         zIndex: 1,
                         height: '100%',
                         width: '100%',
-                        backgroundImage: `url(${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        overflow: 'hidden',
                         borderRadius: 1,
                         transition: 'transform 0.3s ease'
-                    }} />
+                    }}>
+                        <Image
+                            src={`${process.env.NEXT_PUBLIC_IMPLAN_STATIC}${imageUrl}`}
+                            alt=""
+                            fill
+                            sizes="(max-width: 899px) 100vw, 50vw"
+                            quality={75}
+                            style={{ objectFit: 'cover', objectPosition: 'center' }}
+                        />
+                    </Box>
                 </Box>
             </Grid>
         </Grid>
