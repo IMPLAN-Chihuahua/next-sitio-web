@@ -4,6 +4,11 @@ import legacyUrlMap from "./src/app/legacy-url-map.json";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75],
+    minimumCacheTTL: 86400,
+    dangerouslyAllowLocalIP: true,
+    maximumRedirects: 0,
     remotePatterns: [
       {
         hostname: 'localhost'
@@ -11,12 +16,16 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'editorial.implanchihuahua.org',
-        pathname: '/api/uploads/**'
+        port: '',
+        pathname: '/api/uploads/**',
+        search: ''
       },
       {
         protocol: 'https',
         hostname: 'editorial.implanchihuahua.org',
-        pathname: '/uploads/**'
+        port: '',
+        pathname: '/uploads/**',
+        search: ''
       }
     ]
   },
