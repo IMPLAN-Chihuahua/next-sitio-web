@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useScrollTrigger, Zoom, Fab, Box, Tooltip } from '@mui/material';
+import { useScrollTrigger, Zoom, Fab, Box } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const ScrollToTop = () => {
@@ -23,9 +23,13 @@ const ScrollToTop = () => {
                 role="presentation"
                 sx={{
                     position: 'fixed',
-                    bottom: 32,
-                    right: 32,
+                    bottom: 24,
+                    right: 24,
                     zIndex: 99,
+                    '@media (max-width: 600px)': {
+                        bottom: 16,
+                        right: 16,
+                    },
                 }}
             >
                 <Fab
