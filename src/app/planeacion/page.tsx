@@ -66,7 +66,11 @@ export default async function InstrumentosPlaneacionPage({
       </Box>
 
       <Container maxWidth="lg" sx={{ pt: 3 }}>
-        <DiagramaPlaneacion grupo={grupo} />
+        <DiagramaPlaneacion
+          key={tab}
+          grupo={grupo}
+          initiallyOpen={tab === 'sistemas-planeacion'}
+        />
         {tab === 'sistemas-planeacion' && <SistemaPlaneacion grupo={grupo} />}
 
         {tab === 'datos-abiertos' && <DatosAbiertos />}

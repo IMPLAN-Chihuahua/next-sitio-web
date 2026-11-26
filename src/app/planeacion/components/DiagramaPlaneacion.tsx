@@ -7,8 +7,16 @@ import { AccountTreeOutlined, ExpandMore } from '@mui/icons-material';
 import RuedaPlaneacion from './RuedaPlaneacion';
 import type { GrupoPlaneacion } from '../data/sistema-planeacion';
 
-export default function DiagramaPlaneacion({ grupo = null }: { grupo?: GrupoPlaneacion | null }) {
-    const [diagramOpen, setDiagramOpen] = useState(true);
+type DiagramaPlaneacionProps = {
+    grupo?: GrupoPlaneacion | null;
+    initiallyOpen?: boolean;
+};
+
+export default function DiagramaPlaneacion({
+    grupo = null,
+    initiallyOpen = true,
+}: DiagramaPlaneacionProps) {
+    const [diagramOpen, setDiagramOpen] = useState(initiallyOpen);
 
     return (
         <Accordion
