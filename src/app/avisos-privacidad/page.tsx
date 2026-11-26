@@ -12,7 +12,9 @@ export default async function AvisoPrivacidadPage() {
     sort: ['orden:asc'],
     fields: ['titulo', 'fechaElaboracion', 'fechaModificacion', 'orden', 'seoUrl'],
   })
-  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/avisos-privacidad?${queryParams}`);
+  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/avisos-privacidad?${queryParams}`, {
+    next: { revalidate: 300 },
+  });
   const { data: avisos }: { data: AvisoPrivacidad[] } = await req.json();
   const pageTitle = 'Avisos de privacidad'
   return (

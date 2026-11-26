@@ -11,7 +11,9 @@ export default async function AvisoPrivacidadDetailPage({ params }: { params: Pr
   const queryParams = qs.stringify({
     populate: ['adjunto']
   })
-  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/avisos-privacidad/${slug}?${queryParams}`);
+  const req = await fetch(`${process.env.NEXT_PUBLIC_IMPLAN_CMS}/avisos-privacidad/${slug}?${queryParams}`, {
+    next: { revalidate: 300 },
+  });
   const { data: aviso }: { data: AvisoPrivacidad } = await req.json();
   return (
     <Box>
